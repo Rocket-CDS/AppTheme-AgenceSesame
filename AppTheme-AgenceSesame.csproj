@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>AppTheme-AgenceSesame</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="DNNrocketAPI">
+      <HintPath>..\..\..\bin\DNNrocketAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="RazorEngine">
+      <HintPath>..\..\..\bin\RazorEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="RocketAppThemes">
+      <HintPath>..\..\..\bin\RocketAppThemes.dll</HintPath>
+    </Reference>
+    <Reference Include="RocketCatalog">
+      <HintPath>..\..\..\bin\RocketCatalog.dll</HintPath>
+    </Reference>
+    <Reference Include="RocketContent">
+      <HintPath>..\..\..\bin\RocketContent.dll</HintPath>
+    </Reference>
+    <Reference Include="RocketEcommerce">
+      <HintPath>..\..\..\bin\RocketEcommerce.dll</HintPath>
+    </Reference>
+    <Reference Include="RocketPortal">
+      <HintPath>..\..\..\bin\RocketPortal.dll</HintPath>
+    </Reference>
+    <Reference Include="Simplisity">
+      <HintPath>..\..\..\bin\Simplisity.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

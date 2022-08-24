@@ -1,0 +1,28 @@
+@inherits RocketCatalog.Components.RocketCatalogTokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketPortal.Components;
+@using RocketCatalog.Components;
+@using DNNrocketAPI.Components;
+@using System.Globalization;
+
+@{
+    var info = new SimplisityInfo();
+    var articleData = (ArticleLimpet)Model.List.First();
+    if (articleData.Info != null)
+    {
+        info = articleData.Info;
+    }
+    var portalCatalog = (PortalCatalogLimpet)Model.GetDataObject("portalcatalog");
+    var appThemeSystem = (AppThemeSystemLimpet)Model.GetDataObject("appthemesystem");
+    var sessionParams = Model.SessionParamsData;
+    var portalData = new PortalLimpet(portalCatalog.PortalId);
+    var remoteModule = (RemoteModule)Model.GetDataObject("remotemodule");
+    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+}
+
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/Images/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketCatalog/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/RocketThemes/" + portalCatalog.ProjectName + "/" + portalCatalog.AppThemeAdminFolder + "/" + portalCatalog.AppThemeAdminVersion + "/resx/")
+

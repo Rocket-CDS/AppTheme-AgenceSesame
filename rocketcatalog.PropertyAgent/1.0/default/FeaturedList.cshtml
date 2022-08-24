@@ -1,0 +1,56 @@
+﻿@inherits RocketCatalog.Components.RocketCatalogTokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketPortal.Components;
+@using RocketCatalog.Components;
+@using DNNrocketAPI.Components;
+@using System.Globalization;
+
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketCatalog/App_LocalResources/")
+
+@{ var sessionParams = (SessionParams)Model.SessionParamsData;
+    var articleDataList = (ArticleLimpetList)Model.GetDataObject("articlelist");
+    var portalCatalog = (PortalCatalogLimpet)Model.GetDataObject("portalcatalog");
+    var remoteModule = (RemoteModule)Model.GetDataObject("remotemodule");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var categoryList = (CategoryLimpetList)Model.GetDataObject("categorylist");
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
+    var appThemeDefault = (AppThemeLimpet)Model.GetDataObject("appthemedefault");
+    var categoryData = new CategoryLimpet(portalCatalog.PortalId, articleDataList.CategoryId, sessionParams.CultureCode, portalCatalog.SystemKey);
+    var catalogSettings = (CatalogSettingsLimpet)Model.GetDataObject("catalogsettings");
+
+    var hbsDict = new Dictionary<string, SimplisityInfo>();
+    hbsDict.Add("sessionparams", sessionParams.Info);
+    hbsDict.Add("resxlist", RenderRazorUtils.GetResxPaths(Processdata));
+}
+
+@AddProcessData("resourcepath", appTheme.AppThemeVersionFolderRel + "/resx/")
+
+@if (portalCatalog.DebugMode)
+{<div class="w3-small">@DateTime.Now.ToString()</div>}
+
+<h1>
+    @if (sessionParams.GetInt("catid") == 0)
+    {
+        <span>@catalogSettings.CatalogName&nbsp;</span> }
+    else
+    {
+        <span>@categoryData.Name&nbsp;</span>}
+</h1>
+
+<div class="w3-row">
+    @RenderTemplate("SearchBanner.cshtml", appThemeDefault, Model, true)
+</div>
+
+<div class="w3-row w3-padding-16 w3-center">
+    @foreach (ArticleLimpet articleData in articleDataList.GetArticleList())
+    {
+        hbsDict.Remove("data");
+        hbsDict.Add("data", articleData.Info);
+        @RenderHandleBarsRC(hbsDict, appTheme, "productlistrow.hbs", remoteModule.ModuleRef, "")
+    }
+</div>
+<div class="w3-row w3-padding-16 w3-center">
+    @RenderTemplate("ProductPaging.cshtml", appThemeDefault, Model, true)
+</div>

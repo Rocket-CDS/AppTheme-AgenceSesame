@@ -1,0 +1,131 @@
+﻿
+
+<div class="w3-row w3-animate-opacity">
+
+    <h1>{{article this "name"}}</h1>
+
+    <div class="w3-row">
+        <div class="w3-half">
+            <div class="w3-display-row">
+
+                {{#each genxml.data.genxml.imagelist.genxml}}
+                {{#if @first}}
+                <img class="a-largeimagepos sliderind" alt="{{article @root "name"}}" src="{{image @root "thumburl" @index 640 400}}" style="width:100%;">
+                {{else}}
+                <img class="sliderind" src="{{image @root "thumburl" @index 640 400}}" style="width:100%;display:none;">
+                {{/if}}
+                {{/each}}
+
+            </div>
+
+            <div class="w3-row" style="margin: 8px -8px;">
+
+                {{#each genxml.data.genxml.imagelist.genxml}}
+                <div class="w3-col s6 m4 l2 w3-padding-small" style="margin-bottom: 8px">
+                    <img class="demo w3-opacity w3-hover-opacity-off" src="{{image @root "thumburl" @index 640 400}}" style="width:100%;cursor:pointer" onclick="currentDiv({{@index}})">
+                </div>
+                {{/each}}
+
+            </div>
+
+
+        </div>
+        <div class="w3-half">
+            <div class="w3-row w3-padding w3-xxlarge w3-right "><b>{{article @root "genxml/textbox/price"}}&nbsp;€</b></div>
+            <div class="w3-row w3-padding w3-margin-bottom"><b>{{{article this "summary"}}}</b></div>
+
+            {{#articletest @root "haslinks"}}
+            <div class="w3-row w3-padding">
+                <h3>{{resourcekey this "Theme.links"}}</h3>
+                <div id="linklistcontainer w3-padding">
+                    {{#each genxml.data.genxml.linklist.genxml}}
+                    <div class="w3-row">
+                        <a target="_blank" href="{{link @root "url" @index}}" class="w3-bar-item w3-button">{{link @root "name" @index}}</a>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+            {{/articletest}}
+            {{#articletest @root "hasdocs"}}
+            <div class="w3-row w3-padding">
+                <h3>{{resourcekey this "Theme.documents"}}</h3>
+                <div id="linklistcontainer w3-padding">
+                    {{#each genxml.data.genxml.lang.genxml.documentlist.genxml}}
+                    <div class="w3-row">
+                        <a target="_blank" href="{{document @root "url" @index}}" class="w3-bar-item w3-button">{{document @root "name" @index}}</a>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+            {{/articletest}}
+
+        </div>
+    </div>
+
+    <div class="w3-row w3-padding">{{{article @root "genxml/textbox/articlesummary2" "breakof"}}}</div>
+
+    {{#when genxml.data.genxml.checkbox.hidemap "noteq" "true"}}
+    <div class="w3-row">
+        <div id="leafletmap" style="height:300px" class="w3-light-grey"></div>
+    </div>
+    {{/when}}
+</div>
+
+    <script>
+
+        $(document).ready(function () {
+
+            setTimeout(() => { initmap(); }, 500);
+
+        });
+
+
+    function initmap() {
+
+        var x = '{{genxml.data.genxml.textbox.lat}}';
+        var y = '{{genxml.data.genxml.textbox.long}}';
+        var defaultLat = '{{genxml.remotemodule.genxml.settings.lat}}';
+        var defaultLong = '{{genxml.remotemodule.genxml.settings.long}}';
+        var companyname = '{{genxml.data.genxml.textbox.companyname}}';
+        var marker = "";
+        var map = "";
+        if (x != '' && y != '') {
+            map = L.map('leafletmap', { minZoom: 3 }).setView([x, y], 13);
+            marker = L.marker([x, y], { title: companyname });
+            map.addLayer(marker);
+        }
+        else {
+            map = L.map('leafletmap', { minZoom: 3 }).setView([defaultLat, defaultLong], 13);
+        }
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+    }
+
+
+        function currentDiv(n) {
+            showDivs(slideIndex = (n + 1));
+        }
+
+        function showDivs(n) {
+            var i;
+            var x = document.getElementsByClassName("sliderind");
+            var dots = document.getElementsByClassName("demo");
+            if (n > x.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = x.length }
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" w3-opacity-off", "");
+            }
+            x[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " w3-opacity-off";
+        }
+
+    </script>
+
+    {{! displayData this}}
+

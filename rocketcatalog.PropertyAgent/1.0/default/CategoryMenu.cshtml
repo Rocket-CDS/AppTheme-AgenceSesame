@@ -1,0 +1,69 @@
+﻿@inherits RocketCatalog.Components.RocketCatalogTokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketPortal.Components;
+@using RocketCatalog.Components;
+@using DNNrocketAPI.Components;
+
+@{ var categoryList = (CategoryLimpetList)Model.GetDataObject("categorylist");
+                var sessionParams = (SessionParams)Model.SessionParamsData;
+                var portalCatalog = (PortalCatalogLimpet)Model.GetDataObject("portalcatalog");
+                var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme"); }
+
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketCatalog/App_LocalResources/")
+@AddProcessData("resourcepath", appTheme.AppThemeVersionFolderRel + "/resx/")
+
+
+<div class="w3-row">
+    <div class="w3-bar w3-light-grey">
+        <a href="@sessionParams.PageUrl" class="w3-bar-item w3-button">@ResourceKey("theme.allproducts")</a>
+
+        @foreach (var c in categoryList.GetCategoryTree())
+        {
+            if (!c.Hidden && !c.HiddenByCulture && c.Level == 0)
+            {
+                if (c.Level == 0)
+                {
+
+                    var l = c.GetChildren();
+
+                    if (l.Count == 0)
+                    {
+                        <a href="@(c.CategoryUrl(sessionParams))" class="w3-bar-item w3-button">@c.Name</a> 
+                    }
+                    else
+                    {
+                        <div class="w3-dropdown-click">
+                            <div class="w3-button" onclick="myFunction();">
+                                @c.Name
+                                <span class="material-icons">
+                                    arrow_drop_down
+                                </span>
+                            </div>
+                            <div id="demo" class="w3-dropdown-content w3-bar-block w3-card">
+                                @foreach (var child in l)
+                                {
+                                    <a href="@(child.CategoryUrl(sessionParams))" class="w3-bar-item w3-button">@child.Name</a>
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+            }
+        }
+    </div>
+</div>
+
+
+<script>
+    function myFunction() {
+        var x = document.getElementById("demo");
+        if (x.className.indexOf("w3-show") == -1) {
+            x.className += " w3-show";
+        } else {
+            x.className = x.className.replace(" w3-show", "");
+        }
+    }
+</script>
+

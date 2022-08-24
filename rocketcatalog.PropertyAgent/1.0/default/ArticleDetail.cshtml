@@ -1,0 +1,43 @@
+﻿@inherits RocketCatalog.Components.RocketCatalogTokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketPortal.Components;
+@using RocketCatalog.Components;
+@using DNNrocketAPI.Components;
+@using System.Globalization;
+
+@{
+    var sessionParams = (SessionParams)Model.SessionParamsData;
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var portalCatalog = (PortalCatalogLimpet)Model.GetDataObject("portalcatalog");
+    var remoteModule = (RemoteModule)Model.GetDataObject("remotemodule");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var categoryList = (CategoryLimpetList)Model.GetDataObject("categorylist");
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
+    var catalogSettings = (CatalogSettingsLimpet)Model.GetDataObject("catalogsettings");
+    var appThemeDefault = (AppThemeLimpet)Model.GetDataObject("appthemedefault");
+
+    var hbsDict = new Dictionary<string, SimplisityInfo>();
+    hbsDict.Add("sessionparams", sessionParams.Info);
+    hbsDict.Add("data", articleData.Info);
+    hbsDict.Add("remotemodule", new SimplisityInfo(remoteModule.Record));
+    hbsDict.Add("catalogsettings", catalogSettings.Info);
+
+}
+
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketCatalog/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/RocketThemes/" + portalCatalog.ProjectName + "/" + portalCatalog.AppThemeAdminFolder + "/" + portalCatalog.AppThemeAdminVersion + "/resx/")
+@AddProcessData("resourcepath", "/DesktopModules/RocketThemes/" + appTheme.AppThemeFolder + "/" + appTheme.AppVersionFolder + "/resx/")
+@{ 
+    hbsDict.Add("resxlist", RenderRazorUtils.GetResxPaths(Processdata));
+}
+
+@if (portalCatalog.DebugMode)
+{<div class="w3-small">@DateTime.Now.ToString()</div>}
+
+<div class="w3-row">
+    <a href="@Model.SessionParamsData.PageUrl"  class="w3-button" style="float:right; text-decoration:none;">@ButtonText(ButtonTypes.back, sessionParams.CultureCode)</a>
+    @RenderHandleBarsRC(hbsDict, appThemeDefault, "articledetail.hbs", remoteModule.ModuleRef, "")
+</div>
+
