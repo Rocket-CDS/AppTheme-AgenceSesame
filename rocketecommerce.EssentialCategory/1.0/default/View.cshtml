@@ -1,0 +1,56 @@
+﻿@inherits RocketEcommerce.Components.RocketEcommerceTokens<Simplisity.SimplisityRazor>
+@using Simplisity;
+@using RocketEcommerce.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+@{
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
+    var productData = (ProductLimpet)Model.GetDataObject("productdata");
+    var sessionParams = (SessionParams)Model.SessionParamsData;
+    var portalShop = (PortalShopLimpet)Model.GetDataObject("portalshop");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+}
+
+<!-- !PAGE CONTENT! -->
+<div id="ecommerce-tag" class="ecommerce-container">
+    @if (portalShop.DebugMode)
+    {
+        <div class="w3-tiny">DEBUG MODE: @DateTime.Now.ToString()</div>
+    }
+    @{ 
+        if (productData != null)
+        {
+        @RenderTemplate("ProductDetail.cshtml", appTheme, Model, true) 
+        }
+        else
+        {
+        @RenderTemplate("ProductList.cshtml", appTheme, Model, true) 
+        } 
+     }
+</div>
+<div class="w3-overlay simplisity_loader" style="z-index:999;"></div>
+<script>
+    $(document).ready(function () {
+        // get minicart to avoid cache problem with wrong amount.
+        var jsonText = window.sessionStorage.getItem('MiniCartTotals');
+        if ((typeof jsonText == 'undefined') || jsonText == '' || jsonText == null)
+            simplisity_requestjson('@(sessionParams.ApiUrl)', 'rocketecommerce_minicartjson', '', 'MiniCartTotals', '{"moduleref":"@(sessionParams.ModuleRef)"}', 'afterMiniCartJson');
+        else
+            afterMiniCartJson();
+    });
+    function afterMiniCartJson() {
+        try {
+            var jsonText = window.sessionStorage.getItem('MiniCartTotals');
+            var jsonstr = simplisity_parsejson(jsonText);
+            $('#a-cartqty').text(jsonstr.qty);
+            $('#a-carttotal').text(jsonstr.total);        
+        }
+        catch (e) {
+        }
+    }
+    function clearMiniCartJson()
+    {
+        window.sessionStorage.setItem('MiniCartTotals', '');
+    }
+</script>
+
