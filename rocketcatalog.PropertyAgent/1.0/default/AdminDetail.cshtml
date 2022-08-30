@@ -16,7 +16,7 @@
     var portalCatalog = (PortalCatalogLimpet)Model.GetDataObject("portalcatalog");
     var appThemeSystem = (AppThemeSystemLimpet)Model.GetDataObject("appthemesystem");
     var sessionParams = Model.SessionParamsData;
-    var portalData = new PortalLimpet(portalCatalog.PortalId);
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
     var remoteModule = (RemoteModule)Model.GetDataObject("remotemodule");
     var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
 }
@@ -24,7 +24,7 @@
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocket/Images/App_LocalResources/")
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketCatalog/App_LocalResources/")
-@AddProcessData("resourcepath", "/DesktopModules/RocketThemes/" + portalCatalog.ProjectName + "/" + portalCatalog.AppThemeAdminFolder + "/" + portalCatalog.AppThemeAdminVersion + "/resx/")
+@AddProcessData("resourcepath", "/DesktopModules/RocketThemes/" + portalCatalog.Organisation + "/" + portalCatalog.AppThemeAdminFolder + "/" + portalCatalog.AppThemeAdminVersion + "/resx/")
 
 @RenderLanguageSelector("articleadmin_editarticle", "{\"articleid\":\"" + articleData.ArticleId + "\"}", appThemeSystem, Model)
 
@@ -230,7 +230,6 @@
         });
         $('.tag-editor').height(80)
 
-        selectMenu('articleadmin');
 
     });
 

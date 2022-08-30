@@ -5,10 +5,13 @@
 @using RocketCatalog.Components;
 @using DNNrocketAPI.Components;
 
-@{ var categoryList = (CategoryLimpetList)Model.GetDataObject("categorylist");
-                var sessionParams = (SessionParams)Model.SessionParamsData;
-                var portalCatalog = (PortalCatalogLimpet)Model.GetDataObject("portalcatalog");
-                var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme"); }
+@{ 
+    var categoryList = (CategoryLimpetList)Model.GetDataObject("categorylist");
+    var sessionParams = (SessionParams)Model.SessionParamsData;
+    var portalCatalog = (PortalCatalogLimpet)Model.GetDataObject("portalcatalog");
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme"); 
+    var remoteModule = (RemoteModule)Model.GetDataObject("remotemodule");
+}
 
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketCatalog/App_LocalResources/")
@@ -44,7 +47,7 @@
                             <div id="demo" class="w3-dropdown-content w3-bar-block w3-card">
                                 @foreach (var child in l)
                                 {
-                                    <a href="@(child.CategoryUrl(sessionParams))" class="w3-bar-item w3-button">@child.Name</a>
+                                    <a href="@(child.CategoryUrl(sessionParams, remoteModule))" class="w3-bar-item w3-button">@child.Name</a>
                                 }
                             </div>
                         </div>

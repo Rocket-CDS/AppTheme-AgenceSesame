@@ -9,13 +9,14 @@
     var portalData = new PortalLimpet(portalCatData.PortalId);
     var sessionParams = (SessionParams)Model.SessionParamsData;
     var remoteModule = (RemoteModule)Model.GetDataObject("remotemodule");
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
 }
 
 <link rel="stylesheet" href="@(sessionParams.EngineURL)@DNNrocketUtils.AppendFileModifiedDate("/DesktopModules/DNNrocket/css/w3.css")">
 
 <script type="text/javascript" src="@(sessionParams.EngineURL)@DNNrocketUtils.AppendFileModifiedDate("/DesktopModules/DNNrocket/Simplisity/js/simplisity.js")"></script>
-<script type="text/javascript" src="@(sessionParams.EngineURL)@DNNrocketUtils.AppendFileModifiedDate("/DesktopModules/RocketThemes/" + remoteModule.Organisation + "/" + remoteModule.AppThemeViewFolder + "/" + remoteModule.AppThemeViewVersion + "/js/frontend.js")"></script>
-<link rel="stylesheet" href="@(sessionParams.EngineURL)@DNNrocketUtils.AppendFileModifiedDate("/DesktopModules/RocketThemes/" + remoteModule.Organisation + "/" + remoteModule.AppThemeViewFolder + "/" + remoteModule.AppThemeViewVersion + "/css/theme.css")">
+<script type="text/javascript" src="@(sessionParams.EngineURL)@DNNrocketUtils.AppendFileModifiedDate("/DesktopModules/RocketThemes/" + appTheme.AppThemeVersionFolderRel + "/js/frontend.js")"></script>
+<link rel="stylesheet" href="@(sessionParams.EngineURL)@DNNrocketUtils.AppendFileModifiedDate("/DesktopModules/RocketThemes/" + appTheme.AppThemeVersionFolderRel + "/css/theme.css")">
 <script type="text/javascript" src="@(sessionParams.EngineURL)@DNNrocketUtils.AppendFileModifiedDate("/DesktopModules/DNNrocket/js/jquery.validate.min.js")"></script>
 @if (DNNrocketUtils.GetLanguageCode(sessionParams.CultureCode) != "en")
 {

@@ -14,8 +14,8 @@
     var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
     var categoryList = (CategoryLimpetList)Model.GetDataObject("categorylist");
     var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
-    var catalogSettings = (CatalogSettingsLimpet)Model.GetDataObject("catalogsettings");
-    var appThemeDefault = (AppThemeLimpet)Model.GetDataObject("appthemedefault");
+    var catalogSettings = (CatalogSettingsLimpet)Model.GetDataObject("catalogsettings");    
+    var appThemeDefault = new AppThemeLimpet(articleData.PortalId, "rocketcatalog.PropertyAgent", "1.0", appTheme.Organisation);
 
     var hbsDict = new Dictionary<string, SimplisityInfo>();
     hbsDict.Add("sessionparams", sessionParams.Info);
@@ -27,7 +27,7 @@
 
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketCatalog/App_LocalResources/")
-@AddProcessData("resourcepath", "/DesktopModules/RocketThemes/" + portalCatalog.ProjectName + "/" + portalCatalog.AppThemeAdminFolder + "/" + portalCatalog.AppThemeAdminVersion + "/resx/")
+@AddProcessData("resourcepath", "/DesktopModules/RocketThemes/" + portalCatalog.Organisation + "/" + portalCatalog.AppThemeAdminFolder + "/" + portalCatalog.AppThemeAdminVersion + "/resx/")
 @AddProcessData("resourcepath", "/DesktopModules/RocketThemes/" + appTheme.AppThemeFolder + "/" + appTheme.AppVersionFolder + "/resx/")
 @{ 
     hbsDict.Add("resxlist", RenderRazorUtils.GetResxPaths(Processdata));
@@ -40,4 +40,3 @@
     <a href="@Model.SessionParamsData.PageUrl"  class="w3-button" style="float:right; text-decoration:none;">@ButtonText(ButtonTypes.back, sessionParams.CultureCode)</a>
     @RenderHandleBarsRC(hbsDict, appThemeDefault, "articledetail.hbs", remoteModule.ModuleRef, "")
 </div>
-
