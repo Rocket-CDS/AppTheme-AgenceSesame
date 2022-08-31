@@ -1,0 +1,102 @@
+﻿@inherits RocketCatalog.Components.RocketCatalogTokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketPortal.Components;
+@using RocketCatalog.Components;
+@using DNNrocketAPI.Components;
+@using System.Globalization;
+
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketCatalog/App_LocalResources/")
+
+@{
+    var sessionParams = (SessionParams)Model.SessionParamsData;
+    var articleDataList = (ArticleLimpetList)Model.GetDataObject("articlelist");
+    var portalCatalog = (PortalCatalogLimpet)Model.GetDataObject("portalcatalog");
+    var remoteModule = (RemoteModule)Model.GetDataObject("remotemodule");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var categoryList = (CategoryLimpetList)Model.GetDataObject("categorylist");
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
+    var appThemeDefault = (AppThemeLimpet)Model.GetDataObject("appthemedefault");
+    var categoryData = (CategoryLimpet)Model.GetDataObject("categorydata");
+}
+
+@AddProcessData("resourcepath", appTheme.AppThemeVersionFolderRel + "/resx/")
+
+<div class="productlistflex">
+
+    <div class="productlist">
+
+
+        @if (sessionParams.GetInt("catid") == 0)
+        {
+            <h1>@portalData.Name</h1>
+        }
+        else
+        {
+            <h1>@categoryData.Name</h1>
+        }
+
+        @RenderTemplate("SearchBanner.cshtml", appTheme, Model, true)
+
+        <div id="datasection">
+
+            <div class="productgrid">
+
+                @foreach (ArticleLimpet articleData in articleDataList.GetArticleList())
+                {
+                    if (!articleData.IsHidden)
+                    {
+
+                        var imgRelPath = "/DesktopModules/DNNrocket/api/images/noimage2.png";
+                        var articleImage = articleData.GetImage(0);
+                        if (articleImage != null)
+                        {
+                            imgRelPath = articleImage.RelPath;
+                        }
+                        var articleListUrl = articleData.ArticleDetailUrl(sessionParams, remoteModule);
+
+                        <div class="product">
+
+                            <div class="productimg">
+                                <img src="@ThumbnailImageWebsiteDomainUrl(portalData.EngineUrlWithProtocol, imgRelPath, 480, 480)" alt="@articleData.Name" />
+                                <!-- Rollover -->
+                                <div class="productrollover">
+                                    <div class="productrollover-content">
+                                        <div class="productrollover-actions">
+                                            <a href="@articleListUrl">@ResourceKey("theme.details", sessionParams.CultureCode)</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="productcontent">
+                                <h3><a href="@articleListUrl">@articleData.Name</a></h3>
+                                <div class="w3-row">
+                                    <div class="w3-padding">
+                                        <div class="productprice">@articleData.Info.GetXmlPropertyDecimal("genxml/textbox/price").ToString("C2", CultureInfo.CurrentCulture)</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+                }
+
+            </div>
+
+            @RenderTemplate("ProductPaging.cshtml", appThemeDefault, Model, true)
+
+        </div>
+
+    </div>
+
+    <div class="productlistside">
+
+        <!-- Categories -->
+        <div class="productlistcat">
+            @RenderTemplate("CategorySideMenu.cshtml", appTheme, Model, true)
+        </div>
+
+    </div>
+
+</div>

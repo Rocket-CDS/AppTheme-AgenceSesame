@@ -1,0 +1,166 @@
+@inherits RocketCatalog.Components.RocketCatalogTokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketPortal.Components;
+@using RocketCatalog.Components;
+@using DNNrocketAPI.Components;
+
+@{ 
+    var info = new SimplisityInfo();
+    var articleData = (ArticleLimpet)Model.List.First();
+    if (articleData.Info != null)
+    {
+        info = articleData.Info;
+    }
+    var portalCatalog = new PortalCatalogLimpet(articleData.PortalId, DNNrocketUtils.GetEditCulture(), articleData.SystemKey);
+    var appThemeSystem = new AppThemeSystemLimpet(portalCatalog.PortalId, portalCatalog.SystemKey);
+    var sessionParams = Model.SessionParamsData;
+    var portalData = new PortalLimpet(portalCatalog.PortalId);
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme"); 
+}
+
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/Images/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketCatalog/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/RocketThemes/" + portalCatalog.ProjectName + "/" + portalCatalog.AppThemeAdminFolder + "/" + portalCatalog.AppThemeAdminVersion + "/resx/")
+
+@RenderLanguageSelector("articleadmin_editarticle", "{\"articleid\":\"" + articleData.ArticleId + "\"}", appThemeSystem, Model)
+
+<div id="articleedit">
+
+    <div id="articleeditcontent" class='w3-animate-opacity '>
+
+        <div class="w3-bar  w3-padding">
+            <div class="w3-button simplisity_click" s-cmd="articleadmin_editlist" s-fields=''>@ButtonIcon(ButtonTypes.back)</div>
+            <div class="w3-button w3-theme-action simplisity_click savearticlebutton langchangesave" s-before="articlerichtextSave" s-cmd="articleadmin_savedata" s-post="#articledatasection" s-list=".@articleData.ImageListName,.@articleData.DocumentListName,.@articleData.LinkListName" s-fields='{"articleid":"@articleData.ArticleId"}'>@ButtonText(ButtonTypes.save)</div>
+            @if (articleData.Exists)
+            {
+                <div class="w3-button simplisity_confirmclick" s-confirm="@ResourceKey("DNNrocket.copy")&nbsp;?" s-cmd="articleadmin_copy" s-fields='{"articleid":"@info.ItemID"}'>@ButtonText(ButtonTypes.copy)</div>            }
+                    <div class="w3-button w3-right w3-margin-right w3-red simplisity_confirmclick" s-confirm="@ResourceKey("DNNrocket.delete","","confirm")" s-cmd="articleadmin_delete" s-fields='{"articleid":"@articleData.ArticleId"}'>@ButtonText(ButtonTypes.delete)</div>
+                </div>
+
+        <div id="articledatasection" class="">
+            <div class='w3-row'>
+                <div class='w3-row'>
+                    <div class="w3-col m1 w3-padding">
+                        <label>@ResourceKey("RC.ref")</label>
+                        @TextBox(info, articleData.RefXPath, " class='w3-input w3-border' autocomplete='off' ", "", false, 0)
+                    </div>
+                    <div class="w3-col m10 w3-padding">
+                        <label>@ResourceKey("RC.name")</label>&nbsp;@EditFlag(sessionParams)
+                        @TextBox(info, articleData.NameXPath, " class='w3-input w3-border' autocomplete='off' ", "", true, 0)
+                    </div>
+                    <div class="w3-col m1 w3-padding">
+                        <label>@ResourceKey("Theme.price")</label>
+                        @TextBox(info, "genxml/textbox/price", " class='w3-input w3-border w3-right-align' autocomplete='off' ", "", false, 0)
+                    </div>
+                </div>
+
+                <div class=" w3-row w3-padding">
+                    <label>@ResourceKey("RC.summary")</label>&nbsp;@EditFlag(sessionParams)
+                    @TextArea(info, articleData.SummaryXPath, " class='w3-input w3-border' rows='8' autocomplete='off' ", "", true, 0)
+                </div>
+
+                <div class='w3-row'>
+                    <div class="w3-quarter w3-padding">
+                        @CheckBox(info, articleData.HiddenXPath, "&nbsp;" + ResourceKey("RC.hidden"), " class='w3-check' ")
+                    </div>
+                    <div class="w3-quarter w3-padding">
+                        @CheckBox(info, articleData.HiddenByCultureXPath, "&nbsp;" + ResourceKey("RC.hidden") + "&nbsp;" + EditFlag(sessionParams), " class='w3-check' ")
+                    </div>
+                </div>
+
+                <div class="w3-padding">
+                    <div class="w3-bar-item w3-button tablink categoriestabtablink" onclick="openSection('categoriestab')">@ResourceKey("RC.categories")</div>
+                    <div class="w3-bar-item w3-button tablink imgstablink" onclick="openSection('imgs')">@ResourceKey("DNNrocket.images")</div>
+                    <div class="w3-bar-item w3-button tablink docstablink" onclick="openSection('docs')">@ResourceKey("DNNrocket.docs")</div>
+                    <div class="w3-bar-item w3-button tablink linkstablink" onclick="openSection('links')">@ResourceKey("DNNrocket.links")</div>
+                </div>
+
+                <div class="w3-padding">
+
+                    <div id="categoriestab" class='w3-row sectionname a-articlecategorylist' style="display:none">
+                        @RenderTemplate("ArticleCategoryList.cshtml", appThemeSystem, Model, true)
+                    </div>
+                    <div id="imgs" class='w3-row sectionname' style="display:none">
+                        @RenderTemplate("Articleimages.cshtml", appThemeSystem, Model, true)
+                        @RenderTemplate("ArticleimageSelect.cshtml", appThemeSystem, Model, true)
+                    </div>
+                    <div id="docs" class='w3-row sectionname' style="display:none">
+                        @RenderTemplate("ArticleDocuments.cshtml", appThemeSystem, Model, true)
+                        @RenderTemplate("ArticleDocumentSelect.cshtml", appThemeSystem, Model, true)
+                    </div>
+                    <div id="links" class='w3-row sectionname' style="display:none">
+                        @RenderTemplate("ArticleLinks.cshtml", appThemeSystem, Model, true)
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="w3-padding">
+            @if (UserUtils.IsInRole("Administrator"))
+            {
+<div class="w3-container">
+    <div class="w3-right">
+        @RenderXml(info)
+    </div>
+</div>            }
+            <i>ID: </i> @info.ItemID <i> GuidKey:</i> @info.GUIDKey
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        var sectionName = simplisity_getCookieValue('sectionName');
+        if ((typeof sectionName === 'undefined') || sectionName === '') {
+            sectionName = 'categoriestab';
+        }
+
+        $("#price").keydown(function (e) {
+            // Allow: backspace, delete, tab, escape, enter and .
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190, 188]) !== -1 ||
+                // Allow: Ctrl/cmd+A
+                (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                // Allow: Ctrl/cmd+C
+                (e.keyCode == 67 && (e.ctrlKey === true || e.metaKey === true)) ||
+                // Allow: Ctrl/cmd+X
+                (e.keyCode == 88 && (e.ctrlKey === true || e.metaKey === true)) ||
+                // Allow: home, end, left, right
+                (e.keyCode >= 35 && e.keyCode <= 39)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
+
+
+        openSection(sectionName);
+        selectMenu('articleadmin');
+
+    });
+
+    function openSection(sectionName) {
+        var i, x, tablinks;
+        x = document.getElementsByClassName("sectionname");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        $(".tablink").each(function (index) {
+            $(this).removeClass('w3-bottombar');
+        });
+
+        document.getElementById(sectionName).style.display = "block";
+
+        $('.' + sectionName + 'tablink').addClass('w3-bottombar');
+
+        simplisity_setCookieValue('sectionName', sectionName);
+    }
+
+</script>

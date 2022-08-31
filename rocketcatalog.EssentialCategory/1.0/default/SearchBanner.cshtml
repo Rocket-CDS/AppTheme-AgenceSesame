@@ -1,20 +1,21 @@
-﻿@inherits RocketEcommerce.Components.RocketEcommerceTokens<Simplisity.SimplisityRazor>
+﻿@inherits RocketCatalog.Components.RocketCatalogTokens<Simplisity.SimplisityRazor>
 @using Simplisity;
-@using RocketEcommerce.Components;
+@using RocketPortal.Components;
+@using RocketCatalog.Components;
 @using DNNrocketAPI.Components;
 
-
-
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
-@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketEcommerce/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketCatalog/App_LocalResources/")
 
 @{
+
     var sessionParams = (SessionParams)Model.SessionParamsData;
-    var portalShop = (PortalShopLimpet)Model.GetDataObject("portalshop");
-    var productDataList = (ProductLimpetList)Model.GetDataObject("productlist");
+    var portalCatalog = (PortalCatalogLimpet)Model.GetDataObject("portalcatalog");
+    var articleDataList = (ArticleLimpetList)Model.GetDataObject("articlelist");
     var remoteModule = (RemoteModule)Model.GetDataObject("remotemodule");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
     var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
-    var categoryData = new CategoryLimpet(portalShop.PortalId, sessionParams.GetInt("searchcategoryid"), sessionParams.CultureCode);
+    var categoryData = (CategoryLimpet)Model.GetDataObject("categorydata");
 }
 
 <div class="w3-bar searchdata">
@@ -33,20 +34,20 @@
         </div>
     </div>
 
-    @if (productDataList != null)
+    @if (articleDataList != null)
     {
         var orderbyDictionary = new Dictionary<string, string>();
         orderbyDictionary.Add("", "");
-        foreach (var orderbyInfo in portalShop.GetProductOrderByList())
+        foreach (var orderbyInfo in portalCatalog.GetProductOrderByList())
         {
-            orderbyDictionary.Add(orderbyInfo.GetXmlProperty("genxml/key"), ResourceKey("RE." + orderbyInfo.GetXmlProperty("genxml/key"), sessionParams.CultureCode).ToString());
+            orderbyDictionary.Add(orderbyInfo.GetXmlProperty("genxml/key"), ResourceKey("RC." + orderbyInfo.GetXmlProperty("genxml/key"), sessionParams.CultureCode).ToString());
         }
         <div class="w3-bar-item w3-right w3-hide-small w3-margin-left">
-            @DropDownList(new SimplisityInfo(), "genxml/hidden/pagesize", "12,24,48,96", "12,24,48,96", " style='height:40px;' class='w3-input w3-border simplisity_sessionfield ' onchange=\"$('.triggersearch').trigger('click');\" title='" + @ResourceKey("DNNrocket.pagesize", sessionParams.CultureCode) + "'", "24")
+            @DropDownList(new SimplisityInfo(), "genxml/hidden/pagesize", "12,24,48,96", "12,24,48,96", " style='height:40px;' class='w3-input w3-border simplisity_sessionfield ' onchange=\"$('.triggersearch').trigger('click');\" title='" + @ResourceKey("DNNrocket.pagesize", sessionParams.CultureCode) + "'", sessionParams.PageSize.ToString())
         </div>
         <div class="w3-bar-item w3-right w3-hide-small w3-margin-left">
             <span>
-                @DropDownList(new SimplisityInfo(), "genxml/hidden/orderbyref", orderbyDictionary, " style='height:40px;' class='w3-input w3-border simplisity_sessionfield ' onchange=\"$('.triggersearch').trigger('click');\"", "")
+                @DropDownList(new SimplisityInfo(), "genxml/hidden/orderbyref", orderbyDictionary, " style='height:40px;' class='w3-input w3-border simplisity_sessionfield ' onchange=\"$('.triggersearch').trigger('click');\"", sessionParams.OrderByRef)
             </span>
         </div>
     }

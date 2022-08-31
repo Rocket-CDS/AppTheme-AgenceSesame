@@ -1,0 +1,101 @@
+﻿@inherits RocketCatalog.Components.RocketCatalogTokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketPortal.Components;
+@using RocketCatalog.Components;
+@using DNNrocketAPI.Components;
+@using System.Globalization;
+
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketCatalog/App_LocalResources/")
+
+@{ 
+    var sessionParams = (SessionParams)Model.SessionParamsData;
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var portalCatalog = (PortalCatalogLimpet)Model.GetDataObject("portalcatalog");
+    var remoteModule = (RemoteModule)Model.GetDataObject("remotemodule");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var categoryList = (CategoryLimpetList)Model.GetDataObject("categorylist");
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
+}
+
+@AddProcessData("resourcepath", appTheme.AppThemeVersionFolderRel + "/resx/")
+
+<div class="productdetailflex">
+
+    <div class="productdetail">
+
+        <div id="datasection">
+
+            <div id="datalist2">
+                @{ var imgRelPath = "/DesktopModules/DNNrocket/api/images/noimage2.png";
+                                var articleImage = articleData.GetImage(0);
+                                if (articleImage != null)
+                                {
+                                    imgRelPath = articleImage.RelPath;
+                                } }
+                <div onclick="window.history.back()" class="w3-button" style="float:right;" title="@articleData.Name">@ButtonText(ButtonTypes.back, sessionParams.CultureCode)</div>
+
+                <h1>@articleData.Name</h1>
+                <div class="w3-animate-opacity">
+
+                    <div class="productquickview">
+
+                        <div class="quickviewimage">
+                            <img src="@ThumbnailImageWebsiteDomainUrl(portalData.EngineUrlWithProtocol,imgRelPath,450, 450)" popupsrc="@ThumbnailImageWebsiteDomainUrl(portalData.EngineUrlWithProtocol, imgRelPath, 800, 0)" class="imgrollovertarget" alt="@articleData.Name" onclick="popupImage(this)" />
+                            @if (articleData.GetImages().Count > 1)
+                            {
+                <div class="quickviewgallery">
+                    @{ var imgLp = 1; }
+                    @foreach (var i in articleData.GetImages())
+                    {
+                        if (imgLp <= 5)
+                        {
+    <img src="@ThumbnailImageWebsiteDomainUrl(portalData.EngineUrlWithProtocol, i.RelPath, 450, 450)" popupsrc="@ThumbnailImageWebsiteDomainUrl(portalData.EngineUrlWithProtocol, i.RelPath, 800, 0)" class="imgrollover" />}
+                        imgLp += 1;
+                    }
+                </div>}
+                        </div>
+
+                        <div class="quickviewcontent">
+                            <div class="quickviewprice">
+                                @articleData.Info.GetXmlPropertyDecimal("genxml/textbox/price").ToString("C2", CultureInfo.CurrentCulture)
+                            </div>
+                            <div class="quickviewsummary">@BreakOf(articleData.Summary)</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="productlistside">
+
+        <div class="productlistcat">
+            @RenderTemplate("CategorySideMenu.cshtml", appTheme, Model, true)
+        </div>
+
+    </div>
+
+</div>
+
+<div id="modalimgPopup" class="w3-modal w3-center" onclick="this.style.display='none'">
+    <img class="w3-animate-zoom" id="imgPopup" style="">
+</div>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('.imgrollover').unbind("mouseover");
+        $(".imgrollover").mouseover(function () {
+            $('.imgrollovertarget').attr('src', $(this).attr('src'));
+            $('.imgrollovertarget').attr('popupsrc', $(this).attr('popupsrc'));
+        });
+
+    });
+
+</script>

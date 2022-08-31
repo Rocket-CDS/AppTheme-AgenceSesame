@@ -1,0 +1,58 @@
+﻿@inherits RocketCatalog.Components.RocketCatalogTokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketCatalog.Components;
+@using DNNrocketAPI.Components;
+
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketCatalog/App_LocalResources/")
+
+@{
+    var articleDataList = (ArticleLimpetList)Model.List.First();
+    var passModel = new SimplisityRazor(articleDataList.PortalCatalog, new Dictionary<string, string>());
+    var appThemeSystem = new AppThemeSystemLimpet(articleDataList.PortalCatalog.PortalId, "rocketcatalog");
+    var sessionParams = Model.SessionParamsData;
+}
+
+@RenderLanguageSelector("articleadmin_editlist", "", appThemeSystem, Model)
+
+<div class='w3-animate-opacity'>
+
+    @RenderTemplate("AdminSearch.cshtml", appThemeSystem, Model, true)
+
+    <div id="datalistsection" class="w3-padding">
+
+        <table class="w3-table w3-bordered w3-hoverable">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>@ResourceKey("RE.name")</th>
+                </tr>
+            </thead>
+            @foreach (ArticleLimpet articleData in articleDataList.GetArticleList())
+            {
+                <tr class=" simplisity_click" s-cmd="articleadmin_editarticle" s-fields='{"articleid":"@articleData.ArticleId"}' style="cursor:pointer;">
+                    <td style="width:54px;">
+                        @if (articleData.IsHidden)
+                        {
+                            <span class="material-icons">
+                                hide_source
+                            </span>
+                        }
+                    </td>
+                    <td><div class="w3-tiny">@articleData.Ref</div><b>@articleData.Name</b></td>
+                </tr>
+            }
+        </table>
+
+        @RenderTemplate("AdminPaging.cshtml", appThemeSystem, Model, true)
+
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        selectMenu('articleadmin');
+    });
+</script>

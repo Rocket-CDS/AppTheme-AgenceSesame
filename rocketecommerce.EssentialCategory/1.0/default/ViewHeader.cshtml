@@ -45,8 +45,8 @@ if (img != null)
 }
 
 <script type="text/javascript" src="@(sessionParams.EngineURL)@DNNrocketUtils.AppendFileModifiedDate("/DesktopModules/DNNrocket/Simplisity/js/simplisity.js")"></script>
-<script type="text/javascript" src="@(sessionParams.EngineURL)@DNNrocketUtils.AppendFileModifiedDate("/DesktopModules/RocketThemes/" + appTheme.ProjectName + "/" + appTheme.AppThemeFolder + "/" + appTheme.AppVersionFolder + "/js/frontend.js")"></script>
-<link rel="stylesheet" href="@(sessionParams.EngineURL)@DNNrocketUtils.AppendFileModifiedDate("/DesktopModules/RocketThemes/" + appTheme.ProjectName + "/" + appTheme.AppThemeFolder + "/" + appTheme.AppVersionFolder + "/css/theme.css")">
+<script type="text/javascript" src="@(sessionParams.EngineURL)@DNNrocketUtils.AppendFileModifiedDate("/DesktopModules/RocketThemes/" + appTheme.AppThemeVersionFolderRel + "/js/frontend.js")"></script>
+<link rel="stylesheet" href="@(sessionParams.EngineURL)@DNNrocketUtils.AppendFileModifiedDate("/DesktopModules/RocketThemes/" + appTheme.AppThemeVersionFolderRel + "/css/theme.css")">
 <script type="text/javascript" src="@(sessionParams.EngineURL)@DNNrocketUtils.AppendFileModifiedDate("/DesktopModules/DNNrocket/js/jquery.validate.min.js")"></script>
 
 @if (DNNrocketUtils.GetLanguageCode(sessionParams.CultureCode) != "en")
