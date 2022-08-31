@@ -82,7 +82,6 @@
                                     @productData.PriceMinimumDisplay()
                                 </div>
                             }
-                            <div class="quickviewsummary">@BreakOf(productData.Summary)</div>
                             <div class="quickviewmodels">
                                 @{
                                     var displaymodels = "displaymodels";
@@ -111,6 +110,9 @@
                                     </a>
                                 </div>
                             </div>
+
+                            <div class="quickviewsummary">@BreakOf(productData.Summary)</div>
+                            <div class="quickviewsummary">@HtmlOf(productData.RichText)</div>
 
                         </div>
 
