@@ -141,7 +141,10 @@
         </div>
 
         <div class="productlistcat">
-            @RenderTemplate("CategorySideMenu.cshtml", appTheme, Model)
+            @if (categoryDataList.DataList.Count > 0)
+            {
+                @RenderTemplate("CategorySideMenu.cshtml", appTheme, Model)                
+            }
         </div>
 
     </div>
