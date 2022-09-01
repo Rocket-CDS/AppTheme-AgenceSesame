@@ -20,19 +20,19 @@
     var appThemeDefault = (AppThemeLimpet)Model.GetDataObject("appthemedefault");
     var categoryDataList = (CategoryLimpetList)Model.GetDataObject("categorylist");
     var categoryData = (CategoryLimpet)Model.GetDataObject("categorydata");
-    var columnClass = " productlist100 ";
+    var columnClass = " productlistfull ";
     if (categoryDataList.DataList.Count > 0)
     {
-        columnClass = " productlist ";
+        columnClass = "";
     }
 
 }
 
 @AddProcessData("resourcepath", appTheme.AppThemeVersionFolderRel + "/resx/")
 
-<div class="productlistflex">
+<div class="productlistflex @(columnClass)">
 
-    <div class="@(columnClass)">
+    <div class="productlist">
 
 
         @if (sessionParams.GetInt("catid") == 0)

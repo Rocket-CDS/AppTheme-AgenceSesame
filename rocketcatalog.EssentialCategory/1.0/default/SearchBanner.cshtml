@@ -22,14 +22,12 @@
 
     <div class="w3-bar-item " style=''>
         <div class="w3-bar">
-            @TextBox(new SimplisityInfo(), "genxml/textbox/searchtext", " style='height:40px;width:250px;' class='w3-bar-item w3-input w3-border w3-light-grey simplisity_sessionfield actionentrykey' autocomplete='off' ", sessionParams.Get("searchtext"))
-            <span class="w3-bar-item ">
-                <span class="material-icons dosearch" style="cursor: pointer;" onclick="$('.triggersearch').trigger('click');">
-                    search
-                </span>
-                <span class="material-icons w3-small clearsearch" onclick="$('.triggersearch').trigger('click');" style="vertical-align: top; display: none; cursor: pointer; ">
-                    cancel
-                </span>
+            @TextBox(new SimplisityInfo(), "genxml/textbox/searchtext", " style='width:250px;' class='w3-bar-item w3-input w3-border simplisity_sessionfield actionentrykey' autocomplete='off' ", sessionParams.Get("searchtext"))
+            <span class="material-icons w3-button w3-bar-item w3-border dosearch" style="cursor: pointer;" onclick="$('.triggersearch').trigger('click');">
+                search
+            </span>
+            <span class="material-icons w3-button w3-bar-item w3-theme-action clearsearch" onclick="$('.triggersearch').trigger('click');" style="vertical-align: top; display: none; cursor: pointer; ">
+                cancel
             </span>
         </div>
     </div>

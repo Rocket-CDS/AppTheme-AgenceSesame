@@ -17,18 +17,18 @@
     var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
     var categoryDataList = (CategoryLimpetList)Model.GetDataObject("categorylist");
     var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
-    var columnClass = " productdetail100 ";
+    var columnClass = " productdetailfull ";
     if (categoryDataList.DataList.Count > 0)
     {
-        columnClass = " productdetail ";
+        columnClass = "";
     }
 }
 
 @AddProcessData("resourcepath", appTheme.AppThemeVersionFolderRel + "/resx/")
 
-<div class="productdetailflex">
+<div class="productdetailflex @(columnClass)">
 
-    <div class="@(columnClass)">
+    <div class="productdetail">
 
         <div id="datasection">
 

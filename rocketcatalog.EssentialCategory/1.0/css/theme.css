@@ -8,6 +8,21 @@ div.buybutton:hover {background-color:#282828 !important;color:#fff !important;}
 .productlistflex {display:flex;}
 .productlist {width:75%;margin:0 40px 0 0;}
 .productlistside {flex:1;}
+.productlistfull {
+    display: block;
+}
+
+.productlistfull .productlist {
+    width: auto;
+    margin: 0;
+}
+.productdetailfull {
+    display: block;
+}
+.productdetailfull .productdetail {
+    width: auto;
+    margin: 0;
+}
 /* NEW PRODUCT GRID */
 .productgrid {display:grid;grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));grid-gap:1rem;}
 .product {}
