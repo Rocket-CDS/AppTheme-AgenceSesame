@@ -58,9 +58,12 @@
                         </div>
 
                         <div class="quickviewcontent">
-                            <div class="quickviewprice">
-                                @articleData.Info.GetXmlPropertyDecimal("genxml/textbox/price").ToString("C2", CultureInfo.CurrentCulture)
-                            </div>
+                            @if (articleData.Info.GetXmlPropertyDecimal("genxml/textbox/price") > 0)
+                            {
+                                <div class="quickviewprice">
+                                    @articleData.Info.GetXmlPropertyDecimal("genxml/textbox/price").ToString("C2", CultureInfo.CurrentCulture)
+                                </div>                                
+                            }
                             <div class="quickviewsummary">@BreakOf(articleData.Summary)</div>
                             <div class="quickviewsummary">@HtmlOf(articleData.RichText)</div>
                         </div>
@@ -73,16 +76,17 @@
 
     </div>
 
-    <div class="productlistside">
+    @if (categoryDataList.DataList.Count > 0)
+    {
+        <div class="productlistside">
 
-        <div class="productlistcat">
-            @if (categoryDataList.DataList.Count > 0)
-            {
-                @RenderTemplate("CategorySideMenu.cshtml", appTheme, Model)                
-            }
+            <!-- Categories -->
+            <div class="productlistcat">
+                    @RenderTemplate("CategorySideMenu.cshtml", appTheme, Model)                
+            </div>
+
         </div>
-
-    </div>
+    }
 
 </div>
 

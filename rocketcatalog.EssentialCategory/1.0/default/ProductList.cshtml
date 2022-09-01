@@ -74,7 +74,10 @@
                                 <h3><a href="@articleListUrl">@articleData.Name</a></h3>
                                 <div class="w3-row">
                                     <div class="w3-padding">
-                                        <div class="productprice">@articleData.Info.GetXmlPropertyDecimal("genxml/textbox/price").ToString("C2", CultureInfo.CurrentCulture)</div>
+                                        @if (articleData.Info.GetXmlPropertyDecimal("genxml/textbox/price") > 0)
+                                        {
+                                            <div class="productprice">@articleData.Info.GetXmlPropertyDecimal("genxml/textbox/price").ToString("C2", CultureInfo.CurrentCulture)</div>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -91,16 +94,16 @@
 
     </div>
 
-    <div class="productlistside">
+    @if (categoryDataList.DataList.Count > 0)
+    {
+        <div class="productlistside">
 
-        <!-- Categories -->
-        <div class="productlistcat">
-            @if (categoryDataList.DataList.Count > 0)
-            {
-                @RenderTemplate("CategorySideMenu.cshtml", appTheme, Model)                
-            }
+            <!-- Categories -->
+            <div class="productlistcat">
+                    @RenderTemplate("CategorySideMenu.cshtml", appTheme, Model)                
+            </div>
+
         </div>
-
-    </div>
-
+    }
+    
 </div>
