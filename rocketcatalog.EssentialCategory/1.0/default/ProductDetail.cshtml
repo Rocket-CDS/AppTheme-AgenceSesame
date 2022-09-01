@@ -15,7 +15,7 @@
     var portalCatalog = (PortalCatalogLimpet)Model.GetDataObject("portalcatalog");
     var remoteModule = (RemoteModule)Model.GetDataObject("remotemodule");
     var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
-    var categoryList = (CategoryLimpetList)Model.GetDataObject("categorylist");
+    var categoryDataList = (CategoryLimpetList)Model.GetDataObject("categorylist");
     var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
 }
 
@@ -76,7 +76,10 @@
     <div class="productlistside">
 
         <div class="productlistcat">
-            @RenderTemplate("CategorySideMenu.cshtml", appTheme, Model, true)
+            @if (categoryDataList.DataList.Count > 0)
+            {
+                @RenderTemplate("CategorySideMenu.cshtml", appTheme, Model)                
+            }
         </div>
 
     </div>

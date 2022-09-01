@@ -18,6 +18,7 @@
     var categoryList = (CategoryLimpetList)Model.GetDataObject("categorylist");
     var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
     var appThemeDefault = (AppThemeLimpet)Model.GetDataObject("appthemedefault");
+    var categoryDataList = (CategoryLimpetList)Model.GetDataObject("categorylist");
     var categoryData = (CategoryLimpet)Model.GetDataObject("categorydata");
 }
 
@@ -94,7 +95,10 @@
 
         <!-- Categories -->
         <div class="productlistcat">
-            @RenderTemplate("CategorySideMenu.cshtml", appTheme, Model, true)
+            @if (categoryDataList.DataList.Count > 0)
+            {
+                @RenderTemplate("CategorySideMenu.cshtml", appTheme, Model)                
+            }
         </div>
 
     </div>
