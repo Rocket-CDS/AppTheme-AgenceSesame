@@ -35,6 +35,10 @@ div.buybutton {
     width: 75%;
     margin: 0 40px 0 0;
 }
+.productlist100 {
+    width: 100%;
+    margin: 0 40px 0 0;
+}
 
 .productlistside {
     flex: 1;
@@ -314,6 +318,11 @@ a.categoryitem {
     width: 75%;
     margin: 0 40px 0 0;
 }
+.productdetail100 {
+    width: 100%;
+    margin: 0 40px 0 0;
+}
+
 
 @media screen and (max-width:768px) {
     .productlistflex {
