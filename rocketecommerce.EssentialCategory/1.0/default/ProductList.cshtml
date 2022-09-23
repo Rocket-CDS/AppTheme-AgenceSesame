@@ -73,7 +73,7 @@
                                         }
                                         @if (portalShop.ProductDetailPageUrl != "")
                                         {
-                                            <a href="@productData.DetailUrl(sessionParams)#ecommerce-tag" title="@productData.Name">@ResourceKey("RE.details", sessionParams.CultureCode)</a>
+                                            <a href="@productData.DetailUrl(sessionParams,remoteModule)#ecommerce-tag" title="@productData.Name">@ResourceKey("RE.details", sessionParams.CultureCode)</a>
                                         }
                                     </div>
                                 </div>
@@ -81,7 +81,7 @@
                         </div>
                         <div class="productcontent">
                             <h3>
-                                <a href="@productData.DetailUrl(sessionParams)#ecommerce-tag" class="ajaxproduct" productid='@productData.ProductId' title="@productData.Name">
+                                <a href="@productData.DetailUrl(sessionParams,remoteModule)#ecommerce-tag" class="ajaxproduct" productid='@productData.ProductId' title="@productData.Name">
                                     @productData.Name
                                 </a>
                             </h3>
