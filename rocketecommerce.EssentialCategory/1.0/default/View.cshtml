@@ -43,7 +43,7 @@
             var jsonText = window.sessionStorage.getItem('MiniCartTotals');
             var jsonstr = simplisity_parsejson(jsonText);
             $('#a-cartqty').text(jsonstr.qty);
-            $('#a-carttotal').text(jsonstr.total);        
+            $('#a-carttotal').text(jsonstr.subtotal);        
         }
         catch (e) {
         }
