@@ -52,12 +52,12 @@
                         logoRelPath = "/DesktopModules/DNNrocket/api/images/noimage2.png";
                     }
 
-                    <div class="product">
+                    <div class="productl">
 
-                        <div class="productimg">
+                        <div class="productimgl">
                             <img src="@ThumbnailImageWebsiteDomainUrl(portalData.EngineUrlWithProtocol,logoRelPath,120,120)" alt="@productData.Name" />
                         </div>
-                        <div class="productcontent">
+                        <div class="productcontentl">
                             <h3>
                                 <a href="@productData.DetailUrl(sessionParams,remoteModule)#ecommerce-tag" class="ajaxproduct" productid='@productData.ProductId' title="@productData.Name">
                                     @productData.Name
@@ -75,9 +75,7 @@
                                 }
                                 else
                                 {
-                                    <div class="w3-padding">
-                                        <div class="productprice">@productData.PriceMinimumDisplay()</div>
-                                    </div>
+                                    <div class="productprice">@productData.PriceMinimumDisplay()</div>
                                 }
                             </div>
                             <div class="productactions">
