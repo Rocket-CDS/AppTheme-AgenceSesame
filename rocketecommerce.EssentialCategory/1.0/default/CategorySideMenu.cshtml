@@ -22,7 +22,7 @@
 <h3 style="margin-top:30px;">@ResourceKey("RE.categories", sessionParams.CultureCode)</h3>
 
 <div class="categorytree w3-bar-block w3-light-grey w3-mobile w3-margin-top">
-    <a href="@sessionParams.PageUrl" catid="0" onclick="$('.simplisity_loader').show();" class="w3-bar-item w3-button w3-dark-grey">
+    <a href="@sessionParams.PageUrl#ecommerce-tag" catid="0" onclick="$('.simplisity_loader').show();" class="w3-bar-item w3-button w3-dark-grey">
         @ResourceKey("RE.allproducts")
     </a>
     @foreach (var categoryData in categoryDataList.GetCategoryTree())
@@ -40,7 +40,7 @@
                 toplevelclass = "catlevel1";
             }
         }
-        var productListUrl = categoryData.CategoryUrl(sessionParams, remoteModule);
+        var productListUrl = categoryData.CategoryUrl(sessionParams, remoteModule) + "#ecommerce-tag";
         <div class="@selectedcolor @toplevelclass">
             <a href="@productListUrl" class="categoryitem" onclick="$('.simplisity_loader').show();" catid="@categoryData.CategoryId">
                 @if (categoryData.Level > 0)

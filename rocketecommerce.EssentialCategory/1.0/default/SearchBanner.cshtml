@@ -34,7 +34,6 @@
     @if (productDataList != null)
     {
         var orderbyDictionary = new Dictionary<string, string>();
-        orderbyDictionary.Add("", "");
         foreach (var orderbyInfo in portalShop.GetProductOrderByList())
         {
             orderbyDictionary.Add(orderbyInfo.GetXmlProperty("genxml/key"), ResourceKey("RE." + orderbyInfo.GetXmlProperty("genxml/key"), sessionParams.CultureCode).ToString());
