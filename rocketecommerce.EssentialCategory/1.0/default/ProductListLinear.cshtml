@@ -1,0 +1,134 @@
+﻿@inherits RocketEcommerce.Components.RocketEcommerceTokens<Simplisity.SimplisityRazor>
+@using Simplisity;
+@using RocketEcommerce.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketECommerce/App_LocalResources/")
+
+@{
+    var productDataList = (ProductLimpetList)Model.GetDataObject("productlist");
+    var companyData = (CompanyLimpet)Model.GetDataObject("companydata"); ;
+    var cartData = (CartLimpet)Model.GetDataObject("cartdata");
+    var sessionParams = (SessionParams)Model.SessionParamsData;
+    var portalShop = (PortalShopLimpet)Model.GetDataObject("portalshop");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var remoteModule = (RemoteModule)Model.GetDataObject("remotemodule");
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
+    var appThemeDefault = (AppThemeLimpet)Model.GetDataObject("appthemedefault");
+    var categoryDataList = (CategoryLimpetList)Model.GetDataObject("categorylist");
+    var categoryData = new CategoryLimpet(portalShop.PortalId, productDataList.CategoryId, sessionParams.CultureCode);
+}
+@AddProcessData("resourcepath", "/DesktopModules/RocketThemes/" + appTheme.AppThemeVersionFolderRel + "/resx/")
+
+<div class="productlistflex">
+
+    <div class="productlist">
+
+        @if (!categoryData.Exists)
+		{
+			<h1>@companyData.CompanyName</h1>
+		}
+		else
+		{
+			<h1>@categoryData.Name</h1>
+		}
+
+        @RenderTemplate("SearchBanner.cshtml", appTheme, Model, true)
+
+        <div id="datasection">
+
+            <div id="datalist2" class="producttable">
+                @{
+                    var lp1 = 0;
+                }
+                @foreach (ProductLimpet productData in productDataList.GetArticleList())
+                {
+                    lp1 += 1;
+                    var logoRelPath = productData.LogoRelPath;
+                    if (productData.LogoRelPath == "")
+                    {
+                        logoRelPath = "/DesktopModules/DNNrocket/api/images/noimage2.png";
+                    }
+
+                    <div class="product">
+
+                        <div class="productimg">
+                            <img src="@ThumbnailImageWebsiteDomainUrl(portalData.EngineUrlWithProtocol,logoRelPath,120,120)" alt="@productData.Name" />
+                        </div>
+                        <div class="productcontent">
+                            <h3>
+                                <a href="@productData.DetailUrl(sessionParams,remoteModule)#ecommerce-tag" class="ajaxproduct" productid='@productData.ProductId' title="@productData.Name">
+                                    @productData.Name
+                                </a>
+                            </h3>
+                            <div class="w3-row">
+                                @if (productData.SalePriceMinimum > 0)
+                                {
+                                    <div class="w3-half">
+                                        <div class="productprice" style="text-decoration:line-through;">@productData.PriceMinimumDisplay()</div>
+                                    </div>
+                                    <div class="w3-half w3-red">
+                                        <div class="w3-large">@productData.SalePriceMinimumDisplay()</div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="w3-padding">
+                                        <div class="productprice">@productData.PriceMinimumDisplay()</div>
+                                    </div>
+                                }
+                            </div>
+                            <div class="productactions">
+								@{
+									var modellistcount = productData.GetModelList().Count;
+									var optionlistcount = productData.GetOptionList().Count;
+								}
+								@if (modellistcount == 1 && optionlistcount == 0)
+								{
+									<a href="javascript:void(0);"  class="w3-button buybutton simplisity_click"  s-cmdurl="@sessionParams.ApiUrl" s-cmd="rocketecommerce_addtocartjson" s-fields='{"productid":"@productData.ProductId","moduleref":"@sessionParams.ModuleRef"}' s-return="MiniCartTotals" s-returntype="json" s-after="afterMiniCartJson" rel="nofollow">@ResourceKey("RE.addtobasket", sessionParams.CultureCode)</a>
+								}
+								else
+								{
+									<a href="@productData.DetailUrl(sessionParams,remoteModule)#ecommerce-tag" title="@productData.Name" class="w3-button buybutton">@ResourceKey("RE.details", sessionParams.CultureCode)</a>
+								}
+							</div>
+                        </div>
+
+                    </div>
+                }
+            </div>
+
+            @RenderTemplate("ProductPaging.cshtml", appThemeDefault, Model, true)
+
+        </div>
+
+    </div>
+
+    <div class="productlistside">
+
+        <!-- Cart (Include design to stop flicker on the page) -->
+        <div id="minicartdisplay" class="productlistcart">
+            <div class="minicartdisplay">
+                <h3>@ResourceKey("RE.cart", sessionParams.CultureCode)</h3>
+                <div class="w3-border-bottom w3-margin-bottom ">
+                    <div>@ResourceKey("RE.items", sessionParams.CultureCode)&nbsp;:&nbsp;
+                        <span id="a-cartqty">&nbsp;</span>    
+                        <span class="w3-right"><strong><span id="a-carttotal">&nbsp;</span></strong></span>
+                    </div>
+                </div>
+                <a id="cartdisplay" class="w3-button w3-light-grey simplisity_click " s-cmdurl="@(sessionParams.ApiUrl)" s-before="clearMiniCartJson" s-return="#ecommerce-tag" s-cmd="rocketecommerce_cartlist" s-fields='{"template":"cartlist.cshtml","moduleref":"@(remoteModule.ModuleRef)"}'>@MaterialIcon("shopping_cart")&nbsp;@(ResourceKey("RE.viewcart", sessionParams.CultureCode))</a>
+            </div>
+        </div>
+
+        <div class="productlistcat">
+            @if (categoryDataList.DataList.Count > 0)
+            {
+                @RenderTemplate("CategorySideMenu.cshtml", appTheme, Model)                
+            }
+        </div>
+
+    </div>
+
+</div>
