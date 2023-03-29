@@ -1,0 +1,20 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+@{ var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings"); }
+
+<div id="simplisitypanel@(moduleData.ModuleRef)" class="w3-row simplisity_panel" s-cmd="rocketintramenu_usermenulist">
+    <div class="simplisity_loader">
+        <span class=" simplisity_loader_inner"></span>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $(document).simplisityStartUp('@moduleData.GetSetting("domainurl").TrimEnd('/')/Desktopmodules/dnnrocket/api/rocket/action', { systemkey: 'rocketintramenu', debug: false });
+        $('#simplisitypanel@(moduleData.ModuleRef)').activateSimplisityPanel();
+    });
+</script>
