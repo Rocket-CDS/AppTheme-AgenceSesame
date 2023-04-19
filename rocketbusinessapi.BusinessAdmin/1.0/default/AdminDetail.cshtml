@@ -26,19 +26,18 @@
     AddProcessData("resourcepath", systemData.SystemRelPath + "/App_LocalResources/");
 
     var moduleedit = sessionParams.Info.GetXmlPropertyBool("r/moduleedit");
-
+    var sfieldDict = new Dictionary<string, string>();
+    sfieldDict.Add("articleid", articleData.ArticleId.ToString());
 }
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocket/Images/App_LocalResources/")
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources")
 
-
-@RenderLanguageSelector("articleadmin_editarticle", "{\"articleid\":\"" + articleData.ArticleId + "\"}", appThemeDirectory, Model)
+@RenderLanguageSelector("articleadmin_editarticle", sfieldDict, appThemeDirectory, Model)
 
 <div id="articleedit">
 
     <div id="articleeditcontent" class='w3-animate-opacity '>
 
-        <h1>TabId: @sessionParams.TabId</h1>
         <div class="w3-bar  w3-padding">
             @if (!moduleedit)
             {
