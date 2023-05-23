@@ -1,0 +1,47 @@
+@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+@{
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var articleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
+    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+    var appThemeSystem = (AppThemeSystemLimpet)Model.GetDataObject("appthemesystem");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var globalSettings = new SystemGlobalData();
+    var sessionParams = Model.SessionParamsData;
+
+    var info = new SimplisityInfo();
+    if (articleRowData != null && articleRowData.Info != null)
+    {
+        info = articleRowData.Info;
+    }
+    AddProcessDataResx(appThemeView, true);
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
+}
+<!-- require Key for saving -->
+@HiddenField(info, "genxml/config/rowkey")
+@HiddenField(info, "genxml/lang/genxml/config/rowkeylang", "", articleRowData.RowKey)
+
+<div class="w3-row">
+    <div class="w3-col m3 w3-padding" style="max-width:210px;">
+        @RenderTemplate("ArticleImage.cshtml", appThemeSystem, Model, true)
+    </div>
+    <div class="w3-col m9 w3-padding">
+        <div class="w3-container w3-col box form-group">
+            <label>Line 1</label>@EditFlag(sessionParams)
+            @TextBox(info, "genxml/lang/genxml/textbox/title", " class='w3-input w3-border' autocomplete='off' ", "", true)
+        </div>
+        <div class="w3-container w3-col box form-group">
+            <label>Line 2</label>@EditFlag(sessionParams)
+            @TextBox(info, "genxml/lang/genxml/textbox/title2", " class='w3-input w3-border' autocomplete='off' ", "", true)
+        </div>
+    </div>
+</div>
+   
+   

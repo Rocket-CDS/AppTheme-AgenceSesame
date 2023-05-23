@@ -1,0 +1,67 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketPortal.Components;
+@using RocketDirectoryAPI.Components;
+@using DNNrocketAPI.Components;
+@using System.Globalization;
+
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
+
+@{
+    var sessionParams = (SessionParams)Model.SessionParamsData;
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var portalContent = (PortalCatalogLimpet)Model.GetDataObject("portalcontent");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var categoryList = (CategoryLimpetList)Model.GetDataObject("categorylist");
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appThemeDefault = (AppThemeLimpet)Model.GetDataObject("appthemedefault");
+    var moduleSettings = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var categoryData = (CategoryLimpet)Model.GetDataObject("categorydata"); ;
+
+    var rtnUrl = sessionParams.Get(portalContent.SystemKey + "listurl");
+    if (rtnUrl == "")
+    {
+        rtnUrl = DNNrocketUtils.NavigateURL(moduleSettings.ListPageTabId());
+    }
+
+} 
+
+@AddProcessData("resourcepath", appTheme.AppThemeVersionFolderRel + "/resx/")
+
+<div class="w3-row">
+<a href="@(rtnUrl)" class="w3-button" style="float:right;" title="@articleData.Name">@ButtonText(ButtonTypes.back, sessionParams.CultureCode)</a>
+
+<div class="w3-row">
+
+        <h1>@articleData.Name</h1>
+    <div class="w3-animate-opacity">
+        <div class="w3-row w3-center">
+                <img class="imgrollovertarget" alt="@articleData.Name" src="@ImageUrl(articleData.GetImage(0).RelPath,450,450)" style="width:60%">
+            <div class="w3-container">
+                    @foreach (var i in articleData.GetImages())
+                    {
+                        <div class="w3-col s6 m4 l2 w3-padding-small" style="margin-bottom: 8px">
+                            <img class="imgrollover" src="@ImageUrl(i.RelPath,450,450)" style="width:100%">
+                        </div>                        
+                    }
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('.imgrollover').unbind("mouseover");
+        $(".imgrollover").mouseover(function () {
+            $('.imgrollovertarget').attr('src', $(this).attr('src'));
+        });
+        $('.simplisity_loader').hide();
+    });
+
+</script>

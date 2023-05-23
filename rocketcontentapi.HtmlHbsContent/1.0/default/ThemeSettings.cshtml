@@ -1,0 +1,28 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+@{
+    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var info = new SimplisityInfo(moduleData.Record);
+}
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/")
+@AddProcessData("resourcepath", appThemeAdmin.AppThemeVersionFolderRel + "/resx/")
+
+<div class="w3-third w3-padding">
+    <label>@ResourceKey("DNNrocket.imageresize") (px)</label>
+    @TextBox(info, "genxml/settings/imageresize", " class='w3-input w3-border'", "640")
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+    });
+
+</script>

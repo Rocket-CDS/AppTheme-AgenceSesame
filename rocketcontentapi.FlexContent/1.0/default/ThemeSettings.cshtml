@@ -1,0 +1,68 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+@{
+    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var info = new SimplisityInfo(moduleData.Record);
+
+    AddProcessDataResx(appThemeAdmin);
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
+
+    //NOTE: xPath for module settings must use "genxml/settings/*"
+}
+<div class="w3-row">
+    <div class="w3-third w3-padding">
+        <label>imageresize (px)</label>
+        @TextBox(info, "genxml/settings/imageresize", " class='w3-input w3-border'", "1024")
+    </div>
+
+    <div class="w3-third w3-padding">
+        <label>Images width (px)</label>
+        @TextBox(info, "genxml/settings/width", " class='w3-input w3-border'", "1024")
+    </div>
+    <div class="w3-third w3-padding">
+        <label>Images height (px)</label>
+        @TextBox(info, "genxml/settings/height", " class='w3-input w3-border'", "1024")
+    </div>
+    <div class="w3-third w3-padding">
+        <label>Columns</label>
+        @TextBox(info, "genxml/settings/columns", "type='number' class='w3-input w3-border'", "1")
+    </div>
+    <div class="w3-third w3-padding">
+        <label>CSS Class</label>
+        @TextBox(info, "genxml/settings/cssclass", "class='w3-input w3-border'", "")
+    </div>
+</div>
+<div class="w3-row">
+    <div class="w3-quarter w3-padding">
+        <label>@ResourceKey("HtmlContent.backgroundcolor")</label><br />
+        @CheckBox(info, "genxml/settings/bgColorChecked", "", "class='w3-check bgColorCB' ")
+    </div>
+</div>
+<!-- Si le background color est activé -->
+<div class="w3-row backgroundcolor">
+    <label>Background Color</label>
+    @TextBox(info, "genxml/settings/backgroundcolor", " class='w3-input w3-quarter' type='color' style='height:40px;'")
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        var bgColorCB = $(".bgColorCB").prop('checked');
+        displaylinksection(bgColorCB);
+        $(".bgColorCB").click(function () {
+            var bgColorCB = $(this).prop('checked');
+            displaylinksection(bgColorCB);
+        });
+
+        function displaylinksection(bgColorCB) {
+            $(".backgroundcolor").hide();
+            if (bgColorCB == true) $(".backgroundcolor").show();
+        }
+    });
+</script>

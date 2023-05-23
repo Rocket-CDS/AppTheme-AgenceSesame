@@ -1,0 +1,211 @@
+﻿/* Loading image - Includes opacity for IE5-8 */
+#loader {
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+    filter: alpha(opacity=50);
+}
+
+#loader {
+    background: #848D92;
+    color: #000000;
+    height: 100%;
+    left: 0;
+    opacity: 0.3;
+    transition: all 0.4s ease-in-out 0s;
+    position: fixed;
+    text-align: center;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+}
+
+/* Standard Display */
+.flexcontent-wrapper {
+}
+
+.flexcontent-div {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0 0 40px 0;
+}
+
+.fcd-flex {
+    display: flex;
+}
+
+    .fcd-flex .flexcontent-text {
+        flex: 1;
+        margin: 0 40px 0 0;
+    }
+
+/* A rajouter en option dans le BO */
+.fcd-reverse {
+    flex-direction: row-reverse;
+}
+
+.fcd-flex.fcd-reverse .flexcontent-text {
+    margin: 0 0 0 40px;
+}
+
+/* Columns */
+.fcw-2col, .fcw-3col, .fcw-4col, .fcw-5col, .fcw-multicol {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+    .fcw-2col .flexcontent-div {
+        flex: 1 0 50%;
+        width: 50%;
+        padding: 0 4%;
+    }
+
+    .fcw-3col .flexcontent-div {
+        flex: 1 0 33.33%;
+        width: 33.33%;
+        padding: 0 4%;
+    }
+
+    .fcw-4col .flexcontent-div {
+        flex: 1 0 25%;
+        width: 25%;
+        padding: 0 4%;
+    }
+
+    .fcw-5col .flexcontent-div {
+        flex: 1 0 20%;
+        width: 20%;
+        padding: 0 4%;
+    }
+
+    .fcw-multicol .flexcontent-div {
+        flex: 1;
+        padding: 0 4%;
+    }
+
+/* Media */
+.flexcontent-media {
+}
+
+.fcd-images {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+    .fcd-images div {
+        margin: 0 40px 40px 0;
+    }
+
+        .fcd-images div:last-child {
+            margin: 0 0 40px 0;
+        }
+
+.fcm-bottom .fcd-images div {
+    margin: 40px 40px 0 0;
+}
+
+    .fcm-bottom .fcd-images div:last-child {
+        margin: 40px 0 0 0;
+    }
+
+.fcd-flex .fcd-images {
+    margin: 0 40px 0 0;
+    display: block;
+    text-align: center;
+}
+
+    .fcd-flex .fcd-images div {
+        margin: 0 0 40px 0;
+    }
+
+        .fcd-flex .fcd-images div:last-child {
+            margin: 0;
+        }
+
+.fcd-video {
+    margin: 40px 0 0 0;
+}
+
+.fcd-flex .fcd-video {
+    margin: 0 40px 0 0;
+}
+
+.fcd-flex.fcd-reverse .fcd-images {
+    margin: 0;
+}
+
+/* for 980px and less - Only portrait for retina display */
+@media all and (max-width:980px), screen and (-webkit-min-device-pixel-ratio: 3.0) and (max-width: 2940px) and (orientation: portrait), screen and (-webkit-min-device-pixel-ratio: 2.0) and (max-width: 1960px) and (orientation: portrait) {
+    .fcw-3col .flexcontent-div {
+        flex: 1 0 50%;
+        width: 50%;
+    }
+
+    .fcw-4col .flexcontent-div {
+        flex: 1 0 50%;
+        width: 50%;
+    }
+
+    .fcw-5col .flexcontent-div {
+        flex: 1 0 50%;
+        width: 50%;
+    }
+}
+/* for 640px and less - Only portrait for retina display */
+@media all and (max-width:640px), screen and (-webkit-min-device-pixel-ratio: 3.0) and (max-width: 1920px) and (orientation: portrait), screen and (-webkit-min-device-pixel-ratio: 2.0) and (max-width: 1280px) and (orientation: portrait) {
+    .fcd-flex {
+        display: block;
+    }
+
+        .fcd-flex .flexcontent-text {
+            flex: initial;
+            margin: 0 0 40px 0;
+        }
+
+        .fcd-flex.fcd-reverse .flexcontent-text {
+            margin: 0 0 40px 0;
+        }
+
+    .fcw-2col, .fcw-3col, .fcw-4col, .fcw-5col, .fcw-multicol {
+        display: block;
+    }
+
+        .fcw-2col .flexcontent-div {
+            flex: initial;
+            width: auto;
+            padding: 0;
+        }
+
+        .fcw-3col .flexcontent-div {
+            flex: initial;
+            width: auto;
+            padding: 0;
+        }
+
+        .fcw-4col .flexcontent-div {
+            flex: initial;
+            width: auto;
+            padding: 0;
+        }
+
+        .fcw-5col .flexcontent-div {
+            flex: initial;
+            width: auto;
+            padding: 0;
+        }
+
+    .fcd-images div {
+        margin: 0 0 40px 0;
+    }
+
+    .fcd-flex .fcd-images {
+        margin: 0 0 40px 0;
+    }
+
+    .fcd-flex .fcd-video {
+        margin: 0 0 40px 0;
+    }
+}
+

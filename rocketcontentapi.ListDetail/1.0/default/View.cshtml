@@ -1,0 +1,66 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+
+@{
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var globalSettings = new SystemGlobalData();
+    var idx = Model.SessionParamsData.GetInt("idx");
+
+    AddProcessDataResx(appThemeView, true);
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
+}
+
+@if (idx > 0 && articleData.GetRowList().Count >= idx)
+{
+    var rtnUrl = DNNrocketUtils.NavigateURL(Model.SessionParamsData.TabId);
+    var articleRowData1 = articleData.GetRow(idx - 1);
+    var info = articleRowData1.Info;
+    var title = info.GetXmlProperty("genxml/lang/genxml/textbox/title");
+    <div class="w3-padding ">
+        <a class="w3-button w3-right" href="@rtnUrl">@ResourceKey("DNNrocket.back")</a>
+        <h1>@title</h1>
+    </div>
+
+    <div class="w3-row w3-padding">
+        <div class="w3-quarter">
+            <img src="@ImageUrl(info.GetXmlProperty("genxml/imagelist/genxml/hidden/imagepatharticleimage"),250,250)" />
+        </div>
+        <div class="w3-threequarter">
+            @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
+        </div>
+    </div>
+
+}
+else
+{
+    var lp = 1;
+    foreach (var articleRowData in articleData.GetRows())
+    {
+        var info = articleRowData.Info;
+        var title = info.GetXmlProperty("genxml/lang/genxml/textbox/title");
+        string[] urlparams = { "idx",lp.ToString()};
+        var detailurl = DNNrocketUtils.NavigateURL(Model.SessionParamsData.TabId, urlparams);
+        <div class="w3-padding ">
+            <a href="@(detailurl)" class="w3-xlarge">@title</a>
+        </div>
+        lp += 1;
+    }
+
+}
+
+<script>
+    $(document).ready(function () {
+        simplisity_setSessionField('listurl@(moduleData.ModuleId)', window.location.href); // href to cookie so we can use it on the detail back button.
+    });
+</script>
+
+

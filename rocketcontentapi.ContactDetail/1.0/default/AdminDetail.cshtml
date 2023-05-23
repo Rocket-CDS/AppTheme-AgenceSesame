@@ -1,0 +1,129 @@
+@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+@{
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var articleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
+    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+    var appThemeSystem = (AppThemeSystemLimpet)Model.GetDataObject("appthemesystem");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var globalSettings = new SystemGlobalData();
+    var sessionParams = Model.SessionParamsData;
+
+    var info = new SimplisityInfo();
+    if (articleRowData != null && articleRowData.Info != null)
+    {
+        info = articleRowData.Info;
+    }
+    AddProcessDataResx(appThemeView, true);
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
+}
+<!-- require Key for saving -->
+@HiddenField(info, "genxml/config/rowkey")
+@HiddenField(info, "genxml/lang/genxml/config/rowkeylang", "", articleRowData.RowKey)
+
+<div class='w3-row w3-padding'>
+
+    @EditFlag(sessionParams)
+
+    <div class="w3-col m12 w3-padding">
+
+        <!-- display company -->
+        <div class="w3-row w3-padding">
+            <label>Company name</label>
+            @TextBox(info, "genxml/lang/genxml/textbox/company", " class='w3-input w3-border' ", "", true)
+        </div>
+
+        <!-- display adress -->
+        <div class="w3-row w3-padding">
+            <label>Adress</label>
+            @TextArea(info, "genxml/textbox/adress", " class='w3-input w3-border' ", "", false)
+        </div>
+
+        <!-- display tel1 -->
+        <div class="w3-half w3-padding">
+            <label>Tel. 1</label>
+            @TextBox(info, "genxml/textbox/tel1", " class='w3-input w3-border' ", "", false)
+        </div>
+
+        <!-- display tel2 -->
+        <div class="w3-half w3-padding">
+            <label>Tel. 2</label>
+            @TextBox(info, "genxml/textbox/tel2", " class='w3-input w3-border' ", "", false)
+        </div>
+
+        <!-- display fax -->
+        <div class="w3-half w3-padding">
+            <label>Fax</label>
+            @TextBox(info, "genxml/textbox/fax", " class='w3-input w3-border' ", "", false)
+        </div>
+
+        <!-- display email -->
+        <div class="w3-half w3-padding">
+            <label>Email</label>
+            @TextBox(info, "genxml/textbox/email", " class='w3-input w3-border' ", "", false)
+        </div>
+
+        <!-- display contact1 -->
+        <div class="w3-half w3-padding">
+            <label>Contact 1</label>
+            @TextBox(info, "genxml/textbox/contact1", " class='w3-input w3-border' ", "", false)
+        </div>
+
+        <!-- display contact name -->
+        <div class="w3-half w3-padding">
+            <label>Contact name 1</label>
+            @TextBox(info, "genxml/textbox/contactname1", " class='w3-input w3-border' ", "", false)
+        </div>
+
+        <!-- display mobile 1 -->
+        <div class="w3-half w3-padding">
+            <label>Mobile 1</label>
+            @TextBox(info, "genxml/textbox/mobile1", " class='w3-input w3-border' ", "", false)
+        </div>
+
+        <!-- display email1 -->
+        <div class="w3-half w3-padding">
+            <label>Email 1</label>
+            @TextBox(info, "genxml/textbox/email1", " class='w3-input w3-border' ", "", false)
+        </div>
+        <!-- display contact2 -->
+        <div class="w3-half w3-padding">
+            <label>Contact 2</label>
+            @TextBox(info, "genxml/textbox/contact2", " class='w3-input w3-border' ", "", false)
+        </div>
+
+        <!-- display contact name 2-->
+        <div class="w3-half w3-padding">
+            <label>Contact name 2</label>
+            @TextBox(info, "genxml/textbox/contactname2", " class='w3-input w3-border' ", "", false)
+        </div>
+
+        <!-- display mobile 2 -->
+        <div class="w3-half w3-padding">
+            <label>Mobile 2</label>
+            @TextBox(info, "genxml/textbox/mobile2", " class='w3-input w3-border' ", "", false)
+        </div>
+
+        <!-- display email2 -->
+        <div class="w3-half w3-padding">
+            <label>Email 2</label>
+            @TextBox(info, "genxml/textbox/email2", " class='w3-input w3-border' ", "", false)
+        </div>
+
+        <!-- display extra info -->
+        <div class="w3-row w3-padding">
+            <label>Extra info</label>
+            @TextArea(info, "genxml/lang/genxml/textbox/extrainfo", " class='w3-input w3-border' ", "", true)
+        </div>
+    </div>
+</div>
+
+
+

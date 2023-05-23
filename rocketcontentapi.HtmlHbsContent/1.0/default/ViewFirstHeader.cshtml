@@ -1,0 +1,29 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using Simplisity;
+@using DNNrocketAPI.Components;
+@using RocketContentAPI.Components;
+@using RocketPortal.Components;
+
+@{
+
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var articleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
+    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+    var appThemeSystem = (AppThemeSystemLimpet)Model.GetDataObject("appthemesystem");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var globalSettings = new SystemGlobalData();
+    var sessionParams = Model.SessionParamsData;
+
+    var appThemeData = new SimplisityInfo();
+    appThemeData.SetXmlProperty("genxml/config/appthemeversionfolderrel", appThemeView.AppThemeVersionFolderRel);
+    appThemeData.SetXmlProperty("genxml/config/appthemefolderrel", appThemeView.AppThemeFolderRel);
+    appThemeData.SetXmlProperty("genxml/config/engineurl", portalData.EngineUrlWithProtocol);
+    var hbsDict = new Dictionary<string, SimplisityInfo>();
+    hbsDict.Add("appthemedata", appThemeData);
+    hbsDict.Add("data", articleData.Info);
+    hbsDict.Add("sessionparams", sessionParams.Info);
+}
+@RenderHandleBars(hbsDict, appThemeView, "ViewFirstHeader.hbs", moduleData.ModuleRef)
+

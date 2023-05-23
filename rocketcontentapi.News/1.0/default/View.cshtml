@@ -1,0 +1,72 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+
+@{
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var globalSettings = new SystemGlobalData();
+
+    AddProcessDataResx(appThemeView);
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
+
+}
+<div class="blogwrapper">
+    <div class="blogheader">
+        <div class="h1-headline">
+            News
+        </div>
+        <hr />
+    </div>
+
+    <div class="blog">
+        @{var index = 0;}
+        @foreach (var articleRowData in articleData.GetRows())
+        {
+            Model.SetDataObject("articlerow", articleRowData);
+            var info = articleRowData.Info;
+            var hStyle = info.GetXmlProperty("genxml/select/headingstyle");
+            var headingHide = info.GetXmlPropertyBool("genxml/checkbox/hideheading");
+            var hideRow = info.GetXmlPropertyBool("genxml/checkbox/hiderow");
+            if (!hideRow)
+            {
+                <article>
+                    @{
+                        // Changement format de date (dd/MM/yyy)
+                        var date = info.GetXmlPropertyDate("genxml/lang/genxml/textbox/newsdate");
+                        var dateFormat = date.ToString("dd/MM/yyyy");
+                    }
+                    <h2>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
+
+                    <p class="article-infos">Publié le @dateFormat</p>
+                    <!-- Affichage de l'image -->
+                    <div class="article-img">
+                        <img src="@info.GetXmlProperty("genxml/imagelist/genxml/hidden/imagepatharticleimage")" alt="@info.GetXmlProperty("genxml/lang/genxml/textbox/title")" />
+                    </div>
+
+                    <div class="flexcontent-text">
+                        <p>@info.GetXmlProperty("genxml/lang/genxml/textbox/resume")</p>
+                    </div>
+
+                    <!-- TODO gestion URL vers le détal de l'article -->
+                    @{
+                        var tabddlvalue = PagesUtils.NavigateURL(39);
+                        var titleFormat = @info.GetXmlProperty("genxml/lang/genxml/textbox/title");
+                        titleFormat = titleFormat.Replace(" ", "-");
+                        index += 1;
+                    }
+                    <a class="bigbutton" href="@tabddlvalue/@index/@titleFormat">Lire la suite</a>
+                </article>
+            }
+        }
+    </div>
+</div>
+
+

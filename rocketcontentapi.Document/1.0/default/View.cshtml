@@ -1,0 +1,87 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+<!-- TODO Rendre ça plus propre - système D pour que ça marche -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>
+
+@{
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var globalSettings = new SystemGlobalData();
+
+    AddProcessDataResx(appThemeView);
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
+
+    var columnClass = "";
+    var bgColorChecked = moduleData.Record.GetXmlPropertyBool("genxml/settings/bgColorChecked");
+    var bgColor = "";
+}
+
+<div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
+    <h2>
+        @moduleData.Record.GetXmlProperty("genxml/settings/moduletitle")
+    </h2>
+    <div class="about-content">
+        @foreach (var articleRowData in articleData.GetRows())
+        {
+            Model.SetDataObject("articlerow", articleRowData);
+            var info = articleRowData.Info;
+            var hideRow = info.GetXmlPropertyBool("genxml/checkbox/hiderow");
+
+            if (!hideRow)
+            {
+                <!-- Documents -->
+                if (!info.GetXmlPropertyBool("genxml/checkbox/documenthiddenarticledoc") && info.GetXmlProperty("genxml/documentlist/genxml/hidden/documentpatharticledoc") != "")
+                {
+                    <div class="about-content">
+                        @{
+                            var docURL = info.GetXmlProperty("genxml/documentlist/genxml/hidden/documentpatharticledoc");
+                            <!-- Si on veut afficher le pdf sur un nouvel onglet alors on l'affiche '-->
+                            if (info.GetXmlPropertyBool("genxml/checkbox/openinnewtab"))
+                            {
+                                <div class="documents">
+                                    <p>@info.GetXmlProperty("genxml/textbox/text")</p>
+                                    <a href="@(docURL)" target="_blank">
+                                        @if (info.GetXmlProperty("genxml/textbox/name") != "")
+                                        {
+                                            @info.GetXmlProperty("genxml/textbox/name")
+
+                                        }
+                                        else
+                                        {
+                                            @info.GetXmlProperty("genxml/textbox/documentnamearticledoc")
+                                        }
+                                    </a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="documents">
+                                    <p>@info.GetXmlProperty("genxml/textbox/text")</p>
+                                    <a href="@(docURL)" download="@info.GetXmlProperty("genxml/textbox/documentnamearticledoc")">
+                                        @if (info.GetXmlProperty("genxml/textbox/name") != "")
+                                        {
+                                            @info.GetXmlProperty("genxml/textbox/name")
+                                        }
+                                        else
+                                        {
+                                            @info.GetXmlProperty("genxml/textbox/documentnamearticledoc")
+                                        }
+                                    </a>
+                                </div>
+                            }
+                        }
+                    </div>
+                }
+            }
+        }
+    </div>
+</div>

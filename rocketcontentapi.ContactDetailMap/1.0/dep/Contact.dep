@@ -1,0 +1,8 @@
+﻿<genxml>
+  <deps list="true">
+    <genxml>
+      <ctrltype><![CDATA[css]]></ctrltype>
+      <url><![CDATA[{appthemefolder}/css/ContactDetailMap.css]]></url>
+    </genxml>
+  </deps>
+</genxml>

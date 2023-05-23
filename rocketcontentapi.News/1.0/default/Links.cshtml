@@ -1,0 +1,41 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+@{
+    var articleRow = (ArticleRowLimpet)Model.GetDataObject("articlerow");
+    var info = articleRow.Info;
+
+    var linkalignvalue = info.GetXmlPropertyInt("genxml/select/linkalign");
+    var linkalign = "";
+    if (linkalignvalue == 1)
+    {
+        linkalign = "w3-center";
+    }
+    if (linkalignvalue == 2)
+    {
+        linkalign = "w3-right";
+    }
+
+}
+
+@foreach (ArticleLink link in articleRow.Getlinks())
+{
+    if (!link.Hidden)
+    {
+        var anchor = "";
+        if (link.Anchor != "")
+        {
+            anchor = "#" + link.Anchor;
+        }
+        <div class="w3-container">
+            <div class="@(linkalign)">
+                <a target="@(link.Target)" href="@(link.Url)@(anchor)" class="w3-button " download>@link.Name</a>
+            </div>
+        </div>        
+    }
+}
+

@@ -1,0 +1,45 @@
+@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+@{
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var articleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
+    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+    var appThemeSystem = (AppThemeSystemLimpet)Model.GetDataObject("appthemesystem");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var globalSettings = new SystemGlobalData();
+    var sessionParams = Model.SessionParamsData;
+    if (sessionParams == null)
+    {
+        sessionParams = new SessionParams(new SimplisityInfo());
+    }
+    var info = new SimplisityInfo();
+    if (articleRowData != null && articleRowData.Info != null)
+    {
+        info = articleRowData.Info;
+    }
+
+    AddProcessDataResx(appThemeView, true);
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
+}
+
+
+<div class="w3-row w3-padding ">
+    <label>@ResourceKey("HtmlContent.spacingtop")</label>
+    @TextBox(info, "genxml/textbox/spacingtop", " class='w3-input' min='0' max='300' step='10'", "0", false, 0, "", "range")
+</div>    
+
+<div class="w3-row w3-padding ">
+    <label>@ResourceKey("HtmlContent.spacingbottom")</label>
+    @TextBox(info, "genxml/textbox/spacingbottom", " class='w3-input' min='0' max='300' step='10'", "0", false, 0, "", "range")
+</div>    
+
+
+
+

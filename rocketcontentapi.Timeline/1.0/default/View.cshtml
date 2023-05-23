@@ -1,0 +1,41 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+@{
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+}
+
+@foreach (var articleRowData in articleData.GetRows())
+{
+    var info = articleRowData.Info;
+    if (!info.GetXmlPropertyBool("genxml/checkbox/hiderow"))
+    {
+        <div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
+            <div class="w3-padding w3-display-container">
+                <h1>@info.GetXmlProperty("genxml/textbox/title")</h1>
+                @{
+                    var datalist = articleRowData.GetLinkList();
+                    var index = 0;
+                }
+                @foreach (var dateInfo in datalist)
+                {
+                    index++;
+                    <div class="w3-row">
+                        <h3>
+                            @info.GetXmlProperty("genxml/linklist/genxml[" + @index + "]/textbox/date")
+                        </h3>
+                        <h4 style="color: grey;">
+                            @info.GetXmlProperty("genxml/linklist/genxml[" + @index + "]/textbox/text")
+                        </h4>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+}
+

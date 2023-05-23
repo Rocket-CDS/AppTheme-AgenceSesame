@@ -1,0 +1,89 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+
+@{
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+}
+
+@foreach (var articleRowData in articleData.GetRows())
+{
+    var info = articleRowData.Info;
+    if (!info.GetXmlPropertyBool("genxml/checkbox/hiderow"))
+    {
+        var datalist = articleRowData.GetImageList();
+        var index = 0;
+        <div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
+
+            <h1 class="w3-center">@info.GetXmlProperty("genxml/textbox/title")</h1>
+
+            <div class="w3-content w3-display-container">
+                @if (info.GetXmlPropertyInt("genxml/select/animation") == 0 || info.GetXmlPropertyInt("genxml/select/animation") == 1)
+                {
+                    <!-- if no animation -->
+                    foreach (var imgInfo in datalist)
+                    {
+                        var articleImage = new ArticleImage(imgInfo, "articleimage");
+                        if (articleImage.RelPath != "")
+                        {
+                            index++;
+                            <!-- Full-width images with number and caption text -->
+                            <div class="mySlides">
+                                <img src="@ThumbnailImageUrl(articleImage.RelPath)" alt="@info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage")" style="width:100%" />
+                                <h1>@info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/title1")</h1>
+                                <h2>@info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/title2")</h2>
+                                <p>@info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/text")</p>
+                            </div>
+                        }
+                    }
+                }
+                else if (info.GetXmlPropertyInt("genxml/select/animation") == 2)
+                {
+                    <!-- if fade animation -->
+                    foreach (var imgInfo in datalist)
+                    {
+                        var articleImage = new ArticleImage(imgInfo, "articleimage");
+                        if (articleImage.RelPath != "")
+                        {
+                            index++;
+                            <!-- Full-width images with number and caption text -->
+                            <div class="mySlides w3-animate-right">
+                                <img src="@ThumbnailImageUrl(articleImage.RelPath)" alt="@info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage")" style="width:100%" />
+                                <h1>@info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/title1")</h1>
+                                <h2>@info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/title2")</h2>
+                                <p>@info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/text")</p>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+        </div>
+        <!-- Script part -->
+        <script>
+            var slideIndex = 0;
+            carousel();
+
+            function carousel() {
+                var i;
+                var x = document.getElementsByClassName("mySlides");
+                for (i = 0; i < x.length; i++) {
+                    x[i].style.display = "none";
+                }
+                slideIndex++;
+                if (slideIndex > x.length) { slideIndex = 1 }
+                if (@info.GetXmlPropertyInt("genxml/select/animation") == 1) {
+                    $(x[slideIndex - 1]).fadeIn(700);
+                } else {
+                    x[slideIndex - 1].style.display = "block";
+                }
+                setTimeout(carousel, @info.GetXmlPropertyInt("genxml/textbox/timeout") * 1000); // In ms
+            }
+        </script>
+    }
+}
+

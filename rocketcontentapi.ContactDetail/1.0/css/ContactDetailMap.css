@@ -1,0 +1,70 @@
+﻿@font-face {
+    font-family: 'rocket-icons';
+    src: url('../../../rocket-icons-v1.0/fonts/rocket-icons.woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+[class^="ri-"], [class*=" ri-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'rocket-icons' !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    /* Enable Ligatures ================ */
+    letter-spacing: 0;
+    -webkit-font-feature-settings: "liga";
+    -moz-font-feature-settings: "liga=1";
+    -moz-font-feature-settings: "liga";
+    -ms-font-feature-settings: "liga" 1;
+    font-feature-settings: "liga";
+    -webkit-font-variant-ligatures: discretionary-ligatures;
+    font-variant-ligatures: discretionary-ligatures;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.ri-facebook:before {
+    content: "\ea90";
+}
+
+.ri-instagram:before {
+    content: "\ea92";
+}
+
+.ri-twitter:before {
+    content: "\ea96";
+}
+
+.ri-rss:before {
+    content: "\ea9b";
+}
+
+.ri-youtube:before {
+    content: "\ea9d";
+}
+
+.ri-linkedin:before {
+    content: "\eaca";
+}
+
+.ri-pinterest:before {
+    content: "\ead1";
+}
+
+.ri-location:before {
+    content: "\e947";
+}
+
+.ri-clock:before {
+    content: "\e94e";
+}
+
+.ri-tripadvisor:before {
+    content: "\e900";
+}

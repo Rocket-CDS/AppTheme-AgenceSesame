@@ -1,0 +1,97 @@
+@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+@{
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var articleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
+    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+    var appThemeSystem = (AppThemeSystemLimpet)Model.GetDataObject("appthemesystem");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var globalSettings = new SystemGlobalData();
+    var sessionParams = Model.SessionParamsData;
+
+    var info = new SimplisityInfo();
+    if (articleRowData != null && articleRowData.Info != null)
+    {
+        info = articleRowData.Info;
+    }
+    AddProcessDataResx(appThemeView, true);
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
+    AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppThemes-W3-CSS/rocketcontentapi.HeroHeader/1.0/resx");
+
+}
+
+<!-- require Key for saving -->
+@HiddenField(info, "genxml/config/rowkey")
+@HiddenField(info, "genxml/lang/genxml/config/rowkeylang", "", articleRowData.RowKey)
+
+<div class='w3-row w3-padding'>
+
+    <div class='w3-col m12 w3-padding'>
+        <div class='w3-right w3-margin-bottom '>
+            @CheckBox(info, "genxml/checkbox/hiderow", "&nbsp;" + ResourceKey("DNNrocket.hide").ToString(), "class='w3-check' ", false, false, 0)
+        </div>
+    </div>
+</div>
+
+<div class="w3-row w3-padding">
+    <div class="w3-col">
+        <label>@ResourceKey("HeroHeader.title")</label>
+        @TextBox(info, "genxml/textbox/title", " type='text' class='w3-input w3-card w3-border w3-round-large' ", "", false)
+    </div>
+</div>
+
+<div class="w3-row w3-padding">
+    <div class="w3-col">
+        <label>@ResourceKey("HeroHeader.text")</label>
+        @TextBox(info, "genxml/textbox/text", "class='w3-input w3-card w3-card w3-border w3-round-large' row='4' ", "", false)
+    </div>
+</div>
+
+<div class="w3-row w3-padding">
+    <label>@ResourceKey("HeroHeader.background")</label>
+    @RenderTemplate("ArticleImage.cshtml", appThemeSystem, Model, true)
+</div>
+
+
+
+
+
+
+<script>
+    var myCodeMirror;
+
+    $(document).ready(function () {
+
+        $('.a-savebutton').attr('s-before', 'saveeditordata');
+
+        showCodeMirror();
+
+    });
+
+    function saveeditordata() {
+        $('#htmltext').val(myCodeMirror.getValue());
+    }
+
+    function showCodeMirror() {
+        setTimeout(() => {
+            // pause to allow codemirror.js to load.
+            $('#editorwrapper').show();
+
+            myCodeMirror = CodeMirror.fromTextArea(document.getElementById("htmltext"), {
+                mode: 'htmlmixed',
+                theme: "night"
+            });
+
+            myCodeMirror.setSize($('#editorwrapper').width(), $('#editorwrapper').height());
+            $('#htmltext').focus();
+        }, 300);
+    }
+</script>
+

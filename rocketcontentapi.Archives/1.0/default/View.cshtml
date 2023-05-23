@@ -1,0 +1,34 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+
+@{
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var globalSettings = new SystemGlobalData();
+
+
+
+}
+
+
+<!-- TODO faire le lien entre l'élément de la liste et la page détail de son article -->
+<div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
+    <h4>Archives</h4>
+    <ul>
+        @foreach (var articleRowData in articleData.GetRows())
+        {
+            var info = articleRowData.Info;
+
+            <li>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</li>
+        }
+    </ul>
+</div>
+

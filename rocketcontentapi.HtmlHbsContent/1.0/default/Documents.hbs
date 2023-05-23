@@ -1,0 +1,9 @@
+﻿{{#each genxml.data.genxml.documentlist.genxml}}
+<div class="w3-container">
+    <div class="{{@root.genxml.settings.genxml.documentalign}}">
+        <a href="{{@root.genxml.settings.genxml.engineurl}}/{{hidden.documentpatharticledoc}}" class="w3-button" download>{{textbox.documentnamearticledoc}}</a>
+    </div>
+</div>
+{{/each}}
+
+{{!displayData this}}

@@ -1,0 +1,33 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+@{
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var articleRow = (ArticleRowLimpet)Model.GetDataObject("articlerow");
+    var info = articleRow.Info;
+
+    var documentalignvalue = info.GetXmlPropertyInt("genxml/select/documentalign");
+    var documentalign = "";
+    if (documentalignvalue == 1)
+    {
+        documentalign = "w3-center";
+    }
+    if (documentalignvalue == 2)
+    {
+        documentalign = "w3-right-align";
+    }
+
+}
+
+@foreach (ArticleDoc d in articleRow.GetDocs())
+{
+    <div class="w3-container">
+        <div class="@(documentalign)">
+            <a href="@(portalData.EngineUrlWithProtocol)/@(d.RelPath)" class="w3-button" download>@(d.Name)</a>
+        </div>
+    </div>    
+}

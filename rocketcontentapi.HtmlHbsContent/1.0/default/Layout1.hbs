@@ -1,0 +1,15 @@
+﻿<div class="w3-row">
+    <div class="w3-col m3 l2 w3-padding-small">
+        {{#each genxml.data.genxml.imagelist.genxml}}
+        {{#if @first}}
+            <img class="sliderind{{@root.genxml.sessionparams.r.moduleref}}" src="{{thumbnailimageurl @root.genxml.sessionparams.r.engineurl hidden.imagepatharticleimage 400 -1  }}" style="width:100%">
+        {{/if}}
+        {{/each}}
+    </div>
+    <div class="w3-col m9 l10 w3-padding-small">
+        {{{genxml.data.genxml.lang.genxml.textbox.richtext}}}
+    </div>
+</div>
+
+{{! displayData this}}
+

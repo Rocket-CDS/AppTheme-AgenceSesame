@@ -1,0 +1,82 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+
+@{
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var globalSettings = new SystemGlobalData();
+
+    AddProcessDataResx(appThemeView);
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
+
+    var width = moduleData.Record.GetXmlProperty("genxml/settings/width");
+    var height = moduleData.Record.GetXmlProperty("genxml/settings/height");
+
+    var zoom = moduleData.Record.GetXmlPropertyInt("genxml/settings/zoom");
+    var mapLong = moduleData.Record.GetXmlPropertyInt("genxml/settings/long");
+    var mapLat = moduleData.Record.GetXmlPropertyInt("genxml/settings/lat");
+
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.js" integrity="sha512-SeiQaaDh73yrb56sTW/RgVdi/mMqNeM2oBwubFHagc5BkixSpP1fvqF47mKzPGWYSSy4RwbBunrJBQ4Co8fRWA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+@{var index = 0;}
+
+
+
+<script type="text/javascript">
+
+  var map = '';
+
+  $(document).ready(function () {
+
+    initmap();
+
+  });
+
+  function initmap() {
+
+    map = L.map('map-canvas', {
+      scrollWheelZoom: false
+    });
+
+      var markers = [
+
+    @foreach (var articleRowData in articleData.GetRows())
+    {
+
+        Model.SetDataObject("articlerow", articleRowData);
+        var info = articleRowData.Info;
+        @:L.marker([@info.GetXmlProperty("genxml/lang/genxml/textbox/latitude"), @info.GetXmlProperty("genxml/lang/genxml/textbox/longitude")]).bindPopup('@info.GetXmlProperty("genxml/lang/genxml/textbox/title")'),
+    }
+    ];
+        var group = L.featureGroup(markers).addTo(map);
+
+      map.fitBounds(group.getBounds(), {
+        padding: [80, 80]
+    });
+
+        map.on('focus', function() { map.scrollWheelZoom.enable(); });
+        map.on('blur', function() { map.scrollWheelZoom.disable(); });
+
+        L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+        attribution: '© <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+    }
+
+</script>
+
+<div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
+    <!-- The map is displayed here -->
+    <div id="map-canvas" style="width:@(width);height:@(height)px"></div>
+</div>

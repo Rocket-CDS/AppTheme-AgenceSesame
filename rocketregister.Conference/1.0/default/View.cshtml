@@ -1,0 +1,108 @@
+﻿@inherits RocketEcommerceAPI.Components.RocketEcommerceAPITokens<Simplisity.SimplisityRazor>
+@using RocketRegister.Components;
+@using Simplisity;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+@using RocketEcommerceAPI.Components;
+
+@{
+    var sessionParams = (SessionParams)Model.SessionParamsData;
+    var productData = (ProductLimpet)Model.GetDataObject("productdata");
+    var portalShop = (PortalShopLimpet)Model.GetDataObject("portalshop");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var productDataList = (ProductLimpetList)Model.GetDataObject("productlist");
+    var companyData = (CompanyLimpet)Model.GetDataObject("companydata"); ;
+    var cartData = (CartLimpet)Model.GetDataObject("cartdata");
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appThemeDefault = (AppThemeLimpet)Model.GetDataObject("appthemedefault");
+
+    AddProcessDataResx(appTheme, true);
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketEcommerceAPI/App_LocalResources/");
+}
+
+<link rel="stylesheet" href="@(portalData.EngineUrlWithProtocol)/DesktopModules/RocketThemes/AppThemes-W3-CSS/rocketregister.Conference/1.0/css/CF.css" charset="utf-8">
+<link id="w3css" rel="stylesheet" type="text/css" href="@(portalData.EngineUrlWithProtocol)/DesktopModules/DNNrocket/css/w3.css" />
+
+<!-- !PAGE CONTENT! -->
+<div id="ecommerce-tag" class="ecommerce-container">
+
+        <div class="w3-row w3-padding">
+        <div class="w3-threequarter w3-padding">
+            <div class="w3-row">
+                @{
+                    var lp1 = 1;
+                }
+                @foreach (ProductLimpet prd in productDataList.GetArticleList())
+                {
+                    var logoRelPath = prd.GetImage(0).Url;
+                    <div class="w3-bar products w3-margin-bottom" style="min-height:80px;">
+                        @HiddenField(prd.Info, "genxml/hidden/productid", "", prd.ProductId.ToString(), false, lp1)
+                        @if (logoRelPath != "")
+                        {
+                            <div class="w3-bar-item w3-hide-small w3-left"><img src="@ThumbnailImageWebsiteDomainUrl(portalData.EngineUrlWithProtocol, logoRelPath, 120, 120)" style="width:85px;"></div>
+                        }
+                        <div class="w3-bar-item w3-row w3-left">
+                            <div class="w3-bar-item w3-border w3-button w3-center a-removeproduct " idxrow="@(lp1)">&minus;</div>
+                            @TextBox(new SimplisityInfo(),"genxml/textbox/qty","maxlength='3' class='w3-bar-item w3-input w3-border-top w3-border-bottom w3-center qtyvalue' style='width:64px;' ","0",false,lp1)
+                            <div class="w3-bar-item w3-border w3-button w3-center a-addproduct " idxrow="@(lp1)">&plus;</div>
+                        </div>
+                        <div class="w3-bar-item">
+                            <div class="w3-row">
+                                <div class="w3-row w3-large">
+                                    <b>@prd.Name</b>
+                                </div>
+                                <div class="w3-row w3-padding">
+                                    <b>@BreakOf(prd.Summary)</b>
+                                </div>
+                                <div class="w3-row w3-padding">
+                                    @OptionsInput(prd)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    lp1 += 1;
+                }
+            </div>
+
+            <div class="w3-row w3-center">
+                <a id="proceedtocheckout" class="w3-button w3-pale-green w3-margin-top simplisity_click " s-fields='' s-post="#ecommerce-tag" s-list=".products" s-return="#ecommerce-tag" s-cmd="rocketregister_addcartitems" style="display:none;">@MaterialIcon("shopping_cart")&nbsp;@(ResourceKey("CF.addattendees", sessionParams.CultureCode))</a>
+            </div>
+        </div>
+        <div class="w3-quarter w3-padding">
+            <div class="minicartdisplay">
+                <h3>@ResourceKey("RE.cart", sessionParams.CultureCode)</h3>
+                <div class="w3-border-bottom w3-margin-bottom ">
+                    <div>@ResourceKey("CF.attendees", sessionParams.CultureCode)&nbsp;:&nbsp;
+                        <span id="a-cartqty">@cartData.QtyCount</span>    
+                        <span class="w3-right"><strong><span id="a-carttotal">@cartData.TotalDisplay</span></strong></span>
+                    </div>
+                </div>
+                @if (cartData.QtyCount > 0)
+                {
+                <a class="w3-button w3-pale-green w3-margin-top simplisity_click " s-fields='' s-post="#ecommerce-tag" s-list=".products" s-return="#ecommerce-tag" s-cmd="rocketregister_addcartitems">@MaterialIcon("shopping_cart")&nbsp;@(ResourceKey("RE.viewcart", sessionParams.CultureCode))</a>                    
+                }
+            </div>
+        </div>
+ 
+        </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $( ".a-addproduct" ).click(function() {
+            var idx = $(this).attr("idxrow");
+            $("#qty_" + idx).val(parseInt($("#qty_" + idx).val()) + 1);
+            $('#proceedtocheckout').show();
+        });
+        $( ".a-removeproduct" ).click(function() {
+            var idx = $(this).attr("idxrow");
+            $("#qty_" + idx).val(parseInt($("#qty_" + idx).val()) - 1);
+            if (parseInt($("#qty_" + idx).val()) < 0) {
+                $("#qty_" + idx).val("0");
+            }
+        });
+
+    });
+</script>
+

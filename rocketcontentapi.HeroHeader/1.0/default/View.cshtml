@@ -1,0 +1,37 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+
+@{
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+}
+
+@foreach (var articleRowData in articleData.GetRows())
+{
+    var info = articleRowData.Info;
+    <div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
+        @if (!info.GetXmlPropertyBool("genxml/checkbox/hiderow"))
+        {
+        <div class="topimageheader tih-mask" style="background:url('@info.GetXmlProperty("genxml/imagelist/genxml/hidden/imagepatharticleimage")') center @Model.GetSetting("crop") no-repeat;
+                                                    -webkit-background-size: cover;
+                                                    -moz-background-size: cover;
+                                                    -o-background-size: cover;
+                                                    background-size: cover;">
+            <div class="caption">
+                <h2>@info.GetXmlProperty("genxml/textbox/title")</h2>
+                <h3 class="parallax-text">@BreakOf(info, "genxml/textbox/text")</h3>
+            </div>
+        </div>
+
+        }
+    </div>
+
+
+}
+
+

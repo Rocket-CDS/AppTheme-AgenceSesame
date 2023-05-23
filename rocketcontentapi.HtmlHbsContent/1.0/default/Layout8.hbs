@@ -1,0 +1,22 @@
+﻿<div class="w3-row">
+    <div class="w3-col m3 l2">
+        {{#each genxml.data.genxml.imagelist.genxml}}
+        {{#even @index}}
+        <img class=" w3-padding-small sliderind{{@root.genxml.sessionparams.r.moduleref}}" src="{{thumbnailimageurl @root.genxml.sessionparams.r.engineurl hidden.imagepatharticleimage 400 -1  }}" style="width:100%">
+        {{/even}}
+        {{/each}}
+    </div>
+    <div class="w3-col m6 l8 w3-padding-small">
+        {{{genxml.data.genxml.lang.genxml.textbox.richtext}}}
+    </div>
+    <div class="w3-col m3 l2">
+        {{#each genxml.data.genxml.imagelist.genxml}}
+        {{#odd @index}}
+        <img class=" w3-padding-small sliderind{{@root.genxml.sessionparams.r.moduleref}}" src="{{thumbnailimageurl @root.genxml.sessionparams.r.engineurl hidden.imagepatharticleimage 400 -1  }}" style="width:100%">
+        {{/odd}}
+        {{/each}}
+    </div>
+</div>
+
+{{! displayData this}}
+

@@ -1,0 +1,55 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+
+@{
+var articleRow = (ArticleRowLimpet)Model.GetDataObject("articlerow");
+var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+var info = articleRow.Info;
+var lp1 = 1;
+var lp2 = 1;
+var imgcount = articleRow.GetImages().Count;
+}
+
+<div class="w3-row">
+    <div class="w3-col m3 l2">
+
+        @foreach (var img in articleRow.GetImages())
+        {
+        if (!img.Hidden)
+        {
+        if ((imgcount % lp1) == 0)
+        {
+            <div class="w3-row w3-padding-small">
+                        <img class="sliderind@(moduleData.ModuleRef) w3-round" src="@ThumbnailImageUrl(portalData.EngineUrlWithProtocol, img.RelPath, 400, -1)" style="width:100%">
+            </div>
+        }
+        lp1 += 1;
+        }
+        }
+    </div>
+    <div class="w3-col m6 l8 w3-padding-small">
+        @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
+    </div>
+    <div class="w3-col m3 l2">
+        @foreach (var img in articleRow.GetImages())
+        {
+        if (!img.Hidden)
+        {
+        if ((imgcount % lp2) == 1)
+        {
+        <div class="w3-row w3-padding-small">
+            <img class="sliderind@(moduleData.ModuleRef)" src="@ThumbnailImageUrl(portalData.EngineUrlWithProtocol, img.RelPath, 400, -1)" style="width:100%">
+        </div>
+        }
+        lp2 += 1;
+        }
+        }
+    </div>
+</div>
+

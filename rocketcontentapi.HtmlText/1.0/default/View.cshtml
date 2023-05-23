@@ -1,0 +1,25 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+
+@{
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+}
+
+@foreach (var articleRowData in articleData.GetRows())
+{
+    var info = articleRowData.Info;
+    if (!info.GetXmlPropertyBool("genxml/checkbox/hiderow"))
+    {
+        <div id="@articleRowData.RowKey" class="w3-padding">
+            @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
+            @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/htmltext"))
+        </div>        
+    }
+
+}
+

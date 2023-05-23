@@ -1,0 +1,180 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+
+@{
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+}
+
+@foreach (var articleRowData in articleData.GetRows())
+{
+    var info = articleRowData.Info;
+    if (!info.GetXmlPropertyBool("genxml/checkbox/hiderow"))
+    {
+        var datalist = articleRowData.GetImageList();
+        var index = 0;
+
+        <h1 class="w3-center">@info.GetXmlProperty("genxml/textbox/title")</h1>
+
+        <!-- Slideshow container -->
+        <div class="slideshow-container">
+            @foreach (var imgInfo in datalist)
+            {
+                var articleImage = new ArticleImage(imgInfo, "articleimage");
+                if (articleImage.RelPath != "")
+                {
+                    index++;
+                    <!-- Full-width images with number and caption text -->
+                    <div class="mySlides w3-animate-opacity">
+                        <div class="img-container">
+                            <img class="myImgs" src="@ThumbnailImageUrl(articleImage.RelPath)" alt="@info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage")" />
+                        </div>
+                        <h1>@info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/title1")</h1>
+                        <h2>@info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/title2")</h2>
+                        <p>@info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/text")</p>
+                    </div>
+                    
+                }
+            }
+        </div>
+
+        <!-- Next and previous buttons -->
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        <!-- The dots/circles -->
+        <div style="text-align:center">
+            @{
+                var imgNb = articleRowData.GetImageList();
+                var indexNb = 0;
+            }
+
+            @foreach (var imgInfo in imgNb)
+            {
+                var articleImage = new ArticleImage(imgInfo, "articleimage");
+                if (articleImage.RelPath != "")
+                {
+                    indexNb++;
+                    <span class="dot" onclick="currentSlide(@indexNb)"></span>
+                }
+            }
+
+        </div>
+
+        <style>
+            .slideshow-container {
+                position: relative;
+                overflow: hidden;
+                width: 100%;
+                height: 100%;
+            }
+
+            .mySlides {
+                display: none;
+            }
+
+            .myImgs {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .prev, .next {
+                opacity: 0.5;
+                text-decoration: none;
+                cursor: pointer;
+                position: absolute;
+                top: 50%;
+                width: auto;
+                margin-top: -22px;
+                padding: 16px;
+                color: black;
+                background-color: white;
+                font-weight: bold;
+                font-size: 30px;
+                transition: opacity 300ms ease;
+                border-radius: 0 3px 3px 0;
+                user-select: none;
+            }
+
+            .next {
+                right: 0;
+                border-radius: 3px 0 0 3px;
+            }
+
+                .prev:hover, .next:hover {
+                    text-decoration: none;
+                    color: black;
+                    opacity: 1;
+                }
+
+            .text {
+                color: #f2f2f2;
+                font-size: 15px;
+                padding: 8px 12px;
+                position: absolute;
+                bottom: 8px;
+                width: 100%;
+                text-align: center;
+            }
+
+            .numbertext {
+                color: #f2f2f2;
+                font-size: 12px;
+                padding: 8px 12px;
+                position: absolute;
+                top: 0;
+            }
+
+            .dot {
+                cursor: pointer;
+                height: 15px;
+                width: 15px;
+                margin: 0 2px;
+                background-color: #bbb;
+                border-radius: 50%;
+                display: inline-block;
+                transition: background-color 0.6s ease;
+            }
+
+                .active, .dot:hover {
+                    background-color: #717171;
+                }
+        </style>
+
+        <script>
+            let slideIndex = 1;
+            showSlides(slideIndex);
+
+            // Next/previous controls
+            function plusSlides(n) {
+                showSlides(slideIndex += n);
+            }
+
+            function currentSlide(n) {
+                showSlides(slideIndex = n)
+            }
+
+            function showSlides(n) {
+                let i;
+                let slides = document.getElementsByClassName("mySlides");
+                let dots = document.getElementsByClassName("dot");
+                if (n > slides.length) { slideIndex = 1 }
+                if (n < 1) { slideIndex = slides.length }
+                for (i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none";
+                }
+                for (i = 0; i < dots.length; i++) {
+                    dots[i].className = dots[i].className.replace(" active", "");
+                }
+                slides[slideIndex - 1].style.display = "block";
+                dots[slideIndex - 1].className += " active";
+            }
+        </script>
+    }
+
+}
+

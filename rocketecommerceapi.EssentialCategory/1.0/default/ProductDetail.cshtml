@@ -1,0 +1,153 @@
+﻿@inherits RocketEcommerceAPI.Components.RocketEcommerceAPITokens<Simplisity.SimplisityRazor>
+@using Simplisity;
+@using RocketEcommerceAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+@{ 
+    var productData = (ProductLimpet)Model.GetDataObject("productdata");
+    var productDataList = (ProductLimpetList)Model.GetDataObject("productlist");
+    var companyData = (CompanyLimpet)Model.GetDataObject("companydata"); ;
+    var cartData = (CartLimpet)Model.GetDataObject("cartdata");
+    var sessionParams = (SessionParams)Model.SessionParamsData;
+    var portalShop = (PortalShopLimpet)Model.GetDataObject("portalshop");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appThemeDefault = (AppThemeLimpet)Model.GetDataObject("appthemedefault");
+    var categoryDataList = (CategoryLimpetList)Model.GetDataObject("categorylist");
+    var moduleSettings = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var categoryData = (CategoryLimpet)Model.GetDataObject("categorydata");
+}
+
+@AddProcessDataResx(appTheme, true)
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketECommerceAPI/App_LocalResources/")
+
+<div class="w3-row">
+    <div class="w3-threequarter">
+        <div class="w3-row">
+
+            <div class="w3-half w3-padding">
+                <div class="w3-row">
+                    <div class="w3-col m2">
+                    @foreach (var i in productData.GetImages())
+                    {
+                        <div class="w3-row w3-padding-small">
+                            <img class="demo@(moduleSettings.ModuleRef) imgrollover w3-opacity w3-hover-opacity-off" src="@ImageUrl(i.RelPath,640,640)" style="width:100%;cursor:pointer" onclick="currentDiv@(moduleSettings.ModuleRef)">                                
+                        </div>
+                    }
+                    </div>
+                    <div class="w3-col m10">
+                        <img class=" imgrollovertarget sliderind@(moduleSettings.ModuleRef)" src="@ImageUrl(productData.DefaultImageUrl(),640,640)" style="width:100%">
+                    </div>
+                </div>
+
+                <button type="button" class="w3-button" onclick="history.back();">@ResourceKey("DNNrocket.back")</button>
+            </div>
+            <div id="productdatasection@(productData.PortalId)" class="w3-half w3-padding">
+                <h1>@(productData.Name)</h1>
+                <div>@(productData.Ref)</div>
+
+                @if (productData.GetModelList().Count > 1)
+                {
+                <div class="w3-hide-small "><b>@ResourceKey("RE.from")</b></div>                    
+                }
+
+                @if (productData.SalePriceMinimumCents > 0)
+                {
+                    <div class="w3-xxlarge">
+                        <span>&nbsp; @productData.SalePriceMinimumDisplay()</span>
+                        <span style="text-decoration:line-through;" class="w3-small">@productData.PriceMinimumDisplay()</span>
+                    </div>
+                }
+                else
+                {
+                    <div class="w3-xxlarge">
+                        @productData.PriceMinimumDisplay()
+                    </div>
+                }
+
+                <div class="">
+                    @BreakOf(productData.Summary)
+                </div>
+                <div class="">
+                    @HtmlOf(productData.RichText)
+                </div>
+
+                <div class="w3-white w3-margin-bottom">
+                    @ModelDropdown(productData)
+                </div>
+                <div class="w3-white w3-margin-bottom">
+                    @OptionsInput(productData)
+                </div>
+
+                <div id="qtyinput@(productData.ProductId)" class="quickviewactions">
+                    <div class="quickviewqty">
+                        <div class="w3-bar">
+                            <div class="w3-bar-item w3-border w3-col w3-center w3-button product-subtract" productid="@(productData.ProductId)">&minus;</div>
+                            <input type="number" min="0" class="w3-bar-item w3-col w3-input w3-border-top w3-border-bottom w3-center qtyvalue" id="qty@(productData.ProductId)" s-xpath="genxml/textbox/qty" value="1" style="width:60px;" />
+                            <div class="w3-bar-item w3-border w3-col w3-center w3-button product-plus" productid="@(productData.ProductId)">&plus;</div>
+                        </div>
+                    </div>
+                    <div class="quickviewbuy">
+                        <div class="w3-button buybutton simplisity_click" s-cmdurl="@(sessionParams.ApiUrl)" s-cmd="rocketecommerceapi_addtocartjson" s-fields='{"productid":"@(productData.ProductId)","moduleref":"@(moduleSettings.ModuleRef)"' s-post="#productdatasection@(productData.ProductId)" s-return="MiniCartTotals" s-returntype="json" s-after="afterMiniCartJson" title="@ResourceKey("RE.addtobasket")" style="width:60px;">
+                            <span class="material-icons">
+                                shopping_cart
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <script>
+
+                $(document).ready(function () {
+
+                    $('.product-subtract').unbind("click");
+                    $('.product-subtract').click(function () {
+                        updateQty($(this).attr("productid"), -1)
+                        return false; // prevent the button click from happening
+                    });
+                    $('.product-plus').unbind("click");
+                    $('.product-plus').click(function () {
+                        updateQty($(this).attr("productid"), 1)
+                        return false; // prevent the button click from happening
+                    });
+
+                    $('.imgrollover').unbind("mouseover");
+                    $(".imgrollover").mouseover(function () {
+                        $('.imgrollovertarget').attr('src', $(this).attr('src'));
+                        $('.imgrollovertarget').attr('popupsrc', $(this).attr('popupsrc'));
+                    });
+
+                });
+
+            </script>
+
+        </div>
+    </div>
+    <div class="w3-quarter">
+
+        <div id="minicartdisplay" class="productlistcart">
+
+            <div class="minicartdisplay">
+                <h3>@ResourceKey("RE.cart", sessionParams.CultureCode)</h3>
+                <div class="w3-border-bottom w3-margin-bottom ">
+                    <div>
+                        @ResourceKey("RE.items", sessionParams.CultureCode)&nbsp;:&nbsp;
+                        <span id="a-cartqty">&nbsp;</span>
+                        <span class="w3-right"><strong><span id="a-carttotal">&nbsp;</span></strong></span>
+                    </div>
+                </div>
+                <a id="cartdisplay" class="w3-button w3-light-grey simplisity_click " s-cmdurl="@(sessionParams.ApiUrl)" s-before="clearMiniCartJson" s-return="#ecommerce-tag" s-cmd="rocketecommerceapi_cartlist" s-fields='{"template":"cartlist.cshtml","moduleref":"@(moduleSettings.ModuleRef)"}'>@MaterialIcon("shopping_cart")&nbsp;@(ResourceKey("RE.viewcart", sessionParams.CultureCode))</a>
+            </div>
+
+        </div>
+        <div class="productlistcat">
+            @if (categoryDataList.DataList.Count > 0)
+            {
+            @RenderTemplate("CategorySideMenu.cshtml", appTheme, Model)
+            }
+        </div>
+    </div>
+</div>

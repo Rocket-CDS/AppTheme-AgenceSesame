@@ -1,0 +1,66 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketPortal.Components;
+@using RocketDirectoryAPI.Components;
+@using DNNrocketAPI.Components;
+@using System.Globalization;
+
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
+
+@{ 
+    var sessionParams = (SessionParams)Model.SessionParamsData;
+    var articleDataList = (ArticleLimpetList)Model.GetDataObject("articlelist");
+    var portalContent = (PortalCatalogLimpet)Model.GetDataObject("portalcontent");
+    var moduleSettings = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var categoryList = (CategoryLimpetList)Model.GetDataObject("categorylist");
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appThemeDefault = (AppThemeLimpet)Model.GetDataObject("appthemedefault");
+    var categoryData = (CategoryLimpet)Model.GetDataObject("categorydata"); ;
+}
+
+@AddProcessData("resourcepath", appTheme.AppThemeVersionFolderRel + "/resx/")
+
+<h1>
+    @if (sessionParams.GetInt("catid") == 0)
+    {
+        <span>@portalData.Name</span> }
+    else
+    {
+        <span>@categoryData.Name&nbsp;</span>}
+</h1>
+
+<div class="w3-row">
+    @RenderTemplate("SearchBanner.cshtml", appThemeDefault, Model, true)
+</div>
+
+<div class="w3-row w3-padding-16 w3-center">
+    @foreach (ArticleLimpet articleData in articleDataList.GetArticleList())
+    {
+        var urlparams = new Dictionary<string, string>();
+        urlparams.Add("articleid", articleData.ArticleId.ToString());
+
+        <div class="w3-col s12 m6 l3 w3-padding w3-center">
+            <a href="@(DNNrocketUtils.NavigateURL(sessionParams.TabId, urlparams, articleData.Name))" title="@articleData.Name" onclick="$('.simplisity_loader').show()">
+                <img src="@ThumbnailImageWebsiteDomainUrl(portalData.EngineUrlWithProtocol,articleData.GetImage(0).RelPath,320,320)" style="width:100%" alt="@articleData.Name" />
+            </a>
+            <div class="" style="height:100px;overflow:hidden;">
+                <h3>@articleData.Name</h3>
+                <p>@articleData.Summary</p>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="w3-row w3-padding-16 w3-center">
+    @RenderTemplate("ProductPaging.cshtml", appThemeDefault, Model, true)
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.simplisity_loader').hide();
+        simplisity_setSessionField('@(portalContent.SystemKey)listurl', window.location.href); // href to cookie so we can use it on the detail back button.
+    });
+</script>

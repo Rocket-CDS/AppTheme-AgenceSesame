@@ -1,0 +1,54 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+@{
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var globalSettings = new SystemGlobalData();
+
+    AddProcessDataResx(appThemeView);
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
+
+}
+
+<div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
+    <div class="svgblockswrapper">
+        <div class="svgblocks">
+            @foreach (var articleRowData in articleData.GetRows())
+            {
+                Model.SetDataObject("articlerow", articleRowData);
+                var info = articleRowData.Info;
+                var layout = info.GetXmlPropertyInt("genxml/select/layout");
+                var hStyle = info.GetXmlProperty("genxml/select/headingstyle");
+                var headingHide = info.GetXmlPropertyBool("genxml/checkbox/hideheading");
+                var hideRow = info.GetXmlPropertyBool("genxml/checkbox/hiderow");
+
+                if (!hideRow)
+                {
+                    <div class="@info.GetXmlProperty("genxml/lang/genxml/textbox/cssclass")">
+                        <div class="svgblock">
+                            <div class="svgblockicon">
+                                @HtmlOf(info, "genxml/lang/genxml/textbox/svgcode")
+                            </div>
+
+                            <h3>
+                                @info.GetXmlProperty("genxml/lang/genxml/textbox/title")
+                            </h3>
+
+                            <p>
+                                @info.GetXmlProperty("genxml/lang/genxml/textbox/resume")
+                            </p>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>

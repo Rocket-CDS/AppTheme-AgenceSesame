@@ -1,0 +1,109 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+
+@{
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var globalSettings = new SystemGlobalData();
+
+    // Path to the resx file
+    AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppThemes-W3-CSS/rocketcontentapi.Contact/1.0/resx");
+
+}
+
+@foreach (var articleRowData in articleData.GetRows())
+{
+    var info = articleRowData.Info;
+    <div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
+        <div class="h4-headline">
+            Contactez-nous
+        </div>
+        <p>
+            @if (moduleData.Record.GetXmlPropertyBool("genxml/settings/companyname"))
+            {
+                <strong>@info.GetXmlProperty("genxml/lang/genxml/textbox/company")</strong>
+            }
+            @if (moduleData.Record.GetXmlPropertyBool("genxml/settings/adress"))
+            {
+                <br />
+                @info.GetXmlProperty("genxml/textbox/adress");
+            }
+            @if (moduleData.Record.GetXmlPropertyBool("genxml/settings/tel1"))
+            {
+                <br />
+                @:Tél. : @info.GetXmlProperty("genxml/textbox/tel1")
+            }
+            @if (moduleData.Record.GetXmlPropertyBool("genxml/settings/tel1"))
+            {
+                <br />
+                @:Tél. 2 : @info.GetXmlProperty("genxml/textbox/tel2")
+            }
+            @if (moduleData.Record.GetXmlPropertyBool("genxml/settings/fax"))
+            {
+                <br />
+                @:Fax : @info.GetXmlProperty("genxml/textbox/fax")
+            }
+            @if (moduleData.Record.GetXmlPropertyBool("genxml/settings/email"))
+            {
+                <br />
+                @:E - Mail :
+                <a href="mailto:@info.GetXmlProperty("genxml/textbox/email")">@info.GetXmlProperty("genxml/textbox/email")</a>
+            }
+            @if (moduleData.Record.GetXmlPropertyBool("genxml/settings/contact1"))
+            {
+                <br />
+                @info.GetXmlProperty("genxml/textbox/contact1")
+            }
+            @if (moduleData.Record.GetXmlPropertyBool("genxml/settings/contactname1"))
+            {
+                <br />
+                @info.GetXmlProperty("genxml/textbox/contactname1")
+            }
+            @if (moduleData.Record.GetXmlPropertyBool("genxml/settings/mobile1"))
+            {
+                <br />
+                @:Mobile : @info.GetXmlProperty("genxml/textbox/mobile1")
+            }
+            @if (moduleData.Record.GetXmlPropertyBool("genxml/settings/email1"))
+            {
+                <br />
+                <a href="mailto:@info.GetXmlProperty("genxml/textbox/email1")">@info.GetXmlProperty("genxml/textbox/email1")</a>
+            }
+            @if (moduleData.Record.GetXmlPropertyBool("genxml/settings/contact2"))
+            {
+                <br />
+                @info.GetXmlProperty("genxml/textbox/contact2")
+            }
+            @if (moduleData.Record.GetXmlPropertyBool("genxml/settings/contactname2"))
+            {
+                <br />
+                @info.GetXmlProperty("genxml/textbox/contactname2")
+            }
+            @if (moduleData.Record.GetXmlPropertyBool("genxml/settings/mobile2"))
+            {
+                <br />
+                @:Mobile : @info.GetXmlProperty("genxml/textbox/mobile2")
+            }
+            @if (moduleData.Record.GetXmlPropertyBool("genxml/settings/email2"))
+            {
+                <br />
+                <a href="mailto:@info.GetXmlProperty("genxml/textbox/email2")">@info.GetXmlProperty("genxml/textbox/email2")</a>
+            }
+            @if (moduleData.Record.GetXmlPropertyBool("genxml/settings/extrainfo"))
+            {
+                <br />
+                @info.GetXmlProperty("genxml/textbox/extrainfo")
+            }
+        </p>
+    </div>
+}
+
+

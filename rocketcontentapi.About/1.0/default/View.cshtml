@@ -1,0 +1,54 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+
+@{
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+}
+
+@foreach (var articleRowData in articleData.GetRows())
+{
+    var info = articleRowData.Info;
+    // var imageurl = info.GetXmlProperty("genxml/imgs/genxml[1]/hidden/imageurl");
+    if (!info.GetXmlPropertyBool("genxml/checkbox/hiderow"))
+    {
+        <div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
+            <div class="about-content">
+                <img src="@info.GetXmlProperty("genxml/imagelist/genxml/hidden/imagepatharticleimage")" />
+                @if (info.GetXmlProperty("genxml/textbox/content") != "")
+                {
+                    <div class="about-text">
+                        @info.GetXmlProperty("genxml/textbox/content")
+                    </div>
+                }
+                @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 1)
+                {
+                    var tabddlvalue = PagesUtils.NavigateURL(info.GetXmlPropertyInt("genxml/select/linktab"));
+                    <div class="about-link">
+                        <a href="@(tabddlvalue)">@info.GetXmlProperty("genxml/textbox/linktitle")</a>
+                    </div>
+                }
+                @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 2)
+                {
+                    var externalURL = info.GetXmlProperty("genxml/textbox/externalhref");
+                    var blank = "";
+                    if (info.GetXmlPropertyBool("genxml/checkbox/blank"))
+                    {
+                        blank = "_blank";
+                    }
+                    <div class="about-link">
+                        <a href="@(externalURL)" target="@(blank)">@info.GetXmlProperty("genxml/textbox/linktitle")</a>
+                    </div>
+                }
+            </div>
+        </div>
+
+    }
+}
+
+

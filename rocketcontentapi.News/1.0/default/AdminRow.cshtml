@@ -1,0 +1,175 @@
+@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+@{
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var articleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
+    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+    var appThemeSystem = (AppThemeSystemLimpet)Model.GetDataObject("appthemesystem");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var globalSettings = new SystemGlobalData();
+    var sessionParams = Model.SessionParamsData;
+    if (sessionParams == null)
+    {
+        sessionParams = new SessionParams(new SimplisityInfo());
+    }
+    var info = new SimplisityInfo();
+    if (articleRowData != null && articleRowData.Info != null)
+    {
+        info = articleRowData.Info;
+    }
+
+    AddProcessDataResx(appThemeView, true);
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
+
+}
+
+
+<!-- require Key for saving -->
+@HiddenField(info, "genxml/config/rowkey")
+@HiddenField(info, "genxml/lang/genxml/config/rowkeylang", "", articleRowData.RowKey)
+
+<div class='w3-row w3-xlarge w3-padding'>
+    @info.GetXmlProperty("genxml/lang/genxml/textbox/title")
+</div>
+
+<div class='w3-row w3-padding'>
+
+    <div class="w3-bar" style="cursor: pointer;">
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink headingtablink" onclick="openSection('heading')">Titre et Resume</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink htmltablink" onclick="openSection('html')">@ResourceKey("DNNrocket.html")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink imgstablink" onclick="openSection('imgs')">@ResourceKey("DNNrocket.images")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink docstablink" onclick="openSection('docs')">@ResourceKey("DNNrocket.docs")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink linkstablink" onclick="openSection('links')">@ResourceKey("DNNrocket.links")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink htmltexttablink" onclick="openSection('htmltext')">@ResourceKey("HtmlContent.htmltext")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink othertablink" onclick="openSection('other')">@ResourceKey("HtmlContent.extra")</div>
+    </div>
+
+    <div id="heading" class='w3-row sectionname' style="display:none">
+        <div class='w3-row w3-margin-top w3-border'>
+            <div class="w3-half">
+                <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
+                    <label>Date</label>		&nbsp;@EditFlag(sessionParams)
+                    @TextBoxDate(info, "genxml/lang/genxml/textbox/newsdate", " class='w3-input w3-border' autocomplete='off'", "", false, 0)
+                </div>
+            </div>
+        </div>
+        <div class='w3-row w3-margin-top w3-border'>
+            <div class="w3-half">
+                <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
+                    <label>Title</label>		&nbsp;@EditFlag(sessionParams)
+                    @TextBox(info, "genxml/lang/genxml/textbox/title", " class='w3-input w3-border' autocomplete='off' ", "", false, 0)
+                </div>
+            </div>
+        </div>
+        <div class='w3-row w3-margin-top w3-border'>
+            <div class="w3-half">
+                <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
+                    <label>Balise meta Title (SEO)</label>		&nbsp;@EditFlag(sessionParams)
+                    @TextBox(info, "genxml/lang/genxml/textbox/baliseseo", " class='w3-input w3-border' autocomplete='off' ", "", false, 0)
+                </div>
+            </div>
+        </div>
+        <div class='w3-row w3-margin-top w3-border'>
+            <div class="w3-half">
+                <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
+                    <label>Resume</label>		&nbsp;@EditFlag(sessionParams)
+                    @TextArea(info, "genxml/lang/genxml/textbox/resume", " rows='4' class='w3-input w3-border' autocomplete='off' ", "", false, 0)
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="html" class='w3-row sectionname' style="display:none">
+        <div class='w3-col m12 w3-padding'>
+            @EditFlag(sessionParams)
+            <div class='w3-col m12'>
+                @CKEditor4(info, "genxml/lang/genxml/textbox/richtext", true)
+            </div>
+            <div class='w3-col' style='width:0px;height:600px;'></div>
+        </div>
+    </div>
+    <div id="imgs" class='w3-row sectionname' style="display:none">
+        <div class='w3-col m12 w3-padding '>
+            @RenderTemplate("ArticleImage.cshtml", appThemeSystem, Model, true)
+        </div>
+    </div>
+
+    <!-- ***************************************** Ici la partie document à mettre quand le bug sera résolu ***************************************** -->
+    <div id="docs" class='w3-row sectionname' style="display:none">
+        <div class='w3-row w3-padding' style='min-width: 160px;'>
+            <label>&nbsp;</label>
+            @RadioButtonList(info, "genxml/select/documentalign", "0,1,2", "<span class='material-icons'>format_align_left</span>,<span class='material-icons'>format_align_center</span>,<span class='material-icons'>format_align_right</span>", "", "1", "", false, 0, "")
+        </div>
+        <div class='w3-col m12 w3-padding '>
+            @RenderTemplate("ArticleDocuments.cshtml", appThemeSystem, Model, true)
+        </div>
+    </div>
+
+
+    <div id="links" class='w3-row sectionname' style="display:none">
+        <div class='w3-row w3-padding' style='min-width: 160px;'>
+            <label>&nbsp;</label>
+            @RadioButtonList(info, "genxml/select/linkalign", "0,1,2", "<span class='material-icons'>format_align_left</span>,<span class='material-icons'>format_align_center</span>,<span class='material-icons'>format_align_right</span>", "", "1", "", false, 0, "")
+        </div>
+        <div class='w3-col m12 w3-padding '>
+            <!-- A voir si il faut absolument plusieurs liens ou pas !! -->
+            @RenderTemplate("ArticleLink.cshtml", appThemeSystem, Model, true)
+        </div>
+    </div>
+
+    <div id="htmltext" class='w3-row sectionname' style="display:none">
+        <div class='w3-col m12 w3-padding'>
+            @EditFlag(sessionParams)
+            @TextArea(info, "genxml/lang/genxml/textbox/htmltext", " class='w3-input w3-border' rows='8' ", "", true, 0)
+        </div>
+    </div>
+    <div id="other" class='w3-row sectionname' style="display:none">
+        @RenderTemplate("AdminRowExtra.cshtml", appThemeAdmin, Model, true)
+    </div>
+</div>
+
+
+
+
+    <script>
+        $(document).ready(function () {
+
+            var sectionName = localStorage.getItem('sectiontabs');
+            if ((typeof sectionName === 'undefined') || sectionName === '' || sectionName === null) {
+                sectionName = "heading";
+            }
+            openSection(sectionName);
+
+            $('#summary').trigger('onkeyup');
+            $('#text').trigger('onkeyup');
+
+        });
+
+
+        function openSection(sectionName) {
+
+
+            $('.sectionname').hide();
+            $('.tablink').removeClass("w3-border-black");
+            $('.tablink').removeClass("w3-theme-l3");
+            $('#' + sectionName).show();
+            $('.' + sectionName + 'tablink').addClass("w3-border-black");
+            $('.' + sectionName + 'tablink').addClass("w3-theme-l3");
+            localStorage.setItem('sectiontabs', sectionName);
+
+            // so the hidden one gets adjusted
+            $('#summary').trigger('onkeyup');
+            $('#text').trigger('onkeyup');
+
+        }
+
+    </script>
+
+

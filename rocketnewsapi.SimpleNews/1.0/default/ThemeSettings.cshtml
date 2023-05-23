@@ -1,0 +1,37 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using RocketDirectoryAPI.Components;
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketPortal.Components;
+@using DNNrocketAPI.Components;
+@using System.Globalization;
+@using Rocket.AppThemes.Components;
+
+@{
+    var sessionParams = (SessionParams)Model.SessionParamsData;
+    var moduleSettings = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var portalCatalog = (PortalCatalogLimpet)Model.GetDataObject("portalcatalog");
+    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+    var info = new SimplisityInfo(moduleSettings.Record);
+
+    AddProcessDataResx(appThemeAdmin, true);
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/");
+
+    //NOTE: xPath for module settings must use "genxml/settings/*"
+}
+
+<div>
+    <div class="w3-third w3-padding">
+        <label>@ResourceKey("DNNrocket.pagesize")</label>
+        @DropDownList(info, "genxml/settings/pagesize", "12,24,48,96", "12,24,48,96", " style='height:40px;' class='w3-input w3-border simplisity_sessionfield ' onchange=\"doSearchReload();return false;\" title='" + @ResourceKey("DNNrocket.pagesize", sessionParams.CultureCode) + "'", "24")
+    </div>
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+    });
+
+</script>

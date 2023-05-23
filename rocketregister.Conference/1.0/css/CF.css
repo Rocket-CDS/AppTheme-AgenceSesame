@@ -1,0 +1,11 @@
+/* Essential styles */
+.material-icons {vertical-align:middle;}
+/* No spin on Qty field */
+input.qtyvalue::-webkit-outer-spin-button,
+input.qtyvalue::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number].qtyvalue {
+  -moz-appearance: textfield;
+}

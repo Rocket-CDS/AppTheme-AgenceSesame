@@ -1,0 +1,29 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+@{
+    var articleRow = (ArticleRowLimpet)Model.GetDataObject("articlerow");
+    var info = articleRow.Info;
+}
+
+@foreach (ArticleLink link in articleRow.Getlinks())
+{
+    if (!link.Hidden)
+    {
+        var anchor = "";
+        if (link.Anchor != "")
+        {
+            anchor = "#" + link.Anchor;
+        }
+        <div class="w3-container">
+            <div>
+                <a target="@(link.Target)" href="@(link.Url)@(anchor)" class="w3-button " download>@link.Name</a>
+            </div>
+        </div>        
+    }
+}
+

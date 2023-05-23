@@ -1,0 +1,71 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+<!-- TODO Rendre ça plus propre - système D pour que ça marche -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>
+
+@{
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var globalSettings = new SystemGlobalData();
+
+    AddProcessDataResx(appThemeView);
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
+
+    var columnClass = "";
+    var bgColorChecked = moduleData.Record.GetXmlPropertyBool("genxml/settings/bgColorChecked");
+    var bgColor = "";
+}
+
+<div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
+    <h2>
+        @moduleData.Record.GetXmlProperty("genxml/settings/moduletitle")
+    </h2>
+    <div class="about-content">
+        @foreach (var articleRowData in articleData.GetRows())
+        {
+            Model.SetDataObject("articlerow", articleRowData);
+            var info = articleRowData.Info;
+            var hideRow = info.GetXmlPropertyBool("genxml/checkbox/hiderow");
+
+            if (!hideRow)
+            {
+                <div class="@info.GetXmlProperty("genxml/lang/genxml/textbox/cssclass")">
+                    <!-- Lien interne -->
+                    @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 1)
+                    {
+                        var tabddlvalue = PagesUtils.NavigateURL(info.GetXmlPropertyInt("genxml/select/linktab"));
+                        <div class="about-link">
+                            <a href="@(tabddlvalue)#@info.GetXmlProperty("genxml/textbox/linkanchor")">
+                                @info.GetXmlProperty("genxml/textbox/linktitle")
+                            </a>
+                        </div>
+                    }
+                    <!-- Lien externe -->
+                    @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 2)
+                    {
+                        var externalURL = info.GetXmlProperty("genxml/textbox/externalhref");
+                        var blank = "";
+                        if (@info.GetXmlPropertyBool("genxml/checkbox/blank"))
+                        {
+                            blank = "_blank";
+                        }
+                        <div class="about-link">
+                            <a href="@(externalURL)" target="@(blank)">
+                                @info.GetXmlProperty("genxml/textbox/linktitle")
+                            </a>
+                        </div>
+                    }
+                </div>
+            }
+        }
+    </div>
+</div>

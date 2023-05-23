@@ -1,0 +1,75 @@
+﻿@inherits RocketEcommerceAPI.Components.RocketEcommerceAPITokens<Simplisity.SimplisityRazor>
+@using Simplisity;
+@using RocketEcommerceAPI.Components;
+@using DNNrocketAPI.Components;
+
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketEcommerceAPI/App_LocalResources/")
+
+@{ var categoryDataList = (CategoryLimpetList)Model.GetDataObject("categorylist");
+                var sessionParams = (SessionParams)Model.SessionParamsData;
+                var remoteModule = (RemoteModule)Model.GetDataObject("remotemodule");
+
+                var selectedcolor = "";
+                if (sessionParams.GetInt("searchcategoryid") == 0)
+                {
+                    selectedcolor = "w3-grey";
+                }
+                var portalShop = new PortalShopLimpet(categoryDataList.PortalId, categoryDataList.CultureCode); }
+
+<h3 style="margin-top:30px;">@ResourceKey("RE.categories", sessionParams.CultureCode)</h3>
+
+<div class="categorytree w3-bar-block w3-light-grey w3-mobile w3-margin-top">
+    <a href="@sessionParams.PageUrl" catid="0" onclick="$('.simplisity_loader').show();" class="w3-bar-item w3-button w3-dark-grey">
+        @ResourceKey("RE.allproducts")
+    </a>
+    @foreach (var categoryData in categoryDataList.GetCategoryTree())
+    {
+        selectedcolor = "";
+        var toplevelclass = "";
+        if (sessionParams.GetInt("searchcategoryid") == categoryData.CategoryId)
+        {
+            selectedcolor = "catselected";
+        }
+        else
+        {
+            if (categoryData.Level == 0)
+            {
+                toplevelclass = "catlevel1";
+            }
+        }
+        var productListUrl = categoryData.CategoryUrl(sessionParams, remoteModule);
+<div class="@selectedcolor @toplevelclass">
+    <a href="@productListUrl" class="categoryitem" onclick="$('.simplisity_loader').show();" catid="@categoryData.CategoryId">
+        @if (categoryData.Level > 0)
+        {
+<span class="material-icons">
+    chevron_right
+</span>                }
+        <span>@categoryData.Name</span>
+    </a>
+</div>}
+</div>
+
+<script>
+
+    $(document).ready(function () {
+
+        // CATEGORY EVENTS
+        $('.ajaxcategory').unbind("click");
+        $('.ajaxcategory').click(function (event) {
+            event.preventDefault();
+
+            // add to browser bar and history
+            var stateObj = { "": "" };
+            history.pushState(stateObj, "Title", $(this).attr('href'));
+
+            // we need "SearchBanner.cshtml" to be loaded on the page.
+            $('#searchcategoryid').val($(this).attr("catid"));
+            $('.triggersearch').trigger('click');
+
+        });
+
+    });
+
+</script>

@@ -1,0 +1,52 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+
+@{
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var globalSettings = new SystemGlobalData();
+
+    AddProcessDataResx(appThemeView);
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
+
+}
+<div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
+    <h1>Questions fréquentes</h1>
+    <div id="accordion">
+        @foreach (var articleRowData in articleData.GetRows())
+        {
+            var info = articleRowData.Info;
+            <div class="@info.GetXmlProperty("genxml/lang/genxml/textbox/cssclass")">
+                <div class="accordion-header" style="cursor:pointer;">
+                    <p>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</p>
+                    <p>@info.GetXmlProperty("genxml/lang/genxml/textbox/categorie")</p>
+                </div>
+                <div class="accordion-content" style="display: none;">@HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))</div>
+                <hr />
+            </div>
+        }
+    </div>
+</div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        $('#accordion').accordion({
+            header: ".accordion-header",
+            heightStyle: "content",
+            collapsible: true,
+            active: false
+        });
+    });
+</script>
+
+
+
+

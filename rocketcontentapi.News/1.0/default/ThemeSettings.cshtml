@@ -1,0 +1,38 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+@{
+    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var info = new SimplisityInfo(moduleData.Record);
+
+    AddProcessDataResx(appThemeAdmin);
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
+
+    //NOTE: xPath for module settings must use "genxml/settings/*"
+}
+<div class="w3-row">
+    <div class="w3-third w3-padding">
+        <label>@ResourceKey("DNNrocket.imageresize") (px)</label>
+        @TextBox(info, "genxml/settings/imageresize", " class='w3-input w3-border'", "640")
+    </div>
+    <div class="w3-third w3-padding">
+        <label>@ResourceKey("HtmlContent.backgroundcolorclass")</label>
+        @TextBox(info, "genxml/settings/backgroundcolorclass", " class='w3-input w3-border'  ", "htmlcontent-bg")
+    </div>
+</div>
+
+
+<div class="w3-padding">
+    <label>Columns</label>
+    @RadioButtonList(info, "genxml/settings/columns", "def,fcw-2col,fcw-3col,fcw-4col,fcw-5col,fcw-multicol", "default, 2 Columns, 3 Columns, 4 Columns, 5 Columns, Multi Columns", " class=''", "6", "", false)
+</div>
+
+<script>
+    $(document).ready(function () {
+    });
+</script>

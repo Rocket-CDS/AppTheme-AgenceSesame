@@ -1,0 +1,34 @@
+﻿@inherits RocketEcommerceAPI.Components.RocketEcommerceAPITokens<Simplisity.SimplisityRazor>
+@using RocketRegister.Components;
+@using Simplisity;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+@using RocketEcommerceAPI.Components;
+
+@{
+    var sessionParams = (SessionParams)Model.SessionParamsData;
+    var productData = (ProductLimpet)Model.GetDataObject("productdata");
+    var portalShop = (PortalShopLimpet)Model.GetDataObject("portalshop");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var productDataList = (ProductLimpetList)Model.GetDataObject("productlist");
+    var companyData = (CompanyLimpet)Model.GetDataObject("companydata"); ;
+    var cartData = (CartLimpet)Model.GetDataObject("cartdata");
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appThemeDefault = (AppThemeLimpet)Model.GetDataObject("appthemedefault");
+
+    AddProcessDataResx(appTheme, true);
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketEcommerceAPI/App_LocalResources/");
+
+    var lp1 = Model.GetSettingInt("lp1");
+    var cItem = (CartItemLimpet)Model.GetDataObject("cartitem");
+    double qtyLp = 1;
+}
+@while (qtyLp <= cartData.QtyCount)
+{
+<div>
+        @TextBox(new SimplisityInfo(cItem.Record),"genxml/cartoptions/name" + qtyLp," class='w3-input w3-border'","",false,lp1,"","text")
+        @TextBox(new SimplisityInfo(cItem.Record), "genxml/cartoptions/email" + qtyLp, " class='w3-input w3-border'","",false,lp1,"","text")
+    </div>
+    qtyLp += 1;
+}
+

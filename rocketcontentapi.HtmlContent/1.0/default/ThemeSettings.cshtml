@@ -1,0 +1,34 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+@{
+    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var info = new SimplisityInfo(moduleData.Record);
+
+    AddProcessDataResx(appThemeAdmin);
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
+
+    //NOTE: xPath for module settings must use "genxml/settings/*"
+}
+
+<div class="w3-third w3-padding">
+    <label>@ResourceKey("DNNrocket.imageresize") (px)</label>
+    @TextBox(info, "genxml/settings/imageresize", " class='w3-input w3-border'", "640")
+</div>
+<div class="w3-third w3-padding">
+    <label>@ResourceKey("HtmlContent.backgroundcolorclass")</label>
+    @TextBox(info, "genxml/settings/backgroundcolorclass", " class='w3-input w3-border'  ", "htmlcontent-bg")
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+    });
+
+</script>

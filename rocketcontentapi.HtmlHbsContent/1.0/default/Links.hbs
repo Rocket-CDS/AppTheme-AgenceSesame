@@ -1,0 +1,18 @@
+﻿{{#each genxml.data.genxml.linklist.genxml}}
+<div class="w3-container">
+    {{#when checkbox.hidearticlelink "noteq" "true"}}
+    {{#when checkbox.blankarticlelink "eq" "true"}}
+    <div class="{{@root.genxml.settings.genxml.linkalign}}">
+        <a target="_blank" href="{{lookuplang @root "linklist" "textbox.externallinkarticlelink" @index}}#{{lookuplang @root "linklist" "textbox.anchorarticlelink" @index}}" class="w3-button " download>{{lookuplang @root "linklist" "textbox.namearticlelink" @index}}</a>
+    </div>
+    {{/when}}
+    {{#when checkbox.blankarticlelink "noteq" "true"}}
+    <div class="{{@root.genxml.settings.genxml.linkalign}}">
+        <a href="{{lookuplang @root "linklist" "textbox.externallinkarticlelink" @index}}#{{lookuplang @root "linklist" "textbox.anchorarticlelink" @index}}" class="w3-button" download>{{lookuplang @root "linklist" "textbox.namearticlelink" @index}}</a>
+    </div>
+    {{/when}}
+    {{/when}}
+</div>
+{{/each}}
+
+{{!displayData this}}

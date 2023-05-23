@@ -1,0 +1,14 @@
+﻿<genxml>
+	<moduletemplates list="true">
+		<genxml>
+			<file><![CDATA[view.cshtml]]></file>
+			<name><![CDATA[List View]]></name>
+			<cmd>list</cmd>
+		</genxml>
+		<genxml>
+			<file><![CDATA[hozcatmenu2lvl.cshtml]]></file>
+			<name><![CDATA[Horizontal Category Menu (2 levels)]]></name>
+			<cmd>catmenu</cmd>
+		</genxml>
+	</moduletemplates>
+</genxml>

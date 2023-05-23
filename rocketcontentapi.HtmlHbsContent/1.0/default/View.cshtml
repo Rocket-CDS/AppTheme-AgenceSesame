@@ -1,0 +1,180 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+
+@{
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var globalSettings = new SystemGlobalData();
+
+    var hbsDict = new Dictionary<string, SimplisityInfo>();
+    hbsDict.Add("resxlist", RenderRazorUtils.GetResxPaths(Processdata));
+
+    AddProcessData("resourcepath", appThemeView.AppThemeFolderRel + "/resx/");
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/");
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
+}
+
+@foreach (var articleRowData in articleData.GetRows())
+{
+    var info = articleRowData.Info;
+    var layout = info.GetXmlPropertyInt("genxml/select/layout");
+    var hStyle = info.GetXmlProperty("genxml/select/headingstyle");
+    var headingHide = info.GetXmlPropertyBool("genxml/checkbox/hideheading");
+    var hideRow = info.GetXmlPropertyBool("genxml/checkbox/hiderow");
+
+    var swclass = "";
+    var wclass = "w3-row";
+    if (info.GetXmlPropertyInt("genxml/textbox/rowwidth") > 0)
+    {
+        swclass = "w3-col m" + (info.GetXmlPropertyInt("genxml/textbox/rowwidth") / 2).ToString();
+        wclass = "w3-col m" + info.GetXmlPropertyInt("genxml/textbox/rowwidth");
+    }
+
+    var bg = "";
+    if (info.GetXmlPropertyBool("genxml/checkbox/backgroundcolor"))
+    {
+        bg = "w3-light-grey";
+    }
+   
+    var documentalignvalue = info.GetXmlPropertyInt("genxml/select/documentalign");
+    var documentalign = "";
+    if (documentalignvalue == 1)
+    {
+        documentalign = "w3-center";
+    }
+    if (documentalignvalue == 2)
+    {
+        documentalign = "w3-right-align";
+    }
+
+    var linkalignvalue = info.GetXmlPropertyInt("genxml/select/linkalign");
+    var linkalign = "";
+    if (linkalignvalue == 1)
+    {
+        linkalign = "w3-center";
+    }
+    if (linkalignvalue == 2)
+    {
+        linkalign = "w3-right";
+    }
+
+    var settingsInfo = new SimplisityInfo();
+    settingsInfo.SetXmlProperty("genxml/linkalign", linkalign);
+    settingsInfo.SetXmlProperty("genxml/documentalign", documentalign);
+    settingsInfo.SetXmlProperty("genxml/engineurl", portalData.EngineUrlWithProtocol);    
+    
+    hbsDict.Remove("settings");
+    hbsDict.Add("settings", settingsInfo);
+
+    hbsDict.Remove("data");
+    hbsDict.Add("data", info);
+
+
+<div class="w3-row @bg " rowkey="@articleRowData.RowKey">
+
+    @if (!hideRow)
+    {
+        if (swclass != "")
+        {
+            <div class="@swclass">&nbsp;</div>            
+        }
+
+        <div class="@wclass">
+
+        @if (!headingHide)
+        {
+            var headingalignvalue = info.GetXmlPropertyInt("genxml/select/headingalign");
+            var headingalign = "";
+            if (headingalignvalue == 1)
+            {
+                headingalign = "w3-center";
+            }
+            if (headingalignvalue == 2)
+            {
+                headingalign = "w3-right";
+            }
+
+            if (hStyle == "")
+            {
+                hStyle = "h1";
+            }
+
+                if (info.GetXmlProperty("genxml/lang/genxml/textbox/title") != "")
+                {
+                <div class="w3-padding @(headingalign)">
+                    <@(hStyle)>
+                        @info.GetXmlProperty("genxml/lang/genxml/textbox/title")
+                    </@(hStyle)>                    
+                </div>
+                }
+        }
+
+        @if (layout == 0)
+        {
+            @RenderHandleBarsRC(hbsDict, appThemeView, "layout0.hbs", moduleData.ModuleRef)
+        }
+        @if (layout == 1)
+        {
+            @RenderHandleBarsRC(hbsDict, appThemeView, "layout1.hbs", moduleData.ModuleRef)
+        }
+        @if (layout == 2)
+        {
+            @RenderHandleBarsRC(hbsDict, appThemeView, "layout2.hbs", moduleData.ModuleRef)
+        }
+        @if (layout == 3)
+        {
+            @RenderHandleBarsRC(hbsDict, appThemeView, "layout3.hbs", moduleData.ModuleRef)
+        }
+        @if (layout == 4)
+        {
+            @RenderHandleBarsRC(hbsDict, appThemeView, "layout4.hbs", moduleData.ModuleRef)
+        }
+        @if (layout == 5)
+        {
+            @RenderHandleBarsRC(hbsDict, appThemeView, "layout5.hbs", moduleData.ModuleRef)
+        }
+        @if (layout == 6)
+        {
+            @RenderHandleBarsRC(hbsDict, appThemeView, "layout6.hbs", moduleData.ModuleRef)
+        }
+        @if (layout == 7)
+        {
+            @RenderHandleBarsRC(hbsDict, appThemeView, "layout7.hbs", moduleData.ModuleRef)
+        }
+        @if (layout == 8)
+        {
+            @RenderHandleBarsRC(hbsDict, appThemeView, "layout8.hbs", moduleData.ModuleRef)
+        }
+
+        @if (info.GetXmlProperty("genxml/lang/genxml/textbox/htmltext") != "")
+        {
+            @RenderHandleBarsRC(hbsDict, appThemeView, "htmltext.hbs", moduleData.ModuleRef)
+        }
+        @if (articleRowData.GetDocList().Count > 0)
+        {
+            @RenderHandleBarsRC(hbsDict, appThemeView, "documents.hbs", moduleData.ModuleRef)
+        }
+        @if (articleRowData.Getlinks().Count > 0)
+        {
+            @RenderHandleBarsRC(hbsDict, appThemeView, "links.hbs", moduleData.ModuleRef)
+        }
+
+        </div>
+
+        if (swclass != "")
+        {
+            <div class="@swclass">&nbsp;</div>            
+        }
+
+    }
+</div>
+}
+

@@ -1,0 +1,13 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using Simplisity;
+@using DNNrocketAPI.Components;
+@using RocketContentAPI.Components;
+@using RocketPortal.Components;
+
+@{
+    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+}
+
+<link rel="stylesheet" href="@(portalData.EngineUrlWithProtocol)@(appThemeView.AppThemeVersionFolderRel)/css/HtmlContent.css" )">
+

@@ -1,0 +1,29 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+
+@{
+var articleRow = (ArticleRowLimpet)Model.GetDataObject("articlerow");
+var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+var info = articleRow.Info;
+}
+
+<div class="w3-row w3-padding-small">
+    @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
+</div>
+
+@foreach (var img in articleRow.GetImages())
+{
+if (!img.Hidden)
+{
+<div class="w3-col m3 w3-padding-small">
+            <img class="sliderind@(moduleData.ModuleRef) w3-round" src="@ThumbnailImageUrl(portalData.EngineUrlWithProtocol, img.RelPath, 400, -1)" style="width:100%">
+</div>
+}
+}
+

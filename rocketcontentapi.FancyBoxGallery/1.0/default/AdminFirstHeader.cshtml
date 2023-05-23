@@ -1,0 +1,33 @@
+@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+@{
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var articleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
+    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+    var appThemeSystem = (AppThemeSystemLimpet)Model.GetDataObject("appthemesystem");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var globalSettings = new SystemGlobalData();
+    var info = new SimplisityInfo();
+    if (articleRowData != null && articleRowData.Info != null)
+    {
+        info = articleRowData.Info;
+    }
+}
+
+<!-- codemirror.js for editor ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<script src="//@(portalData.EngineUrl)/DesktopModules/DNNrocket/CodeMirror/codemirror.js"></script>
+<link rel="stylesheet" href="//@(portalData.EngineUrl)/DesktopModules/DNNrocket/CodeMirror/night.css" />
+<link rel="stylesheet" href="//@(portalData.EngineUrl)/DesktopModules/DNNrocket/CodeMirror/codemirror.css" />
+<script src="//@(portalData.EngineUrl)/DesktopModules/DNNrocket/CodeMirror/mode/javascript/javascript.js"></script>
+<script src="//@(portalData.EngineUrl)/DesktopModules/DNNrocket/CodeMirror/mode/xml/xml.js"></script>
+<script src="//@(portalData.EngineUrl)/DesktopModules/DNNrocket/CodeMirror/mode/htmlmixed/htmlmixed.js"></script>
+<script src="//@(portalData.EngineUrl)/DesktopModules/DNNrocket/CodeMirror/mode/css/css.js"></script>
+<!-- codemirror.js for editor ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+

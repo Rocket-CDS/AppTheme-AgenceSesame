@@ -1,0 +1,212 @@
+@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using RocketDirectoryAPI.Components;
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketPortal.Components;
+@using DNNrocketAPI.Components;
+@using System.Globalization;
+@using Rocket.AppThemes.Components;
+
+@{
+    var sessionParams = (SessionParams)Model.SessionParamsData;
+    var appThemeSystem = (AppThemeSystemLimpet)Model.GetDataObject("appthemesystem");
+    var appThemeDirectory = (AppThemeSystemLimpet)Model.GetDataObject("appthemedirectory");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var systemData = (SystemLimpet)Model.GetDataObject("systemdata");
+    var portalContent = (PortalCatalogLimpet)Model.GetDataObject("portalcontent");
+    var appThemeProjects = (AppThemeProjectLimpet)Model.GetDataObject("appthemeprojects");
+    var defaultData = (DefaultsLimpet)Model.GetDataObject("defaultdata");
+    var moduleSettings = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var globalSettings = (SystemGlobalData)Model.GetDataObject("globalsettings");
+    var appThemeDefault = (AppThemeLimpet)Model.GetDataObject("appthemedefault");
+    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+    var appThemeDataListView = (AppThemeDataList)Model.GetDataObject("appthemedatalistview");
+    var appThemeDataListAdmin = (AppThemeDataList)Model.GetDataObject("appthemedatalistadmin");
+    var catalogSettings = (CatalogSettingsLimpet)Model.GetDataObject("catalogsettings");
+    var catalogList = (CategoryLimpetList)Model.GetDataObject("categorylist");
+    var propertyList = (PropertyLimpetList)Model.GetDataObject("propertylist");
+    var dashBoard = (DashboardLimpet)Model.GetDataObject("dashboard");
+
+    AddProcessDataResx(appThemeAdmin, true);
+    AddProcessData("resourcepath", systemData.SystemRelPath + "/App_LocalResources/");
+    AddProcessData("resourcepath", "/App_LocalResources/");
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocket/Images/App_LocalResources/");
+
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var info = new SimplisityInfo();
+    if (articleData.Info != null)
+    {
+        info = articleData.Info;
+    }
+
+    var moduleedit = sessionParams.Info.GetXmlPropertyBool("r/moduleedit");
+
+}
+
+@{
+    var sFieldDict = new Dictionary<string, string>();
+    sFieldDict.Add("articleid", articleData.ArticleId.ToString());
+}
+@RenderLanguageSelector("articleadmin_editarticle", sFieldDict, appThemeDirectory, Model)
+
+<div id="articleedit">
+
+    <div id="articleeditcontent" class='w3-animate-opacity '>
+
+        @RenderTemplate("editbuttonbar.cshtml",appThemeDirectory, Model)
+
+        <div id="articledatasection" class="">
+            <div class='w3-row'>
+                <div class='w3-row'>
+                    <div class="w3-col m1 w3-padding">
+                        <label>@ResourceKey("RC.ref")</label>
+                        @TextBox(info, articleData.RefXPath, " class='w3-input w3-border' autocomplete='off' ", "", false, 0)
+                    </div>
+                    <div class="w3-col m10 w3-padding">
+                        <label>@ResourceKey("RC.name")</label>&nbsp;@EditFlag(sessionParams)
+                        @TextBox(info, articleData.NameXPath, " class='w3-input w3-border' autocomplete='off' ", "", true, 0)
+                    </div>
+                    <div class="w3-col m1 w3-padding">
+                        <label>@ResourceKey("Theme.price")</label>
+                        @TextBox(info, "genxml/textbox/price", " class='w3-input w3-border w3-right-align' autocomplete='off' ", "", false, 0)
+                    </div>
+                </div>
+
+                <div class=" w3-row w3-padding">
+                    <label>@ResourceKey("RC.summary")</label>&nbsp;@EditFlag(sessionParams)
+                    @TextArea(info, articleData.SummaryXPath, " class='w3-input w3-border' rows='8' autocomplete='off' ", "", true, 0)
+                </div>
+
+                <div class='w3-row'>
+                    <div class="w3-quarter w3-padding">
+                        @CheckBox(info, articleData.HiddenXPath, "&nbsp;" + ResourceKey("RC.hidden"), " class='w3-check' ")
+                    </div>
+                    <div class="w3-quarter w3-padding">
+                        @CheckBox(info, articleData.HiddenByCultureXPath, "&nbsp;" + ResourceKey("RC.hidden") + "&nbsp;" + EditFlag(sessionParams), " class='w3-check' ")
+                    </div>
+                </div>
+
+                <div>
+                    <script src="https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+
+                    @CKEditor4(info, "genxml/lang/genxml/textbox/richtext",true)
+                </div>
+
+                <div class="w3-padding">
+                    <div class="w3-bar-item w3-button tablink categoriestabtablink" onclick="openSection('categoriestab')">@ResourceKey("RC.categories")</div>
+                    <div class="w3-bar-item w3-button tablink imgstablink" onclick="openSection('imgs')">@ResourceKey("DNNrocket.images")</div>
+                    <div class="w3-bar-item w3-button tablink docstablink" onclick="openSection('docs')">@ResourceKey("DNNrocket.docs")</div>
+                    <div class="w3-bar-item w3-button tablink linkstablink" onclick="openSection('links')">@ResourceKey("DNNrocket.links")</div>
+                </div>
+
+                <div class="w3-padding">
+
+                    <div id="categoriestab" class='w3-row sectionname a-articlecategorylist' style="display:none">
+                        @RenderTemplate("ArticleCategoryList.cshtml", appThemeSystem, Model, true)
+                    </div>
+                    <div id="imgs" class='w3-row sectionname' style="display:none">
+                        @RenderTemplate("Articleimages.cshtml", appThemeSystem, Model, true)
+                    </div>
+                    <div id="docs" class='w3-row sectionname' style="display:none">
+                        @RenderTemplate("ArticleDocuments.cshtml", appThemeSystem, Model, true)
+                    </div>
+                    <div id="links" class='w3-row sectionname' style="display:none">
+                        @RenderTemplate("ArticleLinks.cshtml", appThemeSystem, Model, true)
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        @{
+            // select templates need to be independant from the return element, so they do not get removed from the page.
+        }
+        @RenderTemplate("ArticleDocumentSelect.cshtml", appThemeSystem, Model, true)
+        @RenderTemplate("ArticleimageSelect.cshtml", appThemeSystem, Model, true)
+
+
+        <div class="w3-padding">
+            @if (UserUtils.IsInRole("Administrator"))
+            {
+<div class="w3-container">
+    <div class="w3-right">
+        @RenderXml(info)
+    </div>
+</div>            }
+            <i>ID: </i> @info.ItemID <i> GuidKey:</i> @info.GUIDKey
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+  
+        var sectionName = simplisity_getCookieValue('sectionName');
+        if ((typeof sectionName === 'undefined') || sectionName === '') {
+            sectionName = 'categoriestab';
+        }
+
+        $("#price").keydown(function (e) {
+            // Allow: backspace, delete, tab, escape, enter and .
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190, 188]) !== -1 ||
+                // Allow: Ctrl/cmd+A
+                (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                // Allow: Ctrl/cmd+C
+                (e.keyCode == 67 && (e.ctrlKey === true || e.metaKey === true)) ||
+                // Allow: Ctrl/cmd+X
+                (e.keyCode == 88 && (e.ctrlKey === true || e.metaKey === true)) ||
+                // Allow: home, end, left, right
+                (e.keyCode >= 35 && e.keyCode <= 39)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
+
+
+        openSection(sectionName);
+
+    @if (!moduleedit)
+    {
+        <text>
+                selectMenu('articleadmin');
+        </text>
+    }
+    else
+    {
+        <text>
+                $(document).simplisityStartUp('/Desktopmodules/dnnrocket/api/rocket/action', { systemkey: 'rocketdirectoryapi', debug: false });
+                $('.simplisity_loader').hide();
+        </text>    
+    }
+
+            simplisity_setParamField("moduleedit", '@(moduleedit)')
+
+
+    });
+
+
+    function openSection(sectionName) {
+        var i, x, tablinks;
+        x = document.getElementsByClassName("sectionname");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        $(".tablink").each(function (index) {
+            $(this).removeClass('w3-bottombar');
+        });
+
+        document.getElementById(sectionName).style.display = "block";
+
+        $('.' + sectionName + 'tablink').addClass('w3-bottombar');
+
+        simplisity_setCookieValue('sectionName', sectionName);
+    }
+
+</script>

@@ -1,0 +1,154 @@
+﻿@inherits RocketEcommerceAPI.Components.RocketEcommerceAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketEcommerceAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketECommerceAPI/App_LocalResources/")
+
+@{
+    var paymentData = (PaymentLimpet)Model.List.First();
+    var sessionParams = (SessionParams)Model.SessionParamsData;
+    var info = new SimplisityInfo(paymentData.Record);
+    info.Lang = sessionParams.CultureCode;
+    var portalShop = new PortalShopLimpet(PortalUtils.GetPortalId(), sessionParams.CultureCode);
+    var portalData = new PortalLimpet(PortalUtils.GetPortalId());
+    var notificationLimpet = new NotificationLimpet(portalShop.PortalId, sessionParams.CultureCode);
+    var systemData = new SystemLimpet("rocketecommerce");
+    var adminlink = portalData.EngineUrlWithProtocol.TrimEnd('/') + "/DesktopModules/DNNrocketModules/RocketEcommerce/admin.html";
+    var companyData = new CompanyLimpet(PortalUtils.GetPortalId(), sessionParams.CultureCode);
+    var apiurl = portalData.EngineUrlWithProtocol.TrimEnd('/') + "/Desktopmodules/dnnrocket/api/rocket/action";
+}
+
+<div id="datasection" class="rocketecommerce_paymentform">
+    <div class="w3-container">
+
+        <div class="w3-row w3-padding ">
+
+            <div class="w3-quarter ">
+                @if (companyData.LogoRelPath != "")
+                {
+                    <img src="@ImageUrl(companyData.LogoRelPath, 0, 120)" style="" class="" />
+                }
+            </div>
+            <div class="w3-threequarter w3-padding">
+                <b>
+                    @companyData.CompanyName
+                </b>
+                <div class="w3-row w3-small">
+                    @companyData.WebsiteUrl <br />
+                    @companyData.ContactEmail <br />
+                    @companyData.Phone <br />
+                </div>
+
+                @if (UserUtils.IsManager())
+                {
+                    <div class="w3-button w3-padding">
+                        <a href="/sysadmin/rocketpayment" class="w3-tiny  w3-text-grey" target="_blank">@ResourceKey("DNNrocket.admin")</a>
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
+        <div class="w3-row w3-padding ">
+
+            @if (!paymentData.Exists)
+            {
+                <div class="w3-panel w3-center w3-card-4 w3-xlarge w3-round w3-red w3-padding-large">
+                    @ResourceKey("RE.orderstatus" + paymentData.StatusCode)
+                </div>
+                <h1>ERROR: NO PAYMENT FOUND</h1>
+            }
+            else
+            {
+        <div class="paymentmessage">
+
+            @if (paymentData.PaymentMade || paymentData.IsPaymentCompleted)
+            {
+                <table class="w3-table w3-bordered">
+                    <tr class="">
+                        <td>@ResourceKey("RE.amount")</td>
+                        <td>
+                            @paymentData.AmountDisplay
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>@ResourceKey("RE.paid")</td>
+                        <td>
+                            @paymentData.AmountPaidDisplay
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>@ResourceKey("RE.due")</td>
+                        <td>
+                            @paymentData.AmountDueDisplay
+                        </td>
+                    </tr>
+                </table>
+
+
+                <div class="w3-panel w3-center w3-card-4 w3-xlarge w3-round w3-padding-large w3-green">
+                    @ResourceKey("RE.orderstatus" + Convert.ToInt32(PaymentStatus.PaymentOK))
+                </div>
+
+                if (paymentData.Status == PaymentStatus.WaitingForPayment)
+                {
+                    <p>
+                        @BreakOf(notificationLimpet.Message_WaitingForPayment)
+                    </p>
+                }
+                else
+                {
+                    <p>
+                        @BreakOf(notificationLimpet.Message_PaymentFormOK)
+                    </p>
+                }
+
+                <a class="w3-col m12 w3-button w3-border w3-margin-top  w3-xlarge  w3-round w3-blue " href='javascript:void(0)' onclick="window.location = window.location.href.split('?')[0];">@ResourceKey("RE.newpayment")</a>
+
+            }
+            else
+            {
+                <div class="w3-panel w3-center w3-card-4 w3-xlarge w3-round w3-red w3-padding-large">
+                    @ResourceKey("RE.orderstatus" + paymentData.StatusCode)
+                </div>
+
+                if (paymentData.Status == PaymentStatus.PaymentFailed)
+                {
+                    <p>
+                        @notificationLimpet.Message_PaymentFormFail
+                    </p>
+                }
+
+                <a class="w3-col m12 w3-button w3-border w3-margin-top  w3-xlarge  w3-round w3-blue " href="@(portalShop.PaymentPageUrl)?key=@(paymentData.PaymentKey)">@ResourceKey("RE.retrypayment")</a>
+            }
+
+
+        </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        simplisity_injectlink('@(portalData.EngineUrlWithProtocol.TrimEnd('/'))/DesktopModules/DNNrocket/css/w3.css');
+        simplisity_injectlink('@(portalData.EngineUrlWithProtocol.TrimEnd('/'))/DesktopModules/DNNrocket/Simplisity/css/simplisity.css');
+        simplisity_injectscript('@(portalData.EngineUrlWithProtocol.TrimEnd('/'))/DesktopModules/DNNrocket/Simplisity/js/simplisity.js');
+        simplisity_injectscript('@(portalData.EngineUrlWithProtocol.TrimEnd('/'))/DesktopModules/DNNrocket/js/jquery.validate.min.js');
+
+        @if (DNNrocketUtils.GetCurrentLanguageCode() != "en")
+        {
+            <text>
+                simplisity_injectscript('@(portalData.EngineUrlWithProtocol.TrimEnd('/'))/DesktopModules/DNNrocket/js/localization/messages_@(DNNrocketUtils.GetCurrentLanguageCode()).js');
+            </text>
+        }
+
+
+    });
+</script>
