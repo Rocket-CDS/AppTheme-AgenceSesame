@@ -117,4 +117,61 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="backgroundcolor.Text" xml:space="preserve">
+    <value>Background Color</value>
+  </data>
+  <data name="backgroundcolorclass.Text" xml:space="preserve">
+    <value>Background Color Class</value>
+  </data>
+  <data name="docs.Text" xml:space="preserve">
+    <value>Documents</value>
+  </data>
+  <data name="extra.Text" xml:space="preserve">
+    <value>Extra</value>
+  </data>
+  <data name="heading.Text" xml:space="preserve">
+    <value>Heading</value>
+  </data>
+  <data name="headingalign.Text" xml:space="preserve">
+    <value>Heading Align</value>
+  </data>
+  <data name="headingstyle.Text" xml:space="preserve">
+    <value>Style</value>
+  </data>
+  <data name="hide.Text" xml:space="preserve">
+    <value>Hide</value>
+  </data>
+  <data name="hideheading.Text" xml:space="preserve">
+    <value>Hide Heading</value>
+  </data>
+  <data name="htmltext.Text" xml:space="preserve">
+    <value>Html Text</value>
+  </data>
+  <data name="htmlvideo.Text" xml:space="preserve">
+    <value>Video Embed</value>
+  </data>
+  <data name="imgs.Text" xml:space="preserve">
+    <value>Images</value>
+  </data>
+  <data name="layout.Text" xml:space="preserve">
+    <value>Layout</value>
+  </data>
+  <data name="links.Text" xml:space="preserve">
+    <value>Links</value>
+  </data>
+  <data name="on.Text" xml:space="preserve">
+    <value>On</value>
+  </data>
+  <data name="richtext.Text" xml:space="preserve">
+    <value>Rich Text</value>
+  </data>
+  <data name="rowwidth.Text" xml:space="preserve">
+    <value>Row Width</value>
+  </data>
+  <data name="spacingbottom.Text" xml:space="preserve">
+    <value>Spacing Bottom</value>
+  </data>
+  <data name="spacingtop.Text" xml:space="preserve">
+    <value>Spacing Top</value>
+  </data>
 </root>

@@ -27,9 +27,14 @@
 
     AddProcessDataResx(appThemeView, true);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
-
 }
 
+<div class="w3-half">
+    <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
+        <label>Module Title</label>
+        @TextBox(info, "genxml/lang/genxml/textbox/moduletitle", "class='w3-input w3-border' autocomplete='off'", "", false, 0)
+    </div>
+</div>
 
 <!-- require Key for saving -->
 @HiddenField(info, "genxml/config/rowkey")
@@ -48,7 +53,7 @@
         <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink docstablink" onclick="openSection('docs')">@ResourceKey("DNNrocket.docs")</div>
         <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink linkstablink" onclick="openSection('links')">@ResourceKey("DNNrocket.links")</div>
         <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink htmltexttablink" onclick="openSection('htmltext')">@ResourceKey("HtmlContent.htmltext")</div>
-        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink othertablink" onclick="openSection('other')">@ResourceKey("HtmlContent.extra")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink othertablink" onclick="openSection('video')">Video</div>
     </div>
 
     <div id="heading" class='w3-row sectionname' style="display:none">
@@ -97,7 +102,7 @@
     </div>
     <div id="imgs" class='w3-row sectionname' style="display:none">
         <div class='w3-col m12 w3-padding '>
-            @RenderTemplate("ArticleImage.cshtml", appThemeSystem, Model, true)
+            @RenderTemplate("ArticleImages.cshtml", appThemeSystem, Model, true)
         </div>
     </div>
 
@@ -130,8 +135,11 @@
             @TextArea(info, "genxml/lang/genxml/textbox/htmltext", " class='w3-input w3-border' rows='8' ", "", true, 0)
         </div>
     </div>
-    <div id="other" class='w3-row sectionname' style="display:none">
-        @RenderTemplate("AdminRowExtra.cshtml", appThemeAdmin, Model, true)
+    <div id="video" class='w3-row sectionname' style="display:none">
+        <div class='w3-col m12 w3-padding'>
+            <label>Embeded Video</label>
+            @TextArea(info, "genxml/lang/genxml/textbox/video", " class='w3-input w3-border' rows='8' ", "", true, 0)
+        </div>
     </div>
 </div>
 

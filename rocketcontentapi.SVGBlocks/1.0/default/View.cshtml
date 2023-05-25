@@ -16,9 +16,14 @@
     AddProcessDataResx(appThemeView);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
 
+    var headingArticleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
+    var hInfo = headingArticleRowData.Info;
 }
 
 <div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
+    <h2>
+        @hInfo.GetXmlProperty("genxml/lang/genxml/textbox/moduletitle")
+    </h2>
     <div class="svgblockswrapper">
         <div class="svgblocks">
             @foreach (var articleRowData in articleData.GetRows())

@@ -1,0 +1,46 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+@{
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var width = moduleData.Record.GetXmlPropertyInt("genxml/settings/width");
+    var height = moduleData.Record.GetXmlPropertyInt("genxml/settings/height");
+    var idx = Model.SessionParamsData.GetInt("idx");
+    var articleRow = articleData.GetRow(idx - 1);
+    var info = articleRow.Info;
+    var datalist = articleRow.GetImageList();
+    var index = 0;
+}
+
+<div class="fcd-flex">
+    <div class="flexcontent-text flexcontent-div">
+        @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
+    </div>
+    <div class="fcd-images flexcontent-div">
+        @foreach (var imgInfo in datalist)
+        {
+            index++;
+            var alt = info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage");
+            var articleImage = new ArticleImage(imgInfo, "articleimage");
+            if (!articleImage.Hidden)
+            {
+                <a data-fancybox="1" data-caption="@(alt)" href="@(articleImage.RelPath)">
+                    <img src="@ThumbnailImageUrl(articleImage.RelPath, width, height)" />
+                </a>
+            }
+        }
+    </div>
+    @{
+        if (info.GetXmlProperty("genxml/lang/genxml/textbox/video") != "")
+        {
+            <div class="fcd-video"><div class="video-container">@HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/video"))</div></div>
+        }
+    }
+</div>
+

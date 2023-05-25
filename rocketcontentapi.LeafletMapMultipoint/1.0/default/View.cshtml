@@ -14,6 +14,9 @@
     var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
     var globalSettings = new SystemGlobalData();
 
+    var headingArticleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
+    var hInfo = headingArticleRowData.Info;
+
     AddProcessDataResx(appThemeView);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
 
@@ -31,7 +34,9 @@
 
 @{var index = 0;}
 
-
+<h2>
+    @hInfo.GetXmlProperty("genxml/lang/genxml/textbox/moduletitle")
+</h2>
 
 <script type="text/javascript">
 

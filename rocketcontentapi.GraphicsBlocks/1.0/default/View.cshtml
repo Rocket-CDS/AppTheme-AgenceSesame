@@ -23,11 +23,13 @@
     var columnClass = "";
     var bgColorChecked = moduleData.Record.GetXmlPropertyBool("genxml/settings/bgColorChecked");
     var bgColor = "";
+    var headingArticleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
+    var hinfo = headingArticleRowData.Info;
 }
 
 <div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
     <h1>
-        @moduleData.Record.GetXmlProperty("genxml/settings/moduletitle")
+        @hinfo.GetXmlProperty("genxml/lang/genxml/textbox/moduletitle")
     </h1>
     <div class="gblockswrapper">
         <div class="gblocks">
@@ -36,8 +38,6 @@
                 Model.SetDataObject("articlerow", articleRowData);
                 var info = articleRowData.Info;
                 var hideRow = info.GetXmlPropertyBool("genxml/checkbox/hiderow");
-
-
 
                 if (!hideRow)
                 {
@@ -100,4 +100,26 @@
             }
         </div>
     </div>
+    <script type="text/javascript">
+
+        $("[data-fancybox]").fancybox({
+            lang: 'fr',
+            i18n: {
+                'fr': {
+                    CLOSE: 'Fermer',
+                    NEXT: 'Suivant',
+                    PREV: 'Précédent',
+                    ERROR: 'Le contenu demandé ne peut pas être chargé.<br />Veuillez réessayer plus tard.',
+                    PLAY_START: 'Démarrer le diaporama',
+                    PLAY_STOP: 'Mettre en pause le diaporama',
+                    FULL_SCREEN: 'Plein écran',
+                    THUMBS: 'Vignettes',
+                    DOWNLOAD: 'Télécharger',
+                    SHARE: 'Partager',
+                    ZOOM: 'Zoomer'
+                }
+            }
+        });
+
+    </script>
 </div>

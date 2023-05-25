@@ -14,11 +14,18 @@
     var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
     var globalSettings = new SystemGlobalData();
 
+    var headingArticleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
+    var hInfo = headingArticleRowData.Info;
+
     AddProcessDataResx(appThemeView);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
 
 }
 <div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
+    <h2>
+        @hInfo.GetXmlProperty("genxml/lang/genxml/textbox/moduletitle")
+    </h2>
+
     <div class="slider-container">
         <ul class="rslides" id="heroslider">
             @foreach (var articleRowData in articleData.GetRows())
@@ -29,37 +36,35 @@
 
                 if (!hideRow)
                 {
-                    <div class="@info.GetXmlProperty("genxml/lang/genxml/textbox/cssclass")">
-                        <div style="background:url('@info.GetXmlProperty("genxml/imagelist/genxml/hidden/imagepatharticleimage")') center center no-repeat;
-				    -webkit-background-size: cover;
-				    -moz-background-size: cover;
-				    -o-background-size: cover;
-				    background-size: cover;">
 
-                            <div class="caption">
-                                <h2>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
-                                <h3>@info.GetXmlProperty("genxml/lang/genxml/textbox/title2")</h3>
-                                <p>@info.GetXmlProperty("genxml/lang/genxml/textbox/text")</p>
-                            </div>
-
-                            <!-- Bouton de redirection avec gestion type de lien -->
-                            @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 1)
-                            {
-                                var tabddlvalue = PagesUtils.NavigateURL(info.GetXmlPropertyInt("genxml/select/linktab"));
-                                <a class="bigbutton" href="@(tabddlvalue)">@info.GetXmlProperty("genxml/textbox/linktitle")</a>
-                            }
-                            @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 2)
-                            {
-                                var blank = "";
-                                if (info.GetXmlPropertyBool("genxml/checkbox/blank"))
-                                {
-                                    blank = "_blank";
-                                }
-                                <a class="bigbutton" href="@info.GetXmlProperty("genxml/textbox/externalhref")" target="@(blank)">@info.GetXmlProperty("genxml/textbox/linktitle")</a>
-                            }
+                    <div style="background:url('@info.GetXmlProperty("genxml/imagelist/genxml/hidden/imagepatharticleimage")') center center no-repeat;
+				            -webkit-background-size: cover;
+				            -moz-background-size: cover;
+				            -o-background-size: cover;
+				            background-size: cover;" class="@info.GetXmlProperty("genxml/lang/genxml/textbox/cssclass")">
+                        <div class="caption">
+                            <h2>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
+                            <h3>@info.GetXmlProperty("genxml/lang/genxml/textbox/title2")</h3>
+                            <p>@info.GetXmlProperty("genxml/lang/genxml/textbox/text")</p>
                         </div>
+
+                        <!-- Bouton de redirection avec gestion type de lien -->
+                        @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 1)
+                        {
+                            var tabddlvalue = PagesUtils.NavigateURL(info.GetXmlPropertyInt("genxml/select/linktab"));
+                            <a href="@(tabddlvalue)">@info.GetXmlProperty("genxml/textbox/linktitle")</a>
+                        }
+                        @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 2)
+                        {
+                            var blank = "";
+                            if (info.GetXmlPropertyBool("genxml/checkbox/blank"))
+                            {
+                                blank = "_blank";
+                            }
+                            <a href="@info.GetXmlProperty("genxml/textbox/externalhref")" target="@(blank)">@info.GetXmlProperty("genxml/textbox/linktitle")</a>
+                        }
                     </div>
-                } 
+                }
             }
         </ul>
     </div>

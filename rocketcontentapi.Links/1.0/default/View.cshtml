@@ -23,11 +23,14 @@
     var columnClass = "";
     var bgColorChecked = moduleData.Record.GetXmlPropertyBool("genxml/settings/bgColorChecked");
     var bgColor = "";
+
+    var headingArticleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
+    var hInfo = headingArticleRowData.Info;
 }
 
 <div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
     <h2>
-        @moduleData.Record.GetXmlProperty("genxml/settings/moduletitle")
+        @hInfo.GetXmlProperty("genxml/lang/genxml/textbox/moduletitle")
     </h2>
     <div class="about-content">
         @foreach (var articleRowData in articleData.GetRows())

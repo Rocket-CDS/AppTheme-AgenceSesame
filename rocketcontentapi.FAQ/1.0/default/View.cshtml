@@ -17,9 +17,14 @@
     AddProcessDataResx(appThemeView);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
 
+    var headingArticleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
+    var hInfo = headingArticleRowData.Info;
+
 }
 <div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
-    <h1>Questions fréquentes</h1>
+    <h2>
+        @hInfo.GetXmlProperty("genxml/lang/genxml/textbox/moduletitle")
+    </h2>
     <div id="accordion">
         @foreach (var articleRowData in articleData.GetRows())
         {
