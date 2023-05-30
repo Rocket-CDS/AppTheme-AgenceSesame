@@ -14,6 +14,7 @@
     var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
     var width = moduleData.Record.GetXmlPropertyInt("genxml/settings/width");
     var height = moduleData.Record.GetXmlPropertyInt("genxml/settings/height");
+    var group = articleRow.RowKey;
 }
 
 @{
@@ -28,15 +29,17 @@
             index++;
             var alt = info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage");
             var articleImage = new ArticleImage(imgInfo, "articleimage");
+
             if (articleImage.RelPath != "")
             {
-                <a data-fancybox="1" data-caption="@(alt)" href="@(articleImage.RelPath)">
+                <a data-fancybox="@(group)" data-caption="@(alt)" href="@(ThumbnailImageUrl(articleImage.RelPath))">
                     <img src="@ThumbnailImageUrl(articleImage.RelPath, width, height)" />
                 </a>
 
             }
         }
     </div>
+    
     @{
         if (info.GetXmlProperty("genxml/lang/genxml/textbox/video") != "")
         {
@@ -46,6 +49,7 @@
 </div>
 
 <div class="flexcontent-text flexcontent-div">
+    <h1>1</h1>
     @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
 </div>
 

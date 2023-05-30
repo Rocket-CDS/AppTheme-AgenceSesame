@@ -13,12 +13,13 @@
     var info = articleRow.Info;
     var width = moduleData.Record.GetXmlPropertyInt("genxml/settings/width");
     var height = moduleData.Record.GetXmlPropertyInt("genxml/settings/height");
+    var group = articleRow.RowKey;
 }
 
 <div class="flexcontent-div flexcontent-text">
+    <h1>1</h1>
     @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
 </div>
-
 
 @{
     var datalist = articleRow.GetImageList();
@@ -35,14 +36,14 @@
             if (articleImage.RelPath != "")
             {
                 index++;
-                <a data-fancybox="1" data-caption="@(alt)" href="@(articleImage.RelPath)">
 
-                    <img src="@ThumbnailImageUrl(articleImage.RelPath)" />
+                <a data-fancybox="@(group)" data-caption="@(alt)" href="@(ThumbnailImageUrl(articleImage.RelPath))">
+                    <img src="@ThumbnailImageUrl(articleImage.RelPath, width, height)" />
                 </a>
-
             }
         }
     </div>
+    
     @{
         if (info.GetXmlProperty("genxml/lang/genxml/textbox/video") != "")
         {

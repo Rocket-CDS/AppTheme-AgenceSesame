@@ -20,11 +20,11 @@
 
     AddProcessDataResx(appThemeView);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
-
 }
+
 @if (idx > 0 && articleData.GetRowList().Count >= idx)
 {
-    var rtnUrl = DNNrocketUtils.NavigateURL(Model.SessionParamsData.TabId);
+    var rtnUrl = PagesUtils.NavigateURL(moduleData.Record.GetXmlPropertyInt("genxml/settings/listlinktab"));
     var articleRowData = articleData.GetRow(idx - 1);
     var info = articleRowData.Info;
     var datalist = articleRowData.GetImageList();
@@ -33,7 +33,7 @@
     var dateFormat = date.ToString("dd/MM/yyyy");
     var index = 0;
     var indexMain = 0;
-
+    var group = articleRowData.RowKey;
     <!-- RETURN BTN-->
     <a class="w3-right" href="@rtnUrl">Retour</a>
 
@@ -58,8 +58,6 @@
 
     <!-- TEXT -->
     @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
-
-    <!-- TODO SHARE BUTTON-->
 
     <!-- LINKS-->
     <div class="newspaper-link">
@@ -95,7 +93,6 @@
                             @if (info.GetXmlProperty("genxml/textbox/name") != "")
                             {
                                 @info.GetXmlProperty("genxml/textbox/name")
-
                             }
                             else
                             {
@@ -131,20 +128,22 @@
     }
     <hr />
     <!-- GALLERY -->
-    <div class="article-gallery">
-        @foreach (var imgInfo in datalist)
-        {
-            index++;
-            var alt = info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage");
-            var articleImage = new ArticleImage(imgInfo, "articleimage");
-            if (articleImage.RelPath != "")
+    <div class="gallery-wrapper">
+        <div class="gallery">
+            @foreach (var imgInfo in datalist)
             {
                 index++;
-                <a data-fancybox="1" data-caption="@(alt)" href="@(articleImage.RelPath)">
-                    <img src="@ThumbnailImageUrl(articleImage.RelPath)" />
-                </a>
+                var alt = info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage");
+                var articleImage = new ArticleImage(imgInfo, "articleimage");
+                if (articleImage.RelPath != "")
+                {
+                    index++;
+                    <a data-fancybox="@(group)" data-caption="@(alt)" href="@ThumbnailImageUrl(articleImage.RelPath)">
+                        <img src="@ThumbnailImageUrl(articleImage.RelPath, 300, 300)" alt="@(alt)" />
+                    </a>
+                }
             }
-        }
+        </div>
     </div>
     <hr />
 }
@@ -170,11 +169,15 @@ else
                 var hStyle = info.GetXmlProperty("genxml/select/headingstyle");
                 var headingHide = info.GetXmlPropertyBool("genxml/checkbox/hideheading");
                 var hideRow = info.GetXmlPropertyBool("genxml/checkbox/hiderow");
-                string[] urlparams = {"idx", lp.ToString(), info.GetXmlProperty("genxml/lang/genxml/textbox/title") };
+                var detailLink = PagesUtils.GetPageName(moduleData.Record.GetXmlPropertyInt("genxml/settings/linktab"), DNNrocketUtils.GetPortalId());
+                string[] urlparams = { detailLink, "idx", lp.ToString(), info.GetXmlProperty("genxml/lang/genxml/textbox/title") };
                 var detailurl = DNNrocketUtils.NavigateURL(Model.SessionParamsData.TabId, urlparams);
+                var indexMain = 0;
+                var datalist = articleRowData.GetImageList();
+
                 if (!hideRow)
                 {
-             <article>
+            <article>
                 @{
                     // Changement format de date (dd/MM/yyy)
                     var date = info.GetXmlPropertyDate("genxml/lang/genxml/textbox/newsdate");
@@ -184,12 +187,17 @@ else
 
                 <p class="article-infos">Publié le @dateFormat</p>
                 <!-- Affichage de l'image -->
-                @if (info.GetXmlProperty("genxml/imagelist/genxml["+1+"]/hidden/imagepatharticleimage") != "")
+                @foreach (var imgInfo in datalist)
                 {
-                    <div class="article-img">
-                        <img src="@info.GetXmlProperty("genxml/imagelist/genxml["+1+"]/hidden/imagepatharticleimage")" alt="@info.GetXmlProperty("genxml/lang/genxml/textbox/title")" />
-                    </div>
+                    indexMain++;
+                    var alt = info.GetXmlProperty("genxml/imagelist/genxml[" + indexMain + "]/hidden/imagealtarticleimage");
+                    var articleImage = new ArticleImage(imgInfo, "articleimage");
+                    if (indexMain == 1)
+                    {
+                        <img src="@ThumbnailImageUrl(articleImage.RelPath, 300, 150)" />
+                    }
                 }
+
                 <div class="flexcontent-text">
                     <p>@info.GetXmlProperty("genxml/lang/genxml/textbox/resume")</p>
                 </div>
@@ -198,7 +206,7 @@ else
                     lp += 1;
                 }
                 <a href="@(detailurl)">Lire la suite</a>
-             </article>
+            </article>
                     <hr />
                 }
             }
@@ -206,7 +214,7 @@ else
     </div>
 }
 
-<script>
+<script type="text/javascript">
     $(document).ready(function () {
         simplisity_setSessionField('listurl@(moduleData.ModuleId)', window.location.href); // href to cookie so we can use it on the detail back button.
     });

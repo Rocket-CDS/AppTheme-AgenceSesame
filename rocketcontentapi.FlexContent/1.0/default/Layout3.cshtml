@@ -15,6 +15,8 @@
     var width = moduleData.Record.GetXmlPropertyInt("genxml/settings/width");
     var height = moduleData.Record.GetXmlPropertyInt("genxml/settings/height");
     var datalist = articleRow.GetImageList();
+    var group = articleRow.RowKey;
+
 }
 
 <div class="fcd-flex">
@@ -26,7 +28,7 @@
             var articleImage = new ArticleImage(imgInfo, "articleimage");
             if (!articleImage.Hidden)
             {
-                <a data-fancybox="1" data-caption="@(alt)" href="@(articleImage.RelPath)">
+                <a data-fancybox="@(group)" data-caption="@(alt)" href="@(ThumbnailImageUrl(articleImage.RelPath))">
                     <img src="@ThumbnailImageUrl(articleImage.RelPath, width, height)" />
                 </a>
             }

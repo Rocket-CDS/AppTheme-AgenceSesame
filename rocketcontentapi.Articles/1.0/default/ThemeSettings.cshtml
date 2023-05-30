@@ -20,6 +20,18 @@
         <label>@ResourceKey("DNNrocket.imageresize") (px)</label>
         @TextBox(info, "genxml/settings/imageresize", " class='w3-input w3-border'", "640")
     </div>
+    <div class="w3-row">
+        <label><b>Detail Page</b></label>
+    </div>
+    <div class="w3-row">
+        @TabSelectList(info, "genxml/settings/linktab", "class='w3-input w3-border'", false)
+    </div>
+    <div class="w3-row">
+        <label><b>List Page</b></label>
+    </div>
+    <div class="w3-row">
+        @TabSelectList(info, "genxml/settings/listlinktab", "class='w3-input w3-border'", false)
+    </div>
 </div>
 
 <script>
