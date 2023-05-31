@@ -17,20 +17,27 @@
     // var imageurl = info.GetXmlProperty("genxml/imgs/genxml[1]/hidden/imageurl");
     if (!info.GetXmlPropertyBool("genxml/checkbox/hiderow"))
     {
-        <div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
+
+        var cssClass = "";
+        if (moduleData.Record.GetXmlProperty("genxml/settings/cssclass") != "")
+        {
+            cssClass = "class=" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass") + "";
+        }
+
+        <div @(cssClass)>
             <div class="about-content">
-                <img src="@info.GetXmlProperty("genxml/imagelist/genxml/hidden/imagepatharticleimage")" />
-                @if (info.GetXmlProperty("genxml/textbox/content") != "")
+                <img src="@info.GetXmlProperty("genxml/imagelist/genxml/hidden/imagepatharticleimage")" width="@info.GetXmlPropertyInt("genxml/imagelist/genxml/hidden/width")" height="@info.GetXmlPropertyInt("genxml/imagelist/genxml/hidden/height")" />
+                @if (info.GetXmlProperty("genxml/lang/genxml/textbox/content") != "")
                 {
                     <div class="about-text">
-                        @info.GetXmlProperty("genxml/textbox/content")
+                        @info.GetXmlProperty("genxml/lang/genxml/textbox/content")
                     </div>
                 }
                 @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 1)
                 {
                     var tabddlvalue = PagesUtils.NavigateURL(info.GetXmlPropertyInt("genxml/select/linktab"));
                     <div class="about-link">
-                        <a href="@(tabddlvalue)">@info.GetXmlProperty("genxml/textbox/linktitle")</a>
+                        <a href="@(tabddlvalue)">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
                     </div>
                 }
                 @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 2)
@@ -42,7 +49,7 @@
                         blank = "_blank";
                     }
                     <div class="about-link">
-                        <a href="@(externalURL)" target="@(blank)">@info.GetXmlProperty("genxml/textbox/linktitle")</a>
+                        <a href="@(externalURL)" target="@(blank)">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
                     </div>
                 }
             </div>

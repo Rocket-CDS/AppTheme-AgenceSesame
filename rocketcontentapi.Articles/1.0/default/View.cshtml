@@ -29,7 +29,7 @@
     var info = articleRowData.Info;
     var datalist = articleRowData.GetImageList();
     // Changement format de date (dd/MM/yyy)
-    var date = info.GetXmlPropertyDate("genxml/lang/genxml/textbox/newsdate");
+    var date = info.GetXmlPropertyDate("genxml/textbox/newsdate");
     var dateFormat = date.ToString("dd/MM/yyyy");
     var index = 0;
     var indexMain = 0;
@@ -182,7 +182,7 @@ else
             <article>
                 @{
                     // Changement format de date (dd/MM/yyy)
-                    var date = info.GetXmlPropertyDate("genxml/lang/genxml/textbox/newsdate");
+                    var date = info.GetXmlPropertyDate("genxml/textbox/newsdate");
                     var dateFormat = date.ToString("dd/MM/yyyy");
                 }
                 <h2>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
@@ -196,7 +196,7 @@ else
                     var articleImage = new ArticleImage(imgInfo, "articleimage");
                     if (indexMain == 1)
                     {
-                        <img src="@ThumbnailImageUrl(articleImage.RelPath, 300, 150)" />
+                        <img src="@ThumbnailImageUrl(articleImage.RelPath, info.GetXmlPropertyInt("genxml/imagelist/genxml[" + indexMain + "]/hidden/width"), info.GetXmlPropertyInt("genxml/imagelist/genxml[" + indexMain + "]/hidden/height"))" />
                     }
                 }
 
