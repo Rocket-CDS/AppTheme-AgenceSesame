@@ -29,12 +29,13 @@
 
 <div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
 
+    <div class="gblockswrapper">
+
     @if (hinfo.GetXmlProperty("genxml/lang/genxml/textbox/moduletitle") != "")
     {
         <h1>@hinfo.GetXmlProperty("genxml/lang/genxml/textbox/moduletitle")</h1>
     }
 
-    <div class="gblockswrapper">
         <div class="gblocks">
             @foreach (var articleRowData in articleData.GetRows())
             {
