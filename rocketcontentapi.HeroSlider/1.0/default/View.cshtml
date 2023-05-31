@@ -22,10 +22,6 @@
 
 }
 <div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
-    <h2>
-        @hInfo.GetXmlProperty("genxml/lang/genxml/textbox/moduletitle")
-    </h2>
-
     <div class="slider-container">
         <ul class="rslides" id="heroslider">
             @foreach (var articleRowData in articleData.GetRows())
@@ -37,7 +33,7 @@
                 if (!hideRow)
                 {
 
-                    <div style="background:url('@info.GetXmlProperty("genxml/imagelist/genxml/hidden/imagepatharticleimage")') center center no-repeat;
+                    <li style="background:url('@info.GetXmlProperty("genxml/imagelist/genxml/hidden/imagepatharticleimage")') center center no-repeat;
 				            -webkit-background-size: cover;
 				            -moz-background-size: cover;
 				            -o-background-size: cover;
@@ -63,7 +59,7 @@
                             }
                             <a href="@info.GetXmlProperty("genxml/textbox/externalhref")" target="@(blank)">@info.GetXmlProperty("genxml/textbox/linktitle")</a>
                         }
-                    </div>
+                    </li>
                 }
             }
         </ul>

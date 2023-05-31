@@ -11,37 +11,115 @@
     var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
     var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
     var index = 0;
+    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
     var info = articleRow.Info;
-    var width = moduleData.Record.GetXmlPropertyInt("genxml/settings/width");
-    var height = moduleData.Record.GetXmlPropertyInt("genxml/settings/height");
     var datalist = articleRow.GetImageList();
     var group = articleRow.RowKey;
 
 }
 
-<div class="fcd-flex">
-    <div class="flexcontent-div fcd-images">
-        @foreach (var imgInfo in datalist)
+<div class="flexcontent-div fcd-flex fcd-reverse @info.GetXmlProperty("genxml/textbox/cssclass")">
+    <div class="flexcontent-text">
+        @{
+            var layout = info.GetXmlPropertyInt("genxml/select/layout");
+            var hStyle = info.GetXmlProperty("genxml/select/headingstyle");
+            var headingHide = info.GetXmlPropertyBool("genxml/checkbox/hideheading");
+        }
+        <!-- HEADING SECTION -->
+        @if (!headingHide)
         {
-            index++;
-            var alt = info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage");
-            var articleImage = new ArticleImage(imgInfo, "articleimage");
-            if (!articleImage.Hidden)
+            var title = info.GetXmlProperty("genxml/lang/genxml/textbox/title");
+            var headingalignvalue = info.GetXmlPropertyInt("genxml/select/headingalign");
+            var headingalign = "";
+            if (headingalignvalue == 1)
             {
-                <a data-fancybox="@(group)" data-caption="@(alt)" href="@(ThumbnailImageUrl(articleImage.RelPath))">
-                    <img src="@ThumbnailImageUrl(articleImage.RelPath, width, height)" />
-                </a>
+                headingalign = "w3-center";
+            }
+            if (headingalignvalue == 2)
+            {
+                headingalign = "w3-right";
+            }
+
+            if (hStyle == "")
+            {
+                hStyle = "h1";
+            }
+            if (title != "")
+            {
+                var alignText = info.GetXmlProperty("genxml/select/headingalign");
+                if (hStyle.ToLower() == "h1")
+                {
+                    <h1 id="@info.GetXmlProperty("genxml/lang/genxml/textbox/anchor")" style="text-align: @alignText;">@title</h1>
+                }
+                if (hStyle.ToLower() == "h2")
+                {
+                    <h2 id="@info.GetXmlProperty("genxml/lang/genxml/textbox/anchor")" style="text-align: @alignText;">@title</h2>
+                }
+                if (hStyle.ToLower() == "h3")
+                {
+                    <h3 id="@info.GetXmlProperty("genxml/lang/genxml/textbox/anchor")" style="text-align: @alignText;">@title</h3>
+                }
+                if (hStyle.ToLower() == "h4")
+                {
+                    <h4 id="@info.GetXmlProperty("genxml/lang/genxml/textbox/anchor")" style="text-align: @alignText;">@title</h4>
+                }
             }
         }
+
+        <!-- TEXT SECTION -->
+        @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
+
+        <!-- LINK SECTION -->
+        <div class="newspaper-link">
+            @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 1)
+            {
+                var tabddlvalue = PagesUtils.NavigateURL(info.GetXmlPropertyInt("genxml/select/linktab"));
+                <a href="@(tabddlvalue)#@info.GetXmlProperty("genxml/textbox/linkanchor")">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
+            }
+            @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 2)
+            {
+                var externalURL = info.GetXmlProperty("genxml/textbox/externalhref");
+                var blank = "";
+                if (@info.GetXmlPropertyBool("genxml/checkbox/blank"))
+                {
+                    blank = "_blank";
+                }
+                <a href="@(externalURL)" target="@(blank)">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
+            }
+        </div>
+
+        <!-- DOCUMENTS SECTION -->
+        @RenderTemplate("documents.cshtml", moduleData.ModuleRef, appThemeView, Model, true)
     </div>
-    @{
-        if (info.GetXmlProperty("genxml/lang/genxml/textbox/video") != "")
+
+    <!-- MEDIA SECTION -->
+    <div class="flexcontent-media">
+        <!-- IMAGES SECTION -->
+        <div class="fcd-images">
+            @foreach (var imgInfo in datalist)
+            {
+                index++;
+                var alt = info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage");
+                var articleImage = new ArticleImage(imgInfo, "articleimage");
+                if (!articleImage.Hidden)
+                {
+                    if (info.GetXmlPropertyBool("genxml/checkbox/openfancybox"))
+                    {
+                        <a data-fancybox="@(group)" data-caption="@(alt)" href="@(ThumbnailImageUrl(articleImage.RelPath))">
+                            <img src="@ThumbnailImageUrl(articleImage.RelPath, info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/width"), info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/height"))" />
+                        </a>
+                    }
+                    else
+                    {
+                        <img src="@ThumbnailImageUrl(articleImage.RelPath, info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/width"), info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/height"))" />
+                    }
+                }
+            }
+        </div>
+        <!-- VIDEO SECTION --> 
+        @if (info.GetXmlProperty("genxml/lang/genxml/textbox/video") != "")
         {
             <div class="fcd-video"><div class="video-container">@HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/video"))</div></div>
         }
-    }
-
-    <div class="flexcontent-text flexcontent-div">
-        @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
     </div>
 </div>

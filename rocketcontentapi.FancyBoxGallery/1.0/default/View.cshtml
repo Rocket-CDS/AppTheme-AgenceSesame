@@ -20,33 +20,34 @@
     <div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
         @if (!info.GetXmlPropertyBool("genxml/checkbox/hiderow"))
         {
-            <div class="gallery-wrapper">
-                <h2>
-                    @info.GetXmlProperty("genxml/textbox/title")
-                </h2>
-                <hr />
-                @{
-                    var datalist = articleRowData.GetImageList();
-                    var index = 0;
-                    var group = articleRowData.RowKey;
-                    var width = moduleData.Record.GetXmlPropertyInt("genxml/settings/width");
-                    var height = moduleData.Record.GetXmlPropertyInt("genxml/settings/height");
-                }
-                <div class="gallery">
-                    @foreach (var imgInfo in datalist)
+        <div class="gallery-wrapper">
+            @if (info.GetXmlProperty("genxml/textbox/title") != "")
+            {
+                <h2>@info.GetXmlProperty("genxml/textbox/title")</h2>
+            }
+            <hr />
+            @{
+                var datalist = articleRowData.GetImageList();
+                var index = 0;
+                var group = articleRowData.RowKey;
+                var width = moduleData.Record.GetXmlPropertyInt("genxml/settings/width");
+                var height = moduleData.Record.GetXmlPropertyInt("genxml/settings/height");
+            }
+            <div class="gallery">
+                @foreach (var imgInfo in datalist)
+                {
+                    index++;
+                    var articleImage = new ArticleImage(imgInfo, "articleimage");
+                    var alt = info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage");
+                    if (articleImage.RelPath != "")
                     {
-                        index++;
-                        var articleImage = new ArticleImage(imgInfo, "articleimage");
-                        var alt = info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage");
-                        if (articleImage.RelPath != "")
-                        {
-                            <a data-fancybox="@(group)" data-caption="@(alt)" href="@(articleImage.RelPath)">
-                                <img src="@ThumbnailImageUrl(articleImage.RelPath, width, height)" alt="@(alt)" />
-                            </a>
-                        }
+                        <a data-fancybox="@(group)" data-caption="@(alt)" href="@(articleImage.RelPath)">
+                            <img src="@ThumbnailImageUrl(articleImage.RelPath, width, height)" alt="@(alt)" />
+                        </a>
                     }
-                </div>
+                }
             </div>
+        </div>
         }
     </div>
 }

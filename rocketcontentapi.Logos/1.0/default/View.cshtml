@@ -18,9 +18,12 @@
     {
         <div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
             <div class="labelswrapper">
-                <h2>
-                    @info.GetXmlProperty("genxml/textbox/title")
-                </h2>
+
+                @if (info.GetXmlProperty("genxml/textbox/title") != "")
+                {
+                    <h2>@info.GetXmlProperty("genxml/textbox/title")</h2>
+                }
+                
                 <div class="labels">
                     @{
                         var datalist = articleRowData.GetImageList();

@@ -21,9 +21,12 @@
 }
 
 <div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
-    <h2>
-        @hInfo.GetXmlProperty("genxml/lang/genxml/textbox/moduletitle")
-    </h2>
+
+    @if (hInfo.GetXmlProperty("genxml/lang/genxml/textbox/moduletitle") != "")
+    {
+        <h2>@hInfo.GetXmlProperty("genxml/lang/genxml/textbox/moduletitle")</h2>
+    }
+
     <div class="svgblockswrapper">
         <div class="svgblocks">
             @foreach (var articleRowData in articleData.GetRows())

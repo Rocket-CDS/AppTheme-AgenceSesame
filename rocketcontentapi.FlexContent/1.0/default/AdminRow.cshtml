@@ -35,10 +35,6 @@
 @HiddenField(info, "genxml/config/rowkey")
 @HiddenField(info, "genxml/lang/genxml/config/rowkeylang", "", articleRowData.RowKey)
 
-<div class='w3-row w3-xlarge w3-padding'>
-    @info.GetXmlProperty("genxml/lang/genxml/textbox/title")
-</div>
-
 <div class='w3-row w3-padding'>
 
     <div class="w3-bar" style="cursor: pointer;">
@@ -49,32 +45,12 @@
         <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink linkstablink" onclick="openSection('links')">@ResourceKey("DNNrocket.links")</div>
         <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink htmltexttablink" onclick="openSection('htmltext')">@ResourceKey("HtmlContent.htmltext")</div>
         <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink othertablink" onclick="openSection('video')">Video</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink othertablink" onclick="openSection('advanced')">Advanced Settings</div>
     </div>
 
     <div id="heading" class='w3-row sectionname' style="display:none">
 
-        <div class='w3-row w3-margin-top w3-border'>
-            <div class="w3-half">
-                <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
-                    <label>@ResourceKey("HtmlContent.heading")</label>		&nbsp;@EditFlag(sessionParams)
-                    @TextBox(info, "genxml/lang/genxml/textbox/title", " id='title' class='w3-input w3-border' autocomplete='off' ", "", true, 0)
-                </div>
-            </div>
-            <div class="w3-half">
-                <div class='w3-col m2 w3-padding' style='min-width: 85px;'>
-                    <label>@ResourceKey("HtmlContent.headingstyle")</label>
-                    @DropDownList(info, "genxml/select/headingstyle", "h1,h2,h3,h4", "H1,H2,H3,H4", "class='w3-select w3-border ' ", "", false, 0)
-                </div>
-                <div class='w3-col m4 w3-padding' style='min-width: 170px;'>
-                    <label>&nbsp;</label>
-                    @RadioButtonList(info, "genxml/select/headingalign", "start,center,end", "<span class='material-icons'>format_align_left</span>,<span class='material-icons'>format_align_center</span>,<span class='material-icons'>format_align_right</span>", "", "1", "", false, 0, "")
-                </div>
-                <div class='w3-col m2 w3-padding'>
-                    <label>@ResourceKey("HtmlContent.hide")</label><br />
-                    @CheckBox(info, "genxml/checkbox/hideheading", "", "class='w3-check' ", false, false, 0)
-                </div>
-            </div>
-        </div>
+        @RenderTemplate("ArticleHeading.cshtml", appThemeSystem, Model, true)
 
         <div class='w3-row w3-padding'>
             @{
@@ -88,22 +64,6 @@
             <label>@ResourceKey("HtmlContent.layout")</label>
             @RadioButtonList(info, "genxml/select/layout", "0,1,2,3,4", imgLayoutList, "class='  ' ", "0", "", false, 0)
         </div>
-
-        <div class='w3-row'>
-            <div class='w3-quarter w3-padding'>
-                <label>@ResourceKey("HtmlContent.hide")</label><br />
-                @CheckBox(info, "genxml/checkbox/hiderow", "", "class='w3-check' ", false, false, 0)
-            </div>
-            <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
-                <label>Anchor id</label>		&nbsp;@EditFlag(sessionParams)
-                @TextBox(info, "genxml/lang/genxml/textbox/anchor", "class='w3-input w3-border' autocomplete='off'", "", true, 0)
-            </div>
-            <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
-                <label>CSS Class</label>		&nbsp;@EditFlag(sessionParams)
-                @TextBox(info, "genxml/lang/genxml/textbox/cssclass", "class='w3-input w3-border' autocomplete='off'", "", true, 0)
-            </div>
-        </div>
-
     </div>
 
     <div id="html" class='w3-row sectionname' style="display:none">
@@ -116,8 +76,12 @@
         </div>
     </div>
     <div id="imgs" class='w3-row sectionname' style="display:none">
+        <div class="w3-padding">
+            <label>Open in FancyBox</label><br />
+            @CheckBox(info, "genxml/checkbox/openfancybox", "", "class='w3-check' ", false, false, 0)
+        </div>
         <div class='w3-col m12 w3-padding '>
-            @RenderTemplate("ArticleImages.cshtml", appThemeSystem, Model, true)
+            @RenderTemplate("ArticleImagesFlexContent.cshtml", appThemeSystem, Model, true)
         </div>
     </div>
 
@@ -144,6 +108,17 @@
         <div class='w3-col m12 w3-padding'>
             <label>Embeded Video</label>
             @TextArea(info, "genxml/lang/genxml/textbox/video", " class='w3-input w3-border' rows='8' ", "", true, 0)
+        </div>
+    </div>
+
+    <div id="advanced" class='w3-row sectionname' style="display:none">
+        <div class='w3-quarter w3-padding'>
+            <label>Hide Row</label><br />
+            @CheckBox(info, "genxml/checkbox/hiderow", "", "class='w3-check' ", false, false, 0)
+        </div>
+        <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
+            <label>CSS Class</label>
+            @TextBox(info, "genxml/textbox/cssclass", "class='w3-input w3-border' autocomplete='off'", "", true, 0)
         </div>
     </div>
 </div>

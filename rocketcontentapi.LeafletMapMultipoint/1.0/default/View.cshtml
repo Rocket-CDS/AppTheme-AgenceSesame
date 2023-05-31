@@ -34,9 +34,10 @@
 
 @{var index = 0;}
 
-<h2>
-    @hInfo.GetXmlProperty("genxml/lang/genxml/textbox/moduletitle")
-</h2>
+@if (hInfo.GetXmlProperty("genxml/lang/genxml/textbox/moduletitle") != "")
+{
+    <h2>@hInfo.GetXmlProperty("genxml/lang/genxml/textbox/moduletitle")</h2>
+}
 
 <script type="text/javascript">
 

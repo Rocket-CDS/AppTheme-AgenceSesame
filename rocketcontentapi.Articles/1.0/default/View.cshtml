@@ -41,7 +41,6 @@
     <h2>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
 
     <!-- MAIN IMAGE -->
-    <!-- TODO Améliorer ce code parce que là c'est une unsine à gaz -->
     foreach (var imgInfo in datalist)
     {
         indexMain++;
@@ -156,7 +155,10 @@ else
                     var headingArticleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
                     var hinfo = headingArticleRowData.Info;
                 }
-                @hinfo.GetXmlProperty("genxml/lang/genxml/textbox/moduletitle")
+                @if (hinfo.GetXmlProperty("genxml/lang/genxml/textbox/moduletitle") != "")
+                {
+                    @hinfo.GetXmlProperty("genxml/lang/genxml/textbox/moduletitle")
+                }
             </div>
         </div>
 
