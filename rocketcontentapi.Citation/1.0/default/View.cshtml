@@ -9,6 +9,12 @@
 @{
     var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
     var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+
+    var cssClass = "";
+    if (moduleData.Record.GetXmlProperty("genxml/setting/cssclass") != "")
+    {
+        cssClass = "class=" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass");
+    }
 }
 
 @foreach (var articleRowData in articleData.GetRows())
@@ -17,20 +23,9 @@
     // var imageurl = info.GetXmlProperty("genxml/imgs/genxml[1]/hidden/imageurl");
     if (!info.GetXmlPropertyBool("genxml/checkbox/hiderow"))
     {
-        <div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
-            <div class="w3-display-container">
-                <div class="w3-row">
-                    <h2>
-                        <b>@info.GetXmlProperty("genxml/textbox/citation")</b>
-                    </h2>
-                </div>
-
-                <div class="w3-row">
-                    <h4>
-                        <i>@info.GetXmlProperty("genxml/textbox/auteur")</i>
-                    </h4>
-                </div>
-            </div>
+        <div @(cssClass)>
+            <h2><b>@info.GetXmlProperty("genxml/lang/genxml/textbox/citation")</b></h2>
+            <h4><i>@info.GetXmlProperty("genxml/lang/genxml/textbox/auteur")</i></h4>
         </div>
     }
 }

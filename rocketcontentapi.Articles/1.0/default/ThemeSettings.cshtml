@@ -17,7 +17,7 @@
 }
 <div class="w3-row">
     <div class="w3-third w3-padding">
-        <label>@ResourceKey("DNNrocket.imageresize") (px)</label>
+        <label>Image resize loading (px)</label>
         @TextBox(info, "genxml/settings/imageresize", " class='w3-input w3-border'", "640")
     </div>
     <div class="w3-row">
@@ -31,6 +31,20 @@
     </div>
     <div class="w3-row">
         @TabSelectList(info, "genxml/settings/listlinktab", "class='w3-input w3-border'", false)
+    </div>
+    <div class="w3-row">
+        <div class="w3-third w3-padding">
+            <label>Width (px)</label>
+            @TextBox(info, "genxml/settings/width", " class='w3-input w3-border'", "400")
+        </div>    
+        <div class="w3-third w3-padding">
+            <label>Height (px)</label>
+            @TextBox(info, "genxml/settings/height", " class='w3-input w3-border'", "300")
+        </div>
+    </div>
+    <div class="w3-row">
+        <label>CSS Class</label>
+        @TextBox(info, "genxml/settings/cssclass", " class='w3-input w3-border'", "300")
     </div>
 </div>
 

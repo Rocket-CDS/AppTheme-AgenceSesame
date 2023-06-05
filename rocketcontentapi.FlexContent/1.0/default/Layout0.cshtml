@@ -8,6 +8,7 @@
 
 @{
     var articleRow = (ArticleRowLimpet)Model.GetDataObject("articlerow");
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
     var info = articleRow.Info;
     var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
     var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
@@ -19,7 +20,7 @@
             var hStyle = info.GetXmlProperty("genxml/select/headingstyle");
             var headingHide = info.GetXmlPropertyBool("genxml/checkbox/hideheading");
         }
-        <!-- HEADING SECTION -->        
+        <!-- HEADING SECTION -->
         @if (!headingHide)
         {
             var title = info.GetXmlProperty("genxml/lang/genxml/textbox/title");
@@ -65,21 +66,7 @@
 
         <!-- LINK SECTION -->
         <div class="newspaper-link">
-            @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 1)
-            {
-                var tabddlvalue = PagesUtils.NavigateURL(info.GetXmlPropertyInt("genxml/select/linktab"));
-                <a href="@(tabddlvalue)#@info.GetXmlProperty("genxml/textbox/linkanchor")">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
-            }
-            @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 2)
-            {
-                var externalURL = info.GetXmlProperty("genxml/textbox/externalhref");
-                var blank = "";
-                if (@info.GetXmlPropertyBool("genxml/checkbox/blank"))
-                {
-                    blank = "_blank";
-                }
-                <a href="@(externalURL)" target="@(blank)">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
-            }
+            @RenderTemplate("Links.cshtml", moduleData.ModuleRef, appThemeView, Model, true)
         </div>
 
         <!-- DOCUMENTS SECTION -->

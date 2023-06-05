@@ -17,11 +17,16 @@
     // Path to the resx file
     AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppThemes-W3-CSS/rocketcontentapi.ContactDetail/1.0/resx");
 
+    var cssClass = "";
+    if (moduleData.Record.GetXmlProperty("genxml/setting/cssclass") != "")
+    {
+        cssClass = "class=" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass");
+    }
 }
 
 @foreach (var articleRowData in articleData.GetRows())
 {
-    <div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
+    <div @(cssClass)>
         @{var info = articleRowData.Info;}
         <div class="contact-wrapper">
             <div id="@articleRowData.RowKey" class="contact-infos">

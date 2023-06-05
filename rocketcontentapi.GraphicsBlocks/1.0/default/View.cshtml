@@ -5,10 +5,6 @@
 @using DNNrocketAPI.Components;
 @using RocketPortal.Components;
 
-<!-- TODO Rendre ça plus propre - système D pour que ça marche -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>
-
 @{
     var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
     var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
@@ -21,13 +17,17 @@
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
 
     var columnClass = "";
-    var bgColorChecked = moduleData.Record.GetXmlPropertyBool("genxml/settings/bgColorChecked");
-    var bgColor = "";
     var headingArticleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
     var hinfo = headingArticleRowData.Info;
+
+    var cssClass = "";
+    if (moduleData.Record.GetXmlProperty("genxml/setting/cssclass") != "")
+    {
+        cssClass = "class=" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass");
+    }
 }
 
-<div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
+<div @(cssClass)>
 
     <div class="gblockswrapper">
 
@@ -45,7 +45,13 @@
 
                 if (!hideRow)
                 {
-                    <div class="@info.GetXmlProperty("genxml/lang/genxml/textbox/cssclass")">
+                    var cssClassRow = "";
+                    if (info.GetXmlProperty("genxml/textbox/cssclass") != "")
+                    {
+                        cssClassRow = "class=" + info.GetXmlProperty("genxml/textbox/cssclass");
+                    }
+
+                    <div @(cssClassRow)>
 
                         <!-- Pas de liens -->
                         @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 0)
@@ -66,7 +72,12 @@
                         @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 1)
                         {
                             var tabddlvalue = PagesUtils.NavigateURL(info.GetXmlPropertyInt("genxml/select/linktab"));
-                            <a href="@(tabddlvalue)#@info.GetXmlProperty("genxml/textbox/linkanchor")">
+                            var anchor = "";
+                            if (info.GetXmlProperty("genxml/textbox/linkanchor") != "")
+                            {
+                                anchor = "#" + info.GetXmlProperty("genxml/textbox/linkanchor");
+                            }
+                            <a href="@(tabddlvalue)@(anchor)">
 
                                 @RenderTemplate("Image.cshtml", moduleData.ModuleRef, appThemeView, Model, true)
 

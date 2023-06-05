@@ -27,62 +27,41 @@
 
     AddProcessDataResx(appThemeView, true);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
-
+    AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppTheme-AgenceSesame/resx/");
 }
 
 <!-- require Key for saving -->
 @HiddenField(info, "genxml/config/rowkey")
 @HiddenField(info, "genxml/lang/genxml/config/rowkeylang", "", articleRowData.RowKey)
 
-<div class='w3-row w3-xlarge w3-padding'>
-    @info.GetXmlProperty("genxml/lang/genxml/textbox/title")
-</div>
-
 <div class='w3-row w3-padding'>
 
     <div class="w3-bar" style="cursor: pointer;">
-        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink headingtablink" onclick="openSection('heading')">@ResourceKey("HtmlContent.layout")</div>
-        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink imgstablink" onclick="openSection('imgs')">@ResourceKey("DNNrocket.images")</div>
-        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink linkstablink" onclick="openSection('links')">@ResourceKey("DNNrocket.links")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink headingtablink" onclick="openSection('heading')">@ResourceKey("General.layout")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink imgstablink" onclick="openSection('imgs')">@ResourceKey("General.images")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink linkstablink" onclick="openSection('links')">@ResourceKey("General.links")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink linkstablink" onclick="openSection('advanced')">@ResourceKey("General.advanced")</div>
     </div>
 
     <div id="heading" class='w3-row sectionname' style="display:none">
-
         <div class='w3-row w3-margin-top w3-border'>
             <div class="w3-half">
                 <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
-                    <label>@ResourceKey("HtmlContent.heading")</label>		&nbsp;@EditFlag(sessionParams)
+                    <label>@ResourceKey("General.layout")</label>		&nbsp;@EditFlag(sessionParams)
                     @TextBox(info, "genxml/lang/genxml/textbox/title", " id='title' class='w3-input w3-border' autocomplete='off' ", "", true, 0)
                 </div>
             </div>
             <div class="w3-half">
                 <div class='w3-col m2 w3-padding'>
-                    <label>@ResourceKey("HtmlContent.hide")</label><br />
+                    <label>@ResourceKey("General.hideHeading")</label><br />
                     @CheckBox(info, "genxml/checkbox/hideheading", "", "class='w3-check' ", false, false, 0)
                 </div>
             </div>
             <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
-                <label>Texte</label>		&nbsp;@EditFlag(sessionParams)
+                <label>@ResourceKey("General.content")</label>		&nbsp;@EditFlag(sessionParams)
                 @TextArea(info, "genxml/lang/genxml/textbox/text", "class='w3-input w3-border' rows='4' autocomplete='off'", "", true, 0)
             </div>
         </div>
-
-        <div class='w3-row'>
-            <div class='w3-quarter w3-padding'>
-                <label>@ResourceKey("HtmlContent.hide")</label><br />
-                @CheckBox(info, "genxml/checkbox/hiderow", "", "class='w3-check' ", false, false, 0)
-            </div>
-            <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
-                <label>Anchor id</label>		&nbsp;@EditFlag(sessionParams)
-                @TextBox(info, "genxml/lang/genxml/textbox/anchor", "class='w3-input w3-border' autocomplete='off'", "", true, 0)
-            </div>
-            <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
-                <label>CSS Class</label>		&nbsp;@EditFlag(sessionParams)
-                @TextBox(info, "genxml/lang/genxml/textbox/cssclass", "class='w3-input w3-border' autocomplete='off'", "", true, 0)
-            </div>
-            
-        </div>
-
     </div>
 
     <div id="imgs" class='w3-row sectionname' style="display:none">
@@ -94,6 +73,20 @@
     <div id="links" class='w3-row sectionname' style="display:none">
         <div class='w3-col m12 w3-padding '>
             @RenderTemplate("ArticleLink.cshtml", appThemeSystem, Model, true)
+        </div>
+    </div>
+
+    <div id="advanced" class='w3-row sectionname'>
+        <div class='w3-quarter w3-padding'>
+            <label>@ResourceKey("General.hideRow")</label><br />
+            @CheckBox(info, "genxml/checkbox/hiderow", "", "class='w3-check' ", false, false, 0)
+        </div>
+        <div class='w3-col m12 w3-padding'>
+            <label>@ResourceKey("General.nomAncre")</label>		&nbsp;@EditFlag(sessionParams)
+            @TextBox(info, "genxml/lang/genxml/textbox/anchor", "class='w3-input w3-border' autocomplete='off'", "", true, 0)
+        </div>
+        <div class='w3-col m12 w3-padding'>
+            @TextBox(info, "genxml/textbox/cssclass", "class='w3-input w3-border' autocomplete='off'", "", true, 0)
         </div>
     </div>
 </div>

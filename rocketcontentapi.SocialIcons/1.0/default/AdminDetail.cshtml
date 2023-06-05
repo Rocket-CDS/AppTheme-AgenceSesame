@@ -23,20 +23,19 @@
     }
     AddProcessDataResx(appThemeView, true);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
+    AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppTheme-AgenceSesame/resx/");
+
 }
 <!-- require Key for saving -->
 @HiddenField(info, "genxml/config/rowkey")
 @HiddenField(info, "genxml/lang/genxml/config/rowkeylang", "", articleRowData.RowKey)
 
 <div class='w3-row w3-padding'>
-  
-
-
     <div class="w3-col m12 w3-padding">
 
         <!-- display title -->
         <div class="w3-half w3-padding">
-            <label>Title</label><span>@EditFlag(sessionParams)</span>
+            <label>@ResourceKey("General.moduleTitle")</label><span>@EditFlag(sessionParams)</span>
             @TextBox(info, "genxml/lang/genxml/textbox/title", " class='w3-input w3-border' ", "", true)
         </div>
 

@@ -13,13 +13,19 @@
     var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
     var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
     var globalSettings = new SystemGlobalData();
+
+    var cssClass = "";
+    if (moduleData.Record.GetXmlProperty("genxml/setting/cssclass") != "")
+    {
+        cssClass = "class=" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass");
+    }
 }
 
 @foreach (var articleRowData in articleData.GetRows())
 {
     var info = articleRowData.Info;
 
-    <div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
+    <div @(cssClass)>
         @if (info.GetXmlProperty("genxml/lang/genxml/textbox/title") != "")
         {
             <div class="h4-headline">@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</div>

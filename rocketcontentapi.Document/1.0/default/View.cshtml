@@ -26,9 +26,15 @@
 
     var headingArticleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
     var hInfo = headingArticleRowData.Info;
+
+    var cssClass = "";
+    if (moduleData.Record.GetXmlProperty("genxml/setting/cssclass") != "")
+    {
+        cssClass = "class=" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass");
+    }
 }
 
-<div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
+<div @(cssClass)>
 
     <!-- Test si le titre n'est pas vide alors on l'affiche -->
     @if (hInfo.GetXmlProperty("genxml/lang/genxml/textbox/moduletitle") != "")    
@@ -55,11 +61,10 @@
                             if (info.GetXmlPropertyBool("genxml/checkbox/openinnewtab"))
                             {
                                 <div class="documents">
-                                    <p>@info.GetXmlProperty("genxml/textbox/text")</p>
                                     <a href="@(docURL)" target="_blank">
-                                        @if (info.GetXmlProperty("genxml/textbox/name") != "")
+                                        @if (info.GetXmlProperty("genxml/lang/genxml/textbox/name") != "")
                                         {
-                                            @info.GetXmlProperty("genxml/textbox/name")
+                                            @info.GetXmlProperty("genxml/lang/genxml/textbox/name")
 
                                         }
                                         else
@@ -76,7 +81,7 @@
                                     <a href="@(docURL)" download="@info.GetXmlProperty("genxml/textbox/documentnamearticledoc")">
                                         @if (info.GetXmlProperty("genxml/textbox/name") != "")
                                         {
-                                            @info.GetXmlProperty("genxml/textbox/name")
+                                            @info.GetXmlProperty("genxml/lang/genxml/textbox/name")
                                         }
                                         else
                                         {

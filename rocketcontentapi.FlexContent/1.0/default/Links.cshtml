@@ -10,20 +10,27 @@
     var info = articleRow.Info;
 }
 
-@foreach (ArticleLink link in articleRow.Getlinks())
+@foreach (var linkInfo in articleRow.GetLinkList())
 {
-    if (!link.Hidden)
+    if (linkInfo.GetXmlPropertyInt("genxml/radio/linktypearticlelink") == 1)
     {
+        var tabddlvalue = PagesUtils.NavigateURL(linkInfo.GetXmlPropertyInt("genxml/select/internallinkarticlelink"));
         var anchor = "";
-        if (link.Anchor != "")
+        if (linkInfo.GetXmlProperty("genxml/textbox/linkanchorarticlelink") != "")
         {
-            anchor = "#" + link.Anchor;
+            anchor = "#" + linkInfo.GetXmlProperty("genxml/textbox/linkanchorarticlelink");
         }
-        <div class="w3-container">
-            <div>
-                <a target="@(link.Target)" href="@(link.Url)@(anchor)" class="w3-button " download>@link.Name</a>
-            </div>
-        </div>        
+        <a href="@(tabddlvalue)@(anchor)">@linkInfo.GetXmlProperty("genxml/lang/genxml/textbox/namearticlelink")</a>
+    }
+    if (linkInfo.GetXmlPropertyInt("genxml/radio/linktypearticlelink") == 2)
+    {
+        var externalURL = linkInfo.GetXmlProperty("genxml/textbox/externallinkarticlelink");
+        var blank = "";
+        if (linkInfo.GetXmlPropertyBool("genxml/checkbox/blankarticlelink"))
+        {
+            blank = "_blank";
+        }
+        <a href="@(externalURL)" target="@(blank)">@linkInfo.GetXmlProperty("genxml/lang/genxml/textbox/namearticlelink")</a>
     }
 }
 

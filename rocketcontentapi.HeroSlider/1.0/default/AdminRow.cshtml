@@ -27,10 +27,11 @@
 
     AddProcessDataResx(appThemeView, true);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
+    AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppTheme-AgenceSesame/resx/");
 
 }
 <div class='w3-row'>
-     <label>Css Class</label>
+    <label>@ResourceKey("General.cssClass")</label>
     @TextBox(info, "genxml/lang/genxml/textbox/cssclass", " class='w3-input w3-border' autocomplete='off'", "", false, 0)
 </div>
 
@@ -41,16 +42,16 @@
 <div class='w3-row w3-padding'>
 
     <div class="w3-bar" style="cursor: pointer;">
-        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink headingtablink" onclick="openSection('heading')">Titre et Resume</div>
-        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink imgstablink" onclick="openSection('imgs')">@ResourceKey("DNNrocket.images")</div>
-        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink linkstablink" onclick="openSection('links')">@ResourceKey("DNNrocket.links")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink headingtablink" onclick="openSection('heading')">@ResourceKey("General.layout")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink imgstablink" onclick="openSection('imgs')">@ResourceKey("General.images")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink linkstablink" onclick="openSection('links')">@ResourceKey("General.links")</div>
     </div>
 
     <div id="heading" class='w3-row sectionname' style="display:none">
         <div class='w3-row w3-margin-top w3-border'>
             <div class="w3-half">
                 <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
-                    <label>Title 1</label>		&nbsp;@EditFlag(sessionParams)
+                    <label>@ResourceKey("General.title1")</label>		&nbsp;@EditFlag(sessionParams)
                     @TextBox(info, "genxml/lang/genxml/textbox/title", " class='w3-input w3-border' autocomplete='off'", "", false, 0)
                 </div>
             </div>
@@ -58,7 +59,7 @@
         <div class='w3-row w3-margin-top w3-border'>
             <div class="w3-half">
                 <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
-                    <label>Title 2</label>		&nbsp;@EditFlag(sessionParams)
+                    <label>@ResourceKey("General.title2")</label>		&nbsp;@EditFlag(sessionParams)
                     @TextBox(info, "genxml/lang/genxml/textbox/title2", " class='w3-input w3-border' autocomplete='off' ", "", false, 0)
                 </div>
             </div>
@@ -66,7 +67,7 @@
         <div class='w3-row w3-margin-top w3-border'>
             <div class="w3-half">
                 <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
-                    <label>Text</label>		&nbsp;@EditFlag(sessionParams)
+                    <label>@ResourceKey("General.content")</label>		&nbsp;@EditFlag(sessionParams)
                     @TextArea(info, "genxml/lang/genxml/textbox/text", " rows='4' class='w3-input w3-border' autocomplete='off' ", "", false, 0)
                 </div>
             </div>
@@ -78,10 +79,6 @@
         </div>
     </div>
     <div id="links" class='w3-row sectionname' style="display:none">
-        <div class='w3-row w3-padding' style='min-width: 160px;'>
-            <label>&nbsp;</label>
-            @RadioButtonList(info, "genxml/select/linkalign", "0,1,2", "<span class='material-icons'>format_align_left</span>,<span class='material-icons'>format_align_center</span>,<span class='material-icons'>format_align_right</span>", "", "1", "", false, 0, "")
-        </div>
         <div class='w3-col m12 w3-padding '>
             <!-- A voir si il faut absolument plusieurs liens ou pas !! -->
             @RenderTemplate("ArticleLink.cshtml", appThemeSystem, Model, true)

@@ -20,8 +20,14 @@
     AddProcessDataResx(appThemeView);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
 
+    var cssClass = "";
+    if (moduleData.Record.GetXmlProperty("genxml/setting/cssclass") != "")
+    {
+        cssClass = "class=" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass");
+    }
+
 }
-<div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
+<div @(cssClass)>
     <div class="slider-container">
         <ul class="rslides" id="heroslider">
             @foreach (var articleRowData in articleData.GetRows())
@@ -32,7 +38,6 @@
 
                 if (!hideRow)
                 {
-
                     <li style="background:url('@info.GetXmlProperty("genxml/imagelist/genxml/hidden/imagepatharticleimage")') center center no-repeat;
 				            -webkit-background-size: cover;
 				            -moz-background-size: cover;
@@ -48,7 +53,12 @@
                         @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 1)
                         {
                             var tabddlvalue = PagesUtils.NavigateURL(info.GetXmlPropertyInt("genxml/select/linktab"));
-                            <a href="@(tabddlvalue)">@info.GetXmlProperty("genxml/textbox/linktitle")</a>
+                            var anchor = "";
+                            if (info.GetXmlProperty("genxml/textbox/linkanchor") != "")
+                            {
+                                anchor = "#" + info.GetXmlProperty("genxml/textbox/linkanchor");
+                            }
+                            <a href="@(tabddlvalue)@(anchor)">@info.GetXmlProperty("genxml/textbox/linktitle")</a>
                         }
                         @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 2)
                         {

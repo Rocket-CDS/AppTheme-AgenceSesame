@@ -9,6 +9,15 @@
 @{
     var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
     var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+
+    var cssClass = "";
+    if (moduleData.Record.GetXmlProperty("genxml/setting/cssclass") != "")
+    {
+        cssClass = "class=" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass");
+    }
+
+    var width = moduleData.Record.GetXmlPropertyInt("genxml/settings/width");
+    var height = moduleData.Record.GetXmlPropertyInt("genxml/settings/height");
 }
 
 @foreach (var articleRowData in articleData.GetRows())
@@ -16,12 +25,12 @@
     var info = articleRowData.Info;
     if (!info.GetXmlPropertyBool("genxml/checkbox/hiderow"))
     {
-        <div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
+        <div @(cssClass)>
             <div class="labelswrapper">
 
-                @if (info.GetXmlProperty("genxml/textbox/title") != "")
+                @if (info.GetXmlProperty("genxml/lang/genxml/textbox/title") != "")
                 {
-                    <h2>@info.GetXmlProperty("genxml/textbox/title")</h2>
+                    <h2>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
                 }
                 
                 <div class="labels">
@@ -45,12 +54,12 @@
                                             blank = "_blank";
                                         }
                                         <a href="@info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imageredirectlink")" target="@(blank)">
-                                            <img src="@ThumbnailImageUrl(articleImage.RelPath)" alt="@info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage")" />
+                                            <img src="@ThumbnailImageUrl(articleImage.RelPath, width, height)" alt="@info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage")" />
                                         </a>
                                     }
                                     else
                                     {
-                                        <img src="@ThumbnailImageUrl(articleImage.RelPath)" alt="@info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage")" />
+                                        <img src="@ThumbnailImageUrl(articleImage.RelPath, width, height)" alt="@info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage")" />
                                     }
                                 }
                             </div>

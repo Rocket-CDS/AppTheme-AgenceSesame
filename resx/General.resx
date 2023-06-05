@@ -117,7 +117,157 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="adress.Text" xml:space="preserve">
+    <value>Adresse</value>
+  </data>
+  <data name="advanced.Text" xml:space="preserve">
+    <value>Paramètres avancés</value>
+  </data>
+  <data name="answer.Text" xml:space="preserve">
+    <value>Réponse</value>
+  </data>
+  <data name="articleTitle.Text" xml:space="preserve">
+    <value>Titre de l'article</value>
+  </data>
+  <data name="auteur.Text" xml:space="preserve">
+    <value>Auteur</value>
+  </data>
+  <data name="background.Text" xml:space="preserve">
+    <value>Image de fond</value>
+  </data>
+  <data name="category.Text" xml:space="preserve">
+    <value>Catégorie</value>
+  </data>
+  <data name="citation.Text" xml:space="preserve">
+    <value>Citation</value>
+  </data>
+  <data name="codeGoogleMap.Text" xml:space="preserve">
+    <value>Code intégration Google Map</value>
+  </data>
+  <data name="companyName.Text" xml:space="preserve">
+    <value>Nom de l'entreprise</value>
+  </data>
+  <data name="contact1.Text" xml:space="preserve">
+    <value>Contact 1</value>
+  </data>
+  <data name="contact2.Text" xml:space="preserve">
+    <value>Contact 2</value>
+  </data>
+  <data name="contactname1.Text" xml:space="preserve">
+    <value>Nom du contact 1</value>
+  </data>
+  <data name="contactname2.Text" xml:space="preserve">
+    <value>Nom du contact 2</value>
+  </data>
+  <data name="content.Text" xml:space="preserve">
+    <value>Texte</value>
+  </data>
+  <data name="cssClass.Text" xml:space="preserve">
+    <value>Classe CSS</value>
+  </data>
+  <data name="date.Text" xml:space="preserve">
+    <value>Date de plublication</value>
+  </data>
+  <data name="docs.Text" xml:space="preserve">
+    <value>Documents</value>
+  </data>
+  <data name="email.Text" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="email1.Text" xml:space="preserve">
+    <value>Email du contact 1</value>
+  </data>
+  <data name="email2.Text" xml:space="preserve">
+    <value>Email du contact 2</value>
+  </data>
+  <data name="extraInfo.Text" xml:space="preserve">
+    <value>Informations supplémentaires</value>
+  </data>
+  <data name="fax.Text" xml:space="preserve">
+    <value>Fax</value>
+  </data>
+  <data name="hideHeading.Text" xml:space="preserve">
+    <value>Cacher le titre</value>
+  </data>
+  <data name="hideRow.Text" xml:space="preserve">
+    <value>Cacher la ligne</value>
+  </data>
+  <data name="html.Text" xml:space="preserve">
+    <value>Contenu</value>
+  </data>
+  <data name="htmlText.Text" xml:space="preserve">
+    <value>Code HTML</value>
+  </data>
+  <data name="image.Text" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="images.Text" xml:space="preserve">
+    <value>Images</value>
+  </data>
+  <data name="latitude.Text" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="layout.Text" xml:space="preserve">
+    <value>Titre de ligne</value>
+  </data>
+  <data name="link.Text" xml:space="preserve">
+    <value>Lien</value>
+  </data>
+  <data name="links.Text" xml:space="preserve">
+    <value>Liens</value>
+  </data>
+  <data name="longitude.Text" xml:space="preserve">
+    <value>Longitude</value>
+  </data>
+  <data name="metaSeo.Text" xml:space="preserve">
+    <value>Balise Meta (SEO)</value>
+  </data>
+  <data name="mobile1.Text" xml:space="preserve">
+    <value>Mobile du contact 1</value>
+  </data>
+  <data name="mobile2.Text" xml:space="preserve">
+    <value>Mobile du contact 2</value>
+  </data>
+  <data name="moduleTitle.Text" xml:space="preserve">
+    <value>Titre du module</value>
+  </data>
+  <data name="nomAncre.Text" xml:space="preserve">
+    <value>Nom de l'ancre</value>
+  </data>
+  <data name="openFancy.Text" xml:space="preserve">
+    <value>Ouvrir dans FancyBox</value>
+  </data>
+  <data name="question.Text" xml:space="preserve">
+    <value>Question</value>
+  </data>
+  <data name="resume.Text" xml:space="preserve">
+    <value>Résumé de l'article</value>
+  </data>
+  <data name="svgCode.Text" xml:space="preserve">
+    <value>Code SVG</value>
+  </data>
+  <data name="tel1.Text" xml:space="preserve">
+    <value>Tel. 1</value>
+  </data>
+  <data name="tel2.Text" xml:space="preserve">
+    <value>Tel. 2</value>
+  </data>
   <data name="title.Text" xml:space="preserve">
-    <value>Title</value>
+    <value>Titre</value>
+  </data>
+  <data name="title1.Text" xml:space="preserve">
+    <value>Titre 1</value>
+  </data>
+  <data name="title2.Text" xml:space="preserve">
+    <value>Titre 2</value>
+  </data>
+  <data name="titleResume.Text" xml:space="preserve">
+    <value>Titre et Résumé</value>
+  </data>
+  <data name="video.Text" xml:space="preserve">
+    <value>Vidéo</value>
+  </data>
+  <data name="videoCode.Text" xml:space="preserve">
+    <value>Code intégration vidéo</value>
   </data>
 </root>

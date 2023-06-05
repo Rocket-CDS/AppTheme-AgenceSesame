@@ -23,7 +23,7 @@
     }
     AddProcessDataResx(appThemeView, true);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
-    AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppThemes-W3-CSS/rocketcontentapi.HeroHeader/1.0/resx");
+    AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppTheme-AgenceSesame/resx/");
 
 }
 
@@ -42,27 +42,22 @@
 
 <div class="w3-row w3-padding">
     <div class="w3-col">
-        <label>@ResourceKey("HeroHeader.title")</label>
-        @TextBox(info, "genxml/textbox/title", " type='text' class='w3-input w3-card w3-border w3-round-large' ", "", false)
+        <label>@ResourceKey("General.title")</label>&nbsp;@EditFlag(sessionParams)
+        @TextBox(info, "genxml/lang/genxml/textbox/title", " type='text' class='w3-input w3-card w3-border w3-round-large' ", "", false)
     </div>
 </div>
 
 <div class="w3-row w3-padding">
     <div class="w3-col">
-        <label>@ResourceKey("HeroHeader.text")</label>
-        @TextBox(info, "genxml/textbox/text", "class='w3-input w3-card w3-card w3-border w3-round-large' row='4' ", "", false)
+        <label>@ResourceKey("General.content")</label>&nbsp;@EditFlag(sessionParams)
+        @TextBox(info, "genxml/lang/genxml/textbox/text", "class='w3-input w3-card w3-card w3-border w3-round-large' row='4' ", "", false)
     </div>
 </div>
 
 <div class="w3-row w3-padding">
-    <label>@ResourceKey("HeroHeader.background")</label>
+    <label>@ResourceKey("General.background")</label>
     @RenderTemplate("ArticleImage.cshtml", appThemeSystem, Model, true)
 </div>
-
-
-
-
-
 
 <script>
     var myCodeMirror;

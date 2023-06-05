@@ -22,12 +22,13 @@
     }
     AddProcessDataResx(appThemeView, true);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
+    AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppTheme-AgenceSesame/resx/");
 }
 
 <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
 
 <div class='w3-row w3-half w3-padding'>
-    <label>Module Title</label>
+    <label>@ResourceKey("Document.moduleTitle")</label>
     @TextBox(info, "genxml/lang/genxml/textbox/moduletitle", "class='w3-input w3-border' autocomplete='off'", "", true, 0)
 </div>
 

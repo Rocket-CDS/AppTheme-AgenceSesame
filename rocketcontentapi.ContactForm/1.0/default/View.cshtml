@@ -14,14 +14,19 @@
     var globalSettings = new SystemGlobalData();
 
     // Path to the resx file
-    AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppThemes-W3-CSS/rocketcontentapi.ContactForm/1.0/resx");
+    AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppTheme-AgenceSesame/rocketcontentapi.ContactForm/1.0/resx");
 
+    var cssClass = "";
+    if (moduleData.Record.GetXmlProperty("genxml/setting/cssclass") != "")
+    {
+        cssClass = "class=" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass");
+    }
 }
 
 @foreach (var articleRowData in articleData.GetRows())
 {
     var info = articleRowData.Info;
-    <div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
+    <div @(cssClass)>
         <h2 class="title">@ResourceKey("Form.title")</h2>
         <!-- TODO Rendre ce module fonctionnel, là c'est juste pour voir ce que ça donne avec wiseo pro eko version rocket mode -->
         <div class="contactform">
@@ -57,12 +62,12 @@
                 </div>
                 <div class="cff-cb">
                     <input id="gdprcheckbox" type="checkbox" name="gdprcheckbox" required="" update="save" aria-required="true">
-                    <label>By submitting this form you accept that the information entered may be used to contact you. *</label>
+                    <label>@ResourceKey("Form.gdprMessage")</label>
                 </div>
             </div>
             <div class="cff-required">@ResourceKey("Form.compulsory")</div>
 
-            <button type="button" class="bigbutton">@ResourceKey("Form.send")</button>
+            <button type="button">@ResourceKey("Form.send")</button>
 
 
             <div class="spinner" style="display:none;">

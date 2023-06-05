@@ -1,0 +1,12 @@
+﻿<genxml>
+  <deps list="true">
+    <genxml>
+      <ctrltype><![CDATA[css]]></ctrltype>
+      <url>https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css</url>
+    </genxml>
+    <genxml>
+      <ctrltype><![CDATA[js]]></ctrltype>
+      <url>https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js</url>
+    </genxml>
+  </deps>
+</genxml>

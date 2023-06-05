@@ -27,17 +27,17 @@
     var mapLong = moduleData.Record.GetXmlPropertyInt("genxml/settings/long");
     var mapLat = moduleData.Record.GetXmlPropertyInt("genxml/settings/lat");
 
+    var cssClass = "";
+    if (moduleData.Record.GetXmlProperty("genxml/setting/cssclass") != "")
+    {
+        cssClass = "class=" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass");
+    }
 }
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.js" integrity="sha512-SeiQaaDh73yrb56sTW/RgVdi/mMqNeM2oBwubFHagc5BkixSpP1fvqF47mKzPGWYSSy4RwbBunrJBQ4Co8fRWA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 @{var index = 0;}
-
-@if (hInfo.GetXmlProperty("genxml/lang/genxml/textbox/moduletitle") != "")
-{
-    <h2>@hInfo.GetXmlProperty("genxml/lang/genxml/textbox/moduletitle")</h2>
-}
 
 <script type="text/javascript">
 
@@ -82,7 +82,11 @@
 
 </script>
 
-<div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
+<div @(cssClass)>
+    @if (hInfo.GetXmlProperty("genxml/lang/genxml/textbox/moduletitle") != "")
+    {
+        <h2>@hInfo.GetXmlProperty("genxml/lang/genxml/textbox/moduletitle")</h2>
+    }
     <!-- The map is displayed here -->
     <div id="map-canvas" style="width:@(width);height:@(height)px"></div>
 </div>

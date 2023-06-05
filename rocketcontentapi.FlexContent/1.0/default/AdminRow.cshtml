@@ -27,6 +27,7 @@
 
     AddProcessDataResx(appThemeView, true);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
+    AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppTheme-AgenceSesame/resx/");
 
 }
 
@@ -38,32 +39,33 @@
 <div class='w3-row w3-padding'>
 
     <div class="w3-bar" style="cursor: pointer;">
-        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink headingtablink" onclick="openSection('heading')">@ResourceKey("HtmlContent.layout")</div>
-        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink htmltablink" onclick="openSection('html')">@ResourceKey("DNNrocket.html")</div>
-        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink imgstablink" onclick="openSection('imgs')">@ResourceKey("DNNrocket.images")</div>
-        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink docstablink" onclick="openSection('docs')">@ResourceKey("DNNrocket.docs")</div>
-        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink linkstablink" onclick="openSection('links')">@ResourceKey("DNNrocket.links")</div>
-        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink htmltexttablink" onclick="openSection('htmltext')">@ResourceKey("HtmlContent.htmltext")</div>
-        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink othertablink" onclick="openSection('video')">Video</div>
-        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink othertablink" onclick="openSection('advanced')">Advanced Settings</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink headingtablink" onclick="openSection('heading')">@ResourceKey("General.layout")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink htmltablink" onclick="openSection('html')">@ResourceKey("General.html")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink imgstablink" onclick="openSection('imgs')">@ResourceKey("General.images")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink docstablink" onclick="openSection('docs')">@ResourceKey("General.docs")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink linkstablink" onclick="openSection('links')">@ResourceKey("General.links")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink htmltexttablink" onclick="openSection('htmltext')">@ResourceKey("General.htmlText")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink othertablink" onclick="openSection('video')">@ResourceKey("General.video")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink othertablink" onclick="openSection('advanced')">@ResourceKey("General.advanced")</div>
     </div>
 
     <div id="heading" class='w3-row sectionname' style="display:none">
 
-        @RenderTemplate("ArticleHeading.cshtml", appThemeSystem, Model, true)
-
         <div class='w3-row w3-padding'>
             @{
+                String[] layouts = {"<span class='material-icons'>view_headline</span>","<span class='material-icons' style='transform:rotate(180deg);'>horizontal_split</span>","<span class='material-icons'>horizontal_split</span>","<span class='material-icons'>vertical_split</span>","<span class='material-icons' style='transform:rotate(180deg);'>vertical_split</span>"};
                 var imgLayoutList = "";
                 for (int i = 0; i < 5; i++)
                 {
-                    imgLayoutList += "<img src='" + appThemeAdmin.AppThemeFolderRel + "/img/Newspaper" + i + ".png' />,";
+                    imgLayoutList += "<span class='w3-button w3-round w3-theme-action'>" + layouts[i] + "</span>,";
                 }
                 imgLayoutList = imgLayoutList.TrimEnd(',');
             }
-            <label>@ResourceKey("HtmlContent.layout")</label>
+            <label>@ResourceKey("General.layout")</label>
             @RadioButtonList(info, "genxml/select/layout", "0,1,2,3,4", imgLayoutList, "class='  ' ", "0", "", false, 0)
         </div>
+
+        @RenderTemplate("ArticleHeading.cshtml", appThemeSystem, Model, true)
     </div>
 
     <div id="html" class='w3-row sectionname' style="display:none">
@@ -77,11 +79,11 @@
     </div>
     <div id="imgs" class='w3-row sectionname' style="display:none">
         <div class="w3-padding">
-            <label>Open in FancyBox</label><br />
+            <label>@ResourceKey("General.openFancy")</label><br />
             @CheckBox(info, "genxml/checkbox/openfancybox", "", "class='w3-check' ", false, false, 0)
         </div>
         <div class='w3-col m12 w3-padding '>
-            @RenderTemplate("ArticleImages  Size.cshtml", appThemeSystem, Model, true)
+            @RenderTemplate("ArticleImagesSize.cshtml", appThemeSystem, Model, true)
         </div>
     </div>
 
@@ -93,10 +95,9 @@
 
     <div id="links" class='w3-row sectionname' style="display:none">
         <div class='w3-col m12 w3-padding '>
-            @RenderTemplate("ArticleLink.cshtml", appThemeSystem, Model, true)
+            @RenderTemplate("ArticleLinks.cshtml", appThemeSystem, Model, true)
         </div>
     </div>
-
     <div id="htmltext" class='w3-row sectionname' style="display:none">
         <div class='w3-col m12 w3-padding'>
             @EditFlag(sessionParams)
@@ -106,18 +107,18 @@
 
     <div id="video" class='w3-row sectionname' style="display:none">
         <div class='w3-col m12 w3-padding'>
-            <label>Embeded Video</label>
+            <label>@ResourceKey("General.videoCode")</label>
             @TextArea(info, "genxml/lang/genxml/textbox/video", " class='w3-input w3-border' rows='8' ", "", true, 0)
         </div>
     </div>
 
     <div id="advanced" class='w3-row sectionname' style="display:none">
         <div class='w3-quarter w3-padding'>
-            <label>Hide Row</label><br />
+            <label>@ResourceKey("General.hideRow")</label><br />
             @CheckBox(info, "genxml/checkbox/hiderow", "", "class='w3-check' ", false, false, 0)
         </div>
         <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
-            <label>CSS Class</label>
+            <label>@ResourceKey("General.cssClass")</label>
             @TextBox(info, "genxml/textbox/cssclass", "class='w3-input w3-border' autocomplete='off'", "", true, 0)
         </div>
     </div>

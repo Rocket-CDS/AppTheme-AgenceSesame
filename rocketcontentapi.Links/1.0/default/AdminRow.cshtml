@@ -27,10 +27,10 @@
 
     AddProcessDataResx(appThemeView, true);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
-
+    AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppTheme-AgenceSesame/resx/");
 }
 <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
-    <label>Module Title</label>
+    <label>@ResourceKey("General.moduleTitle")</label>
     @TextBox(info, "genxml/lang/genxml/textbox/moduletitle", "class='w3-input w3-border' autocomplete='off'", "", true, 0)
 </div>
 <!-- require Key for saving -->
@@ -42,8 +42,8 @@
         @RenderTemplate("ArticleLink.cshtml", appThemeSystem, Model, true)
     </div>
     <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
-        <label>CSS Class</label>		&nbsp;@EditFlag(sessionParams)
-        @TextBox(info, "genxml/lang/genxml/textbox/cssclass", "class='w3-input w3-border' autocomplete='off'", "", true, 0)
+        <label>@ResourceKey("General.cssClass")</label>
+        @TextBox(info, "genxml/textbox/cssclass", "class='w3-input w3-border' autocomplete='off'", "", true, 0)
     </div>
 </div>
 

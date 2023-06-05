@@ -5,49 +5,51 @@
 @using DNNrocketAPI.Components;
 @using RocketPortal.Components;
 
-<!-- TODO Rendre ça plus propre - système D pour que ça marche -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>
-
 @{
     var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
     var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+
+    var cssClass = "";
+    if (moduleData.Record.GetXmlProperty("genxml/setting/cssclass") != "")
+    {
+        cssClass = "class=" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass");
+    }
 }
 
 @foreach (var articleRowData in articleData.GetRows())
 {
     var info = articleRowData.Info;
-    <div class="@moduleData.Record.GetXmlProperty("genxml/settings/cssclass")">
+    <div @(cssClass)>
         @if (!info.GetXmlPropertyBool("genxml/checkbox/hiderow"))
         {
-        <div class="gallery-wrapper">
-            @if (info.GetXmlProperty("genxml/textbox/title") != "")
-            {
-                <h2>@info.GetXmlProperty("genxml/textbox/title")</h2>
-            }
-            <hr />
-            @{
-                var datalist = articleRowData.GetImageList();
-                var index = 0;
-                var group = articleRowData.RowKey;
-                var width = moduleData.Record.GetXmlPropertyInt("genxml/settings/width");
-                var height = moduleData.Record.GetXmlPropertyInt("genxml/settings/height");
-            }
-            <div class="gallery">
-                @foreach (var imgInfo in datalist)
+            <div class="gallery-wrapper">
+                @if (info.GetXmlProperty("genxml/lang/genxml/textbox/title") != "")
                 {
-                    index++;
-                    var articleImage = new ArticleImage(imgInfo, "articleimage");
-                    var alt = info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage");
-                    if (articleImage.RelPath != "")
-                    {
-                        <a data-fancybox="@(group)" data-caption="@(alt)" href="@(articleImage.RelPath)">
-                            <img src="@ThumbnailImageUrl(articleImage.RelPath, width, height)" alt="@(alt)" />
-                        </a>
-                    }
+                    <h2>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
                 }
+                <hr />
+                @{
+                    var datalist = articleRowData.GetImageList();
+                    var index = 0;
+                    var group = articleRowData.RowKey;
+                    var width = moduleData.Record.GetXmlPropertyInt("genxml/settings/width");
+                    var height = moduleData.Record.GetXmlPropertyInt("genxml/settings/height");
+                }
+                <div class="gallery">
+                    @foreach (var imgInfo in datalist)
+                    {
+                        index++;
+                        var articleImage = new ArticleImage(imgInfo, "articleimage");
+                        var alt = info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage");
+                        if (articleImage.RelPath != "")
+                        {
+                            <a data-fancybox="@(group)" data-caption="@(alt)" href="@(articleImage.RelPath)">
+                                <img src="@ThumbnailImageUrl(articleImage.RelPath, width, height)" alt="@(alt)" />
+                            </a>
+                        }
+                    }
+                </div>
             </div>
-        </div>
         }
     </div>
 }
