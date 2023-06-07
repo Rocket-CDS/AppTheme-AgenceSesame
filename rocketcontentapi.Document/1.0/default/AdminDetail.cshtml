@@ -27,12 +27,8 @@
 
 <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
 
-<div class='w3-row w3-half w3-padding'>
-    <label>@ResourceKey("Document.moduleTitle")</label>
-    @TextBox(info, "genxml/lang/genxml/textbox/moduletitle", "class='w3-input w3-border' autocomplete='off'", "", true, 0)
-</div>
-
 <div class="w3-row">
+    @RenderTemplate("ArticleHeader.cshtml", appThemeSystem, Model, true)
     <div id="articledetailpanel" class="w3-threequarter">
         @RenderTemplate("AdminRow.cshtml", appThemeAdmin, Model, true)
     </div>

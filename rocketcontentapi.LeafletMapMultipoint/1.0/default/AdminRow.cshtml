@@ -28,12 +28,8 @@
     AddProcessDataResx(appThemeView, true);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
     AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppTheme-AgenceSesame/resx/");
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/");
 }
-<div class='w3-col m12 w3-padding' style='min-width: 200px;'>
-    <label>@ResourceKey("General.moduleTitle")</label>		
-    @TextBox(info, "genxml/lang/genxml/textbox/moduletitle", " class='w3-input w3-border' autocomplete='off' ", "", false, 0)
-</div>
-
 <!-- require Key for saving -->
 @HiddenField(info, "genxml/config/rowkey")
 @HiddenField(info, "genxml/lang/genxml/config/rowkeylang", "", articleRowData.RowKey)
@@ -48,7 +44,7 @@
         <div class='w3-row w3-margin-top'>
             <div class="w3-half">
                 <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
-                    <label>@ResourceKey("General.title")</label>		&nbsp;@EditFlag(sessionParams)
+                    <label>@ResourceKey("DNNrocket.title")</label>		&nbsp;@EditFlag(sessionParams)
                     @TextBox(info, "genxml/lang/genxml/textbox/title", " class='w3-input w3-border' autocomplete='off' ", "", false, 0)
                 </div>
             </div>
@@ -56,7 +52,7 @@
         <div class='w3-row w3-margin-top'>
             <div class="w3-half">
                 <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
-                    <label>@ResourceKey("General.latitude")</label>		&nbsp;@EditFlag(sessionParams)
+                    <label>@ResourceKey("DNNrocket.latitude")</label>		&nbsp;@EditFlag(sessionParams)
                     @TextBox(info, "genxml/lang/genxml/textbox/latitude", " rows='4' class='w3-input w3-border' autocomplete='off' ", "", false, 0)
                 </div>
             </div>
@@ -64,7 +60,7 @@
         <div class='w3-row w3-margin-top'>
             <div class="w3-half">
                 <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
-                    <label>@ResourceKey("General.longitude")</label>		&nbsp;@EditFlag(sessionParams)
+                    <label>@ResourceKey("DNNrocket.longitude")</label>		&nbsp;@EditFlag(sessionParams)
                     @TextBox(info, "genxml/lang/genxml/textbox/longitude", " rows='4' class='w3-input w3-border' autocomplete='off' ", "", false, 0)
                 </div>
             </div>

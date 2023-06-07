@@ -195,7 +195,7 @@
   <data name="html.Text" xml:space="preserve">
     <value>Contenu</value>
   </data>
-  <data name="htmlText.Text" xml:space="preserve">
+  <data name="htmltext.Text" xml:space="preserve">
     <value>Code HTML</value>
   </data>
   <data name="image.Text" xml:space="preserve">

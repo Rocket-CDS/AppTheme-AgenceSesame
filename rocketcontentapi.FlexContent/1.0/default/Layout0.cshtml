@@ -20,56 +20,56 @@
             var hStyle = info.GetXmlProperty("genxml/select/headingstyle");
             var headingHide = info.GetXmlPropertyBool("genxml/checkbox/hideheading");
         }
-        <!-- HEADING SECTION -->
-        @if (!headingHide)
-        {
-            var title = info.GetXmlProperty("genxml/lang/genxml/textbox/title");
-            var headingalignvalue = info.GetXmlPropertyInt("genxml/select/headingalign");
-            var headingalign = "";
-            if (headingalignvalue == 1)
+            <!-- HEADING SECTION -->
+            @if (!headingHide)
             {
-                headingalign = "w3-center";
-            }
-            if (headingalignvalue == 2)
-            {
-                headingalign = "w3-right";
+                var title = info.GetXmlProperty("genxml/lang/genxml/textbox/title");
+                var headingalignvalue = info.GetXmlPropertyInt("genxml/select/headingalign");
+                var headingalign = "";
+                if (headingalignvalue == 1)
+                {
+                    headingalign = "w3-center";
+                }
+                if (headingalignvalue == 2)
+                {
+                    headingalign = "w3-right";
+                }
+
+                if (hStyle == "")
+                {
+                    hStyle = "h1";
+                }
+                if (title != "")
+                {
+                    var alignText = info.GetXmlProperty("genxml/select/headingalign");
+                    if (hStyle.ToLower() == "h1")
+                    {
+                        <h1 id="@info.GetXmlProperty("genxml/lang/genxml/textbox/anchor")" style="text-align: @alignText;">@title</h1>
+                    }
+                    if (hStyle.ToLower() == "h2")
+                    {
+                        <h2 id="@info.GetXmlProperty("genxml/lang/genxml/textbox/anchor")" style="text-align: @alignText;">@title</h2>
+                    }
+                    if (hStyle.ToLower() == "h3")
+                    {
+                        <h3 id="@info.GetXmlProperty("genxml/lang/genxml/textbox/anchor")" style="text-align: @alignText;">@title</h3>
+                    }
+                    if (hStyle.ToLower() == "h4")
+                    {
+                        <h4 id="@info.GetXmlProperty("genxml/lang/genxml/textbox/anchor")" style="text-align: @alignText;">@title</h4>
+                    }
+                }
             }
 
-            if (hStyle == "")
-            {
-                hStyle = "h1";
-            }
-            if (title != "")
-            {
-                var alignText = info.GetXmlProperty("genxml/select/headingalign");
-                if (hStyle.ToLower() == "h1")
-                {
-                    <h1 id="@info.GetXmlProperty("genxml/lang/genxml/textbox/anchor")" style="text-align: @alignText;">@title</h1>
-                }
-                if (hStyle.ToLower() == "h2")
-                {
-                    <h2 id="@info.GetXmlProperty("genxml/lang/genxml/textbox/anchor")" style="text-align: @alignText;">@title</h2>
-                }
-                if (hStyle.ToLower() == "h3")
-                {
-                    <h3 id="@info.GetXmlProperty("genxml/lang/genxml/textbox/anchor")" style="text-align: @alignText;">@title</h3>
-                }
-                if (hStyle.ToLower() == "h4")
-                {
-                    <h4 id="@info.GetXmlProperty("genxml/lang/genxml/textbox/anchor")" style="text-align: @alignText;">@title</h4>
-                }
-            }
-        }
+            <!-- TEXT SECTION -->
+            @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
 
-        <!-- TEXT SECTION -->
-        @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
+            <!-- LINK SECTION -->
+            <div class="newspaper-link">
+                @RenderTemplate("Links.cshtml", moduleData.ModuleRef, appThemeView, Model, true)
+            </div>
 
-        <!-- LINK SECTION -->
-        <div class="newspaper-link">
-            @RenderTemplate("Links.cshtml", moduleData.ModuleRef, appThemeView, Model, true)
+            <!-- DOCUMENTS SECTION -->
+            @RenderTemplate("documents.cshtml", moduleData.ModuleRef, appThemeView, Model, true)
         </div>
-
-        <!-- DOCUMENTS SECTION -->
-        @RenderTemplate("documents.cshtml", moduleData.ModuleRef, appThemeView, Model, true)
     </div>
-</div>

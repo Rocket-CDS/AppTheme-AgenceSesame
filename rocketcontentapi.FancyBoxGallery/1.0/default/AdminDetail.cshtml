@@ -25,6 +25,7 @@
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
     AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppThemes-W3-CSS/rocketcontentapi.Labels/1.0/resx");
     AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppTheme-AgenceSesame/resx/");
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/");
 }
 
 <!-- require Key for saving -->
@@ -32,7 +33,7 @@
 @HiddenField(info, "genxml/lang/genxml/config/rowkeylang", "", articleRowData.RowKey)
 
 <div class="w3-row w3-padding">
-    <label><b>@ResourceKey("General.moduleTitle")</b></label>&nbsp;@EditFlag(sessionParams)
+    <label><b>@ResourceKey("DNNrocket.moduletitle")</b></label>&nbsp;@EditFlag(sessionParams)
     @TextBox(info, "genxml/lang/genxml/textbox/title", " type='text' class='w3-input w3-card w3-border w3-round-large' ", "", false)
 </div>
 <div class='w3-row w3-padding'>

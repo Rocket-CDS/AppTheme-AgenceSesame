@@ -28,9 +28,35 @@
 
 <div @(cssClass)>
 
-    @if (hInfo.GetXmlProperty("genxml/lang/genxml/textbox/moduletitle") != "")
+    <!-- HEADER SECTION -->
+    @{
+        var headerStyle = articleData.Info.GetXmlProperty("genxml/header/headerstyle");
+        var moduleTitle = articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headertitle");
+    }
+
+    @if (headerStyle == "")
     {
-        <h2>@hInfo.GetXmlProperty("genxml/lang/genxml/textbox/moduletitle")</h2>
+        headerStyle = "h1";
+    }
+    @if (moduleTitle != "")
+    {
+        var headerAlignText = articleData.Info.GetXmlProperty("genxml/header/headeralign");
+        if (headerStyle.ToLower() == "h1")
+        {
+            <h1 id="@articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor")" style="text-align: @headerAlignText;">@moduleTitle</h1>
+        }
+        if (headerStyle.ToLower() == "h2")
+        {
+            <h2 id="@articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor")" style="text-align: @headerAlignText;">@moduleTitle</h2>
+        }
+        if (headerStyle.ToLower() == "h3")
+        {
+            <h3 id="@articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor")" style="text-align: @headerAlignText;">@moduleTitle</h3>
+        }
+        if (headerStyle.ToLower() == "h4")
+        {
+            <h4 id="@articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor")" style="text-align: @headerAlignText;">@moduleTitle</h4>
+        }
     }
 
     <div class="svgblockswrapper">

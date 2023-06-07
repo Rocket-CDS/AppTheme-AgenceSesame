@@ -23,6 +23,7 @@
     }
     AddProcessDataResx(appThemeView, true);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/");
     AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppTheme-AgenceSesame/resx/");
 
 }
@@ -33,20 +34,20 @@
 
 <div class="w3-row w3-padding">
     <div class="w3-col">
-        <label>@ResourceKey("General.content")</label>&nbsp;@EditFlag(sessionParams)
+        <label>@ResourceKey("DNNRocket.content")</label>&nbsp;@EditFlag(sessionParams)
         @TextArea(info, "genxml/lang/genxml/textbox/content", "class='w3-input w3-border w3-margin-bottom' autocomplete='off' MaxLength='500' row='4'", "", false)
     </div>
 </div>
 
 <div class="w3-row w3-padding">
-    <label>@ResourceKey("General.image")</label>
+    <label>@ResourceKey("DNNrocket.image")</label>
     <div class="w3-row w3-border w3-card w3-round-large w3-padding">
         @RenderTemplate("ArticleImage.cshtml", appThemeSystem, Model, true)
     </div>
 </div>
 
 <div class="w3-row w3-padding">
-    <label>@ResourceKey("General.link")</label>
+    <label>@ResourceKey("DNNrocket.link")</label>
     <div class="w3-row w3-border w3-card w3-round-large w3-padding">
         @RenderTemplate("ArticleLink.cshtml", appThemeSystem, Model, true)
     </div>

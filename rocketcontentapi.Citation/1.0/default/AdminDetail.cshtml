@@ -23,6 +23,7 @@
     }
     AddProcessDataResx(appThemeView, true);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/");
     AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppTheme-AgenceSesame/resx/");
 
 }
@@ -42,14 +43,14 @@
 
 <div class="w3-row w3-padding">
     <div class="w3-col">
-        <label>@ResourceKey("General.citation")</label>
+        <label>@ResourceKey("DNNrocket.citation")</label>
         @TextBox(info, "genxml/lang/genxml/textbox/citation", "class='w3-input w3-border w3-margin-bottom' autocomplete='off' MaxLength='200'", "", false)
     </div>
 </div>
 
 <div class="w3-row w3-padding">
     <div class="w3-col">
-        <label>@ResourceKey("General.auteur")</label>
+        <label>@ResourceKey("DNNrocket.author")</label>
         @TextBox(info, "genxml/lang/genxml/textbox/auteur", "class='w3-input w3-border w3-margin-bottom' autocomplete='off' MaxLength='200'", "", false)
     </div>
 </div>

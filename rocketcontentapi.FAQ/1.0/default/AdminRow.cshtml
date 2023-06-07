@@ -28,16 +28,12 @@
     AddProcessDataResx(appThemeView, true);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
     AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppThemes-AgenceSesame/rocketcontentapi.FAQ/1.0/resx");
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/");
     AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppTheme-AgenceSesame/resx/");
 }
 
 <div class='w3-padding w3-row'>
-    <label>@ResourceKey("General.moduleTitle")</label>
-    @TextBox(info, "genxml/lang/genxml/textbox/moduletitle", " class='w3-input w3-border' autocomplete='off'", "", false, 0)
-</div>
-
-<div class='w3-padding w3-row'>
-    <label>@ResourceKey("General.cssClass")</label>
+    <label>@ResourceKey("DNNrocket.cssClass")</label>
     @TextBox(info, "genxml/textbox/cssclass", " class='w3-input w3-border' autocomplete='off'", "", false, 0)
 </div>
 
