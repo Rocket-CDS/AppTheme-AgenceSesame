@@ -1,0 +1,99 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using RocketDirectoryAPI.Components;
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketPortal.Components;
+@using DNNrocketAPI.Components;
+@using System.Globalization;
+@using Rocket.AppThemes.Components;
+
+@{
+    var sessionParams = (SessionParams)Model.SessionParamsData;
+    var articleDataList = (ArticleLimpetList)Model.GetDataObject("articlelist");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var categoryList = (CategoryLimpetList)Model.GetDataObject("categorylist");
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appThemeDefault = (AppThemeLimpet)Model.GetDataObject("appthemedefault");
+    var appThemeDirectory = (AppThemeSystemLimpet)Model.GetDataObject("appthemedirectory");
+    var appThemeDirectoryDefault = (AppThemeLimpet)Model.GetDataObject("appthemedirectorydefault");
+    var categoryData = (CategoryLimpet)Model.GetDataObject("categorydata");
+    var catalogSettings = (CatalogSettingsLimpet)Model.GetDataObject("catalogsettings");
+    var propertyList = (PropertyLimpetList)Model.GetDataObject("propertylist");
+    var moduleSettings = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var propertyCheckboxes = new List<PropertyLimpet>();
+    var nodList = false;
+    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+
+    AddProcessDataResx(appThemeView, true);
+}
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
+
+
+<div class="container">
+
+    <h1 class="title">@ResourceKey("LibraryListView.restaurants", sessionParams.CultureCode)</h1>
+
+                @if (articleDataList.GetArticleList().Count > 0)
+                {
+                    <div class="listcontainer">
+                        <div class="productlist">
+
+                            @foreach (ArticleLimpet articleData in articleDataList.GetArticleList())
+                            {
+                                var urlparams = new Dictionary<string, string>();
+                                urlparams.Add("articleid", articleData.ArticleId.ToString());
+                                var hreflink = DNNrocketUtils.NavigateURL(sessionParams.TabId, urlparams, articleData.Name);
+
+                                <div class="product">
+                                    <div class="product-image">
+                                <a href="@(hreflink)" title="@articleData.Name" onclick="$('#simplisity_loader').show();">
+                                            <img src="@ThumbnailImageWebsiteDomainUrl(portalData.EngineUrlWithProtocol,articleData.GetImage(0).RelPath,380, 285)" alt="@articleData.GetImage(0).Alt" />
+                                        </a>
+                                    </div>
+                                    <div class="product-content">
+                                        <h2><a href="@(hreflink)" title="@articleData.Name" onclick="$('#simplisity_loader').show();">@articleData.Name</a></h2>
+                                        <div class="product-summary">
+                                            @articleData.Info.GetXmlProperty("genxml/textbox/address1")
+                                            @if (articleData.Info.GetXmlProperty("genxml/textbox/address2") != "")
+                                            {
+                                                <br /><span>@articleData.Info.GetXmlProperty("genxml/textbox/address2")</span>
+											}
+                                            @if (articleData.Info.GetXmlProperty("genxml/textbox/address3") != "")
+                                            {
+                                                <br /><span>@articleData.Info.GetXmlProperty("genxml/textbox/address3")</span>
+											}
+                                            @if (articleData.Info.GetXmlProperty("genxml/textbox/address4") != "")
+                                            {
+                                                <br /><span>@articleData.Info.GetXmlProperty("genxml/textbox/address4")</span>
+											}
+											@if (articleData.Info.GetXmlProperty("genxml/textbox/phone") != "")
+											{
+												var clictel = articleData.Info.GetXmlProperty("genxml/textbox/mobile");
+                                        <br />
+
+                                        @ResourceKey("DNNrocket.tel", sessionParams.CultureCode) <a href="tel:@clictel">@articleData.Info.GetXmlProperty("genxml/textbox/phone")</a>
+											}	
+                                        </div>
+                            <a href="@(hreflink)" title="@articleData.Name" onclick="$('#simplisity_loader').show();" class="bigbutton detailbtn">@ResourceKey("LibraryListView.details", sessionParams.CultureCode)</a>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                    <div class="w3-row w3-padding-16 w3-center">
+                        @RenderTemplate("ProductPaging.cshtml", appThemeDirectoryDefault, Model, true)
+                    </div>
+
+}
+else
+{
+    <div class="h2-headline">Aucun résultat</div>
+}
+
+</div>
+
+<script>
+$(document).ready(function () {        
+});
+</script>
