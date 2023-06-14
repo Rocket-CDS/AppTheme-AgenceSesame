@@ -20,10 +20,16 @@
 @foreach (var articleRowData in articleData.GetRows())
 {
     var info = articleRowData.Info;
+    var datalist = articleRowData.GetImageList();
+    var imgInfo = datalist.First();
+    var articleImage = new ArticleImage(imgInfo, "articleimage");
+
+    var width = moduleData.Record.GetXmlPropertyInt("genxml/settings/width");
+    var height = moduleData.Record.GetXmlPropertyInt("genxml/settings/height");
     <div @(cssClass)>
         @if (!info.GetXmlPropertyBool("genxml/checkbox/hiderow"))
         {
-        <div class="topimageheader tih-mask" style="background:url('@info.GetXmlProperty("genxml/imagelist/genxml/hidden/imagepatharticleimage")') center @Model.GetSetting("crop") no-repeat;
+        <div class="topimageheader tih-mask" style="background:url('@ImageUrl(articleImage.RelPathWebp, width, height, "", "webp")') center @Model.GetSetting("crop") no-repeat;
                                                     -webkit-background-size: cover;
                                                     -moz-background-size: cover;
                                                     -o-background-size: cover;

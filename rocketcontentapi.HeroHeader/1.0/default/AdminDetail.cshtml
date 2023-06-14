@@ -32,15 +32,6 @@
 @HiddenField(info, "genxml/config/rowkey")
 @HiddenField(info, "genxml/lang/genxml/config/rowkeylang", "", articleRowData.RowKey)
 
-<div class='w3-row w3-padding'>
-
-    <div class='w3-col m12 w3-padding'>
-        <div class='w3-right w3-margin-bottom '>
-            @CheckBox(info, "genxml/checkbox/hiderow", "&nbsp;" + ResourceKey("DNNrocket.hide").ToString(), "class='w3-check' ", false, false, 0)
-        </div>
-    </div>
-</div>
-
 <div class="w3-row w3-padding">
     <div class="w3-col">
         <label>@ResourceKey("DNNrocket.title")</label>&nbsp;@EditFlag(sessionParams)

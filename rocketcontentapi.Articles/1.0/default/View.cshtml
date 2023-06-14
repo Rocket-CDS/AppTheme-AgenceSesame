@@ -224,7 +224,6 @@ else
                                 var dateFormat = date.ToString("dd/MM/yyyy");
                             }
                             <h2>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
-
                             <p class="article-infos">Publié le @dateFormat</p>
                             <!-- Affichage de l'image -->
                             @foreach (var imgInfo in datalist)
@@ -234,20 +233,17 @@ else
                                 var articleImage = new ArticleImage(imgInfo, "articleimage");
                                 if (indexMain == 1)
                                 {
-                                    <img src="@ThumbnailImageUrl(articleImage.RelPath, moduleData.Record.GetXmlPropertyInt("genxml/settings/width"), moduleData.Record.GetXmlPropertyInt("genxml/settings/height"))" />
+                                    <img src="@ImageUrl(articleImage.RelPath, moduleData.Record.GetXmlPropertyInt("genxml/settings/width"), moduleData.Record.GetXmlPropertyInt("genxml/settings/height"))" />
                                 }
                             }
-
                             <div class="flexcontent-text">
                                 <p>@info.GetXmlProperty("genxml/lang/genxml/textbox/resume")</p>
                             </div>
-
                             @{
                                 lp += 1;
                             }
                             <a href="@(detailurl)">Lire la suite</a>
                         </article>
-                        <hr />
                     }
                 }
             </div>

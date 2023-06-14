@@ -31,10 +31,6 @@
     AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/");
 
 }
-<div class='w3-row'>
-    <label>@ResourceKey("DNNrocket.cssClass")</label>
-    @TextBox(info, "genxml/lang/genxml/textbox/cssclass", " class='w3-input w3-border' autocomplete='off'", "", false, 0)
-</div>
 
 <!-- require Key for saving -->
 @HiddenField(info, "genxml/config/rowkey")
@@ -72,6 +68,11 @@
                     @TextArea(info, "genxml/lang/genxml/textbox/text", " rows='4' class='w3-input w3-border' autocomplete='off' ", "", false, 0)
                 </div>
             </div>
+        </div>
+        <!-- CSS CLASS FOR THE ROW -->
+        <div class='w3-col m6'>
+            <label>@ResourceKey("DNNrocket.cssClass")</label>
+            @TextBox(info, "genxml/lang/genxml/textbox/cssclass", " class='w3-input w3-border' autocomplete='off'", "", false, 0)
         </div>
     </div>
     <div id="imgs" class='w3-row sectionname' style="display:none">

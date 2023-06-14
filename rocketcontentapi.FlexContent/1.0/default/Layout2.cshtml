@@ -84,13 +84,13 @@
                 {
                     if (info.GetXmlPropertyBool("genxml/checkbox/openfancybox"))
                     {
-                        <a data-fancybox="@(group)" data-caption="@(alt)" href="@(ThumbnailImageUrl(articleImage.RelPath))">
+                        <div><a data-fancybox="@(group)" data-caption="@(alt)" href="@(ThumbnailImageUrl(articleImage.RelPath))">
                             <img src="@ThumbnailImageUrl(articleImage.RelPath, info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/width"), info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/height"))" />
-                        </a>
+                        </a></div>
                     }
                     else
                     {
-                        <img src="@ThumbnailImageUrl(articleImage.RelPath, info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/width"), info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/height"))" />
+                        <div><img src="@ThumbnailImageUrl(articleImage.RelPath, info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/width"), info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/height"))" /></div>
                     }
                 }
             }

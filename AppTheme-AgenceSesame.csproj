@@ -36,7 +36,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="rocketcontentapi.HeroSlider\1.0\css\" />
+    <Folder Include="rocketcontentapi.About\1.0\dep\" />
+    <Folder Include="rocketcontentapi.Citation\1.0\dep\" />
+    <Folder Include="rocketcontentapi.ContactDetailSat\1.0\dep\" />
+    <Folder Include="rocketcontentapi.ContactDetail\1.0\css\" />
+    <Folder Include="rocketcontentapi.ContactDetail\1.0\dep\" />
+    <Folder Include="rocketcontentapi.Document\1.0\dep\" />
+    <Folder Include="rocketcontentapi.FAQ\1.0\dep\" />
+    <Folder Include="rocketcontentapi.GraphicsBlocks\1.0\dep\" />
+    <Folder Include="rocketcontentapi.HeroHeader\1.0\dep\" />
+    <Folder Include="rocketcontentapi.LeafletMapMultipoint\1.0\dep\" />
+    <Folder Include="rocketcontentapi.LinksDownload\1.0\dep\" />
+    <Folder Include="rocketcontentapi.Links\1.0\dep\" />
   </ItemGroup>
 
 </Project>

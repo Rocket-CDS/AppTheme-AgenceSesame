@@ -38,7 +38,7 @@
             @if (moduleData.Record.GetXmlPropertyBool("genxml/settings/adress"))
             {
                 <br />
-                @info.GetXmlProperty("genxml/textbox/adress");
+                @BreakOf(info, "genxml/textbox/adress")
             }
             @if (moduleData.Record.GetXmlPropertyBool("genxml/settings/tel1"))
             {

@@ -28,36 +28,6 @@
 
 }
 <div @(cssClass)>
-    <!-- HEADER SECTION -->
-    @{
-        var headerStyle = articleData.Info.GetXmlProperty("genxml/header/headerstyle");
-        var moduleTitle = articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headertitle");
-    }
-
-    @if (headerStyle == "")
-    {
-        headerStyle = "h1";
-    }
-    @if (moduleTitle != "")
-    {
-        var headerAlignText = articleData.Info.GetXmlProperty("genxml/header/headeralign");
-        if (headerStyle.ToLower() == "h1")
-        {
-            <h1 id="@articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor")" style="text-align: @headerAlignText;">@moduleTitle</h1>
-        }
-        if (headerStyle.ToLower() == "h2")
-        {
-            <h2 id="@articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor")" style="text-align: @headerAlignText;">@moduleTitle</h2>
-        }
-        if (headerStyle.ToLower() == "h3")
-        {
-            <h3 id="@articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor")" style="text-align: @headerAlignText;">@moduleTitle</h3>
-        }
-        if (headerStyle.ToLower() == "h4")
-        {
-            <h4 id="@articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor")" style="text-align: @headerAlignText;">@moduleTitle</h4>
-        }
-    }
     <div class="slider-container">
         <ul class="rslides" id="heroslider">
             @foreach (var articleRowData in articleData.GetRows())
@@ -66,13 +36,15 @@
                 var info = articleRowData.Info;
                 var hideRow = info.GetXmlPropertyBool("genxml/checkbox/hiderow");
 
+                var datalist = articleRowData.GetImageList();
+                var imgInfo = datalist.First();
+                var articleImage = new ArticleImage(imgInfo, "articleimage");
+
+                var width = moduleData.Record.GetXmlPropertyInt("genxml/settings/width");
+                var height = moduleData.Record.GetXmlPropertyInt("genxml/settings/height");
                 if (!hideRow)
                 {
-                    <li style="background:url('@info.GetXmlProperty("genxml/imagelist/genxml/hidden/imagepatharticleimage")') center center no-repeat;
-				            -webkit-background-size: cover;
-				            -moz-background-size: cover;
-				            -o-background-size: cover;
-				            background-size: cover;" class="@info.GetXmlProperty("genxml/lang/genxml/textbox/cssclass")">
+                    <li style="background: url('@ImageUrl(articleImage.RelPathWebp, width, height, "", "webp")') center center no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;" class="@info.GetXmlProperty("genxml/lang/genxml/textbox/cssclass")">
                         <div class="caption">
                             <h2>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
                             <h3>@info.GetXmlProperty("genxml/lang/genxml/textbox/title2")</h3>

@@ -5,10 +5,6 @@
 @using DNNrocketAPI.Components;
 @using RocketPortal.Components;
 
-<!-- TODO Rendre ça plus propre - système D pour que ça marche -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>
-
 @{
     var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
     var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
@@ -31,6 +27,8 @@
 }
 
 <div @(cssClass)>
+
+    <div class="linkswrapper">
 
     <!-- HEADER SECTION -->
     @{
@@ -63,7 +61,7 @@
         }
     }
 
-    <div class="about-content">
+    <ul class="links">
         @foreach (var articleRowData in articleData.GetRows())
         {
             Model.SetDataObject("articlerow", articleRowData);
@@ -74,7 +72,7 @@
                 cssRow = "class=" + info.GetXmlProperty("genxml/textbox/cssclass");
             }
 
-            <div @(cssRow)>
+            <li @(cssRow)>
                 <!-- Lien interne -->
                 @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 1)
                 {
@@ -84,9 +82,7 @@
                     {
                         anchor = "#" + info.GetXmlProperty("genxml/textbox/linkanchor");
                     }
-                    <div class="about-link">
-                        <a href="@(tabddlvalue)@(anchor)">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
-                    </div>
+                    <a href="@(tabddlvalue)@(anchor)">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
                 }
                 <!-- Lien externe -->
                 @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 2)
@@ -97,13 +93,12 @@
                     {
                         blank = "_blank";
                     }
-                    <div class="about-link">
-                        <a href="@(externalURL)" target="@(blank)">
-                            @info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")
-                        </a>
-                    </div>
+                    <a href="@(externalURL)" target="@(blank)">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
                 }
-            </div>
+            </li>
         }
+    </ul>
+
     </div>
+
 </div>

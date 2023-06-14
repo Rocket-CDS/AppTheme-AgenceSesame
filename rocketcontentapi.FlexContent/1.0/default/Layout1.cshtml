@@ -36,13 +36,13 @@
                 {
                     if (info.GetXmlPropertyBool("genxml/checkbox/openfancybox"))
                     {
-                        <a data-fancybox="@(group)" data-caption="@(alt)" href="@(ThumbnailImageUrl(articleImage.RelPath))">
+                        <div><a data-fancybox="@(group)" data-caption="@(alt)" href="@(ThumbnailImageUrl(articleImage.RelPath))">
                             <img src="@ThumbnailImageUrl(articleImage.RelPath, info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/width"), info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/height"))" />
-                        </a>
+                        </a></div>
                     }
                     else
                     {
-                        <img src="@ThumbnailImageUrl(articleImage.RelPath, info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/width"), info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/height"))" />
+                        <div><img src="@ThumbnailImageUrl(articleImage.RelPath, info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/width"), info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/height"))" /></div>
                     }
                 }
             }
@@ -53,6 +53,7 @@
         {
             <div class="fcd-video"><div class="video-container">@HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/video"))</div></div>
         }
+
     </div>
 
     <div class="flexcontent-text">
@@ -61,20 +62,11 @@
             var hStyle = info.GetXmlProperty("genxml/select/headingstyle");
             var headingHide = info.GetXmlPropertyBool("genxml/checkbox/hideheading");
         }
+
         <!-- HEADING SECTION -->
         @if (!headingHide)
         {
             var title = info.GetXmlProperty("genxml/lang/genxml/textbox/title");
-            var headingalignvalue = info.GetXmlPropertyInt("genxml/select/headingalign");
-            var headingalign = "";
-            if (headingalignvalue == 1)
-            {
-                headingalign = "w3-center";
-            }
-            if (headingalignvalue == 2)
-            {
-                headingalign = "w3-right";
-            }
 
             if (hStyle == "")
             {
@@ -112,8 +104,7 @@
 
         <!-- DOCUMENTS SECTION -->
         @RenderTemplate("documents.cshtml", moduleData.ModuleRef, appThemeView, Model, true)
+
     </div>
+
 </div>
-
-
-
