@@ -5,10 +5,6 @@
 @using DNNrocketAPI.Components;
 @using RocketPortal.Components;
 
-<!-- TODO Rendre ça plus propre - système D pour que ça marche -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>
-
 @{
     var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
     var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
@@ -31,6 +27,8 @@
 }
 
 <div @(cssClass)>
+
+    <div class="linksdownloadswrapper">
 
     <!-- HEADER SECTION -->
     @{
@@ -63,7 +61,7 @@
         }
     }
 
-    <div class="about-content">
+    <ul class="linksdownloads">
         @foreach (var articleRowData in articleData.GetRows())
         {
             Model.SetDataObject("articlerow", articleRowData);
@@ -74,7 +72,7 @@
             {
                 cssRow = "class=" + info.GetXmlProperty("genxml/textbox/cssclass");
             }
-            <div @(cssRow)>
+            <li @(cssRow)>
                 <!-- Lien interne -->
                 @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 1)
                 {
@@ -84,11 +82,7 @@
                     {
                         anchor = "#" + info.GetXmlProperty("genxml/textbox/linkanchor");
                     }
-                    <div class="about-link">
-                        <a href="@(tabddlvalue)@(anchor)">
-                            @info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")
-                        </a>
-                    </div>
+                    <a href="@(tabddlvalue)@(anchor)" class="linkitem">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
                 }
                 <!-- Lien externe -->
                 @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 2)
@@ -99,57 +93,43 @@
                     {
                         blank = "_blank";
                     }
-                    <div class="about-link">
-                        <a href="@(externalURL)" target="@(blank)">
-                            @info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")
-                        </a>
-                    </div>
+                    <a href="@(externalURL)" target="@(blank)" class="linkitem">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
                 }
-
                 <!-- Documents -->
                 @if (!info.GetXmlPropertyBool("genxml/checkbox/documenthiddenarticledoc") && info.GetXmlProperty("genxml/documentlist/genxml/hidden/documentpatharticledoc") != "")
                 {
-                    <div class="about-content">
-                        @{
-                            var docURL = info.GetXmlProperty("genxml/documentlist/genxml/hidden/documentpatharticledoc");
-                            <!-- Si on veut afficher le pdf sur un nouvel onglet alors on l'affiche '-->
-                            if (info.GetXmlPropertyBool("genxml/checkbox/openinnewtab"))
+                    var docURL = info.GetXmlProperty("genxml/documentlist/genxml/hidden/documentpatharticledoc");
+                    if (info.GetXmlPropertyBool("genxml/checkbox/openinnewtab"))
+                    {
+                        <a href="~/@(docURL)" target="_blank" class="docitem">
+                            @if (info.GetXmlProperty("genxml/lang/genxml/textbox/name") != "")
                             {
-                                <div class="documents">
-                                    <p>@info.GetXmlProperty("genxml/textbox/text")</p>
-                                    <a href="@(docURL)" target="_blank">
-                                        @if (info.GetXmlProperty("genxml/lang/genxml/textbox/name") != "")
-                                        {
-                                            @info.GetXmlProperty("genxml/lang/genxml/textbox/name")
-
-                                        }
-                                        else
-                                        {
-                                            @info.GetXmlProperty("genxml/textbox/documentnamearticledoc")
-                                        }
-                                    </a>
-                                </div>
+                                @info.GetXmlProperty("genxml/lang/genxml/textbox/name")
                             }
                             else
                             {
-                                <div class="documents">
-                                    <p>@info.GetXmlProperty("genxml/textbox/text")</p>
-                                    <a href="@(docURL)" download="@info.GetXmlProperty("genxml/textbox/documentnamearticledoc")">
-                                        @if (info.GetXmlProperty("genxml/lang/genxml/textbox/name") != "")
-                                        {
-                                            @info.GetXmlProperty("genxml/lang/genxml/textbox/name")
-                                        }
-                                        else
-                                        {
-                                            @info.GetXmlProperty("genxml/textbox/documentnamearticledoc")
-                                        }
-                                    </a>
-                                </div>
+                                @info.GetXmlProperty("genxml/textbox/documentnamearticledoc")
                             }
-                        }
-                    </div>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="~/@(docURL)" download="@info.GetXmlProperty("genxml/textbox/documentnamearticledoc")" class="docitem">
+                            @if (info.GetXmlProperty("genxml/lang/genxml/textbox/name") != "")
+                            {
+                                @info.GetXmlProperty("genxml/lang/genxml/textbox/name")
+                            }
+                            else
+                            {
+                                @info.GetXmlProperty("genxml/textbox/documentnamearticledoc")
+                            }
+                        </a>
+                    }
                 }
-            </div>
+            </li>
         }
+    </ul>
+
     </div>
+
 </div>
