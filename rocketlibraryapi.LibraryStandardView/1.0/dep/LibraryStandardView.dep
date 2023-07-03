@@ -14,15 +14,11 @@
 		</genxml>
 		<genxml>
 			<ctrltype><![CDATA[css]]></ctrltype>
-			<url><![CDATA[{domainurl}{appthemefolder}/css/BusinessMapListView.css]]></url>
+			<url><![CDATA[{domainurl}{appthemefolder}/css/LibraryStansardView]]></url>
 		</genxml>
 		<genxml>
 			<ctrltype><![CDATA[css]]></ctrltype>
 			<url><![CDATA[{domainurl}{appthemefolder}/css/bulma.css]]></url>
-		</genxml>
-		<genxml>
-			<ctrltype><![CDATA[css]]></ctrltype>
-			<url><![CDATA[{domainurl}{appthemefolder}/css/MarkerCluster.css]]></url>
 		</genxml>
 		<genxml>
 			<ctrltype><![CDATA[css]]></ctrltype>
@@ -31,22 +27,6 @@
 		<genxml>
 			<ctrltype><![CDATA[css]]></ctrltype>
 			<url><![CDATA[https://fonts.googleapis.com/icon?family=Material+Icons]]></url>
-		</genxml>
-		<genxml>
-			<ctrltype>css</ctrltype>
-			<url>https://unpkg.com/leaflet@1.7.1/dist/leaflet.css</url>
-		</genxml>
-		<genxml>
-			<ctrltype>js</ctrltype>
-			<url>https://unpkg.com/leaflet@1.7.1/dist/leaflet.js</url>
-		</genxml>
-		<genxml>
-			<ctrltype>css</ctrltype>
-			<url>https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css</url>
-		</genxml>
-		<genxml>
-			<ctrltype>js</ctrltype>
-			<url>https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js</url>
 		</genxml>
 		<genxml>
 			<ctrltype>css</ctrltype>
