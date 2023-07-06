@@ -10,22 +10,22 @@
     var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
     var info = new SimplisityInfo(moduleData.Record);
 
-    AddProcessDataResx(appThemeAdmin);
+    AddProcessDataResx(appThemeAdmin, true);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
 
     //NOTE: xPath for module settings must use "genxml/settings/*"
 }
 <div class="w3-row">
     <div class="w3-third w3-padding">
-        <label>imageresize (px)</label>
+        <label>@ResourceKey("DNNrocket.imageresize") (px)</label>
         @TextBox(info, "genxml/settings/imageresize", " class='w3-input w3-border'", "1024")
     </div>
-    <div class="w3-padding">
-        <label>Columns</label>
-        @RadioButtonList(info, "genxml/settings/columns", "def,fcw-2col,fcw-3col,fcw-4col,fcw-5col,fcw-multicol", "default, 2 Columns, 3 Columns, 4 Columns, 5 Columns, Multi Columns", " class=''", "6", "", false)
+    <div class="w3-third w3-padding">
+        <label>@ResourceKey("DNNrocket.columns")</label>
+        @DropDownList(info, "genxml/settings/columns", "default,fcw-2col,fcw-3col,fcw-4col,fcw-5col,fcw-multicol", ResourceKey("DNNrocket.columnsddl").ToString(), "class='w3-select w3-border'", "false")
     </div>
     <div class="w3-third w3-padding">
-        <label>CSS Class</label>
+        <label>@ResourceKey("DNNrocket.cssClass")</label>
         @TextBox(info, "genxml/settings/cssclass", "class='w3-input w3-border'", "")
     </div>
 </div>

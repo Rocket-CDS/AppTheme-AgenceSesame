@@ -1,25 +1,8 @@
-@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketContentAPI.Components;
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
 @using DNNrocketAPI.Components;
-@using RocketPortal.Components;
 
 @{
-    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
-    var articleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
-    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
-    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
     var appThemeSystem = (AppThemeSystemLimpet)Model.GetDataObject("appthemesystem");
-    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
-    var globalSettings = new SystemGlobalData();
-    var info = new SimplisityInfo();
-    if (articleRowData != null && articleRowData.Info != null)
-    {
-        info = articleRowData.Info;
-    }
 }
 
-<script src="/DesktopModules/DNNrocket/API/CKEditor/ckeditor4.21.0/ckeditor.js"></script>
-
+@RenderTemplate("CKEditor4.cshtml", appThemeSystem, Model, true)

@@ -28,34 +28,38 @@
 
 <div @(cssClass)>
 
-    <!-- HEADER SECTION -->
+    <!-- Header Section -->
     @{
-        var headerStyle = articleData.Info.GetXmlProperty("genxml/header/headerstyle");
         var moduleTitle = articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headertitle");
-    }
-
-    @if (headerStyle == "")
-    {
-        headerStyle = "h1";
     }
     @if (moduleTitle != "")
     {
+        var headerStyle = articleData.Info.GetXmlProperty("genxml/header/headerstyle");
+        if (headerStyle == "")
+        {
+            headerStyle = "h2";
+        }
         var headerAlignText = articleData.Info.GetXmlProperty("genxml/header/headeralign");
-        if (headerStyle.ToLower() == "h1")
+        var headerAnchor = "";
+        if (articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor") != "")
         {
-            <h1 id="@articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor")" style="text-align: @headerAlignText;">@moduleTitle</h1>
+            headerAnchor = "id=" + articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor");
         }
-        if (headerStyle.ToLower() == "h2")
+        if (headerStyle == "h1")
         {
-            <h2 id="@articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor")" style="text-align: @headerAlignText;">@moduleTitle</h2>
+            <h1 style="text-align:@headerAlignText;" @(headerAnchor)>@moduleTitle</h1>
         }
-        if (headerStyle.ToLower() == "h3")
+        if (headerStyle == "h2")
         {
-            <h3 id="@articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor")" style="text-align: @headerAlignText;">@moduleTitle</h3>
+            <h2 style="text-align:@headerAlignText;" @(headerAnchor)>@moduleTitle</h2>
         }
-        if (headerStyle.ToLower() == "h4")
+        if (headerStyle == "h3")
         {
-            <h4 id="@articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor")" style="text-align: @headerAlignText;">@moduleTitle</h4>
+            <h3 style="text-align:@headerAlignText;" @(headerAnchor)>@moduleTitle</h3>
+        }
+        if (headerStyle == "h4")
+        {
+            <h4 style="text-align:@headerAlignText;" @(headerAnchor)>@moduleTitle</h4>
         }
     }
 

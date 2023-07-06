@@ -44,7 +44,7 @@
                         if (articleImage.RelPath != "")
                         {
                             <a data-fancybox="@(group)" data-caption="@(alt)" href="@(articleImage.RelPath)">
-                                <img src="@ThumbnailImageUrl(articleImage.RelPath, width, height)" alt="@(alt)" />
+                                <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@(alt)" />
                             </a>
                         }
                     }

@@ -24,37 +24,27 @@
             @if (!headingHide)
             {
                 var title = info.GetXmlProperty("genxml/lang/genxml/textbox/title");
-                var headingalignvalue = info.GetXmlPropertyInt("genxml/select/headingalign");
-                var headingalign = "";
-                if (headingalignvalue == 1)
-                {
-                    headingalign = "w3-center";
-                }
-                if (headingalignvalue == 2)
-                {
-                    headingalign = "w3-right";
-                }
 
                 if (hStyle == "")
                 {
-                    hStyle = "h1";
+                    hStyle = "h2";
                 }
                 if (title != "")
                 {
                     var alignText = info.GetXmlProperty("genxml/select/headingalign");
-                    if (hStyle.ToLower() == "h1")
+                    if (hStyle == "h1")
                     {
                         <h1 id="@info.GetXmlProperty("genxml/lang/genxml/textbox/anchor")" style="text-align: @alignText;">@title</h1>
                     }
-                    if (hStyle.ToLower() == "h2")
+                    if (hStyle == "h2")
                     {
                         <h2 id="@info.GetXmlProperty("genxml/lang/genxml/textbox/anchor")" style="text-align: @alignText;">@title</h2>
                     }
-                    if (hStyle.ToLower() == "h3")
+                    if (hStyle == "h3")
                     {
                         <h3 id="@info.GetXmlProperty("genxml/lang/genxml/textbox/anchor")" style="text-align: @alignText;">@title</h3>
                     }
-                    if (hStyle.ToLower() == "h4")
+                    if (hStyle == "h4")
                     {
                         <h4 id="@info.GetXmlProperty("genxml/lang/genxml/textbox/anchor")" style="text-align: @alignText;">@title</h4>
                     }
@@ -70,6 +60,8 @@
             </div>
 
             <!-- DOCUMENTS SECTION -->
-            @RenderTemplate("documents.cshtml", moduleData.ModuleRef, appThemeView, Model, true)
+            @RenderTemplate("Documents.cshtml", moduleData.ModuleRef, appThemeView, Model, true)
+
         </div>
+
     </div>

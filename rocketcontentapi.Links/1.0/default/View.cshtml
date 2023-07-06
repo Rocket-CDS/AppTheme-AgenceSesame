@@ -30,74 +30,78 @@
 
     <div class="linkswrapper">
 
-    <!-- HEADER SECTION -->
-    @{
-        var headerStyle = articleData.Info.GetXmlProperty("genxml/header/headerstyle");
-        var moduleTitle = articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headertitle");
-    }
-
-    @if (headerStyle == "")
-    {
-        headerStyle = "h1";
-    }
-    @if (moduleTitle != "")
-    {
-        var headerAlignText = articleData.Info.GetXmlProperty("genxml/header/headeralign");
-        if (headerStyle.ToLower() == "h1")
-        {
-            <h1 id="@articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor")" style="text-align: @headerAlignText;">@moduleTitle</h1>
+        <!-- Header Section -->
+        @{
+            var moduleTitle = articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headertitle");
         }
-        if (headerStyle.ToLower() == "h2")
+        @if (moduleTitle != "")
         {
-            <h2 id="@articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor")" style="text-align: @headerAlignText;">@moduleTitle</h2>
-        }
-        if (headerStyle.ToLower() == "h3")
-        {
-            <h3 id="@articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor")" style="text-align: @headerAlignText;">@moduleTitle</h3>
-        }
-        if (headerStyle.ToLower() == "h4")
-        {
-            <h4 id="@articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor")" style="text-align: @headerAlignText;">@moduleTitle</h4>
-        }
-    }
-
-    <ul class="links">
-        @foreach (var articleRowData in articleData.GetRows())
-        {
-            Model.SetDataObject("articlerow", articleRowData);
-            var info = articleRowData.Info;
-            var cssRow = "";
-            if (info.GetXmlProperty("genxml/textbox/cssclass") != "")
+            var headerStyle = articleData.Info.GetXmlProperty("genxml/header/headerstyle");
+            if (headerStyle == "")
             {
-                cssRow = "class=" + info.GetXmlProperty("genxml/textbox/cssclass");
+                headerStyle = "h2";
             }
-
-            <li @(cssRow)>
-                <!-- Lien interne -->
-                @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 1)
-                {
-                    var tabddlvalue = PagesUtils.NavigateURL(info.GetXmlPropertyInt("genxml/select/linktab"));
-                    var anchor = "";
-                    if (info.GetXmlProperty("genxml/textbox/linkanchor") != "")
-                    {
-                        anchor = "#" + info.GetXmlProperty("genxml/textbox/linkanchor");
-                    }
-                    <a href="@(tabddlvalue)@(anchor)">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
-                }
-                <!-- Lien externe -->
-                @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 2)
-                {
-                    var externalURL = info.GetXmlProperty("genxml/textbox/externalhref");
-                    var blank = "";
-                    if (@info.GetXmlPropertyBool("genxml/checkbox/blank"))
-                    {
-                        blank = "_blank";
-                    }
-                    <a href="@(externalURL)" target="@(blank)">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
-                }
-            </li>
+            var headerAlignText = articleData.Info.GetXmlProperty("genxml/header/headeralign");
+            var headerAnchor = "";
+            if (articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor") != "")
+            {
+                headerAnchor = "id=" + articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor");
+            }
+            if (headerStyle == "h1")
+            {
+                <h1 style="text-align:@headerAlignText;" @(headerAnchor)>@moduleTitle</h1>
+            }
+            if (headerStyle == "h2")
+            {
+                <h2 style="text-align:@headerAlignText;" @(headerAnchor)>@moduleTitle</h2>
+            }
+            if (headerStyle == "h3")
+            {
+                <h3 style="text-align:@headerAlignText;" @(headerAnchor)>@moduleTitle</h3>
+            }
+            if (headerStyle == "h4")
+            {
+                <h4 style="text-align:@headerAlignText;" @(headerAnchor)>@moduleTitle</h4>
+            }
         }
-    </ul>
+
+        <ul class="links">
+            @foreach (var articleRowData in articleData.GetRows())
+            {
+                Model.SetDataObject("articlerow", articleRowData);
+                var info = articleRowData.Info;
+                var cssRow = "";
+                if (info.GetXmlProperty("genxml/textbox/cssclass") != "")
+                {
+                    cssRow = "class=" + info.GetXmlProperty("genxml/textbox/cssclass");
+                }
+
+                <li @(cssRow)>
+                    <!-- Lien interne -->
+                    @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 1)
+                    {
+                        var tabddlvalue = PagesUtils.NavigateURL(info.GetXmlPropertyInt("genxml/select/linktab"));
+                        var anchor = "";
+                        if (info.GetXmlProperty("genxml/textbox/linkanchor") != "")
+                        {
+                            anchor = "#" + info.GetXmlProperty("genxml/textbox/linkanchor");
+                        }
+                        <a href="@(tabddlvalue)@(anchor)">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
+                    }
+                    <!-- Lien externe -->
+                    @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 2)
+                    {
+                        var externalURL = info.GetXmlProperty("genxml/textbox/externalhref");
+                        var blank = "";
+                        if (@info.GetXmlPropertyBool("genxml/checkbox/blank"))
+                        {
+                            blank = "_blank";
+                        }
+                        <a href="@(externalURL)" target="@(blank)">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
+                    }
+                </li>
+            }
+        </ul>
 
     </div>
 

@@ -27,7 +27,6 @@
     {
         <div @(cssClass)>
             <div class="labelswrapper">
-
                 @if (info.GetXmlProperty("genxml/lang/genxml/textbox/title") != "")
                 {
                     <h2>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
@@ -54,12 +53,12 @@
                                             blank = "_blank";
                                         }
                                         <a href="@info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imageredirectlink")" target="@(blank)">
-                                            <img src="@ThumbnailImageUrl(articleImage.RelPath, width, height)" alt="@info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage")" />
+                                            <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage")" />
                                         </a>
                                     }
                                     else
                                     {
-                                        <img src="@ThumbnailImageUrl(articleImage.RelPath, width, height)" alt="@info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage")" />
+                                        <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage")" />
                                     }
                                 }
                             </div>

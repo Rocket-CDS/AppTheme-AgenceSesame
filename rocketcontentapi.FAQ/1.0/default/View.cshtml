@@ -28,6 +28,9 @@
 
 }
 <div @(cssClass)>
+
+    <div class="faqwrapper">
+
     <!-- HEADER SECTION -->
     @{
         var headerStyle = articleData.Info.GetXmlProperty("genxml/header/headerstyle");
@@ -59,7 +62,7 @@
         }
     }
 
-    <div id="accordion">
+    <div id="accordion" class="faq">
         @foreach (var articleRowData in articleData.GetRows())
         {
             var info = articleRowData.Info;
@@ -70,14 +73,17 @@
             }
             <div @(rowCssClass)>
                 <div class="accordion-header" style="cursor:pointer;">
-                    <p>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</p>
-                    <p>@info.GetXmlProperty("genxml/lang/genxml/textbox/categorie")</p>
+                    <div class="faq-cat">@info.GetXmlProperty("genxml/lang/genxml/textbox/categorie")</div>
+                    <h4>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h4>
                 </div>
-                <div class="accordion-content" style="display: none;">@HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))</div>
+                <div class="accordion-content" style="display:none;">@HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))</div>
                 <hr />
             </div>
         }
     </div>
+
+    </div>
+
 </div>
 
 <script type="text/javascript">

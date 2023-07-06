@@ -27,11 +27,8 @@
 
     AddProcessDataResx(appThemeView, true);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
-    AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppTheme-AgenceSesame/resx/");
     AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/");
-
 }
-
 
 <!-- require Key for saving -->
 @HiddenField(info, "genxml/config/rowkey")
@@ -46,13 +43,12 @@
         <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink docstablink" onclick="openSection('docs')">@ResourceKey("DNNrocket.docs")</div>
         <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink linkstablink" onclick="openSection('links')">@ResourceKey("DNNrocket.links")</div>
         <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink htmltexttablink" onclick="openSection('htmltext')">@ResourceKey("DNNrocket.html")</div>
-        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink othertablink" onclick="openSection('video')">@ResourceKey("DNNrocket.video")</div>
-        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink othertablink" onclick="openSection('advanced')">@ResourceKey("DNNrocket.advanced")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink videolink" onclick="openSection('video')">@ResourceKey("DNNrocket.video")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink advancedlink" onclick="openSection('advanced')">@ResourceKey("DNNrocket.advanced")</div>
     </div>
 
     <div id="heading" class='w3-row sectionname' style="display:none">
-
-        <div class='w3-row w3-padding'>
+        <div class="w3-panel w3-padding w3-light-grey">
             @{
                 String[] layouts = {"<span class='material-icons'>view_headline</span>","<span class='material-icons' style='transform:rotate(180deg);'>horizontal_split</span>","<span class='material-icons'>horizontal_split</span>","<span class='material-icons'>vertical_split</span>","<span class='material-icons' style='transform:rotate(180deg);'>vertical_split</span>"};
                 var imgLayoutList = "";
@@ -62,10 +58,8 @@
                 }
                 imgLayoutList = imgLayoutList.TrimEnd(',');
             }
-            <label>@ResourceKey("DNNrocket.heading")</label>
             @RadioButtonList(info, "genxml/select/layout", "0,1,2,3,4", imgLayoutList, "class='  ' ", "0", "", false, 0)
         </div>
-
         @RenderTemplate("ArticleHeading.cshtml", appThemeSystem, Model, true)
     </div>
 
@@ -75,16 +69,14 @@
             <div class='w3-col m12'>
                 @CKEditor4(info, "genxml/lang/genxml/textbox/richtext", true)
             </div>
-            <div class='w3-col' style='width:0px;height:600px;'></div>
         </div>
     </div>
     <div id="imgs" class='w3-row sectionname' style="display:none">
-        <div class="w3-padding">
-            <label>@ResourceKey("General.openfancy")</label><br />
-            @CheckBox(info, "genxml/checkbox/openfancybox", "", "class='w3-check' ", false, false, 0)
-        </div>
-        <div class='w3-col m12 w3-padding '>
+        <div class='w3-padding '>
             @RenderTemplate("ArticleImagesSize.cshtml", appThemeSystem, Model, true)
+        </div>
+        <div class="w3-padding">
+            @CheckBox(info, "genxml/checkbox/openfancybox", "", "class='w3-check' style='margin-right:6px;' ", false, false, 0)<label>@ResourceKey("DNNrocket.openfancy")</label>
         </div>
     </div>
 

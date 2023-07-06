@@ -15,59 +15,24 @@
 
     AddProcessDataResx(appThemeView);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
-
-    var columnClass = "";
-    <!-- Si le radio button n'est pas égal à celui par défaut -->
-    if (moduleData.Record.GetXmlProperty("genxml/settings/columns") != "def")
-    {
-        columnClass = moduleData.Record.GetXmlProperty("genxml/settings/columns");
-    }
-    var cssClass = "";
-    if (moduleData.Record.GetXmlProperty("genxml/settings/cssclass") != "")
-    {
-        cssClass = "class='" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass") + "'";
-    }
+    
     var columns = "";
-    <!-- Si pas egal au btn par défaut-->
-    if (moduleData.Record.GetXmlProperty("genxml/settings/columns") != "def") 
+    if (moduleData.Record.GetXmlProperty("genxml/settings/columns") != "default")
     {
         columns = moduleData.Record.GetXmlProperty("genxml/settings/columns");
     }
 
+    var cssClass = "";
+    if (moduleData.Record.GetXmlProperty("genxml/settings/cssclass") != "")
+    {
+        cssClass = "class=" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass");
+    }
+
 }
+
 <div @(cssClass)>
+
     <div class="flexcontent-wrapper @(columns)">
-
-        <!-- HEADER SECTION -->
-        @{
-            var headerStyle = articleData.Info.GetXmlProperty("genxml/header/headerstyle");
-            var moduleTitle = articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headertitle");
-        }
-
-        @if (headerStyle == "")
-        {
-            headerStyle = "h1";
-        }
-        @if (moduleTitle != "")
-        {
-            var headerAlignText = articleData.Info.GetXmlProperty("genxml/header/headeralign");
-            if (headerStyle.ToLower() == "h1")
-            {
-                <h1 id="@articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor")" style="text-align: @headerAlignText;">@moduleTitle</h1>
-            }
-            if (headerStyle.ToLower() == "h2")
-            {
-                <h2 id="@articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor")" style="text-align: @headerAlignText;">@moduleTitle</h2>
-            }
-            if (headerStyle.ToLower() == "h3")
-            {
-                <h3 id="@articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor")" style="text-align: @headerAlignText;">@moduleTitle</h3>
-            }
-            if (headerStyle.ToLower() == "h4")
-            {
-                <h4 id="@articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor")" style="text-align: @headerAlignText;">@moduleTitle</h4>
-            }
-        }
 
         @foreach (var articleRowData in articleData.GetRows())
         {
@@ -104,8 +69,11 @@
                 }
             }
         }
+    
     </div>
+
 </div>
+
 <script type="text/javascript">
 
     $("[data-fancybox]").fancybox({

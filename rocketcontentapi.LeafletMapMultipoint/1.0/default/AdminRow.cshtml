@@ -27,8 +27,6 @@
 
     AddProcessDataResx(appThemeView, true);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
-    AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppTheme-AgenceSesame/resx/");
-    AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/");
 }
 <!-- require Key for saving -->
 @HiddenField(info, "genxml/config/rowkey")
@@ -44,7 +42,7 @@
         <div class='w3-row w3-margin-top'>
             <div class="w3-half">
                 <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
-                    <label>@ResourceKey("DNNrocket.title")</label>		&nbsp;@EditFlag(sessionParams)
+                    <label>@ResourceKey("DNNrocket.title")</label>&nbsp;@EditFlag(sessionParams)
                     @TextBox(info, "genxml/lang/genxml/textbox/title", " class='w3-input w3-border' autocomplete='off' ", "", false, 0)
                 </div>
             </div>
@@ -52,7 +50,7 @@
         <div class='w3-row w3-margin-top'>
             <div class="w3-half">
                 <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
-                    <label>@ResourceKey("DNNrocket.latitude")</label>		&nbsp;@EditFlag(sessionParams)
+                    <label>@ResourceKey("DNNrocket.latitude")</label>
                     @TextBox(info, "genxml/lang/genxml/textbox/latitude", " rows='4' class='w3-input w3-border' autocomplete='off' ", "", false, 0)
                 </div>
             </div>
@@ -60,7 +58,7 @@
         <div class='w3-row w3-margin-top'>
             <div class="w3-half">
                 <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
-                    <label>@ResourceKey("DNNrocket.longitude")</label>		&nbsp;@EditFlag(sessionParams)
+                    <label>@ResourceKey("DNNrocket.longitude")</label>
                     @TextBox(info, "genxml/lang/genxml/textbox/longitude", " rows='4' class='w3-input w3-border' autocomplete='off' ", "", false, 0)
                 </div>
             </div>
@@ -68,38 +66,29 @@
     </div>
 </div>
 
-    <script>
-        $(document).ready(function () {
-
-            var sectionName = localStorage.getItem('sectiontabs');
-            if ((typeof sectionName === 'undefined') || sectionName === '' || sectionName === null) {
-                sectionName = "heading";
-            }
-            openSection(sectionName);
-
-            $('#summary').trigger('onkeyup');
-            $('#text').trigger('onkeyup');
-
-        });
-
-
-        function openSection(sectionName) {
-
-
-            $('.sectionname').hide();
-            $('.tablink').removeClass("w3-border-black");
-            $('.tablink').removeClass("w3-theme-l3");
-            $('#' + sectionName).show();
-            $('.' + sectionName + 'tablink').addClass("w3-border-black");
-            $('.' + sectionName + 'tablink').addClass("w3-theme-l3");
-            localStorage.setItem('sectiontabs', sectionName);
-
-            // so the hidden one gets adjusted
-            $('#summary').trigger('onkeyup');
-            $('#text').trigger('onkeyup');
-
+<script>
+    $(document).ready(function () {
+        var sectionName = localStorage.getItem('sectiontabs');
+        if ((typeof sectionName === 'undefined') || sectionName === '' || sectionName === null) {
+            sectionName = "heading";
         }
+        openSection(sectionName);
+        $('#summary').trigger('onkeyup');
+        $('#text').trigger('onkeyup');
+    });
 
-    </script>
+    function openSection(sectionName) {
+        $('.sectionname').hide();
+        $('.tablink').removeClass("w3-border-black");
+        $('.tablink').removeClass("w3-theme-l3");
+        $('#' + sectionName).show();
+        $('.' + sectionName + 'tablink').addClass("w3-border-black");
+        $('.' + sectionName + 'tablink').addClass("w3-theme-l3");
+        localStorage.setItem('sectiontabs', sectionName);
+        // so the hidden one gets adjusted
+        $('#summary').trigger('onkeyup');
+        $('#text').trigger('onkeyup');
+    }
+</script>
 
 

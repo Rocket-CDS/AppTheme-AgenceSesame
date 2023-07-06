@@ -10,7 +10,7 @@
     var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
     var info = new SimplisityInfo(moduleData.Record);
 
-    AddProcessDataResx(appThemeAdmin);
+    AddProcessDataResx(appThemeAdmin, true);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
     AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/");
 
@@ -18,7 +18,7 @@
 }
 <div class="w3-row">
     <div class="w3-third w3-padding">
-        <label></label>
+        <label>@ResourceKey("DNNrocket.cssClass")</label>
         @TextBox(info, "genxml/settings/cssclass", "class='w3-input w3-border'", "")
     </div>
 </div>

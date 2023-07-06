@@ -13,7 +13,10 @@
     var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
     var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
     var globalSettings = new SystemGlobalData();
+
+    <!-- Problem with eid -->
     var eid = Model.SessionParamsData.GetInt("eid");
+    
     AddProcessDataResx(appThemeView);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
     var cssClass = "";
@@ -22,6 +25,8 @@
         cssClass = "class=" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass") + "";
     }
 }
+
+<h1>EID : @(eid)</h1>
 
 @if (eid > 0 && articleData.GetRowList().Count >= eid)
 {
@@ -61,7 +66,6 @@
         @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
 
         <!-- LINKS-->
-
         @foreach (var linkInfo in articleRow.GetLinkList())
         {
             <div class="newspaper-link">
@@ -210,7 +214,7 @@ else
                     var hStyle = info.GetXmlProperty("genxml/select/headingstyle");
                     var headingHide = info.GetXmlPropertyBool("genxml/checkbox/hideheading");
                     var hideRow = info.GetXmlPropertyBool("genxml/checkbox/hiderow");
-                    string[] urlparams = { "eid", lp.ToString(), info.GetXmlProperty("genxml/lang/genxml/textbox/title") };
+                    string[] urlparams = {"eid", lp.ToString(), info.GetXmlProperty("genxml/lang/genxml/textbox/title")};
                     var detailurl = DNNrocketUtils.NavigateURL(moduleData.Record.GetXmlPropertyInt("genxml/settings/linktab"), urlparams);
                     var indexMain = 0;
                     var datalist = articleRowData.GetImageList();
@@ -218,31 +222,35 @@ else
                     if (!hideRow)
                     {
                         <article>
-                            @{
-                                // Changement format de date (dd/MM/yyy)
-                                var date = info.GetXmlPropertyDate("genxml/textbox/newsdate");
-                                var dateFormat = date.ToString("dd/MM/yyyy");
-                            }
-                            <h2>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
-                            <p class="article-infos">Publié le @dateFormat</p>
-                            <!-- Affichage de l'image -->
-                            @foreach (var imgInfo in datalist)
-                            {
-                                indexMain++;
-                                var alt = info.GetXmlProperty("genxml/imagelist/genxml[" + indexMain + "]/hidden/imagealtarticleimage");
-                                var articleImage = new ArticleImage(imgInfo, "articleimage");
-                                if (indexMain == 1)
-                                {
-                                    <img src="@ImageUrl(articleImage.RelPath, moduleData.Record.GetXmlPropertyInt("genxml/settings/width"), moduleData.Record.GetXmlPropertyInt("genxml/settings/height"))" />
+                            <div class="blog-content">
+                                @{
+                                    // Changement format de date (dd/MM/yyy)
+                                    var date = info.GetXmlPropertyDate("genxml/textbox/newsdate");
+                                    var dateFormat = date.ToString("dd/MM/yyyy");
                                 }
-                            }
-                            <div class="flexcontent-text">
-                                <p>@info.GetXmlProperty("genxml/lang/genxml/textbox/resume")</p>
+                                <!-- Article title -->
+                                <h3>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h3>
+
+                                @foreach (var imgInfo in datalist)
+                                {
+                                    indexMain++;
+                                    var alt = info.GetXmlProperty("genxml/imagelist/genxml[" + indexMain + "]/hidden/imagealtarticleimage");
+                                    var articleImage = new ArticleImage(imgInfo, "articleimage");
+                                    if (indexMain == 1)
+                                    {
+                                        <img src="@ThumbnailImageUrl(articleImage.RelPath, moduleData.Record.GetXmlPropertyInt("genxml/settings/width"), moduleData.Record.GetXmlPropertyInt("genxml/settings/height"))" />
+                                    }
+                                }
+                                <div class="blog-text">
+                                    <p>@info.GetXmlProperty("genxml/lang/genxml/textbox/resume")</p>
+                                </div>
+                                <!-- Affichage de l'image -->
+
+                                <a class="bigbutton" href="@(detailurl)">Lire la suite</a>
+                                @{
+                                    lp += 1;
+                                }
                             </div>
-                            @{
-                                lp += 1;
-                            }
-                            <a href="@(detailurl)">Lire la suite</a>
                         </article>
                     }
                 }

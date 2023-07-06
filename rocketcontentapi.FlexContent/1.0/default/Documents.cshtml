@@ -13,23 +13,8 @@
 @foreach (var docInfo in articleRow.GetDocList())
 {
     var docURL = docInfo.GetXmlProperty("genxml/hidden/documentpatharticledoc");
-    <!-- Si on veut afficher le pdf sur un nouvel onglet alors on l'affiche '-->
-    if (docInfo.GetXmlPropertyBool("genxml/checkbox/openinnewtab"))
-    {
-        <div class="documents">
-            <a href="@(docURL)" target="_blank">
-                @if (docInfo.GetXmlProperty("genxml/lang/genxml/textbox/name") != "")
-                {
-                    @docInfo.GetXmlProperty("genxml/lang/genxml/textbox/name")
-                }
-                else
-                {
-                    @docInfo.GetXmlProperty("genxml/textbox/documentnamearticledoc")
-                }
-            </a>
-        </div>
-    }
-    else
+
+    if (docInfo.GetXmlPropertyBool("genxml/checkbox/forcedownload"))
     {
         <div class="documents">
             <a href="@(docURL)" download>
@@ -43,5 +28,20 @@
                 }
             </a>
         </div>
+    }
+    else
+    {
+        <div class="documents">
+            <a href="@(docURL)" target="_blank">
+                @if (docInfo.GetXmlProperty("genxml/lang/genxml/textbox/name") != "")
+                {
+                    @docInfo.GetXmlProperty("genxml/lang/genxml/textbox/name")
+                }
+                else
+                {
+                    @docInfo.GetXmlProperty("genxml/textbox/documentnamearticledoc")
+                }
+            </a>
+        </div>   
     }
 }

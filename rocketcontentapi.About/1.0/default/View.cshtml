@@ -36,6 +36,10 @@
                 @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 1)
                 {
                     var tabddlvalue = PagesUtils.NavigateURL(info.GetXmlPropertyInt("genxml/select/linktab"));
+                    if (info.GetXmlProperty("genxml/lang/genxml/textbox/linkanchor") != "")
+                    {
+                        tabddlvalue = tabddlvalue + "#" + info.GetXmlProperty("genxml/lang/genxml/textbox/linkanchor");
+                    }
                     <div class="about-link">
                         <a href="@(tabddlvalue)">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
                     </div>

@@ -44,11 +44,8 @@
     var myCodeMirror;
 
     $(document).ready(function () {
-
         $('.a-savebutton').attr('s-before', 'saveeditordata');
-
         showCodeMirror();
-
     });
 
     function saveeditordata() {
@@ -59,12 +56,10 @@
         setTimeout(() => {
             // pause to allow codemirror.js to load.
             $('#editorwrapper').show();
-
             myCodeMirror = CodeMirror.fromTextArea(document.getElementById("htmltext"), {
                 mode: 'htmlmixed',
                 theme: "night"
             });
-
             myCodeMirror.setSize($('#editorwrapper').width(), $('#editorwrapper').height());
             $('#htmltext').focus();
         }, 300);
