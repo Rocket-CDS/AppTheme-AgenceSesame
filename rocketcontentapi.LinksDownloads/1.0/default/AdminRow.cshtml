@@ -1,0 +1,81 @@
+@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+@{
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var articleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
+    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+    var appThemeSystem = (AppThemeSystemLimpet)Model.GetDataObject("appthemesystem");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var globalSettings = new SystemGlobalData();
+    var sessionParams = Model.SessionParamsData;
+    if (sessionParams == null)
+    {
+        sessionParams = new SessionParams(new SimplisityInfo());
+    }
+    var info = new SimplisityInfo();
+    if (articleRowData != null && articleRowData.Info != null)
+    {
+        info = articleRowData.Info;
+    }
+
+    AddProcessDataResx(appThemeView, true);
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
+}
+<!-- require Key for saving -->
+@HiddenField(info, "genxml/config/rowkey")
+@HiddenField(info, "genxml/lang/genxml/config/rowkeylang", "", articleRowData.RowKey)
+
+<div class='w3-row w3-padding'>
+    <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
+        <label>@ResourceKey("DNNrocket.cssClass")</label>
+        @TextBox(info, "genxml/textbox/cssclass", "class='w3-input w3-border' autocomplete='off'", "", true, 0)
+    </div>
+    <div class="w3-bar" style="cursor: pointer;">
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink linktablink" onclick="openSection('link')">@ResourceKey("DNNrocket.link")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink doctablink" onclick="openSection('doc')">@ResourceKey("DNNrocket.document")</div>
+    </div>
+    <div id="link" class='w3-row sectionname'>
+        <div class='w3-col m12 w3-padding '>
+            @RenderTemplate("ArticleLink.cshtml", appThemeSystem, Model, true)
+        </div>
+    </div>
+    <div id="doc" class='w3-row sectionname' style="display:none">
+        <div class='w3-col m12 w3-padding '>
+            @RenderTemplate("ArticleDocuments.cshtml", appThemeSystem, Model, true)
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var sectionName = localStorage.getItem('sectiontabs');
+        if ((typeof sectionName === 'undefined') || sectionName === '' || sectionName === null) {
+            sectionName = "heading";
+        }
+        openSection(sectionName);
+        $('#summary').trigger('onkeyup');
+        $('#text').trigger('onkeyup');
+    });
+
+    function openSection(sectionName) {
+        $('.sectionname').hide();
+        $('.tablink').removeClass("w3-border-black");
+        $('.tablink').removeClass("w3-theme-l3");
+        $('#' + sectionName).show();
+        $('.' + sectionName + 'tablink').addClass("w3-border-black");
+        $('.' + sectionName + 'tablink').addClass("w3-theme-l3");
+        localStorage.setItem('sectiontabs', sectionName);
+        // so the hidden one gets adjusted
+        $('#summary').trigger('onkeyup');
+        $('#text').trigger('onkeyup');
+    }
+</script>
+
+

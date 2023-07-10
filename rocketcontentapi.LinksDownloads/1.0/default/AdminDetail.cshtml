@@ -1,0 +1,23 @@
+@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+@{
+    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+    var appThemeSystem = (AppThemeSystemLimpet)Model.GetDataObject("appthemesystem");
+}
+
+<script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+
+<div class="w3-row">
+    @RenderTemplate("ArticleHeader.cshtml", appThemeSystem, Model, true)
+    <div id="articledetailpanel" class="w3-threequarter">
+        @RenderTemplate("AdminRow.cshtml", appThemeAdmin, Model, true)
+    </div>
+    <div class="w3-quarter">
+        @RenderTemplate("AdminRowSelect.cshtml", appThemeSystem, Model, true)
+    </div>
+</div>
