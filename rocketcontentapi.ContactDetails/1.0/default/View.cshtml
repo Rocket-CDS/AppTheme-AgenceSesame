@@ -62,52 +62,9 @@
                             </p>
                         </div>
                     </div>
-                    if (info.GetXmlProperty("genxml/textbox/contact1") != "")
-                    {
-                    <div class="contact-item">
-                        <div class="ci-header">
-                            <span><i class="fas fa-user"></i></span>
-                            <h3>@info.GetXmlProperty("genxml/textbox/contact1")</h3>
-                        </div>
-                        <div class="ci-content">
-                            @if (info.GetXmlProperty("genxml/textbox/contactname1") != "")
-                            {
-                                <div>@info.GetXmlProperty("genxml/textbox/contactname1")</div>
-                            }
-                            @if (info.GetXmlProperty("genxml/textbox/mobile1") != "")
-                            {
-                                <div>@ResourceKey("Contact.contactport") : @info.GetXmlProperty("genxml/textbox/mobile1")</div>
-                            }
-                            @if (info.GetXmlProperty("genxml/textbox/email1") != "")
-                            {
-                                <div>@info.GetXmlProperty("genxml/textbox/email1")</div>
-                            }
-                        </div>
-                    </div>
-                    }
-                    if (info.GetXmlProperty("genxml/textbox/contact2") != "")
-                    {
-                    <div class="contact-item">
-                        <div class="ci-header">
-                            <span><i class="fas fa-user"></i></span>
-                            <h3>@info.GetXmlProperty("genxml/textbox/contact2")</h3>
-                        </div>
-                        <div class="ci-content">
-                            @if (info.GetXmlProperty("genxml/textbox/contactname2") != "")
-                            {
-                                <div>@info.GetXmlProperty("genxml/textbox/contactname2")</div>
-                            }
-                            @if (info.GetXmlProperty("genxml/textbox/mobile2") != "")
-                            {
-                                <div>@ResourceKey("Contact.contactport") : @info.GetXmlProperty("genxml/textbox/mobile2")</div>
-                            }
-                            @if (info.GetXmlProperty("genxml/textbox/email2") != "")
-                            {
-                                <div>@info.GetXmlProperty("genxml/textbox/email2")</div>
-                            }
-                        </div>
-                    </div>
-                    }
+                    <!-- To display contacts -->
+                    @RenderTemplate("DisplayContacts.cshtml", moduleData.ModuleRef, appThemeView, Model, true)
+
                     if (info.GetXmlProperty("genxml/lang/genxml/textbox/extrainfo") != "")
                     {
                         <div class="contact-item">

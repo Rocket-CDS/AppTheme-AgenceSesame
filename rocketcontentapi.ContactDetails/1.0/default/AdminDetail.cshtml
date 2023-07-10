@@ -64,46 +64,14 @@
             <label>@ResourceKey("DNNrocket.email")</label>
             @TextBox(info, "genxml/textbox/email", " class='w3-input w3-border' ", "", false)
         </div>
-        <!-- display contact1 -->
-        <div class="w3-half w3-padding">
-            <label>@ResourceKey("DNNrocket.contact1")</label>
-            @TextBox(info, "genxml/textbox/contact1", " class='w3-input w3-border' ", "", false)
+
+        <!-- TEMPLATE CONTACTS -->
+        <br />
+        <div class="w3-row w3-padding">
+            <label>@ResourceKey("DNNrocket.contact")</label>
+            @RenderTemplate("Contacts.cshtml", moduleData.ModuleRef, appThemeView, Model, true)
         </div>
-        <!-- display contact name -->
-        <div class="w3-half w3-padding">
-            <label>@ResourceKey("DNNrocket.contactname1")</label>
-            @TextBox(info, "genxml/textbox/contactname1", " class='w3-input w3-border' ", "", false)
-        </div>
-        <!-- display mobile 1 -->
-        <div class="w3-half w3-padding">
-            <label>@ResourceKey("DNNrocket.mobile1")</label>
-            @TextBox(info, "genxml/textbox/mobile1", " class='w3-input w3-border' ", "", false)
-        </div>
-        <!-- display email1 -->
-        <div class="w3-half w3-padding">
-            <label>@ResourceKey("DNNrocket.email1")</label>
-            @TextBox(info, "genxml/textbox/email1", " class='w3-input w3-border' ", "", false)
-        </div>
-        <!-- display contact2 -->
-        <div class="w3-half w3-padding">
-            <label>@ResourceKey("DNNrocket.contact2")</label>
-            @TextBox(info, "genxml/textbox/contact2", " class='w3-input w3-border' ", "", false)
-        </div>
-        <!-- display contact name 2-->
-        <div class="w3-half w3-padding">
-            <label>@ResourceKey("DNNrocket.contactname2")</label>
-            @TextBox(info, "genxml/textbox/contactname2", " class='w3-input w3-border' ", "", false)
-        </div>
-        <!-- display mobile 2 -->
-        <div class="w3-half w3-padding">
-            <label>@ResourceKey("DNNrocket.mobile2")</label>
-            @TextBox(info, "genxml/textbox/mobile2", " class='w3-input w3-border' ", "", false)
-        </div>
-        <!-- display email2 -->
-        <div class="w3-half w3-padding">
-            <label>@ResourceKey("DNNrocket.email2")</label>
-            @TextBox(info, "genxml/textbox/email2", " class='w3-input w3-border' ", "", false)
-        </div>
+        <br />
         <!-- display extra info -->
         <div class="w3-row w3-padding">
             <label>@ResourceKey("DNNrocket.extraInfo")&nbsp;@EditFlag(sessionParams)</label>

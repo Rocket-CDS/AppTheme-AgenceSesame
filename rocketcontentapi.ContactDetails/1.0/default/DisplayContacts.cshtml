@@ -1,0 +1,44 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+@{
+    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var articleRow = (ArticleRowLimpet)Model.GetDataObject("articlerow");
+    var info = articleRow.Info;
+
+    AddProcessDataResx(appThemeView, true);
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
+}
+
+@foreach (var linkInfo in articleRow.GetLinkList())
+{
+
+    <div class="contact-item">
+        @if (linkInfo.GetXmlProperty("genxml/textbox/contactmulti") != "")
+        {
+            <div class="ci-header">
+                <span><i class="fas fa-user"></i></span>
+                <h3>@linkInfo.GetXmlProperty("genxml/textbox/contactmulti")</h3>
+            </div>
+        }
+        <div class="ci-content">
+            @if (linkInfo.GetXmlProperty("genxml/textbox/contactnamemulti") != "")
+            {
+                <div>@info.GetXmlProperty("genxml/textbox/contactnamemulti")</div>
+            }
+            @if (linkInfo.GetXmlProperty("genxml/textbox/mobilemulti") != "")
+            {
+                <div>@ResourceKey("DNNrocket.mobile") : @linkInfo.GetXmlProperty("genxml/textbox/mobilemulti")</div>
+            }
+            @if (linkInfo.GetXmlProperty("genxml/textbox/emailmulti") != "")
+            {
+                <div>@info.GetXmlProperty("genxml/textbox/emailmulti")</div>
+            }
+        </div>
+    </div>
+}
+
