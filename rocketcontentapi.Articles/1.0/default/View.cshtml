@@ -26,8 +26,6 @@
     }
 }
 
-<h1>EID : @(eid)</h1>
-
 @if (eid > 0 && articleData.GetRowList().Count >= eid)
 {
     var rtnUrl = PagesUtils.NavigateURL(moduleData.Record.GetXmlPropertyInt("genxml/settings/listlinktab"));
