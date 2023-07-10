@@ -1,0 +1,49 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+
+@{
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var globalSettings = new SystemGlobalData();
+
+    var index = 0;
+
+    // Path to the resx file
+    AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppThemes-W3-CSS/rocketcontentapi.Contact/1.0/resx");
+
+}
+
+<div class="h4-headline">
+    Dernières actus
+</div>
+@{var lp = 0; }
+<!-- Faire le href plus tard parce que j'ai pas d'idée de comment le faire -->
+<div class="w3-container">
+    @foreach (var articleRowData in articleData.GetRows())
+    {
+
+        var info = articleRowData.Info;
+        // Changement format de date (dd/MM/yyy)
+        var date = info.GetXmlPropertyDate("genxml/lang/genxml/textbox/newsdate");
+        var dateFormat = date.ToString("dd/MM/yyyy");
+        string[] urlparams = { "eid", lp.ToString(), info.GetXmlProperty("genxml/lang/genxml/textbox/title") };
+        <!-- TODO refaire bien le lien vers détail article j'ai supprimé le bon module T-T -->
+        var detailurl = DNNrocketUtils.NavigateURL(moduleData.Record.GetXmlPropertyInt("genxml/settings/linktab"), urlparams);
+
+        <a href="@(detailurl)">@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</a>
+
+        lp++;
+    }
+</div>
+
+<!-- TODO refaire le lien vers la page d'article, j'ai supprimé le bon module T-T -->
+@{var tabddlvalue = PagesUtils.NavigateURL(Model.SessionParamsData.TabId);}
+<a href="@(tabddlvalue)">Toutes les actualités</a>
