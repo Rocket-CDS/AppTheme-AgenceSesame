@@ -8,10 +8,11 @@
     var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
     var articleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
     var contactLP = 0;
+    var contactId = 1;
     var datalist = articleRowData.GetLinkList();
     var globalSettings = new SystemGlobalData();
     var sessionParams = Model.SessionParamsData;
-    var fieldId = "multi"; 
+    var fieldId = "multi";
     var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
     var appThemeSystem = (AppThemeSystemLimpet)Model.GetDataObject("appthemesystem");
     var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
@@ -31,22 +32,23 @@
         {
             <li class="linklist w3-display-container w3-padding w3-border-0" style="list-style-type:none;">
                 @SortableListIndex(contactInfo, contactLP)
-                
+
+                <label class="w3-center w3-large">@ResourceKey("DNNrocket.contact") N°@(contactId)</label>
                 <div class="w3-container w3-padding w3-card">
                     <div class="w3-col m6 w3-padding">
-                        <label>@ResourceKey("DNNrocket.contact")-@(contactLP)</label>
+                        <label>@ResourceKey("DNNrocket.contact")</label>
                         @TextBox(contactInfo, "genxml/textbox/contact" + fieldId, " class='w3-input w3-border' ", "", false, contactLP)
                     </div>
                     <div class="w3-col m6 w3-padding">
-                        <label>@ResourceKey("DNNrocket.contactname")-@(contactLP)</label>
+                        <label>@ResourceKey("DNNrocket.name")</label>
                         @TextBox(contactInfo, "genxml/textbox/contactname" + fieldId, " class='w3-input w3-border' ", "", false, contactLP)
                     </div>
                     <div class="w3-col m6 w3-padding">
-                        <label>@ResourceKey("DNNrocket.mobile")-@(contactLP)</label>
+                        <label>@ResourceKey("DNNrocket.mobile")</label>
                         @TextBox(contactInfo, "genxml/textbox/mobile" + fieldId, " class='w3-input w3-border' ", "", false, contactLP)
                     </div>
                     <div class="w3-col m6 w3-padding">
-                        <label>@ResourceKey("DNNrocket.email")-@(contactLP)</label>
+                        <label>@ResourceKey("DNNrocket.email")</label>
                         @TextBox(contactInfo, "genxml/textbox/email" + fieldId, " class='w3-input w3-border' ", "", false, contactLP)
                     </div>
                     <div class="simplisity_removelistitem w3-display-topright" s-removelist=".linklist" s-recylebin="linklistbin" style="cursor: pointer;">
@@ -54,7 +56,8 @@
                     </div>
                 </div>
             </li>
-            contactLP += 1;
+            contactLP++;
+            contactId++;
         }
     </ul>
 </div>
