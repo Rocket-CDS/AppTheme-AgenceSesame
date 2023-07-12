@@ -33,27 +33,31 @@
 @HiddenField(info, "genxml/lang/genxml/config/rowkeylang", "", articleRowData.RowKey)
 
 <div class='w3-row w3-padding'>
-
     <div class='w3-col m12 w3-padding'>
-        <div class='w3-right w3-margin-bottom '>
+        <div class='w3-right'>
             @CheckBox(info, "genxml/checkbox/hiderow", "&nbsp;" + ResourceKey("DNNrocket.hide").ToString(), "class='w3-check' ", false, false, 0)
         </div>
     </div>
 </div>
 
-<div class="w3-row w3-padding">
+<div class="w3-row">
     <div class="w3-col">
-        <label>@ResourceKey("DNNrocket.citation")</label>
-        @TextBox(info, "genxml/lang/genxml/textbox/citation", "class='w3-input w3-border w3-margin-bottom' autocomplete='off' MaxLength='200'", "", false)
+        <label>@ResourceKey("DNNrocket.title")</label>
+        @TextBox(info, "genxml/lang/genxml/textbox/title", "class='w3-input w3-border w3-margin-bottom' autocomplete='off' MaxLength='200'", "", false)
     </div>
 </div>
 
-<div class="w3-row w3-padding">
+<div class="w3-row">
     <div class="w3-col">
-        <label>@ResourceKey("DNNrocket.auteur")</label>
-        @TextBox(info, "genxml/lang/genxml/textbox/auteur", "class='w3-input w3-border w3-margin-bottom' autocomplete='off' MaxLength='200'", "", false)
+        <label>@ResourceKey("DNNrocket.content")</label>
+        @TextBox(info, "genxml/lang/genxml/textbox/content", "class='w3-input w3-border w3-margin-bottom' autocomplete='off' MaxLength='200'", "", false)
     </div>
 </div>
+
+<div class="w3-row w3-border w3-round w3-margin-bottom">
+    @RenderTemplate("ArticleLink.cshtml", appThemeSystem, Model, true)
+</div>
+
 
 <script>
     var myCodeMirror;

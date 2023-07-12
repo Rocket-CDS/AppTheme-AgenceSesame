@@ -9,41 +9,46 @@
     var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
     var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
     var info = new SimplisityInfo(moduleData.Record);
-    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
 
-    AddProcessDataResx(appThemeView, true);
+    AddProcessDataResx(appThemeAdmin);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
 
     //NOTE: xPath for module settings must use "genxml/settings/*"
 }
-<div class="w3-container">
-    <label class="w3-padding">@ResourceKey("DNNrocket.resizeonupload") (px)</label>
-    <div class="w3-row w3-padding">
-        @TextBox(info, "genxml/settings/imageresize", " class='w3-input w3-col m5 w3-border'", "640")
+<div class="w3-row">
+    <div class="w3-third w3-padding">
+        <label>Image resize loading (px)</label>
+        @TextBox(info, "genxml/settings/imageresize", " class='w3-input w3-border'", "640")
     </div>
-
-    <label class="w3-padding"><b>@ResourceKey("DNNrocket.detailPage")</b></label>
-    <div class="w3-row w3-padding">
-        @TabSelectList(info, "genxml/settings/linktab", "class='w3-input w3-col m5 w3-border'", false)
-    </div>
-
-    <label class="w3-padding"><b>@ResourceKey("DNNrocket.listPage")</b></label>
-    <div class="w3-row w3-padding">
-        @TabSelectList(info, "genxml/settings/listlinktab", "class='w3-input w3-col m5 w3-border'", false)
-    </div>
-
     <div class="w3-row">
-        <div class="w3-col m2 w3-padding">
-            <label>@ResourceKey("DNNrocket.width") (px)</label>
+        <label><b>Detail Page</b></label>
+    </div>
+    <div class="w3-row">
+        @TabSelectList(info, "genxml/settings/linktab", "class='w3-input w3-border'", false)
+    </div>
+    <div class="w3-row">
+        <label><b>List Page</b></label>
+    </div>
+    <div class="w3-row">
+        @TabSelectList(info, "genxml/settings/listlinktab", "class='w3-input w3-border'", false)
+    </div>
+    <div class="w3-row">
+        <div class="w3-third w3-padding">
+            <label>Width (px)</label>
             @TextBox(info, "genxml/settings/width", " class='w3-input w3-border'", "400")
-        </div>
-        <div class="w3-col m2 w3-padding">
-            <label>@ResourceKey("DNNrocket.height") (px)</label>
+        </div>    
+        <div class="w3-third w3-padding">
+            <label>Height (px)</label>
             @TextBox(info, "genxml/settings/height", " class='w3-input w3-border'", "300")
         </div>
     </div>
-    <label class="w3-padding">@ResourceKey("DNNrocket.cssClass")</label>
-    <div class="w3-row w3-padding">
-        @TextBox(info, "genxml/settings/cssclass", " class='w3-input w3-col m5 w3-border'", "")
+    <div class="w3-row">
+        <label>CSS Class</label>
+        @TextBox(info, "genxml/settings/cssclass", " class='w3-input w3-border'", "")
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+    });
+</script>

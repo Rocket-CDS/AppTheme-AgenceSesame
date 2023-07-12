@@ -13,10 +13,7 @@
     var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
     var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
     var globalSettings = new SystemGlobalData();
-
-    <!-- Problem with eid -->
     var eid = Model.SessionParamsData.GetInt("eid");
-    
     AddProcessDataResx(appThemeView);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
     var cssClass = "";
@@ -40,11 +37,9 @@
     var group = articleRowData.RowKey;
     <div @(cssClass)>
         <!-- RETURN BTN-->
-        <a class="w3-right" href="@rtnUrl">Retour</a>
-
+        <a class="w3-right" href="@rtnUrl"><i class="rtn-arrow fa fa-arrow-left">&nbsp;&nbsp;</i>Retour</a>
         <!-- TITLE -->
-        <h2>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
-
+        <h1><b>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</b></h1>
         <!-- MAIN IMAGE -->
         @foreach (var imgInfo in datalist)
         {
@@ -64,9 +59,10 @@
         @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
 
         <!-- LINKS-->
+
         @foreach (var linkInfo in articleRow.GetLinkList())
         {
-            <div class="newspaper-link">
+            <div>
                 @if (linkInfo.GetXmlPropertyInt("genxml/radio/linktypearticlelink") == 1)
                 {
                     var tabddlvalue = PagesUtils.NavigateURL(linkInfo.GetXmlPropertyInt("genxml/select/internallinkarticlelink"));
@@ -75,7 +71,7 @@
                     {
                         anchor = "#" + linkInfo.GetXmlProperty("genxml/textbox/linkanchorarticlelink");
                     }
-                    <a href="@(tabddlvalue)@(anchor)">@linkInfo.GetXmlProperty("genxml/lang/genxml/textbox/namearticlelink")</a>
+                    <a class="w3-btn w3-red w3-round-xxlarge" href="@(tabddlvalue)@(anchor)">@linkInfo.GetXmlProperty("genxml/lang/genxml/textbox/namearticlelink")</a>
                 }
                 @if (linkInfo.GetXmlPropertyInt("genxml/radio/linktypearticlelink") == 2)
                 {
@@ -85,7 +81,7 @@
                     {
                         blank = "_blank";
                     }
-                    <a href="@(externalURL)" target="@(blank)">@linkInfo.GetXmlProperty("genxml/lang/genxml/textbox/namearticlelink")</a>
+                    <a class="w3-btn w3-red w3-round-xxlarge" href="@(externalURL)" target="@(blank)">@linkInfo.GetXmlProperty("genxml/lang/genxml/textbox/namearticlelink")</a>
                 }
             </div>
         }
@@ -94,13 +90,13 @@
         <!-- DOCUMENTS -->
         @if (!info.GetXmlPropertyBool("genxml/checkbox/documenthiddenarticledoc") && info.GetXmlProperty("genxml/documentlist/genxml/hidden/documentpatharticledoc") != "")
         {
-            <div class="about-content">
+            <div>
                 @{
                     var docURL = info.GetXmlProperty("genxml/documentlist/genxml/hidden/documentpatharticledoc");
                     <!-- Si on veut afficher le pdf sur un nouvel onglet alors on l'affiche '-->
                     if (info.GetXmlPropertyBool("genxml/checkbox/openinnewtab"))
                     {
-                        <div class="documents">
+                        <div>
                             <p>@info.GetXmlProperty("genxml/textbox/text")</p>
                             <a href="@(docURL)" target="_blank">
                                 @if (info.GetXmlProperty("genxml/textbox/name") != "")
@@ -116,7 +112,7 @@
                     }
                     else
                     {
-                        <div class="documents">
+                        <div>
                             <p>@info.GetXmlProperty("genxml/textbox/text")</p>
                             <a href="@(docURL)" download="@info.GetXmlProperty("genxml/textbox/documentnamearticledoc")">
                                 @if (info.GetXmlProperty("genxml/textbox/name") != "")
@@ -137,12 +133,12 @@
         <!-- VIDEO -->
         @if (info.GetXmlProperty("genxml/lang/genxml/textbox/video") != "")
         {
-            <div class="fcd-video"><div class="video-container">@HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/video"))</div></div>
+            <div><div class="video-container">@HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/video"))</div></div>
         }
-        <hr />
+        <hr class="article-hr" />
         <!-- GALLERY -->
-        <div class="gallery-wrapper">
-            <div class="gallery">
+        <div>
+            <div class="gallery-img">
                 @foreach (var imgInfo in datalist)
                 {
                     index++;
@@ -152,13 +148,13 @@
                     {
                         index++;
                         <a data-fancybox="@(group)" data-caption="@(alt)" href="@ThumbnailImageUrl(articleImage.RelPath)">
-                            <img src="@ThumbnailImageUrl(articleImage.RelPath, 300, 300)" alt="@(alt)" />
+                            <img src="@ThumbnailImageUrl(articleImage.RelPath, 300, 300)" class="w3-margin" alt="@(alt)" />
                         </a>
                     }
                 }
             </div>
         </div>
-        <hr />
+        <hr class="article-hr" />
     </div>
 
 }
@@ -201,8 +197,9 @@ else
                         <h4 id="@articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor")" style="text-align: @headerAlignText;">@moduleTitle</h4>
                     }
                 }
-            </div>
+                <hr class="small-hr"/>
 
+            </div>
             <div class="blog">
                 @{var lp = 1;}
                 @foreach (var articleRowData in articleData.GetRows())
@@ -212,7 +209,7 @@ else
                     var hStyle = info.GetXmlProperty("genxml/select/headingstyle");
                     var headingHide = info.GetXmlPropertyBool("genxml/checkbox/hideheading");
                     var hideRow = info.GetXmlPropertyBool("genxml/checkbox/hiderow");
-                    string[] urlparams = {"eid", lp.ToString(), info.GetXmlProperty("genxml/lang/genxml/textbox/title")};
+                    string[] urlparams = { "eid", lp.ToString(), info.GetXmlProperty("genxml/lang/genxml/textbox/title") };
                     var detailurl = DNNrocketUtils.NavigateURL(moduleData.Record.GetXmlPropertyInt("genxml/settings/linktab"), urlparams);
                     var indexMain = 0;
                     var datalist = articleRowData.GetImageList();
@@ -220,36 +217,36 @@ else
                     if (!hideRow)
                     {
                         <article>
-                            <div class="blog-content">
-                                @{
-                                    // Changement format de date (dd/MM/yyy)
-                                    var date = info.GetXmlPropertyDate("genxml/textbox/newsdate");
-                                    var dateFormat = date.ToString("dd/MM/yyyy");
-                                }
-                                <!-- Article title -->
-                                <h3>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h3>
+                            @{
+                                // Changement format de date (dd/MM/yyy)
+                                var date = info.GetXmlPropertyDate("genxml/textbox/newsdate");
+                                var dateFormat = date.ToString("dd/MM/yyyy");
+                            }
+                            <h2><b>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</b></h2>
 
-                                @foreach (var imgInfo in datalist)
+                            <p>Publié le @dateFormat</p>
+                            <!-- Affichage de l'image -->
+                            @foreach (var imgInfo in datalist)
+                            {
+                                indexMain++;
+                                var alt = info.GetXmlProperty("genxml/imagelist/genxml[" + indexMain + "]/hidden/imagealtarticleimage");
+                                var articleImage = new ArticleImage(imgInfo, "articleimage");
+                                if (indexMain == 1)
                                 {
-                                    indexMain++;
-                                    var alt = info.GetXmlProperty("genxml/imagelist/genxml[" + indexMain + "]/hidden/imagealtarticleimage");
-                                    var articleImage = new ArticleImage(imgInfo, "articleimage");
-                                    if (indexMain == 1)
-                                    {
-                                        <img src="@ThumbnailImageUrl(articleImage.RelPath, moduleData.Record.GetXmlPropertyInt("genxml/settings/width"), moduleData.Record.GetXmlPropertyInt("genxml/settings/height"))" />
-                                    }
+                                    <img src="@ThumbnailImageUrl(articleImage.RelPath, moduleData.Record.GetXmlPropertyInt("genxml/settings/width"), moduleData.Record.GetXmlPropertyInt("genxml/settings/height"))" />
                                 }
-                                <div class="blog-text">
-                                    <p>@info.GetXmlProperty("genxml/lang/genxml/textbox/resume")</p>
-                                </div>
-                                <!-- Affichage de l'image -->
+                            }
 
-                                <a class="bigbutton" href="@(detailurl)">Lire la suite</a>
-                                @{
-                                    lp += 1;
-                                }
+                            <div>
+                                <p>@info.GetXmlProperty("genxml/lang/genxml/textbox/resume")</p>
                             </div>
+
+                            @{
+                                lp += 1;
+                            }
+                            <a class="bigbutton" href="@(detailurl)">Lire la suite</a>
                         </article>
+                        <hr class="article-hr" />
                     }
                 }
             </div>

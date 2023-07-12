@@ -15,21 +15,21 @@
     var globalSettings = new SystemGlobalData();
     var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
     var moduleDataSrc = new ModuleContentLimpet(moduleData.PortalId, moduleData.DataRef, moduleData.SystemKey);
+    var limit = moduleData.Record.GetXmlPropertyInt("genxml/settings/limit");
 
     // Path to the resx file
     AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppThemes-W3-CSS/rocketcontentapi.Contact/1.0/resx");
 
 }
 
-<div class="h4-headline">
-    Dernières actus
-</div>
+<h3>Dernières actus</h3>
+    
 @{var lp = 1; }
 <!-- Faire le href plus tard parce que j'ai pas d'idée de comment le faire -->
 <div class="latest-news">
     @foreach (var articleRowData in articleData.GetRows())
     {
-
+       
         var info = articleRowData.Info;
         // Changement format de date (dd/MM/yyy)
         var date = info.GetXmlPropertyDate("genxml/lang/genxml/textbox/newsdate");
@@ -38,12 +38,16 @@
         <!-- TODO refaire bien le lien vers détail article j'ai supprimé le bon module T-T -->
         var detailurl = DNNrocketUtils.NavigateURL(moduleDataSrc.Record.GetXmlPropertyInt("genxml/settings/linktab"), urlparams);
 
-        <a href="@(detailurl)">@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</a>
+        <a href="@(detailurl)"><span>@(date.ToString("dd")) / @(date.ToString("MMM")) | </span>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</a><br /><br />
 
+        if (lp == limit)
+        {
+            break;
+        }
         lp++;
     }
 </div>
 
 <!-- TODO refaire le lien vers la page d'article, j'ai supprimé le bon module T-T -->
 @{var tabddlvalue = PagesUtils.NavigateURL(moduleDataSrc.Record.GetXmlPropertyInt("genxml/settings/listlinktab"));}
-<a href="@(tabddlvalue)">Toutes les actualités</a>
+<a class="bigbutton" href="@(tabddlvalue)">Toutes les actualités</a>

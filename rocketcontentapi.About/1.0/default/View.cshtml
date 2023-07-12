@@ -9,6 +9,7 @@
 @{
     var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
     var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+
 }
 
 @foreach (var articleRowData in articleData.GetRows())
@@ -18,6 +19,13 @@
     if (!info.GetXmlPropertyBool("genxml/checkbox/hiderow"))
     {
 
+        var datalist = articleRowData.GetImageList();
+        var imgInfo = datalist.First();
+        var articleImage = new ArticleImage(imgInfo, "articleimage");
+        var width = info.GetXmlPropertyInt("genxml/imagelist/genxml/hidden/width");
+        var height = info.GetXmlPropertyInt("genxml/imagelist/genxml/hidden/height");
+
+
         var cssClass = "";
         if (moduleData.Record.GetXmlProperty("genxml/settings/cssclass") != "")
         {
@@ -26,7 +34,8 @@
 
         <div @(cssClass)>
             <div class="about-content">
-                <img src="@info.GetXmlProperty("genxml/imagelist/genxml/hidden/imagepatharticleimage")" width="@info.GetXmlPropertyInt("genxml/imagelist/genxml/hidden/width")" height="@info.GetXmlPropertyInt("genxml/imagelist/genxml/hidden/height")" />
+                <img src="@ImageUrl(articleImage.RelPath, width, height, "", "")" />
+
                 @if (info.GetXmlProperty("genxml/lang/genxml/textbox/content") != "")
                 {
                     <div class="about-text">

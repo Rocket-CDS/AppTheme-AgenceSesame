@@ -1,4 +1,4 @@
- @inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
 @using DNNrocketAPI;
 @using Simplisity;
 @using RocketContentAPI.Components;
@@ -20,11 +20,10 @@
     {
         info = articleRowData.Info;
     }
+    
     AddProcessDataResx(appThemeView, true);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
 }
-
-<script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
 
 <div class="w3-row">
     @RenderTemplate("ArticleHeader.cshtml", appThemeSystem, Model, true)

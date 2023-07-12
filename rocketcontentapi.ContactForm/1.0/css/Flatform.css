@@ -4,7 +4,6 @@
 .cff {margin:0 0 20px 0;}
 .cff-100 {display:flex;margin:0 0 20px 0;}
 .cff-50 {flex:1;margin:0 4% 0 0;}
-.cff-100 div:last-child {margin:0;}
 .contactformfields {margin:0 0 20px 0;}
 .contactformfields input[type=text], .contactformfields input[type=email], .contactformfields input[type=date], .contactformfields select {border:none;height:40px;padding-left:10px;background:#eee;color:#666666;font:inherit;}
 .contactformfields textarea {border:none;padding:10px;background:#eee;color:#666666;font:inherit;}
