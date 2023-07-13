@@ -28,8 +28,25 @@
         <label>@ResourceKey("DNNrocket.height") (px)</label>
         @TextBox(info, "genxml/settings/height", " class='w3-input w3-border'", "0")
     </div>
+</div>
+<div class="w3-row">
     <div class="w3-third w3-padding">
         <label>@ResourceKey("DNNrocket.cssClass")</label>
-        @TextBox(info, "genxml/settings/cssclass", " class='w3-input w3-border'  ", "")
+        @TextBox(info, "genxml/settings/cssclass", "class='w3-input w3-border'", "")
+    </div>
+    <div class="w3-third w3-padding">
+        <label>@ResourceKey("DNNrocket.hr")</label><br />
+        @CheckBox(info, "genxml/settings/separation", "", "class='w3-check' ", false, false, 0)
+    </div>
+    <div class="w3-third w3-padding">
+        <label>@ResourceKey("DNNrocket.mask")</label><br />
+        @CheckBox(info, "genxml/settings/mask", "", "class='w3-check' ", false, false, 0)
     </div>
 </div>
+<div class="w3-row">
+    <div class="w3-third w3-padding">
+        <label>@ResourceKey("DNNrocket.crop")</label>
+        @DropDownList(info, "genxml/settings/crop", "center,top,bottom", ResourceKey("DNNrocket.position").ToString(), "class='w3-select w3-border'", "false")
+    </div>
+</div>
+

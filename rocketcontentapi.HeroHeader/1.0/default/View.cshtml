@@ -11,10 +11,18 @@
     var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
 
     var cssClass = "";
+    var mask = "";
     if (moduleData.Record.GetXmlProperty("genxml/setting/cssclass") != "")
     {
         cssClass = "class=" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass");
     }
+
+    if (moduleData.Record.GetXmlPropertyBool("genxml/settings/mask"))
+    {
+        mask = "tih-mask";
+    }
+
+    var crop = moduleData.Record.GetXmlProperty("genxml/settings/crop");
 }
 
 @foreach (var articleRowData in articleData.GetRows())
@@ -26,19 +34,24 @@
 
     var width = moduleData.Record.GetXmlPropertyInt("genxml/settings/width");
     var height = moduleData.Record.GetXmlPropertyInt("genxml/settings/height");
+    var separationLine = moduleData.Record.GetXmlPropertyBool("genxml/settings/separation");
     <div @(cssClass)>
         @if (!info.GetXmlPropertyBool("genxml/checkbox/hiderow"))
         {
-        <div class="topimageheader tih-mask" style="background:url('@ImageUrl(articleImage.RelPathWebp, width, height, "", "webp")') center @Model.GetSetting("crop") no-repeat;
+            <div class="topimageheader @(mask)" style="background:url('@ImageUrl(articleImage.RelPathWebp, width, height, "", "webp")') center @(crop) no-repeat;
                                                     -webkit-background-size: cover;
                                                     -moz-background-size: cover;
                                                     -o-background-size: cover;
                                                     background-size: cover;">
-            <div class="caption">
-                <h2>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
-                <h3>@BreakOf(info, "genxml/lang/genxml/textbox/text")</h3>
+                <div class="caption">
+                    <h2>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
+                    @if (separationLine)
+                    {
+                        <hr />
+                    }
+                    <h3>@BreakOf(info, "genxml/lang/genxml/textbox/text")</h3>
+                </div>
             </div>
-        </div>
 
         }
     </div>

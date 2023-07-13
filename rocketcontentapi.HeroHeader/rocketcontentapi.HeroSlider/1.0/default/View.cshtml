@@ -16,7 +16,6 @@
 
     var headingArticleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
     var hInfo = headingArticleRowData.Info;
-    var mask = "";
 
     AddProcessDataResx(appThemeView);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
@@ -27,16 +26,9 @@
         cssClass = "class=" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass");
     }
 
-    if (moduleData.Record.GetXmlPropertyBool("genxml/settings/mask"))
-    {
-        mask = "rs-mask";
-    }
-
-    var crop = moduleData.Record.GetXmlProperty("genxml/settings/crop");
-
 }
 <div @(cssClass)>
-    <div class="slider-container @(mask)">
+    <div class="slider-container">
         <ul class="rslides" id="heroslider">
             @foreach (var articleRowData in articleData.GetRows())
             {
@@ -50,28 +42,13 @@
 
                 var width = moduleData.Record.GetXmlPropertyInt("genxml/settings/width");
                 var height = moduleData.Record.GetXmlPropertyInt("genxml/settings/height");
-
-                var separationLine = moduleData.Record.GetXmlPropertyBool("genxml/settings/separation");
                 if (!hideRow)
                 {
-                    <li style="background: url('@ImageUrl(articleImage.RelPathWebp, width, height, "", "webp")') center @(crop) no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;" class="@info.GetXmlProperty("genxml/lang/genxml/textbox/cssclass")">
+                    <li style="background: url('@ImageUrl(articleImage.RelPathWebp, width, height, "", "webp")') center center no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;" class="@info.GetXmlProperty("genxml/lang/genxml/textbox/cssclass")">
                         <div class="caption">
-                            @if (info.GetXmlProperty("genxml/lang/genxml/textbox/title") != "")
-                            {
-                                <h2>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
-                            }
-                            @if (separationLine)
-                            {
-                                <hr />
-                            }
-                            @if (info.GetXmlProperty("genxml/lang/genxml/textbox/title2") != "")
-                            {
-                                <h3>@info.GetXmlProperty("genxml/lang/genxml/textbox/title2")</h3>
-                            }
-                            @if (info.GetXmlProperty("genxml/lang/genxml/textbox/text") != "")
-                            {
-                                <p>@info.GetXmlProperty("genxml/lang/genxml/textbox/text")</p>
-                            }
+                            <h2>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
+                            <h3>@info.GetXmlProperty("genxml/lang/genxml/textbox/title2")</h3>
+                            <p>@info.GetXmlProperty("genxml/lang/genxml/textbox/text")</p>
                         </div>
 
                         <!-- Bouton de redirection avec gestion type de lien -->
