@@ -23,8 +23,6 @@
         var imgInfo = datalist.First();
         var articleImage = new ArticleImage(imgInfo, "articleimage");
         var width = info.GetXmlPropertyInt("genxml/imagelist/genxml/hidden/width");
-        var height = info.GetXmlPropertyInt("genxml/imagelist/genxml/hidden/height");
-
 
         var cssClass = "";
         if (moduleData.Record.GetXmlProperty("genxml/settings/cssclass") != "")
@@ -34,7 +32,7 @@
 
         <div @(cssClass)>
             <div class="about-content">
-                <img src="@ImageUrl(articleImage.RelPath, width, height)" />
+                <img src="@ThumbnailImageUrl(articleImage.RelPath, width)" />
 
                 @if (info.GetXmlProperty("genxml/lang/genxml/textbox/content") != "")
                 {
