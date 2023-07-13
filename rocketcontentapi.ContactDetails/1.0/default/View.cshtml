@@ -27,8 +27,8 @@
 {
     var info = articleRowData.Info;
     <div @(cssClass)>
-        <div class="contactdetailswrapper">
-            <div id="@articleRowData.RowKey" class="contactdetails">
+        <div class="contact-wrapper">
+            <div id="@articleRowData.RowKey" class="contact-infos">
                 @if (info.GetXmlProperty("genxml/lang/genxml/textbox/title") != "")
                 {
                     <h2>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
@@ -79,7 +79,7 @@
             </div>
             @if(info.GetXmlProperty("genxml/lang/genxml/textbox/map") != "")
             {
-                <div class="contactmap">@HtmlOf(info, "genxml/lang/genxml/textbox/map")</div>
+                <div class="contact-map">@HtmlOf(info, "genxml/lang/genxml/textbox/map")</div>
             }
         
         </div>

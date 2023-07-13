@@ -32,8 +32,8 @@
 
         var info = articleRowData.Info;
         // Changement format de date (dd/MM/yyy)
-        var date = info.GetXmlPropertyDate("genxml/lang/genxml/textbox/newsdate");
-        var dateFormat = date.ToString("dd/MM/yyyy");
+        var date = info.GetXmlPropertyDate("genxml/textbox/newsdate");
+        var dateFormat = date.ToString("MM/dd/yyyy");
         string[] urlparams = { "eid", lp.ToString(), info.GetXmlProperty("genxml/lang/genxml/textbox/title") };
         var indexMain = 0;
         var datalist = articleRowData.GetImageList();

@@ -37,7 +37,7 @@
                         {
                             anchor = "#" + info.GetXmlProperty("genxml/textbox/linkanchor");
                         }
-                        <a href="@(tabddlvalue)@(anchor)">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
+                        <a class="bigbutton" href="@(tabddlvalue)@(anchor)">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
                     }
                     @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 2)
                     {
@@ -47,7 +47,7 @@
                         {
                             blank = "_blank";
                         }
-                        <a href="@(externalURL)" target="@(blank)">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
+                        <a class="bigbutton" href="@(externalURL)" @(blank)>@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
                     }
 
                 </div>

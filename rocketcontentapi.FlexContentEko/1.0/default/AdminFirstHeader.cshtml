@@ -1,0 +1,7 @@
+@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+
+@{
+    var appThemeSystem = (AppThemeSystemLimpet)Model.GetDataObject("appthemesystem");
+}
+@RenderTemplate("CKEditor4.cshtml", appThemeSystem, Model, true)

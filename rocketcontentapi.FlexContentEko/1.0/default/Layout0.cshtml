@@ -1,0 +1,67 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+
+@{
+    var articleRow = (ArticleRowLimpet)Model.GetDataObject("articlerow");
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var info = articleRow.Info;
+    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+}
+<div class="flexcontent-div @info.GetXmlProperty("genxml/lang/genxml/textbox/cssclass")">
+    <div class="flexcontent-text">
+        @{
+            var layout = info.GetXmlPropertyInt("genxml/select/layout");
+            var hStyle = info.GetXmlProperty("genxml/select/headingstyle");
+            var headingHide = info.GetXmlPropertyBool("genxml/checkbox/hideheading");
+        }
+            <!-- HEADING SECTION -->
+            @if (!headingHide)
+            {
+                var title = info.GetXmlProperty("genxml/lang/genxml/textbox/title");
+
+                if (hStyle == "")
+                {
+                    hStyle = "h2";
+                }
+                if (title != "")
+                {
+                    var alignText = info.GetXmlProperty("genxml/select/headingalign");
+                    if (hStyle == "h1")
+                    {
+                        <h1 id="@info.GetXmlProperty("genxml/lang/genxml/textbox/anchor")" style="text-align: @alignText;">@title</h1>
+                    }
+                    if (hStyle == "h2")
+                    {
+                        <h2 id="@info.GetXmlProperty("genxml/lang/genxml/textbox/anchor")" style="text-align: @alignText;">@title</h2>
+                    }
+                    if (hStyle == "h3")
+                    {
+                        <h3 id="@info.GetXmlProperty("genxml/lang/genxml/textbox/anchor")" style="text-align: @alignText;">@title</h3>
+                    }
+                    if (hStyle == "h4")
+                    {
+                        <h4 id="@info.GetXmlProperty("genxml/lang/genxml/textbox/anchor")" style="text-align: @alignText;">@title</h4>
+                    }
+                }
+            }
+
+            <!-- TEXT SECTION -->
+            @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
+
+            <!-- LINK SECTION -->
+            <div class="newspaper-link">
+                @RenderTemplate("Links.cshtml", moduleData.ModuleRef, appThemeView, Model, true)
+            </div>
+
+            <!-- DOCUMENTS SECTION -->
+            @RenderTemplate("Documents.cshtml", moduleData.ModuleRef, appThemeView, Model, true)
+
+        </div>
+
+    </div>
