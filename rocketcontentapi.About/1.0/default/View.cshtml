@@ -34,7 +34,7 @@
 
         <div @(cssClass)>
             <div class="about-content">
-                <img src="@ImageUrl(articleImage.RelPath, width, height, "", "")" />
+                <img src="@ImageUrl(articleImage.RelPath, width, height)" />
 
                 @if (info.GetXmlProperty("genxml/lang/genxml/textbox/content") != "")
                 {

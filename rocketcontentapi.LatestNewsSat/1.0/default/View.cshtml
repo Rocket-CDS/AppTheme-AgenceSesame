@@ -22,23 +22,45 @@
 
 }
 
-<h3>Dernières actus</h3>
-    
+
+
 @{var lp = 1; }
-<!-- Faire le href plus tard parce que j'ai pas d'idée de comment le faire -->
-<div class="latest-news">
+<div class="blogsat">
+    <h3>Dernières actus</h3>
     @foreach (var articleRowData in articleData.GetRows())
     {
-       
+
         var info = articleRowData.Info;
         // Changement format de date (dd/MM/yyy)
         var date = info.GetXmlPropertyDate("genxml/lang/genxml/textbox/newsdate");
         var dateFormat = date.ToString("dd/MM/yyyy");
         string[] urlparams = { "eid", lp.ToString(), info.GetXmlProperty("genxml/lang/genxml/textbox/title") };
-        <!-- TODO refaire bien le lien vers détail article j'ai supprimé le bon module T-T -->
+        var indexMain = 0;
+        var datalist = articleRowData.GetImageList();
         var detailurl = DNNrocketUtils.NavigateURL(moduleDataSrc.Record.GetXmlPropertyInt("genxml/settings/linktab"), urlparams);
+        <article>
+            <!-- IMAGE - REMOVE IT IN A MODULE LEVEL TEMPLATE IF NOT NEEDED-->
+            @foreach (var imgInfo in datalist)
+            {
+                indexMain++;
+                var alt = info.GetXmlProperty("genxml/imagelist/genxml[" + indexMain + "]/hidden/imagealtarticleimage");
 
-        <a href="@(detailurl)"><span>@(date.ToString("dd")) / @(date.ToString("MMM")) | </span>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</a><br /><br />
+                var articleImage = new ArticleImage(imgInfo, "articleimage");
+                var width = moduleData.Record.GetXmlPropertyInt("genxml/settings/width");
+                var height = moduleData.Record.GetXmlPropertyInt("genxml/settings/height");
+
+                if (indexMain == 1)
+                {
+                    <div class="article-img">
+                        <img src="@ThumbnailImageUrl(articleImage.RelPath, width, height)" />
+                    </div>
+                }
+
+            }
+            <!-- IMAGE END -->
+            <h2><a href="@(detailurl)">@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</a></h2>
+        </article>
+
 
         if (lp == limit)
         {
@@ -46,8 +68,10 @@
         }
         lp++;
     }
-</div>
 
-<!-- TODO refaire le lien vers la page d'article, j'ai supprimé le bon module T-T -->
-@{var tabddlvalue = PagesUtils.NavigateURL(moduleDataSrc.Record.GetXmlPropertyInt("genxml/settings/listlinktab"));}
-<a class="bigbutton" href="@(tabddlvalue)">Toutes les actualités</a>
+
+    @{var tabddlvalue = PagesUtils.NavigateURL(moduleDataSrc.Record.GetXmlPropertyInt("genxml/settings/listlinktab"));}
+    <div class="blogsat-link">
+        <a class="bigbutton" href="@(tabddlvalue)">Toutes les actualités</a>
+    </div>
+</div>

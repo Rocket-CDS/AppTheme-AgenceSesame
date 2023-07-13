@@ -17,18 +17,18 @@
     }
 }
 
-<div class="parallax-window">
+<div class="citation-window">
     @foreach (var articleRowData in articleData.GetRows())
     {
         var info = articleRowData.Info;
         // var imageurl = info.GetXmlProperty("genxml/imgs/genxml[1]/hidden/imageurl");
         if (!info.GetXmlPropertyBool("genxml/checkbox/hiderow"))
         {
-            <div class="parallax-content">
-                <h2><b>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</b></h2>
+            <div class="citation-content">
+                <h2>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
                 <hr />
-                <div class="parallax-text">@info.GetXmlProperty("genxml/lang/genxml/textbox/content")</div>
-                <div class="parallax-link">
+                <div class="citation-text">@info.GetXmlProperty("genxml/lang/genxml/textbox/content")</div>
+                <div class="citation-link">
                     @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 1)
                     {
                         var tabddlvalue = PagesUtils.NavigateURL(info.GetXmlPropertyInt("genxml/select/linktab"));
