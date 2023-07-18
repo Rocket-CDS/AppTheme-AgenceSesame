@@ -52,7 +52,11 @@
             <div class="w3-half">
                 <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
                     <label>@ResourceKey("DNNrocket.date")</label>
-                    @TextBoxDate(info, "genxml/textbox/newsdate", " class='w3-input w3-border' autocomplete='off'", "", false, 0)
+                    @{ 
+                        DateTime today = DateTime.Today;
+                        var todayString = today.ToString("MM/dd/yyyy");
+                    }
+                    @TextBoxDate(info, "genxml/textbox/newsdate", " class='w3-input w3-border' autocomplete='off'", todayString, false, 0)
                 </div>
             </div>
         </div>
