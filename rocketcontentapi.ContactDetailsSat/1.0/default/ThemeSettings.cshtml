@@ -9,6 +9,8 @@
     var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
     var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
     var info = new SimplisityInfo(moduleData.Record);
+    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var articleRow = (ArticleRowLimpet)Model.GetDataObject("articlerow");
 
     AddProcessDataResx(appThemeAdmin, true);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
@@ -22,14 +24,6 @@
     @CheckBox(info, "genxml/settings/tel2", ResourceKey("DNNrocket.tel2").ToString(), "class='w3-check contactCb' ")</br>
     @CheckBox(info, "genxml/settings/fax", ResourceKey("DNNrocket.fax").ToString(), "class='w3-check contactCb' ")</br>
     @CheckBox(info, "genxml/settings/email", ResourceKey("DNNrocket.email").ToString(), "class='w3-check contactCb' ")</br>
-    @CheckBox(info, "genxml/settings/contact1", ResourceKey("DNNrocket.contact1").ToString(), "class='w3-check contactCb' ")</br>
-    @CheckBox(info, "genxml/settings/contactname1", ResourceKey("DNNrocket.contactname1").ToString(), "class='w3-check contactCb' ")</br>
-    @CheckBox(info, "genxml/settings/mobile1", ResourceKey("DNNrocket.mobile1").ToString(), "class='w3-check contactCb' ")</br>
-    @CheckBox(info, "genxml/settings/email1", ResourceKey("DNNrocket.email1").ToString(), "class='w3-check contactCb' ")</br>
-    @CheckBox(info, "genxml/settings/contact2", ResourceKey("DNNrocket.contact2").ToString(), "class='w3-check contactCb' ")</br>
-    @CheckBox(info, "genxml/settings/contactname2", ResourceKey("DNNrocket.contactname2").ToString(), "class='w3-check contactCb' ")</br>
-    @CheckBox(info, "genxml/settings/mobile2", ResourceKey("DNNrocket.mobile2").ToString(), "class='w3-check contactCb' ")</br>
-    @CheckBox(info, "genxml/settings/email2", ResourceKey("DNNrocket.email2").ToString(), "class='w3-check contactCb' ")</br>
     @CheckBox(info, "genxml/settings/extrainfo", ResourceKey("DNNrocket.extraInfo").ToString(), "class='w3-check contactCb' ")
 </div>
 
@@ -39,7 +33,3 @@
         @TextBox(info, "genxml/settings/cssclass", "class='w3-input w3-border'", "")
     </div>
 </div>
-
-<script>
-
-</script>
