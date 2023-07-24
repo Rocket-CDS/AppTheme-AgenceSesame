@@ -1,0 +1,24 @@
+﻿@inherits RocketForms.Components.RocketFormsTokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketContentAPI.Components;
+@using Simplisity;
+@using RazorEngine.Text;
+@using Rocket.AppThemes.Components;
+@using RocketPortal.Components;
+
+@{
+    var sessionParams = Model.SessionParamsData;
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
+    AddProcessDataResx(appTheme, true);
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketForms/App_LocalResources/");
+}
+
+<div class="w3-content w3-xlarge w3-pale-blue w3-padding " style="max-width:1200px">
+    @HtmlOf(moduleData.GetSetting("emailsentmessage" + sessionParams.CultureCode))
+</div>
+<div class="w3-row w3-large w3-padding w3-center " style="max-width:1200px">
+    <div class="w3-button w3-padding w3-blue " onclick="window.location.reload(true)">@ResourceKey("RocketForms.ok")</div>
+</div>
+
+

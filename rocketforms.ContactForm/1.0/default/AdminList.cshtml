@@ -1,0 +1,84 @@
+@inherits RocketForms.Components.RocketFormsTokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketContentAPI.Components;
+@using Simplisity;
+@using RazorEngine.Text;
+@using Rocket.AppThemes.Components;
+@using RocketPortal.Components;
+
+@{
+    var sessionParams = Model.SessionParamsData;
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
+    var info = new SimplisityInfo();
+    var formlist = (List<SimplisityRecord>)Model.GetDataObject("formlist");
+    var lp = 1;
+
+    AddProcessDataResx(appTheme, true);
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketForms/App_LocalResources/");
+    
+}
+
+<input class="w3-input w3-border w3-padding w3-margin-top" type="text" placeholder="Search..." id="searchinput" onkeydown="if (event.keyCode == 13) { event.preventDefault(); }" onkeyup="myFunction()">
+
+<table class="w3-table w3-margin-top simplisity_panel" id="searchtable">
+
+
+    @foreach (SimplisityRecord f in formlist)
+    {
+        <tr>
+            <td>
+                <div class="w3-row w3-card">
+                    <div class="w3-row w3-padding w3-hover-light-grey" onclick="$('.formmessage@(lp)').toggle()">
+                        <b>@f.GetXmlPropertyDate("genxml/createddate").ToShortDateString() @f.GetXmlPropertyDate("genxml/createddate").ToShortTimeString() &nbsp;:&nbsp; @f.GetXmlProperty("genxml/email")</b> &nbsp; @f.GetXmlProperty("genxml/company"), @f.GetXmlProperty("genxml/name"), @ResourceKey("RocketForms.tel"): @f.GetXmlProperty("genxml/tel")
+                    </div>
+                    <div class="w3-row w3-padding w3-pale-yellow formmessage@(lp)" style="display:none;">
+                        <div>
+                            <b>@ResourceKey("RocketForms.subject") : @f.GetXmlProperty("genxml/subject")</b><br/>
+                            @HtmlOf(f.GetXmlProperty("genxml/message"))
+                        </div>
+                        <div class="w3-button w3-right simplisity_click" s-cmd="rocketforms_delete" s-fields='{"formref":"@(f.GUIDKey)","moduleref":"@moduleData.ModuleRef","moduleid":"@moduleData.ModuleId","tabid":"@moduleData.TabId"}'>
+                            <span class="material-icons">
+                                delete
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+
+            </td>
+        </tr>
+
+        lp += 1;
+    }
+
+</table>
+
+
+<script>
+
+    $( document ).ready(function() {
+        $(document).simplisityStartUp("/Desktopmodules/dnnrocket/api/rocket/action", { systemkey: 'rocketforms' })
+    });
+
+    function myFunction() {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("searchinput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("searchtable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+

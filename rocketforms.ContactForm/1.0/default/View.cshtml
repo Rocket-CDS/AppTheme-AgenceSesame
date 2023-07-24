@@ -1,0 +1,108 @@
+﻿@inherits RocketForms.Components.RocketFormsTokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketContentAPI.Components;
+@using Simplisity;
+@using RazorEngine.Text;
+@using Rocket.AppThemes.Components;
+@using RocketPortal.Components;
+
+@{ var sessionParams = Model.SessionParamsData;
+                var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+                var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+                var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
+                var info = new SimplisityInfo();
+
+                AddProcessDataResx(appTheme, true);
+                AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketForms/App_LocalResources/");
+
+                var cssClass = "";
+                if (moduleData.Record.GetXmlProperty("genxml/setting/cssclass") != "")
+                {
+                    cssClass = "class='" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass") + "' ";
+                } }
+
+
+<div @(cssClass)>
+    <h2 class="title">@ResourceKey("RocketForms.title")</h2>
+    <div id="contactform@(moduleData.ModuleId)" class="contactform">
+        <div class="contactformfields">
+            <div class="cff-100">
+                <div class="cff-50">
+                    <label>@ResourceKey("RocketForms.name")</label>
+                    @TextBox(info, "genxml/textbox/name")
+                </div>
+                <div class="cff-50">
+                    <label>@ResourceKey("RocketForms.company")</label>
+                    @TextBox(info, "genxml/textbox/company")
+                </div>
+            </div>
+            <div class="cff-100">
+                <div class="cff-50">
+                    <label>@ResourceKey("RocketForms.email")</label>
+                    @TextBox(info, "genxml/textbox/clientemail", "type='email' required")
+                </div>
+                <div class="cff-50">
+                    <label>@ResourceKey("RocketForms.tel")</label>
+                    @TextBox(info, "genxml/textbox/tel")
+                </div>
+            </div>
+                <div class="cff-50">
+                    <label>@ResourceKey("RocketForms.subject")</label>
+                    @TextBox(info, "genxml/textbox/subject")
+                </div>
+                <br />
+                <div class="cff-50">
+                    <label>@ResourceKey("RocketForms.message")</label>
+                    @TextArea(info, "genxml/textbox/message")
+                </div>
+            <div class="cff-cb">
+                <input id="gdprcheckbox@(moduleData.ModuleId)" type="checkbox" name="gdprcheckbox" required update="save" aria-required="true">
+                <label>@ResourceKey("Form.gdprMessage")</label>
+            </div>
+        </div>
+        <div class="cff-required"><i>@ResourceKey("RocketForms.compulsory")</i></div>
+        
+        <div id="buttondiv@(moduleData.ModuleId)" class="simplisity_panel" style="min-height:40px;">
+            <div class="bigbutton">@ResourceKey("RocketForms.send")</div>
+        </div>
+        <div id="myBarWrapper@(moduleData.ModuleId)" class="w3-light-grey w3-margin" style="display:none;">
+            <div id="myBar@(moduleData.ModuleId)" class="w3-container w3-green" style="height:24px;width:1%"></div>
+        </div>
+        <!-- we must pass moduleid to server -->
+        @HiddenField(info, "genxml/hidden/moduleid", "", moduleData.ModuleId.ToString())
+    </div>
+</div>
+
+<script>
+    $( document ).ready(function() {
+        setTimeout(function () {
+            var buttontext = '<button id="sendemail@(moduleData.ModuleId)" type="button" class="bigbutton simplisity_click" s-before="move" s-return="#buttondiv@(moduleData.ModuleId)"  s-cmdurl="/Desktopmodules/dnnrocket/api/rocket/action" s-cmd="rocketforms_publicpostform"  s-post="#contactform@(moduleData.ModuleId)" >@ResourceKey("RocketForms.send")</button>'
+            $('#buttondiv@(moduleData.ModuleId)').html(buttontext);
+
+            $('#contactform@(moduleData.ModuleId)').activateSimplisityPanel();
+
+        }, 1200);
+
+    });
+
+    function move() {
+      $('#buttondiv@(moduleData.ModuleId)').html('');
+      $('#myBarWrapper@(moduleData.ModuleId)').appendTo('#buttondiv@(moduleData.ModuleId)')
+      $('#myBarWrapper@(moduleData.ModuleId)').show();
+
+      var elem = document.getElementById("myBar@(moduleData.ModuleId)");
+      var width = 1;
+      var id = setInterval(frame, 30);
+      function frame() {
+        if (width >= 100) {
+          clearInterval(id);
+        } else {
+          width++;
+          elem.style.width = width + '%';
+        }
+      }
+    }
+</script>
+
+
+
