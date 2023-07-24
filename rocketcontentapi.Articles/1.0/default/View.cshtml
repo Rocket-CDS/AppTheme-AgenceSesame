@@ -209,7 +209,17 @@ else
                     var hStyle = info.GetXmlProperty("genxml/select/headingstyle");
                     var headingHide = info.GetXmlPropertyBool("genxml/checkbox/hideheading");
                     var hideRow = info.GetXmlPropertyBool("genxml/checkbox/hiderow");
-                    string[] urlparams = { "eid", lp.ToString(), info.GetXmlProperty("genxml/lang/genxml/textbox/title") };
+
+                    /*** PERFECT LINK ***/
+                    var title = info.GetXmlProperty("genxml/lang/genxml/textbox/title");
+                    title = title.Replace(" ", "-");
+                    title = title.ToLower();
+                    byte[] tempBytes;
+                    tempBytes = System.Text.Encoding.GetEncoding("ISO-8859-8").GetBytes(title);
+                    title = System.Text.Encoding.UTF8.GetString(tempBytes);
+                    /*** END OF PERFECT LINK ***/
+
+                    string[] urlparams = { "eid", lp.ToString(), title};
                     var detailurl = DNNrocketUtils.NavigateURL(moduleData.Record.GetXmlPropertyInt("genxml/settings/linktab"), urlparams);
                     var indexMain = 0;
                     var datalist = articleRowData.GetImageList();
