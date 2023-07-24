@@ -1,0 +1,67 @@
+/* Essential styles */
+.material-icons {vertical-align:middle;}
+
+/* List */
+.articlelist {}
+.article {display:flex;margin:0 0 40px 0;}
+.article-image {margin:0 40px 0 0;}
+.article-content {flex:1;}
+.article-content h2 {font-size:24px;line-height:30px;margin:0;}
+.article-tags {margin:10px 0;}
+.article-tags div {display:inline-block;background:lightyellow;font-size:13px;border-radius:3px;padding:0 10px;}
+.article-summary {font-size:16px;line-height:24px;}
+.article-infos {font-size:13px;font-weight:bold;color:#3c95c0;}
+
+/* Detail */
+.articledetail {position:relative;padding:60px 0 0 0;}
+.articledetail-back {position:absolute;top:0;right:0;}
+.articledetailflex {display:flex;}
+.articledetail-left {width:60%;margin:0 40px 0 0;}
+.articledetail-right {flex:1;}
+.articledetail-section {margin:0 0 40px 0;}
+.articledetail-section i.fas, .articledetail-section i.far {color:#8c3636;margin:0 10px 0 0;}
+.articledetail-section .block {margin:0 0 20px 0;}
+.articledetail .image img {max-width:100%;height:auto;}
+.articlegallery a {display:block;float:left;margin:0 12px 12px 0;}
+.articlegallery:after {content:"";display:table;clear:both;}
+.articlegallery a:first-child {display:none;}
+.sociallinks a {margin:0 6px 0 0;}
+.docslinks {margin:30px 0 0 0;}
+
+/* Loader */
+.loader-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #fff;
+    opacity: 0.5;
+    z-index: 9999;
+    transition: opacity .3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.loader {
+    height: 80px;
+    width: 80px;
+}
+
+/************************************************************************************
+MEDIA QUERIES
+*************************************************************************************/
+/* for 980px and less - Only portrait for retina display */
+@media all and (max-width:980px),
+            screen and (-webkit-min-device-pixel-ratio: 3.0) and (max-width: 2940px) and (orientation: portrait),
+            screen and (-webkit-min-device-pixel-ratio: 2.0) and (max-width: 1960px) and (orientation: portrait) {
+.article {display:block;}
+.article-image img {width:100%;height:auto;}
+.articledetailflex {display:block;}
+.articledetail-left {width:auto;margin:0 0 40px 0;}
+.articledetail-right {flex:initial;}
+}
+/* for less than 480px */
+@media screen and (max-width:480px) {
+.detailbtn {position:relative;bottom:auto;right:auto;margin:40px 0 0 0;}
+}
