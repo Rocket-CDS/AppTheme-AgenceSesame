@@ -7,19 +7,27 @@
 @using RocketPortal.Components;
 
 @{ var sessionParams = Model.SessionParamsData;
-                var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-                var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
-                var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
-                var info = new SimplisityInfo();
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
+    var info = new SimplisityInfo();
 
-                AddProcessDataResx(appTheme, true);
-                AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketForms/App_LocalResources/");
+    AddProcessDataResx(appTheme, true);
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketForms/App_LocalResources/");
 
-                var cssClass = "";
-                if (moduleData.Record.GetXmlProperty("genxml/setting/cssclass") != "")
-                {
-                    cssClass = "class='" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass") + "' ";
-                } }
+    var cssClass = "";
+    if (moduleData.Record.GetXmlProperty("genxml/setting/cssclass") != "")
+    {
+        cssClass = "class='" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass") + "' ";
+    }
+
+    if (DNNrocketUtils.GetCurrentLanguageCode() != "fr")
+    {
+        <script type="text/javascript" src="/DesktopModules/DNNrocket/js/localization/messages_@(DNNrocketUtils.GetCurrentLanguageCode()).js"></script>
+    }
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+}
 
 
 <div @(cssClass)>
@@ -46,23 +54,23 @@
                     @TextBox(info, "genxml/textbox/tel")
                 </div>
             </div>
-                <div class="cff-50">
-                    <label>@ResourceKey("RocketForms.subject")</label>
-                    @TextBox(info, "genxml/textbox/subject")
-                </div>
-                <br />
-                <div class="cff-50">
-                    <label>@ResourceKey("RocketForms.message")</label>
-                    @TextArea(info, "genxml/textbox/message")
-                </div>
+            <div class="cff-50">
+                <label>@ResourceKey("RocketForms.subject")</label>
+                @TextBox(info, "genxml/textbox/subject")
+            </div>
+            <br />
+            <div class="cff-50">
+                <label>@ResourceKey("RocketForms.message")</label>
+                @TextArea(info, "genxml/textbox/message")
+            </div>
             <div class="cff-cb">
-                <input id="gdprcheckbox@(moduleData.ModuleId)" type="checkbox" name="gdprcheckbox" required update="save" aria-required="true">
-                <label>@ResourceKey("Form.gdprMessage")</label>
+                <input type="checkbox" name="gdprcheckbox" required update="save" aria-required="true">
+                <label>@ResourceKey("RocketForms.gdprMessage")</label>
             </div>
         </div>
         <div class="cff-required"><i>@ResourceKey("RocketForms.compulsory")</i></div>
-        
-        <div id="buttondiv@(moduleData.ModuleId)" class="simplisity_panel" style="min-height:40px;">
+
+        <div id="buttondiv@(moduleData.ModuleId)" class="bigbutton simplisity_panel" style="min-height:40px;">
             <div class="bigbutton">@ResourceKey("RocketForms.send")</div>
         </div>
         <div id="myBarWrapper@(moduleData.ModuleId)" class="w3-light-grey w3-margin" style="display:none;">
@@ -74,33 +82,45 @@
 </div>
 
 <script>
-    $( document ).ready(function() {
+    $(document).ready(function () {
+
         setTimeout(function () {
-            var buttontext = '<button id="sendemail@(moduleData.ModuleId)" type="button" class="bigbutton simplisity_click" s-before="move" s-return="#buttondiv@(moduleData.ModuleId)"  s-cmdurl="/Desktopmodules/dnnrocket/api/rocket/action" s-cmd="rocketforms_publicpostform"  s-post="#contactform@(moduleData.ModuleId)" >@ResourceKey("RocketForms.send")</button>'
+            var buttontext = '<button id="sendemail@(moduleData.ModuleId)" type="button" class="bigbutton simplisity_click" s-before="validate@(moduleData.ModuleId)" s-return="#buttondiv@(moduleData.ModuleId)"  s-cmdurl="/Desktopmodules/dnnrocket/api/rocket/action" s-cmd="rocketforms_publicpostform"  s-post="#contactform@(moduleData.ModuleId)" >@ResourceKey("RocketForms.send")</button>'
             $('#buttondiv@(moduleData.ModuleId)').html(buttontext);
-
             $('#contactform@(moduleData.ModuleId)').activateSimplisityPanel();
-
         }, 1200);
 
     });
 
-    function move() {
-      $('#buttondiv@(moduleData.ModuleId)').html('');
-      $('#myBarWrapper@(moduleData.ModuleId)').appendTo('#buttondiv@(moduleData.ModuleId)')
-      $('#myBarWrapper@(moduleData.ModuleId)').show();
+    function validate@(moduleData.ModuleId)() {
+        var form = $("#Form");
+        form.validate();
 
-      var elem = document.getElementById("myBar@(moduleData.ModuleId)");
-      var width = 1;
-      var id = setInterval(frame, 30);
-      function frame() {
-        if (width >= 100) {
-          clearInterval(id);
+        if (form.valid()) {
+            move@(moduleData.ModuleId)();
         } else {
-          width++;
-          elem.style.width = width + '%';
+            $('#sendemail@(moduleData.ModuleId)').attr('s-stop', 'stop');
         }
-      }
+    }
+
+    function move@(moduleData.ModuleId)() {
+
+
+        $('#buttondiv@(moduleData.ModuleId)').html('');
+        $('#myBarWrapper@(moduleData.ModuleId)').appendTo('#buttondiv@(moduleData.ModuleId)')
+        $('#myBarWrapper@(moduleData.ModuleId)').show();
+
+        var elem = document.getElementById("myBar@(moduleData.ModuleId)");
+        var width = 1;
+        var id = setInterval(frame, 30);
+        function frame() {
+            if (width >= 100) {
+                clearInterval(id);
+            } else {
+                width++;
+                elem.style.width = width + '%';
+            }
+        }
     }
 </script>
 
