@@ -11,6 +11,7 @@
 .contactformfields input[type=text], .contactformfields input[type=email], .contactformfields input[type=date], .contactformfields select, .contactformfields textarea {width:100%;}
 .requiredfield {position:relative;}
 .requiredfield:before {position:absolute;top:8px;right:10px;font-family:'Font Awesome 5 Free';font-weight:900;content:"\f069";color:#d45252;font-size:8px;}
+
 /* Custom checkbox */
 .cff-cb {-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;margin:20px 0 0 0;position:relative;cursor:pointer;font-size:14px;line-height:18px;}
 .cff-cb input {position:absolute;opacity:0;}
@@ -28,7 +29,7 @@
 }
 .cff-cb input ~ label:hover:before {background:#ccc;}
 .cff-cb input:checked ~ label:before {background:#2196F3;}
-.cff-cb input:checked ~ label:after {position:absolute;top:0;left:5px;font-family:'Font Awesome 5 Free';font-weight:900;content:"\f00c";color:white;font-size:16px;text-align:center;line-height:24px;}*/
+/*.cff-cb input:checked ~ label:after {position:absolute;top:0;left:5px;font-family:'Font Awesome 5 Free';font-weight:900;content:"\f00c";color:white;font-size:16px;text-align:center;line-height:24px;}*/
 .cff-cb input:checked ~ label:after {
   position: absolute;
   content: '';
@@ -89,7 +90,7 @@ label.error:before {font-family:'Font Awesome 5 Free';font-weight:900;content:"\
   }
 }
 
-/* for 640px and less */
+ for 640px and less 
 @media screen and (max-width:640px) {
 .cff-100 {display:block;}
 .cff-50 {flex:0;margin:0;}
