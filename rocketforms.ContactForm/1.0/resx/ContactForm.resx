@@ -117,31 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="compulsory.Text" xml:space="preserve">
-    <value>* Obligatoire</value>
-  </data>
-  <data name="email.Text" xml:space="preserve">
-    <value>Email</value>
-  </data>
-  <data name="firstname.Text" xml:space="preserve">
-    <value>Prénom *</value>
-  </data>
-  <data name="gdprMessage.Text" xml:space="preserve">
-    <value>En validant se formulaire vous acceptez que les informations entrées peuvent êtres utilisées pour vous contacter. *</value>
-  </data>
-  <data name="lastname.Text" xml:space="preserve">
-    <value>Nom *</value>
-  </data>
-  <data name="message.Text" xml:space="preserve">
-    <value>Message *</value>
-  </data>
-  <data name="send.Text" xml:space="preserve">
-    <value>Envoyer</value>
-  </data>
-  <data name="subject.Text" xml:space="preserve">
-    <value>Objet *</value>
-  </data>
-  <data name="tel.Text" xml:space="preserve">
-    <value>Téléphone</value>
-  </data>
 </root>

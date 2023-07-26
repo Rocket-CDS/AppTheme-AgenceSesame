@@ -1,13 +1,15 @@
-@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketContentAPI.Components;
+@inherits RocketForms.Components.RocketFormsTokens<Simplisity.SimplisityRazor>
 @using DNNrocketAPI.Components;
+@using RocketContentAPI.Components;
+@using Simplisity;
+@using RazorEngine.Text;
+@using Rocket.AppThemes.Components;
 @using RocketPortal.Components;
 
 @{
     var info = (SimplisityInfo)Model.List.First();
     var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
     AddProcessDataResx(appTheme, true);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketForms/App_LocalResources/");
 }
