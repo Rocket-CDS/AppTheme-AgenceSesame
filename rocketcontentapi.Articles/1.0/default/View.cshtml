@@ -39,7 +39,7 @@
         <!-- RETURN BTN-->
         <a class="w3-right" href="@rtnUrl"><i class="rtn-arrow fa fa-arrow-left">&nbsp;&nbsp;</i>Retour</a>
         <!-- TITLE -->
-        <h1><b>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</b></h1>
+        <h1>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h1>
         <!-- MAIN IMAGE -->
         @foreach (var imgInfo in datalist)
         {
@@ -230,11 +230,13 @@ else
                             @{
                                 // Changement format de date (dd/MM/yyy)
                                 var date = info.GetXmlPropertyDate("genxml/textbox/newsdate");
-                                var dateFormat = date.ToString("dd/MM/yyyy");
                             }
-                            <h2><b>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</b></h2>
+                            <h2>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
 
-                            <p>Publié le @dateFormat</p>
+                           <div class="formatdate">
+                               <span class="fd-day">@date.ToString("dd")</span>
+                               <span class="fd-month">@date.ToString("MMM")</span>
+                           </div>
                             <!-- Affichage de l'image -->
                             @foreach (var imgInfo in datalist)
                             {
