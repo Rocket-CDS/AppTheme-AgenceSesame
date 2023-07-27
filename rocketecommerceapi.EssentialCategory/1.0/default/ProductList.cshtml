@@ -45,17 +45,15 @@ else
                     <div class="productcontent">
                         <h3>
                             <a href="@(productDetailUrl)" class="" title="@productData.Name" onclick="$('.simplisity_loader').show();">
-                                    @productData.Name
+                                @productData.Name
                             </a>
                         </h3>    
-                        <div class="">@productData.PriceMinimumDisplay()</div>
+                        @productData.PriceMinimumDisplay()
                     </div>
                 </div>      
              }
         </div>
         @RenderTemplate("ProductPaging.cshtml", appThemeDefault, Model, true)
-
-
     </div>
         <div class="productlistside">
             <div id="minicartdisplay" class="productlistcart">
