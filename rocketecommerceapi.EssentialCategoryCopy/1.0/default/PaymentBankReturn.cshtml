@@ -1,0 +1,32 @@
+@inherits RocketEcommerceAPI.Components.RocketEcommerceAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketEcommerceAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketECommerceAPI/App_LocalResources/")
+
+@{
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var sessionParams = (SessionParams)Model.SessionParamsData;
+    var portalShop = (PortalShopLimpet)Model.GetDataObject("portalshop");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var notification = (NotificationLimpet)Model.GetDataObject("notificationdata");
+    var systemData = (SystemLimpet)Model.GetDataObject("systemdata"); ;
+    var companyData = (CompanyLimpet)Model.GetDataObject("companydata"); ;
+    
+    var info = (SimplisityInfo)Model.List.First();
+    info.Lang = DNNrocketUtils.GetCurrentCulture();
+
+}
+
+<div id="cartbankreturn"></div>
+
+<script>
+    $(document).ready(function () {
+        $('.simplisity_loader').show();
+        $('#cartbankreturn').getSimplisity('@(portalShop.ApiUrl)', '@(sessionParams.Get("cmd"))', '{"systemkey":"rocketecommerceapi", "moduleref": "@(sessionParams.ModuleRef)","key":"@(sessionParams.Get("key"))" }', '')
+    });
+</script>

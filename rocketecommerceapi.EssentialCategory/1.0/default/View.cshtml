@@ -28,17 +28,21 @@
         } 
      }
 </div>
-<div class="w3-overlay simplisity_loader" style="z-index:999;"></div>
+<div class="simplisity_loader" style="display:none;">
+    <span class=" simplisity_loader_inner">
+    </span>
+</div>
 <script>
     $(document).ready(function () {
         // get minicart to avoid cache problem with wrong amount.
         var jsonText = window.sessionStorage.getItem('MiniCartTotals');
         if ((typeof jsonText == 'undefined') || jsonText == '' || jsonText == null)
-            simplisity_requestjson('@(sessionParams.ApiUrl)', 'rocketecommerceapi_minicartjson', '', 'MiniCartTotals', '{"moduleref":"@(sessionParams.ModuleRef)"}', 'afterMiniCartJson');
+            simplisity_requestjson('@(portalShop.ApiUrl)', 'rocketecommerceapi_minicartjson', '', 'MiniCartTotals', '{"moduleref":"@(sessionParams.ModuleRef)","browserid":"@(sessionParams.BrowserId)"}', 'afterMiniCartJson');
         else
             afterMiniCartJson();
 
         $('#ecommerce-tag').activateSimplisityPanel();
+        $('#simplisity_loader').hide();
     });
     function afterMiniCartJson() {
         try {

@@ -1,0 +1,75 @@
+﻿@inherits RocketEcommerceAPI.Components.RocketEcommerceAPITokens<Simplisity.SimplisityRazor>
+@using Simplisity;
+@using RocketEcommerceAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+@{
+    var sessionParams = (SessionParams)Model.SessionParamsData;
+    var articleData = (ProductLimpet)Model.GetDataObject("articledata");
+    var portalCatalog = (PortalShopLimpet)Model.GetDataObject("portalshop");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var categoryList = (CategoryLimpetList)Model.GetDataObject("categorylist");
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appThemeDefault = (AppThemeLimpet)Model.GetDataObject("appthemedefault");
+    var moduleSettings = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var categoryData = (CategoryLimpet)Model.GetDataObject("categorydata"); ;
+}
+
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
+@AddProcessData("resourcepath", appTheme.AppThemeVersionFolderRel + "/resx/")
+
+<div class="w3-row">
+    <div class="w3-bar w3-light-grey">
+        <a href="@DNNrocketUtils.NavigateURL(sessionParams.TabId)" class="w3-bar-item w3-button">@ResourceKey("Products.allproducts")</a>
+
+        @foreach (var c in categoryList.GetCategoryTree())
+        {
+            if (!c.Hidden && !c.HiddenByCulture && c.Level == 0)
+            {
+                if (c.Level == 0)
+                {
+                    var l = c.GetDirectChildren();
+                    var catDict = new Dictionary<string, string>();
+                    catDict.Add("catid", c.CategoryId.ToString());
+                    if (l.Count == 0)
+                    {
+                        <a href="@DNNrocketUtils.NavigateURL(sessionParams.TabId, catDict, c.Name)" onclick="$('.simplisity_loader').show()" class="w3-bar-item w3-button">@c.Name</a> 
+                    }
+                    else
+                    {
+                        <div class="w3-dropdown-click">
+                            <div class="w3-button" onclick="myFunction();">
+                                <a href="@DNNrocketUtils.NavigateURL(sessionParams.TabId, catDict, c.Name)" onclick="$('.simplisity_loader').show()" class="w3-bar-item w3-button">@c.Name</a>
+                                <span class="material-icons">
+                                    arrow_drop_down
+                                </span>
+                            </div>
+                            <div id="demo" class="w3-dropdown-content w3-bar-block w3-card">
+                                @foreach (var child in l)
+                                {
+                                    var catDict2 = new Dictionary<string, string>();
+                                    catDict2.Add("catid", child.CategoryId.ToString());
+                                    <a href="@DNNrocketUtils.NavigateURL(sessionParams.TabId, catDict2, child.Name)" onclick="$('.simplisity_loader').show()" class="w3-bar-item w3-button">@child.Name</a>
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+            }
+        }
+    </div>
+</div>
+
+
+<script>
+    function myFunction() {
+        var x = document.getElementById("demo");
+        if (x.className.indexOf("w3-show") == -1) {
+            x.className += " w3-show";
+        } else {
+            x.className = x.className.replace(" w3-show", "");
+        }
+    }
+</script>
+

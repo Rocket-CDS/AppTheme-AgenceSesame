@@ -1,0 +1,148 @@
+@inherits RocketEcommerceAPI.Components.RocketEcommerceAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketEcommerceAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketECommerceAPI/App_LocalResources/")
+
+@{
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var sessionParams = (SessionParams)Model.SessionParamsData;
+    var portalShop = (PortalShopLimpet)Model.GetDataObject("portalshop");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var notification = (NotificationLimpet)Model.GetDataObject("notificationdata");
+    var systemData = (SystemLimpet)Model.GetDataObject("systemdata"); ;
+    var companyData = (CompanyLimpet)Model.GetDataObject("companydata"); ;
+    
+    var info = (SimplisityInfo)Model.List.First();
+    info.Lang = DNNrocketUtils.GetCurrentCulture();
+
+}
+
+    <div class="w3-row formdata">
+
+
+            <div class="w3-row w3-padding">
+                <p>
+                    @BreakOf(notification.Message_PaymentForm)
+                </p>
+            </div>
+
+            <div class="w3-row w3-padding w3-left-align">
+                <label>@ResourceKey("RE.amount")</label>
+                @TextBoxMoney(info.PortalId, info.Lang, info, "genxml/textbox/amountpay", "  name='amount' onKeyUp='numericFilter(this,100000);' class='w3-input w3-border w3-right-align '  placeholder='' required  style='font-weight: bold;' autocomplete='off' ", "0", false, 0, "", "")
+            </div>
+
+            <div class="w3-row w3-padding">
+                @TextBox(info, "genxml/textbox/email", " class='w3-input w3-border w3-pale-yellow' name='email' required email autocomplete='off' placeholder='" + ResourceKey("RE.email") + "...' ")
+            </div>
+            <div class="w3-row w3-padding ">
+                @TextBox(info, "genxml/textbox/company", " class='w3-input w3-border w3-pale-yellow'  name='company' autocomplete='off' placeholder='" + ResourceKey("RE.company") + "...' ")
+            </div>
+            <div class="w3-row w3-padding ">
+                @TextBox(info, "genxml/textbox/firstname", " class='w3-input w3-border w3-pale-yellow' name='firstname' autocomplete='off' placeholder='" + ResourceKey("RE.firstname") + "...' ")
+            </div>
+            <div class="w3-row w3-padding ">
+                @TextBox(info, "genxml/textbox/lastname", " class='w3-input w3-border w3-pale-yellow' name='lastname' autocomplete='off' placeholder='" + ResourceKey("RE.lastname") + "...' ")
+            </div>
+            <div class="w3-row w3-padding ">
+                @TextBox(info, "genxml/textbox/invoiceref", " class='w3-input w3-border w3-pale-yellow' name='ref' autocomplete='off' placeholder='" + ResourceKey("RE.ref") + "...' ")
+            </div>
+
+            @{
+                var payList = portalShop.GetActivePaymentMethods();
+                var buttoncolor = "w3-green";
+
+                foreach (var p in payList)
+                {
+                    <div class="w3-row w3-padding">
+                        <div style="cursor:pointer;" class="w3-card-2 w3-margin-bottom w3-hover-light-grey dovalidatepayment simplisity_click " s-return="document" s-before="validatePayment" s-cmd="remote_publicpay" s-post="#datasection" s-fields='{"providerkey":"@(p.PaymentProvKey())","systemkey":"rocketpayment"}'>
+                            <div class="w3-button w3-large @(buttoncolor)" style="width:100%;">@ResourceKey("RE.pay")</div>
+                        </div>
+                    </div>
+                    buttoncolor = "w3-pale-green";
+                }
+            }
+    </div>
+
+<script>
+    $(document).ready(function () {
+
+        // Take ALL params passed to the page and pass them to the server as hidden fields in paramInfo.
+        var urlParams = new URLSearchParams(window.location.search);
+        urlParams.forEach(function (value, key) {
+            simplisity_setParamField(key, value);
+        });
+
+        $(document).simplisityStartUp('@(portalShop.ApiUrl)', { systemkey: 'rocketpayment', debug: false });        
+
+        if (urlParams.get('amount') != null && typeof urlParams.get('amount') != 'undefined' && urlParams.get('amount') != '') {
+            $('#amountpay').val(urlParams.get('amount'));
+        }
+        if (urlParams.get('ref') != null && typeof urlParams.get('ref') != 'undefined' && urlParams.get('ref') != '') {
+            $('#invoiceref').val(urlParams.get('ref'));
+        }
+        
+        $('.simplisity_loader').hide();
+
+    });
+
+    function validatePayment() {
+
+        var form = $("#Form");
+
+        jQuery.validator.addMethod("greaterThanZero", function(value, element) {
+            return this.optional(element) || (parseFloat(value) > 0);
+        }, "");
+
+        form.validate({
+            rules: {
+                email: {
+                    required: true,
+                    email: true
+                },
+                amount : { greaterThanZero : true }
+            },
+            errorPlacement: function () {
+                return false;  // suppresses error message text
+            },
+            invalidHandler: function (e, validator) {
+                $('input').removeClass('w3-pale-red');
+                $('input').removeClass('w3-border-red');
+                for (var i in validator.errorMap) {
+                    $('#' + i).addClass('w3-pale-red');
+                    $('#' + i).addClass('w3-border-red')
+                }
+            },
+            amount: {
+                required: true,
+                digits: true
+            }
+        });
+        
+        if (!form.valid()) {
+            $('.dovalidatepayment').attr('s-stop', 'stop')
+        }
+        else {
+            $('.formdata').hide();
+            $('.formdataprocess').show();            
+            $('.simplisity_loader').show();
+        }
+
+    }
+    function numericFilter(txb, max) {
+        var valid = /^\d{0,6}([\.\,]\d{0,2})?$/.test(txb.value),
+            val = txb.value;
+        if (!valid) {
+            txb.value = val.substring(0, val.length - 1);
+        }
+        if (parseFloat(txb.value) > max) {
+            txb.value = max;
+        }
+    }
+
+</script>
+

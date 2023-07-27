@@ -4,7 +4,8 @@
 @using DNNrocketAPI.Components;
 @using RocketPortal.Components;
 
-@{ var productDataList = (ProductLimpetList)Model.GetDataObject("productlist");
+@{ 
+    var productDataList = (ProductLimpetList)Model.GetDataObject("productlist");
     var companyData = (CompanyLimpet)Model.GetDataObject("companydata"); ;
     var cartData = (CartLimpet)Model.GetDataObject("cartdata");
     var sessionParams = (SessionParams)Model.SessionParamsData;
@@ -14,7 +15,8 @@
     var appThemeDefault = (AppThemeLimpet)Model.GetDataObject("appthemedefault");
     var categoryDataList = (CategoryLimpetList)Model.GetDataObject("categorylist");
     var moduleSettings = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-    var categoryData = (CategoryLimpet)Model.GetDataObject("categorydata"); }
+    var categoryData = (CategoryLimpet)Model.GetDataObject("categorydata");
+}
 
 @AddProcessDataResx(appTheme, true)
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketECommerceAPI/App_LocalResources/")
@@ -23,58 +25,61 @@
     @if (!categoryData.Exists)
     {
 <span>@companyData.CompanyName</span> }
-else
-{
+            else
+            {
 <span>@categoryData.Name</span>}
 </h1>
 
-<div class="productlistflex">
-    <div class="productlist">
+<div class="w3-row">
+    <div class="w3-threequarter">
+        <div class="w3-row">
             @RenderTemplate("SearchBanner.cshtml", appThemeDefault, Model, true)
-        <div class="productgrid productgrid3">
             @foreach (ProductLimpet productData in productDataList.GetArticleList())
             {
                 var urlparams = new Dictionary<string, string>();
                 urlparams.Add("pid", productData.ProductId.ToString());
                 var productDetailUrl = DNNrocketUtils.NavigateURL(moduleSettings.DetailPageTabId(), urlparams, productData.Name);
 
-                <div class="product">
-                    <a href="@(productDetailUrl)" class="productimg" title="@productData.Name" onclick="$('.simplisity_loader').show();">
+                <div class="w3-col s12 m6 l3 w3-padding w3-center">
+                    <a href="@(productDetailUrl)" class="" title="@productData.Name" onclick="$('.simplisity_loader').show();">
                         <img class="sliderind@(moduleSettings.ModuleRef)" src="@ImageUrl(productData.DefaultImageUrl(),200,200)" style="width:100%;">
                     </a>
-                    <div class="productcontent">
-                        <h3>
-                            <a href="@(productDetailUrl)" class="" title="@productData.Name" onclick="$('.simplisity_loader').show();">
-                                    @productData.Name
-                            </a>
-                        </h3>    
+                    <div class="w3-row w3-padding w3-center">
                         <div class="">@productData.PriceMinimumDisplay()</div>
                     </div>
-                </div>      
-             }
+                    <div class="w3-padding" style="height:80px;overflow:hidden;">
+                        <a href="@(productDetailUrl)" class="" title="@productData.Name" onclick="$('.simplisity_loader').show();">
+                            @productData.Name
+                        </a>
+                    </div>
+                </div>
+
+            }
         </div>
         @RenderTemplate("ProductPaging.cshtml", appThemeDefault, Model, true)
-
-
     </div>
-        <div class="productlistside">
-            <div id="minicartdisplay" class="productlistcart">
-                <div class="minicartdisplay">
-                    <h3>@ResourceKey("RE.cart", sessionParams.CultureCode)</h3>
-                    <div class="w3-border-bottom w3-margin-bottom ">
-                        <div>
-                            @ResourceKey("RE.items", sessionParams.CultureCode)&nbsp;:&nbsp;
-                            <span id="a-cartqty">&nbsp;</span>
-                            <span class="w3-right"><strong><span id="a-carttotal">&nbsp;</span></strong></span>
-                        </div>
+    <div class="w3-quarter">
+
+        <div id="minicartdisplay" class="productlistcart">
+
+            <div class="minicartdisplay">
+                <h3>@ResourceKey("RE.cart", sessionParams.CultureCode)</h3>
+                <div class="w3-border-bottom w3-margin-bottom ">
+                    <div>@ResourceKey("RE.items", sessionParams.CultureCode)&nbsp;:&nbsp;
+                        <span id="a-cartqty">&nbsp;</span>    
+                        <span class="w3-right"><strong><span id="a-carttotal">&nbsp;</span></strong></span>
                     </div>
-                    <a id="cartdisplay" class="w3-button w3-light-grey simplisity_click " s-cmdurl="@(portalShop.ApiUrl)" s-before="clearMiniCartJson" s-return="#ecommerce-tag" s-cmd="rocketecommerceapi_cartlist" s-fields='{"template":"cartlist.cshtml","moduleref":"@(moduleSettings.ModuleRef)"}'>@MaterialIcon("shopping_cart")&nbsp;@(ResourceKey("RE.viewcart", sessionParams.CultureCode))</a>
                 </div>
+                <a id="cartdisplay" class="w3-button w3-light-grey simplisity_click " s-cmdurl="@(portalShop.ApiUrl)" s-before="clearMiniCartJson" s-return="#ecommerce-tag" s-cmd="rocketecommerceapi_cartlist" s-fields='{"template":"cartlist.cshtml","moduleref":"@(moduleSettings.ModuleRef)"}'>@MaterialIcon("shopping_cart")&nbsp;@(ResourceKey("RE.viewcart", sessionParams.CultureCode))</a>
             </div>
-            <div class="productlistcat">
-                @if (categoryDataList.DataList.Count > 0)
-                {
-        @RenderTemplate("CategorySideMenu.cshtml", appTheme, Model)}
-            </div>
+
         </div>
+        <div class="productlistcat">
+            @if (categoryDataList.DataList.Count > 0)
+            {
+                @RenderTemplate("CategorySideMenu.cshtml", appTheme, Model)                
+            }
+        </div>
+    </div>
 </div>
+

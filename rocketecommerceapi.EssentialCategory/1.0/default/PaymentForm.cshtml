@@ -1,0 +1,65 @@
+@inherits RocketEcommerceAPI.Components.RocketEcommerceAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketEcommerceAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketECommerceAPI/App_LocalResources/")
+
+@{
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var sessionParams = (SessionParams)Model.SessionParamsData;
+    var portalShop = (PortalShopLimpet)Model.GetDataObject("portalshop");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var notification = (NotificationLimpet)Model.GetDataObject("notificationdata");
+    var systemData = (SystemLimpet)Model.GetDataObject("systemdata"); ;
+    var companyData = (CompanyLimpet)Model.GetDataObject("companydata"); ;
+    
+    var info = (SimplisityInfo)Model.List.First();
+    info.Lang = DNNrocketUtils.GetCurrentCulture();
+
+}
+
+
+<div id="datasection" class="rocketecommerce_paymentform simplisity_panel">
+    <div class="w3-container w3-margin">
+
+        <div class="w3-row formdata">
+
+            <div class="w3-row w3-padding ">
+
+                <div class="w3-quarter ">
+                    @if (companyData.LogoRelPath != "")
+                    {
+                        <img src="@ImageUrl(companyData.LogoRelPath, 0, 120)" style="" class="" />
+                    }
+                </div>
+                <div class="w3-threequarter w3-padding">
+                    <b>
+                        @companyData.CompanyName
+                    </b>
+                    <div class="w3-row w3-small">
+                        @companyData.WebsiteUrl <br />
+                        @companyData.ContactEmail <br />
+                        @companyData.Phone <br />
+                    </div>
+
+                </div>
+
+            </div>
+            @if (sessionParams.Get("cmd") == "remote_cartbankreturn")
+            {
+                @RenderTemplate("PaymentBankReturn.cshtml", appTheme,Model, true)
+            }
+            else
+            {
+                @RenderTemplate("PaymentFields.cshtml", appTheme,Model, true)
+            }
+        </div>
+    </div>
+</div>
+
+
+

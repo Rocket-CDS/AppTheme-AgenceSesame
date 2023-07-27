@@ -4,7 +4,8 @@
 @using DNNrocketAPI.Components;
 @using RocketPortal.Components;
 
-@{ var productData = (ProductLimpet)Model.GetDataObject("productdata");
+@{
+    var productData = (ProductLimpet)Model.GetDataObject("productdata");
     var productDataList = (ProductLimpetList)Model.GetDataObject("productlist");
     var companyData = (CompanyLimpet)Model.GetDataObject("companydata"); ;
     var cartData = (CartLimpet)Model.GetDataObject("cartdata");
@@ -15,46 +16,52 @@
     var appThemeDefault = (AppThemeLimpet)Model.GetDataObject("appthemedefault");
     var categoryDataList = (CategoryLimpetList)Model.GetDataObject("categorylist");
     var moduleSettings = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-    var categoryData = (CategoryLimpet)Model.GetDataObject("categorydata"); }
+    var categoryData = (CategoryLimpet)Model.GetDataObject("categorydata");
+}
 
 @AddProcessDataResx(appTheme, true)
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketECommerceAPI/App_LocalResources/")
 
-<div class="productdetailflex">
-    <div class="productdetail">
-            <!-- Back btn -->
-            <button type="button" class="w3-button" onclick="history.back();">@ResourceKey("DNNrocket.back")</button>
-        <div class="productquickview">
-            <!-- Product images -->
-            <div class="quickviewimage">
-                <img class="imgrollovertarget sliderind@(moduleSettings.ModuleRef)" src="@ImageUrl(productData.DefaultImageUrl(),640,640)" style="width:100%">
-                <div class="quickviewgallery">
+<div class="w3-row">
+    <div class="w3-threequarter">
+        <div class="w3-row">
+
+            <div class="w3-half w3-padding">
+                <div class="w3-row">
+                    <div class="w3-col m2">
                     @foreach (var i in productData.GetImages())
                     {
-                        <img class="demo@(moduleSettings.ModuleRef) imgrollover" src="@ImageUrl(i.RelPath,640,640)" style="width:100%;cursor:pointer;" onclick="currentDiv@(moduleSettings.ModuleRef)">
+                        <div class="w3-row w3-padding-small">
+                            <img class="demo@(moduleSettings.ModuleRef) imgrollover w3-opacity w3-hover-opacity-off" src="@ImageUrl(i.RelPath,640,640)" style="width:100%;cursor:pointer" onclick="currentDiv@(moduleSettings.ModuleRef)">                                
+                        </div>
                     }
+                    </div>
+                    <div class="w3-col m10">
+                        <img class=" imgrollovertarget sliderind@(moduleSettings.ModuleRef)" src="@ImageUrl(productData.DefaultImageUrl(),640,640)" style="width:100%">
+                    </div>
                 </div>
+
+                <button type="button" class="w3-button" onclick="history.back();">@ResourceKey("DNNrocket.back")</button>
             </div>
-            <!-- Content view -->
-            <div id="productdatasection@(productData.PortalId)" class="quickviewcontent">
+            <div id="productdatasection@(productData.PortalId)" class="w3-half w3-padding">
                 <h1>@(productData.Name)</h1>
                 <div>@(productData.Ref)</div>
 
                 @if (productData.GetModelList().Count > 1)
                 {
-                    <div class="w3-hide-small "><b>@ResourceKey("RE.from")</b></div>
-                }   
+                <div class="w3-hide-small "><b>@ResourceKey("RE.from")</b></div>                    
+                }
 
                 @if (productData.SalePriceMinimumCents > 0)
                 {
-                    <div class="quickviewprice">
+                    <div class="w3-xxlarge">
                         <span>&nbsp; @productData.SalePriceMinimumDisplay()</span>
                         <span style="text-decoration:line-through;" class="w3-small">@productData.PriceMinimumDisplay()</span>
-                    </div> 
+                    </div>
                 }
                 else
                 {
-                    <div class="quickviewprice">
+                    <div class="w3-xxlarge">
                         @productData.PriceMinimumDisplay()
                     </div>
                 }
@@ -66,7 +73,7 @@
                     @HtmlOf(productData.RichText)
                 </div>
 
-                <div class="quickviewmodels">
+                <div class="w3-white w3-margin-bottom">
                     @ModelDropdown(productData)
                 </div>
                 <div class="w3-white w3-margin-bottom">
@@ -119,7 +126,7 @@
 
         </div>
     </div>
-    <div class="productlistside">
+    <div class="w3-quarter">
 
         <div id="minicartdisplay" class="productlistcart">
 
@@ -139,7 +146,7 @@
         <div class="productlistcat">
             @if (categoryDataList.DataList.Count > 0)
             {
-                @RenderTemplate("CategorySideMenu.cshtml", appTheme, Model)
+            @RenderTemplate("CategorySideMenu.cshtml", appTheme, Model)
             }
         </div>
     </div>

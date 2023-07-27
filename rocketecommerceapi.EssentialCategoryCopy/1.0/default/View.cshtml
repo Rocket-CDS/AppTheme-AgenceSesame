@@ -1,10 +1,10 @@
-﻿@inherits RocketEcommerce.Components.RocketEcommerceTokens<Simplisity.SimplisityRazor>
+﻿@inherits RocketEcommerceAPI.Components.RocketEcommerceAPITokens<Simplisity.SimplisityRazor>
 @using Simplisity;
-@using RocketEcommerce.Components;
+@using RocketEcommerceAPI.Components;
 @using DNNrocketAPI.Components;
 @using RocketPortal.Components;
 @{
-    var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("appthemeview");
     var productData = (ProductLimpet)Model.GetDataObject("productdata");
     var sessionParams = (SessionParams)Model.SessionParamsData;
     var portalShop = (PortalShopLimpet)Model.GetDataObject("portalshop");
@@ -28,22 +28,28 @@
         } 
      }
 </div>
-<div class="w3-overlay simplisity_loader" style="z-index:999;"></div>
+<div class="simplisity_loader" style="display:none;">
+    <span class=" simplisity_loader_inner">
+    </span>
+</div>
 <script>
     $(document).ready(function () {
         // get minicart to avoid cache problem with wrong amount.
         var jsonText = window.sessionStorage.getItem('MiniCartTotals');
         if ((typeof jsonText == 'undefined') || jsonText == '' || jsonText == null)
-            simplisity_requestjson('@(sessionParams.ApiUrl)', 'rocketecommerce_minicartjson', '', 'MiniCartTotals', '{"moduleref":"@(sessionParams.ModuleRef)"}', 'afterMiniCartJson');
+            simplisity_requestjson('@(portalShop.ApiUrl)', 'rocketecommerceapi_minicartjson', '', 'MiniCartTotals', '{"moduleref":"@(sessionParams.ModuleRef)","browserid":"@(sessionParams.BrowserId)"}', 'afterMiniCartJson');
         else
             afterMiniCartJson();
+
+        $('#ecommerce-tag').activateSimplisityPanel();
+        $('#simplisity_loader').hide();
     });
     function afterMiniCartJson() {
         try {
             var jsonText = window.sessionStorage.getItem('MiniCartTotals');
             var jsonstr = simplisity_parsejson(jsonText);
             $('#a-cartqty').text(jsonstr.qty);
-            $('#a-carttotal').text('');        
+            $('#a-carttotal').text(jsonstr.subtotal);        
         }
         catch (e) {
         }
