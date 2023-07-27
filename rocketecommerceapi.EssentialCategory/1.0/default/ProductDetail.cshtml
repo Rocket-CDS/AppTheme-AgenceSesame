@@ -77,7 +77,7 @@
                     <div class="quickviewqty">
                         <div class="w3-bar">
                             <div class="w3-bar-item w3-border w3-col w3-center w3-button product-subtract" productid="@(productData.ProductId)">&minus;</div>
-                            <input type="number" min="0" class="w3-bar-item w3-col w3-input w3-border-top w3-border-bottom w3-center qtyvalue" id="qty@(productData.ProductId)" s-xpath="genxml/textbox/qty" value="1" style="width:60px;" />
+                            <input id="qty@(productData.ProductId)" oninput="checkValue(this, 3);" s-xpath="genxml/textbox/qty" type="number" maxlength="3" class="w3-bar-item w3-input w3-border-top w3-border-bottom w3-center qtyvalue" value="1" style="width:60px;" />
                             <div class="w3-bar-item w3-border w3-col w3-center w3-button product-plus" productid="@(productData.ProductId)">&plus;</div>
                         </div>
                     </div>
@@ -93,6 +93,18 @@
             </div>
 
             <script>
+                /**
+                 * To not be able to put a value < 1 and not put a value who is longer than 3
+                 * param - input
+                 * param - maxLength
+                 */
+                function checkValue(input, maxLength) {
+                    if (input.value < 1) {
+                        input.value = 1;
+                    } else if (input.value.length > maxLength) {
+                        input.value = input.value.slice(0, maxLength);
+                    }
+                }
 
                 $(document).ready(function () {
 
@@ -112,6 +124,7 @@
                         $('.imgrollovertarget').attr('src', $(this).attr('src'));
                         $('.imgrollovertarget').attr('popupsrc', $(this).attr('popupsrc'));
                     });
+
 
                 });
 
