@@ -1,0 +1,76 @@
+﻿@inherits RocketCatalog.Components.RocketCatalogTokens<Simplisity.SimplisityRazor>
+@using Simplisity;
+@using RocketPortal.Components;
+@using RocketCatalog.Components;
+@using DNNrocketAPI.Components;
+
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
+
+@{
+
+    var articleDataList = (ArticleLimpetList)Model.GetDataObject("articlelist");
+    var rowcount = articleDataList.SessionParamData.RowCount;
+    var page = articleDataList.SessionParamData.Page;
+    var pagesize = articleDataList.SessionParamData.PageSize;
+    var pagechapter = 5;
+    var lastpage = 0;
+    var catid = articleDataList.CategoryId;
+
+    var r = (page - 1) / pagechapter;
+    var BeginPage = 0;
+    var EndPage = 0;
+
+    if (pagesize > 0)
+    {
+        lastpage = System.Convert.ToInt32(rowcount / pagesize);
+        if (rowcount % pagesize > 0)
+        {
+            lastpage += 1;
+        }
+        BeginPage = pagechapter * r + 1;
+        EndPage = Math.Min(pagechapter * (r + 1), lastpage);
+    }
+
+}
+
+@if (pagesize > 0)
+{
+
+    <nav class="pagination is-centered" role="navigation">
+
+            @if (BeginPage != 1)
+            {
+                <a href="@articleDataList.PagingUrl(1)" class="pagination-previous" onclick="$('.simplisity_loader').show()"><i class="fas fa-step-backward"></i></a>
+            }
+
+            @if (page < lastpage)
+            {
+                <a href="@articleDataList.PagingUrl(lastpage)" class="pagination-next" onclick="$('.simplisity_loader').show()"><i class="fas fa-step-forward"></i></a>
+            }
+
+            <ul class="pagination-list">
+            @if (page >= 6)
+            {
+                <li><a href="@articleDataList.PagingUrl(BeginPage - 1)" class="pagination-link" onclick="$('.simplisity_loader').show()"><i class="fas fa-ellipsis-h"></i></a></li>
+            }
+            @for (int i = BeginPage; i < (EndPage + 1); i++)
+            {
+                var selected = "";
+                if (i == page)
+                {
+                    selected = "is-current";
+                }
+                if (i <= lastpage)
+                {
+                    <li><a href="@articleDataList.PagingUrl(i)" class="pagination-link @selected" onclick="$('.simplisity_loader').show()">@(i)</a></li>
+                }
+            }
+            @if (EndPage != lastpage)
+            {
+                <li><a href="@articleDataList.PagingUrl(EndPage + 1)" class="pagination-link" onclick="$('.simplisity_loader').show()"><i class="fas fa-ellipsis-h"></i></a></li>
+            }
+            </ul>
+
+    </nav>
+
+}
