@@ -19,17 +19,16 @@
 @AddProcessDataResx(appTheme, true)
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketECommerceAPI/App_LocalResources/")
 
-<h1>
-    @if (!categoryData.Exists)
-    {
-<span>@companyData.CompanyName</span> }
-else
-{
-<span>@categoryData.Name</span>}
-</h1>
-
 <div class="productlistflex">
     <div class="productlist">
+	<h1>
+		@if (!categoryData.Exists)
+		{
+	<span>@companyData.CompanyName</span> }
+	else
+	{
+	<span>@categoryData.Name</span>}
+	</h1>
             @RenderTemplate("SearchBanner.cshtml", appThemeDefault, Model, true)
         <div class="productgrid productgrid3">
             @foreach (ProductLimpet productData in productDataList.GetArticleList())
@@ -37,18 +36,42 @@ else
                 var urlparams = new Dictionary<string, string>();
                 urlparams.Add("pid", productData.ProductId.ToString());
                 var productDetailUrl = DNNrocketUtils.NavigateURL(moduleSettings.DetailPageTabId(), urlparams, productData.Name);
-
                 <div class="product">
-                    <a href="@(productDetailUrl)" class="productimg" title="@productData.Name" onclick="$('.simplisity_loader').show();">
-                        <img class="sliderind@(moduleSettings.ModuleRef)" src="@ImageUrl(productData.DefaultImageUrl(),200,200)" style="width:100%;">
-                    </a>
+					<div class="productimg">
+						<img src="@ImageUrl(productData.DefaultImageUrl(),480,480)" alt="@productData.Name">
+						<!-- Rollover -->
+						<div class="productrollover">
+							<div class="productrollover-content">
+								<div class="productrollover-actions">
+								<a href="@(productDetailUrl)#ecommerce-tag" title="@productData.Name" onclick="$('.simplisity_loader').show();"><span class="material-icons">search</span></a>
+								</div>
+							</div>
+						</div>
+					</div>
                     <div class="productcontent">
                         <h3>
-                            <a href="@(productDetailUrl)" class="" title="@productData.Name" onclick="$('.simplisity_loader').show();">
+                            <a href="@(productDetailUrl)#ecommerce-tag" title="@productData.Name" onclick="$('.simplisity_loader').show();">
                                 @productData.Name
                             </a>
                         </h3>    
-                        @productData.PriceMinimumDisplay()
+						<div class="quickviewprice">
+						@if (productData.GetModelList().Count > 1)
+						{
+							<span class="w3-hide-small">@ResourceKey("RE.from")</span>
+						}   
+
+						@if (productData.SalePriceMinimumCents > 0)
+						{
+							<span style="text-decoration:line-through;" class="w3-small">@productData.PriceMinimumDisplay()</span>
+							<span>@productData.SalePriceMinimumDisplay()</span>
+						}
+						else
+						{
+							<span>
+								@productData.PriceMinimumDisplay()
+							</span>
+						}
+						</div>
                     </div>
                 </div>      
              }

@@ -23,57 +23,52 @@
 <div class="productdetailflex">
     <div class="productdetail">
             <!-- Back btn -->
-            <button type="button" class="w3-button" onclick="history.back();">@ResourceKey("DNNrocket.back")</button>
+            <button type="button" class="w3-button" onclick="history.back();" style="float:right;">@ResourceKey("DNNrocket.back")</button>
+			<h1>@(productData.Name)</h1>
+			<div class="productref">@(productData.Ref)</div>
         <div class="productquickview">
             <!-- Product images -->
             <div class="quickviewimage">
-                <img class="imgrollovertarget sliderind@(moduleSettings.ModuleRef)" src="@ImageUrl(productData.DefaultImageUrl(),640,640)" style="width:100%">
+                <img class="imgrollovertarget sliderind@(moduleSettings.ModuleRef)" src="@ImageUrl(productData.DefaultImageUrl(),450,450)" popupsrc="@ImageUrl(productData.DefaultImageUrl(),800,0)" alt="@(productData.Name)" onclick="popupImage(this)" />
                 <div class="quickviewgallery">
                     @foreach (var i in productData.GetImages())
                     {
-                        <img class="demo@(moduleSettings.ModuleRef) imgrollover" src="@ImageUrl(i.RelPath,640,640)" style="width:100%;cursor:pointer;" onclick="currentDiv@(moduleSettings.ModuleRef)">
+                        <img class="demo@(moduleSettings.ModuleRef) imgrollover" src="@ImageUrl(i.RelPath,450,450)" popupsrc="@ImageUrl(i.RelPath,800,0)" onclick="currentDiv@(moduleSettings.ModuleRef)" />
                     }
                 </div>
             </div>
             <!-- Content view -->
             <div id="productdatasection@(productData.PortalId)" class="quickviewcontent">
-                <h1>@(productData.Name)</h1>
-                <div>@(productData.Ref)</div>
-
+                
+				<div class="quickviewprice">
                 @if (productData.GetModelList().Count > 1)
                 {
-                    <div class="w3-hide-small "><b>@ResourceKey("RE.from")</b></div>
+                    <span class="w3-hide-small">@ResourceKey("RE.from")</span>
                 }   
 
                 @if (productData.SalePriceMinimumCents > 0)
                 {
-                    <div class="quickviewprice">
-                        <span>&nbsp; @productData.SalePriceMinimumDisplay()</span>
-                        <span style="text-decoration:line-through;" class="w3-small">@productData.PriceMinimumDisplay()</span>
-                    </div> 
+					<span style="text-decoration:line-through;" class="w3-small">@productData.PriceMinimumDisplay()</span>
+					<span>@productData.SalePriceMinimumDisplay()</span>
                 }
                 else
                 {
-                    <div class="quickviewprice">
+                    <span>
                         @productData.PriceMinimumDisplay()
-                    </div>
+                    </span>
                 }
-
-                <div class="">
-                    @BreakOf(productData.Summary)
-                </div>
-                <div class="">
-                    @HtmlOf(productData.RichText)
-                </div>
-
-                <div class="quickviewmodels">
-                    @ModelDropdown(productData)
-                </div>
-                <div class="w3-white w3-margin-bottom">
-                    @OptionsInput(productData)
-                </div>
-
-                <div id="qtyinput@(productData.ProductId)" class="quickviewactions">
+				</div>
+				
+				<div class="quickviewmodels">
+                    <div class="w3-white w3-margin-bottom">
+						@ModelDropdown(productData)
+					</div>
+					<div class="w3-white w3-margin-bottom">
+						@OptionsInput(productData)
+					</div>
+				</div>
+				
+				<div id="qtyinput@(productData.ProductId)" class="quickviewactions">
                     <div class="quickviewqty">
                         <div class="w3-bar">
                             <div class="w3-bar-item w3-border w3-col w3-center w3-button product-subtract" productid="@(productData.ProductId)">&minus;</div>
@@ -89,10 +84,50 @@
                         </div>
                     </div>
                 </div>
+				
+                <div class="quickviewsummary">
+                    @BreakOf(productData.Summary)
+                </div>
 
             </div>
+        </div>
+		
+		<div class="quickviewsummary">
+			@HtmlOf(productData.RichText)
+		</div>
+		
+    </div>
+    <div class="productlistside">
 
-            <script>
+        <div id="minicartdisplay" class="productlistcart">
+
+            <div class="minicartdisplay">
+                <h3>@ResourceKey("RE.cart", sessionParams.CultureCode)</h3>
+                <div class="w3-border-bottom w3-margin-bottom ">
+                    <div>
+                        @ResourceKey("RE.items", sessionParams.CultureCode)&nbsp;:&nbsp;
+                        <span id="a-cartqty">&nbsp;</span>
+                        <span class="w3-right"><strong><span id="a-carttotal">&nbsp;</span></strong></span>
+                    </div>
+                </div>
+                <a id="cartdisplay" class="w3-button w3-light-grey simplisity_click " s-cmdurl="@(portalShop.ApiUrl)" s-before="clearMiniCartJson" s-return="#ecommerce-tag" s-cmd="rocketecommerceapi_cartlist" s-fields='{"template":"cartlist.cshtml","moduleref":"@(moduleSettings.ModuleRef)"}'>@MaterialIcon("shopping_cart")&nbsp;@(ResourceKey("RE.viewcart", sessionParams.CultureCode))</a>
+            </div>
+
+        </div>
+        <div class="productlistcat">
+            @if (categoryDataList.DataList.Count > 0)
+            {
+                @RenderTemplate("CategorySideMenu.cshtml", appTheme, Model)
+            }
+        </div>
+    </div>
+</div>
+
+<div id="modalimgPopup" class="w3-modal w3-center" onclick="this.style.display='none'">
+    <img class="w3-animate-zoom" id="imgPopup" />
+</div>
+
+<script>
                 /**
                  * To not be able to put a value < 1 and not put a value who is longer than 3
                  * param - input
@@ -129,31 +164,3 @@
                 });
 
             </script>
-
-        </div>
-    </div>
-    <div class="productlistside">
-
-        <div id="minicartdisplay" class="productlistcart">
-
-            <div class="minicartdisplay">
-                <h3>@ResourceKey("RE.cart", sessionParams.CultureCode)</h3>
-                <div class="w3-border-bottom w3-margin-bottom ">
-                    <div>
-                        @ResourceKey("RE.items", sessionParams.CultureCode)&nbsp;:&nbsp;
-                        <span id="a-cartqty">&nbsp;</span>
-                        <span class="w3-right"><strong><span id="a-carttotal">&nbsp;</span></strong></span>
-                    </div>
-                </div>
-                <a id="cartdisplay" class="w3-button w3-light-grey simplisity_click " s-cmdurl="@(portalShop.ApiUrl)" s-before="clearMiniCartJson" s-return="#ecommerce-tag" s-cmd="rocketecommerceapi_cartlist" s-fields='{"template":"cartlist.cshtml","moduleref":"@(moduleSettings.ModuleRef)"}'>@MaterialIcon("shopping_cart")&nbsp;@(ResourceKey("RE.viewcart", sessionParams.CultureCode))</a>
-            </div>
-
-        </div>
-        <div class="productlistcat">
-            @if (categoryDataList.DataList.Count > 0)
-            {
-                @RenderTemplate("CategorySideMenu.cshtml", appTheme, Model)
-            }
-        </div>
-    </div>
-</div>
