@@ -21,39 +21,6 @@
 
 <div class="flexcontent-div fcd-flex @info.GetXmlProperty("genxml/textbox/cssclass")">
 
-    <!--  MEDIA SECTION -->
-    <div class="flexcontent-media">
-        <!-- IMAGES SECTION -->
-        <div class="fcd-images">
-            @foreach (var imgInfo in datalist)
-            {
-                index++;
-                var alt = info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage");
-                var articleImage = new ArticleImage(imgInfo, "articleimage");
-                if (!articleImage.Hidden)
-                {
-                    if (info.GetXmlPropertyBool("genxml/checkbox/openfancybox"))
-                    {
-                        <div>
-                            <a data-fancybox="@(group)" data-caption="@(alt)" href="@(ThumbnailImageUrl(articleImage.RelPath))">
-                                <img src="@ThumbnailImageUrl(articleImage.RelPath, info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/width"), info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/height"))" />
-                            </a>
-                        </div>
-                    }
-                    else
-                    {
-                        <div><img src="@ThumbnailImageUrl(articleImage.RelPath, info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/width"), info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/height"))" /></div>
-                    }
-                }
-            }
-        </div>
-
-        <!-- VIDEO SECTION -->
-        @if (info.GetXmlProperty("genxml/lang/genxml/textbox/video") != "")
-        {
-            <div class="fcd-video"><div class="video-container">@HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/video"))</div></div>
-        }
-    </div>
     <div class="flexcontent-text">
         @{
             var layout = info.GetXmlPropertyInt("genxml/select/layout");
@@ -104,6 +71,39 @@
         @RenderTemplate("documents.cshtml", moduleData.ModuleRef, appThemeView, Model, true)
     </div>
 
+	<!--  MEDIA SECTION -->
+    <div class="flexcontent-media">
+        <!-- IMAGES SECTION -->
+        <div class="fcd-images">
+            @foreach (var imgInfo in datalist)
+            {
+                index++;
+                var alt = info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage");
+                var articleImage = new ArticleImage(imgInfo, "articleimage");
+                if (!articleImage.Hidden)
+                {
+                    if (info.GetXmlPropertyBool("genxml/checkbox/openfancybox"))
+                    {
+                        <div>
+                            <a data-fancybox="@(group)" data-caption="@(alt)" href="@(ThumbnailImageUrl(articleImage.RelPath))">
+                                <img src="@ThumbnailImageUrl(articleImage.RelPath, info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/width"), info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/height"))" />
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div><img src="@ThumbnailImageUrl(articleImage.RelPath, info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/width"), info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/height"))" /></div>
+                    }
+                }
+            }
+        </div>
+
+        <!-- VIDEO SECTION -->
+        @if (info.GetXmlProperty("genxml/lang/genxml/textbox/video") != "")
+        {
+            <div class="fcd-video"><div class="video-container">@HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/video"))</div></div>
+        }
+    </div>
 
 </div>
 
