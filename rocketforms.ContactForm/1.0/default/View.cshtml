@@ -30,7 +30,7 @@
 
 @if (!GeneralUtils.IsEmail(moduleData.GetSetting("fromemail")) || !GeneralUtils.IsEmail(moduleData.GetSetting("manageremail")))
 {
-    <div style="background-color:red;color:black;">
+    <div class="w3-panel w3-pale-yellow w3-border">
         @ResourceKey("RocketForms.fromemailerror")    
     </div>
 }
@@ -43,8 +43,8 @@
                     @TextBox(info, "genxml/textbox/name")
                 </div>
                 <div class="cff-50">
-                    <label>@ResourceKey("RocketForms.company")</label>
-                    @TextBox(info, "genxml/textbox/company")
+                    <label>@ResourceKey("RocketForms.firstname")</label>
+                    @TextBox(info, "genxml/textbox/firstname")
                 </div>
             </div>
             <div class="cff-100">
@@ -57,14 +57,13 @@
                     @TextBox(info, "genxml/textbox/tel")
                 </div>
             </div>
-            <div class="cff-50">
+            <div class="cff">
                 <label>@ResourceKey("RocketForms.subject")</label>
-                @TextBox(info, "genxml/textbox/subject")
+                <div>@TextBox(info, "genxml/textbox/subject")</div>
             </div>
-            <br />
-            <div class="cff-50">
+            <div class="cff">
                 <label>@ResourceKey("RocketForms.message")</label>
-                @TextArea(info, "genxml/textbox/message")
+                <div>@TextArea(info, "genxml/textbox/message", "rows='4'")</div>
             </div>
         </div>
 

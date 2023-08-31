@@ -72,6 +72,10 @@
                 var info = articleRowData.Info;
                 var hideRow = info.GetXmlPropertyBool("genxml/checkbox/hiderow");
 
+                var articleImage = articleRowData.GetImage(0);
+                var width = moduleData.Record.GetXmlPropertyInt("genxml/settings/width");
+                var height = moduleData.Record.GetXmlPropertyInt("genxml/settings/height");
+
                 if (!hideRow)
                 {
                     var cssClassRow = "";
@@ -82,7 +86,7 @@
                     if (info.GetXmlPropertyInt("genxml/select/rbllink") == 0)
                     {
                         <div class="gblock @(cssClassRow)">
-                            @RenderTemplate("Image.cshtml", moduleData.ModuleRef, appThemeView, Model, true)
+                            <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@info.GetXmlProperty("genxml/lang/genxml/textbox/title")" />
                             @{
                                 var title = info.GetXmlProperty("genxml/lang/genxml/textbox/title");
                             }
@@ -101,7 +105,7 @@
                             anchor = "#" + info.GetXmlProperty("genxml/textbox/linkanchor");
                         }
                         <a class="gblock @(cssClassRow)" href="@(tabddlvalue)@(anchor)">
-                            @RenderTemplate("Image.cshtml", moduleData.ModuleRef, appThemeView, Model, true)
+                            <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@info.GetXmlProperty("genxml/lang/genxml/textbox/title")" />
                             @{
                                 var title = info.GetXmlProperty("genxml/lang/genxml/textbox/title");
                             }
@@ -115,7 +119,7 @@
                     {
                         var externalURL = info.GetXmlProperty("genxml/textbox/externalhref");
                         <a class="gblock @(cssClassRow)" href="@(externalURL)" target="_blank">
-                            @RenderTemplate("Image.cshtml", moduleData.ModuleRef, appThemeView, Model, true)
+                            <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@info.GetXmlProperty("genxml/lang/genxml/textbox/title")" />
                             @{
                                 var title = info.GetXmlProperty("genxml/lang/genxml/textbox/title");
                             }

@@ -117,40 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="address.Text" xml:space="preserve">
-    <value>Addresse</value>
+  <data name="readmore.Text" xml:space="preserve">
+    <value>Lire la suite</value>
   </data>
-  <data name="company.Text" xml:space="preserve">
-    <value>Nom de l'entreprise</value>
+  <data name="back.Text" xml:space="preserve">
+    <value>Retour</value>
   </data>
-  <data name="contact1.Text" xml:space="preserve">
-    <value>Contact 1</value>
-  </data>
-  <data name="contact2.Text" xml:space="preserve">
-    <value>Contact 2</value>
-  </data>
-  <data name="contactemail.Text" xml:space="preserve">
-    <value>E-mail</value>
-  </data>
-  <data name="contactname.Text" xml:space="preserve">
-    <value>Nom du contact</value>
-  </data>
-  <data name="contactport.Text" xml:space="preserve">
-    <value>Mobile</value>
-  </data>
-  <data name="email.Text" xml:space="preserve">
-    <value>Email</value>
-  </data>
-  <data name="extrainfos.Text" xml:space="preserve">
-    <value>Informations supplémentaires</value>
-  </data>
-  <data name="fax.Text" xml:space="preserve">
-    <value>Fax</value>
-  </data>
-  <data name="tel1.Text" xml:space="preserve">
-    <value>Tél.</value>
-  </data>
-  <data name="tel2.Text" xml:space="preserve">
-    <value>Tél. 2</value>
+  <data name="published.Text" xml:space="preserve">
+    <value>Publié le</value>
   </data>
 </root>

@@ -38,7 +38,7 @@
                     <h1>@info.GetXmlProperty("genxml/lang/genxml/textbox/company")</h1>
                     <div class="contact-item">
                         <div class="ci-header">
-                            <span><i class="fas fa-map-marker-alt"></i></span>
+                            <span class="ri-location"></span>
                         </div>
                         <div class="ci-content">
                             @if (info.GetXmlProperty("genxml/textbox/adress") != "")
@@ -65,6 +65,7 @@
                         </p>
                         </div>
                     </div>
+                    
                     <!-- To display contacts -->
                     @RenderTemplate("DisplayContacts.cshtml", moduleData.ModuleRef, appThemeView, Model, true)
 
@@ -72,7 +73,7 @@
                     {
                         <div class="contact-item">
                             <div class="ci-header">
-                                <span><i class="far fa-clock"></i></span>
+                                <span class="ri-clock"></span>
                             </div>
                             <div class="ci-content">@BreakOf(info, "genxml/lang/genxml/textbox/extrainfo")</div>
                         </div>

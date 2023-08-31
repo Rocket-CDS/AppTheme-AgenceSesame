@@ -1,0 +1,77 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketContentAPI.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+
+
+@{
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var globalSettings = new SystemGlobalData();
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var moduleDataSrc = new ModuleContentLimpet(moduleData.PortalId, moduleData.DataRef, moduleData.SystemKey);
+    var limit = moduleData.Record.GetXmlPropertyInt("genxml/settings/limit");
+
+    // Path to the resx file
+    AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppTheme-AgenceSesame/rocketcontentapi.Articles/1.0/resx");
+
+}
+
+
+
+@{var lp = 1; }
+<div class="blogsat">
+    <h3>@ResourceKey("Articles.latestnews")</h3>
+    @foreach (var articleRowData in articleData.GetRows())
+    {
+
+        var info = articleRowData.Info;
+        // Changement format de date (dd/MM/yyy)
+        var date = info.GetXmlPropertyDate("genxml/textbox/newsdate");
+        var dateFormat = date.ToString("dd/MM/yyyy");
+        string[] urlparams = { "eid", lp.ToString(), info.GetXmlProperty("genxml/lang/genxml/textbox/title") };
+        var indexMain = 0;
+        var datalist = articleRowData.GetImageList();
+        var detailurl = DNNrocketUtils.NavigateURL(moduleDataSrc.Record.GetXmlPropertyInt("genxml/settings/linktab"), urlparams);
+        <article>
+            <!-- IMAGE - REMOVE IT IN A MODULE LEVEL TEMPLATE IF NOT NEEDED-->
+            @foreach (var imgInfo in datalist)
+            {
+                indexMain++;
+                var alt = info.GetXmlProperty("genxml/imagelist/genxml[" + indexMain + "]/hidden/imagealtarticleimage");
+
+                var articleImage = new ArticleImage(imgInfo, "articleimage");
+                var width = moduleData.Record.GetXmlPropertyInt("genxml/settings/width");
+                var height = moduleData.Record.GetXmlPropertyInt("genxml/settings/height");
+
+                if (indexMain == 1)
+                {
+                    <div class="article-img">
+                        <img src="@ThumbnailImageUrl(articleImage.RelPath, width, height)" />
+                    </div>
+                }
+
+            }
+            <!-- IMAGE END -->
+            <h2><a href="@(detailurl)">@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</a></h2>
+        </article>
+
+
+        if (lp == limit)
+        {
+            break;
+        }
+        lp++;
+    }
+
+
+    @{var tabddlvalue = PagesUtils.NavigateURL(moduleDataSrc.Record.GetXmlPropertyInt("genxml/settings/listlinktab"));}
+    <div class="blogsat-link">
+        <a class="bigbutton" href="@(tabddlvalue)">@ResourceKey("Articles.allnews")</a>
+    </div>
+</div>

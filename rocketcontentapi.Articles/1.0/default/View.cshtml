@@ -29,15 +29,15 @@
     var articleRowData = articleData.GetRow(eid - 1);
     var info = articleRowData.Info;
     var datalist = articleRowData.GetImageList();
-    // Changement format de date (dd/MM/yyy)
-    var date = info.GetXmlPropertyDate("genxml/textbox/newsdate");
-    var dateFormat = date.ToString("dd/MM/yyyy");
     var index = 0;
     var indexMain = 0;
     var group = articleRowData.RowKey;
+
     <div @(cssClass)>
+    <article class="blog-detail">
+
         <!-- RETURN BTN-->
-        <a class="w3-right" href="@rtnUrl"><i class="rtn-arrow fa fa-arrow-left">&nbsp;&nbsp;</i>Retour</a>
+        <a class="article-back bigbutton" href="@rtnUrl">@ResourceKey("Articles.back")</a>
         <!-- TITLE -->
         <h1>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h1>
         <!-- MAIN IMAGE -->
@@ -48,12 +48,14 @@
             var articleImage = new ArticleImage(imgInfo, "articleimage");
             if (indexMain == 1)
             {
-                <img src="@ThumbnailImageUrl(articleImage.RelPath)" />
+                <div class="article-img"><img src="@ThumbnailImageUrl(articleImage.RelPath)" alt="@(alt)" /></div>
             }
         }
 
         <!-- PUBLICATION DATE -->
-        <p>Publié le @dateFormat</p>
+        <p class="article-infos"><span>@ResourceKey("Articles.published") </span>@DateOf(info,"genxml/textbox/newsdate",Model.SessionParamsData.CultureCode,"d")</p>
+
+        <div class="article-content">
 
         <!-- TEXT -->
         @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
@@ -135,26 +137,28 @@
         {
             <div><div class="video-container">@HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/video"))</div></div>
         }
-        <hr class="article-hr" />
+
+        </div>
         <!-- GALLERY -->
-        <div>
-            <div class="gallery-img">
-                @foreach (var imgInfo in datalist)
+        <div class="article-gallery">
+            @foreach (var imgInfo in datalist)
+            {
+                index++;
+                var alt = info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage");
+                var articleImage = new ArticleImage(imgInfo, "articleimage");
+                if (articleImage.RelPath != "")
                 {
                     index++;
-                    var alt = info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage");
-                    var articleImage = new ArticleImage(imgInfo, "articleimage");
-                    if (articleImage.RelPath != "")
-                    {
-                        index++;
-                        <a data-fancybox="@(group)" data-caption="@(alt)" href="@ThumbnailImageUrl(articleImage.RelPath)">
-                            <img src="@ThumbnailImageUrl(articleImage.RelPath, 300, 300)" class="w3-margin" alt="@(alt)" />
-                        </a>
-                    }
+                    <a data-fancybox="@(group)" data-caption="@(alt)" href="@ThumbnailImageUrl(articleImage.RelPath)">
+                        <img src="@ThumbnailImageUrl(articleImage.RelPath, 300, 300)" alt="@(alt)" />
+                    </a>
                 }
-            </div>
+            }
         </div>
-        <hr class="article-hr" />
+
+        <hr />
+    
+    </article>
     </div>
 
 }
@@ -198,7 +202,6 @@ else
                     }
                 }
                 <hr class="small-hr"/>
-
             </div>
             <div class="blog">
                 @{var lp = 1;}
@@ -245,20 +248,17 @@ else
                                 var articleImage = new ArticleImage(imgInfo, "articleimage");
                                 if (indexMain == 1)
                                 {
-                                    <img src="@ThumbnailImageUrl(articleImage.RelPath, moduleData.Record.GetXmlPropertyInt("genxml/settings/width"), moduleData.Record.GetXmlPropertyInt("genxml/settings/height"))" />
+                                    <div class="article-img"><img src="@ThumbnailImageUrl(articleImage.RelPath, moduleData.Record.GetXmlPropertyInt("genxml/settings/width"), moduleData.Record.GetXmlPropertyInt("genxml/settings/height"))" alt="@(alt)" /></div>
                                 }
                             }
 
-                            <div>
-                                <p>@info.GetXmlProperty("genxml/lang/genxml/textbox/resume")</p>
-                            </div>
+                            <p>@info.GetXmlProperty("genxml/lang/genxml/textbox/resume")</p>
 
                             @{
                                 lp += 1;
                             }
-                            <a class="bigbutton" href="@(detailurl)">Lire la suite</a>
+                            <a class="bigbutton" href="@(detailurl)">@ResourceKey("Articles.readmore")</a>
                         </article>
-                        <hr class="article-hr" />
                     }
                 }
             </div>
@@ -267,8 +267,6 @@ else
 }
 
 <script type="text/javascript">
-    $(document).ready(function () {
-    });
     $("[data-fancybox]").fancybox({
         lang: 'fr',
         i18n: {

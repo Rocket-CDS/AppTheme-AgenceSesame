@@ -5,9 +5,9 @@
 .cff-100 {display:flex;margin:0 0 20px 0;}
 .cff-50 {flex:1;margin:0 4% 0 0;}
 .contactformfields {margin:0 0 20px 0;}
-.contactformfields input[type=text], .contactformfields input[type=email], .contactformfields input[type=date], .contactformfields select {border:none;height:40px;padding-left:10px;background:#eee;color:#666666;font:inherit;}
-.contactformfields textarea {border:none;padding:10px;background:#eee;color:#666666;font:inherit;}
-.contactformfields input[type=text]:focus, .contactformfields input[type=email]:focus, .contactformfields input[type=date]:focus, .contactformfields textarea:focus {background:#ccc;}
+.contactformfields input[type=text], .contactformfields input[type=email], .contactformfields input[type=date], .contactformfields select {border:none;height:40px;padding-left:10px;background:#f2f2f2;color:#666666;font:inherit;}
+.contactformfields textarea {border:none;padding:10px;background:#f2f2f2;color:#666666;font:inherit;}
+.contactformfields input[type=text]:focus, .contactformfields input[type=email]:focus, .contactformfields input[type=date]:focus, .contactformfields textarea:focus {background:#eee;}
 .contactformfields input[type=text], .contactformfields input[type=email], .contactformfields input[type=date], .contactformfields select, .contactformfields textarea {width:100%;}
 .requiredfield {position:relative;}
 .requiredfield:before {position:absolute;top:8px;right:10px;font-family:'Font Awesome 5 Free';font-weight:900;content:"\f069";color:#d45252;font-size:8px;}
@@ -24,24 +24,21 @@
   left: 0;
   height: 25px;
   width: 25px;
-  background: #eee;
+  background: #f2f2f2;
   transition: all 0.2s ease-in;
 }
-.cff-cb input ~ label:hover:before {background:#ccc;}
+.cff-cb input ~ label:hover:before {background:#eee;}
 .cff-cb input:checked ~ label:before {background:#2196F3;}
-/*.cff-cb input:checked ~ label:after {position:absolute;top:0;left:5px;font-family:'Font Awesome 5 Free';font-weight:900;content:"\f00c";color:white;font-size:16px;text-align:center;line-height:24px;}*/
 .cff-cb input:checked ~ label:after {
-  position: absolute;
   content: '';
-  display: inline-block;
-  top: 5px;
+  display: block;
+  position: absolute;
+  top: 4px;
   left: 9px;
-  width: 5px;
-  height: 10px;
+  width: 6px;
+  height: 14px;
   border: solid white;
   border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
 .cf-small .cff-cb {font-size:12px;line-height:normal;}
@@ -90,7 +87,7 @@ label.error:before {font-family:'Font Awesome 5 Free';font-weight:900;content:"\
   }
 }
 
- for 640px and less 
+/* for 640px and less */
 @media screen and (max-width:640px) {
 .cff-100 {display:block;}
 .cff-50 {flex:0;margin:0;}
