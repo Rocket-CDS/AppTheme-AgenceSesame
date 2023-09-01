@@ -7,7 +7,7 @@
 .contactformfields {margin:0 0 20px 0;}
 .contactformfields input[type=text], .contactformfields input[type=email], .contactformfields input[type=date], .contactformfields select {border:none;height:40px;padding-left:10px;background:#f2f2f2;color:#666666;font:inherit;}
 .contactformfields textarea {border:none;padding:10px;background:#f2f2f2;color:#666666;font:inherit;}
-.contactformfields input[type=text]:focus, .contactformfields input[type=email]:focus, .contactformfields input[type=date]:focus, .contactformfields textarea:focus {background:#eee;}
+.contactformfields input[type=text]:focus, .contactformfields input[type=email]:focus, .contactformfields input[type=date]:focus, .contactformfields textarea:focus {background:#eaeaea;}
 .contactformfields input[type=text], .contactformfields input[type=email], .contactformfields input[type=date], .contactformfields select, .contactformfields textarea {width:100%;}
 .requiredfield {position:relative;}
 .requiredfield:before {position:absolute;top:8px;right:10px;font-family:'Font Awesome 5 Free';font-weight:900;content:"\f069";color:#d45252;font-size:8px;}
@@ -15,31 +15,34 @@
 /* Custom checkbox */
 .cff-cb {-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;margin:20px 0 0 0;position:relative;cursor:pointer;font-size:14px;line-height:18px;}
 .cff-cb input {position:absolute;opacity:0;}
-.cff-cb label {display:block;text-transform:none;margin:0;padding-left:35px;cursor:pointer;}
+.cff-cb label {display:block;text-transform:none;margin:0;padding-left:27px;cursor:pointer;}
 .cff-cb input ~ label:before {
   position: absolute;
   content: '';
-  display: inline-block;
+  display: block;
   top: 0;
   left: 0;
-  height: 25px;
-  width: 25px;
-  background: #f2f2f2;
+  height: 18px;
+  width: 18px;
+  border: 1px solid #ccc;
   transition: all 0.2s ease-in;
+  border-radius: 2px;
+  box-sizing: border-box;
 }
-.cff-cb input ~ label:hover:before {background:#eee;}
-.cff-cb input:checked ~ label:before {background:#2196F3;}
+.cff-cb input ~ label:hover:before {background:#eaeaea;}
+.cff-cb input:checked ~ label:before {background:#2196F3;border:1px solid #2196F3;}
 .cff-cb input:checked ~ label:after {
   content: '';
   display: block;
   position: absolute;
-  top: 4px;
-  left: 9px;
-  width: 6px;
-  height: 14px;
   border: solid white;
-  border-width: 0 3px 3px 0;
+  border-width: 0 2px 2px 0;
+  height: 12px;
+  left: 6px;
   transform: rotate(45deg);
+  width: 6px;
+  top: 1px;
+  box-sizing: inherit;
 }
 .cf-small .cff-cb {font-size:12px;line-height:normal;}
 
