@@ -75,10 +75,11 @@
         <div class="cff-required"><i>@ResourceKey("RocketForms.compulsory")</i></div>
 
         <div id="buttondiv@(moduleData.ModuleId)" class="bigbutton simplisity_panel" style="min-height:40px;">
-            <div class="bigbutton">@ResourceKey("RocketForms.send")</div>
         </div>
-        <div id="myBarWrapper@(moduleData.ModuleId)" class="w3-light-grey w3-margin" style="display:none;">
-            <div id="myBar@(moduleData.ModuleId)" class="w3-container w3-green" style="height:24px;width:1%"></div>
+
+        <div class="simplisity_loader" style="display:none;">
+            <span class=" simplisity_loader_inner">
+            </span>
         </div>
         <!-- we must pass moduleid to server -->
         @HiddenField(info, "genxml/hidden/moduleid", "", moduleData.ModuleId.ToString())
@@ -94,6 +95,8 @@
             $('#contactform@(moduleData.ModuleId)').activateSimplisityPanel();
         }, 1200);
 
+        $('.simplisity_loader').hide();
+
     });
 
     function validate@(moduleData.ModuleId)() {
@@ -101,31 +104,12 @@
         form.validate();
 
         if (form.valid()) {
-            move@(moduleData.ModuleId)();
+            $('.simplisity_loader').show();
         } else {
             $('#sendemail@(moduleData.ModuleId)').attr('s-stop', 'stop');
         }
     }
 
-    function move@(moduleData.ModuleId)() {
-
-
-        $('#buttondiv@(moduleData.ModuleId)').html('');
-        $('#myBarWrapper@(moduleData.ModuleId)').appendTo('#buttondiv@(moduleData.ModuleId)')
-        $('#myBarWrapper@(moduleData.ModuleId)').show();
-
-        var elem = document.getElementById("myBar@(moduleData.ModuleId)");
-        var width = 1;
-        var id = setInterval(frame, 30);
-        function frame() {
-            if (width >= 100) {
-                clearInterval(id);
-            } else {
-                width++;
-                elem.style.width = width + '%';
-            }
-        }
-    }
 </script>
 
 

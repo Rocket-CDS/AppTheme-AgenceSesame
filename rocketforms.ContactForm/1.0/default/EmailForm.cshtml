@@ -41,27 +41,27 @@
         }
 </style>
 
-<h2>@moduleData.GetSetting("subject")</h2>
+<h2>@HtmlOf(moduleData.GetSetting("subject"))</h2>
 <table class="datatable" border="0" cellspacing="2" cellpadding="0">
     <tr>
         <td align="right"><label>@ResourceKey("RocketForms.subject")</label></td>
-        <td>@info.GetXmlProperty("genxml/subject")</td>
+        <td>@HtmlOf(info.GetXmlProperty("genxml/subject"))</td>
     </tr>
     <tr>
         <td align="right"><label>@ResourceKey("RocketForms.name")</label></td>
-        <td>@info.GetXmlProperty("genxml/name")</td>
+        <td>@HtmlOf(info.GetXmlProperty("genxml/name"))</td>
     </tr>
     <tr>
-        <td align="right"><label>@ResourceKey("RocketForms.company")</label></td>
-        <td>@info.GetXmlProperty("genxml/company")</td>
+        <td align="right"><label>@ResourceKey("RocketForms.firstname")</label></td>
+        <td>@HtmlOf(info.GetXmlProperty("genxml/firstname"))</td>
     </tr>
     <tr>
         <td align="right"><label>@ResourceKey("RocketForms.email")</label></td>
-        <td>@info.GetXmlProperty("genxml/email")</td>
+        <td>@HtmlOf(info.GetXmlProperty("genxml/email"))</td>
     </tr>
     <tr>
         <td align="right"><label>@ResourceKey("RocketForms.tel")</label></td>
-        <td>@info.GetXmlProperty("genxml/tel")</td>
+        <td>@HtmlOf(info.GetXmlProperty("genxml/tel"))</td>
     </tr>
     <tr>
         <td align="right"><label>@ResourceKey("RocketForms.message")</label></td>

@@ -20,7 +20,7 @@
     
 }
 
-<input class="w3-input w3-border w3-padding w3-margin-top" type="text" placeholder="Search..." id="searchinput" onkeydown="if (event.keyCode == 13) { event.preventDefault(); }" onkeyup="myFunction()">
+<input class="w3-input w3-border w3-padding w3-margin-top" type="text" placeholder="@(ResourceKey("DNNrocket.search"))...." id="searchinput" onkeydown="if (event.keyCode == 13) { event.preventDefault(); }" onkeyup="myFunction()">
 
 <table class="w3-table w3-margin-top simplisity_panel" id="searchtable">
 
@@ -31,11 +31,11 @@
             <td>
                 <div class="w3-row w3-card">
                     <div class="w3-row w3-padding w3-hover-light-grey" onclick="$('.formmessage@(lp)').toggle()">
-                        <b>@f.GetXmlPropertyDate("genxml/createddate").ToShortDateString() @f.GetXmlPropertyDate("genxml/createddate").ToShortTimeString() &nbsp;:&nbsp; @f.GetXmlProperty("genxml/email")</b> &nbsp; @f.GetXmlProperty("genxml/company"), @f.GetXmlProperty("genxml/name"), @ResourceKey("RocketForms.tel"): @f.GetXmlProperty("genxml/tel")
+                        <b>@f.GetXmlPropertyDate("genxml/createddate").ToShortDateString() @f.GetXmlPropertyDate("genxml/createddate").ToShortTimeString() &nbsp;:&nbsp; @f.GetXmlProperty("genxml/email")</b> &nbsp; @HtmlOf(f.GetXmlProperty("genxml/firstname")), @HtmlOf(f.GetXmlProperty("genxml/name")), @ResourceKey("RocketForms.tel"): @HtmlOf(f.GetXmlProperty("genxml/tel"))
                     </div>
                     <div class="w3-row w3-padding w3-pale-yellow formmessage@(lp)" style="display:none;">
                         <div>
-                            <b>@ResourceKey("RocketForms.subject") : @f.GetXmlProperty("genxml/subject")</b><br/>
+                            <b>@ResourceKey("RocketForms.subject") : @HtmlOf(f.GetXmlProperty("genxml/subject"))</b><br/>
                             @HtmlOf(f.GetXmlProperty("genxml/message"))
                         </div>
                         <div class="w3-button w3-right simplisity_click" s-cmd="rocketforms_delete" s-fields='{"formref":"@(f.GUIDKey)","moduleref":"@moduleData.ModuleRef","moduleid":"@moduleData.ModuleId","tabid":"@moduleData.TabId"}'>
