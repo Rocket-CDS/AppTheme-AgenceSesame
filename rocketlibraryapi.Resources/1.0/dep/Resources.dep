@@ -32,6 +32,10 @@
 			<ctrltype>js</ctrltype>
 			<url>https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js</url>
 		</genxml>
+		<genxml>
+			<ctrltype><![CDATA[js]]></ctrltype>
+			<url><![CDATA[{appthemefolder}/js/jquery.succinct.min.js]]></url>
+		</genxml>
 	</deps>
 	<moduletemplates list="true">
 		<genxml>
