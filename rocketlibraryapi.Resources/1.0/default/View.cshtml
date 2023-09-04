@@ -7,23 +7,25 @@
 @using System.Globalization;
 @using Rocket.AppThemes.Components;
 
-<div id="catalog-mapview-tag" class="catalog-mapview-container">
-    @{
-        Model.SetSetting("searchview", "false");
-        var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
-        var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
-        var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
-        if (articleData != null)
-        {
-            @RenderTemplate("ArticleDetail.cshtml", appThemeView, Model, true)
-        }
-        else
-        {
-            @RenderTemplate("ArticleList.cshtml", appThemeView, Model, true)
-        }
-    }
+@{ 
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+}
+
+<div class="pageflex">
+    <div id="a-filtercontainer" class="leftpane">
+        @RenderTemplate("Filters.cshtml", appTheme, Model, true)
+    </div>
+    <div id="a-articlecontainer" class="contentpane2">
+        @if (articleData != null)
+        {@RenderTemplate("ArticleDetail.cshtml", appTheme, Model, false)}
+        else 
+        {@RenderTemplate("ArticleList.cshtml", appTheme, Model, false)}
+    </div>
 </div>
 
-<div id="simplisity_loader" class="loader-wrapper" style="display:none;">
-    <div class="loader is-loading"></div>
+<div class="simplisity_loader" style="display:none;">
+    <span class=" simplisity_loader_inner">
+    </span>
 </div>
+

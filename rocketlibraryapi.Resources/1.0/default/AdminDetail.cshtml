@@ -19,7 +19,7 @@
     var appThemeDirectory = (AppThemeSystemLimpet)Model.GetDataObject("appthemedirectory");
     var sessionParams = Model.SessionParamsData;
     var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
-    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("apptheme");
     var systemData = (SystemLimpet)Model.GetDataObject("systemdata");
 
     AddProcessDataResx(appThemeAdmin, true);
@@ -75,12 +75,7 @@
                                 <div class='w3-col w3-padding'>
                                     <label>Statut</label>
                                     <div>
-                                        <div class="w3-half w3-padding">
-                                            @CheckBox(info, articleData.HiddenXPath, "&nbsp;" + ResourceKey("Theme.published"), " class='w3-check' ")
-                                        </div>
-                                        <div class="w3-half w3-padding">
-                                            @CheckBox(info, articleData.HiddenByCultureXPath, "&nbsp;" + ResourceKey("Theme.published") + "&nbsp;" + EditFlag(sessionParams), " class='w3-check' ")
-                                        </div>
+                                        @CheckBox(info, articleData.HiddenXPath, "&nbsp;" + ResourceKey("DNNrocket.hidden"), " class='w3-check' ")
                                     </div>
                                 </div>    
                             </div>
@@ -96,24 +91,6 @@
                         <div class=" w3-row w3-padding">
                             <label>Description</label>&nbsp;@EditFlag(sessionParams)
                             @CKEditor4(info, "genxml/lang/genxml/textbox/richtext", true)
-                        </div>
-                        <div class='w3-row'>
-                            <div class='w3-row w3-padding'><strong>Contact</strong></div>
-                            <div class='w3-half'>
-                                <div class='w3-row w3-padding'>
-                                    <label>@ResourceKey("DNNrocket.email")</label>
-                                    @TextBox(info, "genxml/textbox/email", " class='w3-input w3-border' autocomplete='off' ", "", false, 0)
-                                </div>
-                                <div class='w3-row w3-padding'>
-                                    <label>Tél.</label>
-                                    @TextBox(info, "genxml/textbox/phone", " class='w3-input w3-border' autocomplete='off' ", "", false, 0)
-                                </div>
-                                <div class='w3-row w3-padding'>
-                                    <label>Clic tél.</label>
-                                    @TextBox(info, "genxml/textbox/mobile", " class='w3-input w3-border' autocomplete='off' ", "", false, 0)
-                                </div>
-                            </div>
-                            <div class='w3-half'></div>
                         </div>
                         <div class=" w3-row w3-padding">
                             @RenderTemplate("AdminExtra.cshtml", appThemeAdmin, Model, true)

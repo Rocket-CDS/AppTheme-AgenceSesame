@@ -12,13 +12,13 @@
     var moduleSettings = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
     var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
     var portalCatalog = (PortalCatalogLimpet)Model.GetDataObject("portalcatalog");
-    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
     var catalogSettings = (CatalogSettingsLimpet)Model.GetDataObject("catalogsettings");
 
     var groupDict = catalogSettings.GetPropertyGroups();
     var info = new SimplisityInfo(moduleSettings.Record);
 
-    AddProcessDataResx(appThemeAdmin, true);
+    AddProcessDataResx(appTheme, true);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/");
 
     //NOTE: xPath for module settings must use "genxml/settings/*"

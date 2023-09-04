@@ -12,7 +12,7 @@
     var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
     var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
     var categoryList = (CategoryLimpetList)Model.GetDataObject("categorylist");
-    var appTheme = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
     var appThemeDefault = (AppThemeLimpet)Model.GetDataObject("appthemedefault");
     var appThemeDirectory = (AppThemeSystemLimpet)Model.GetDataObject("appthemedirectory");
     var appThemeDirectoryDefault = (AppThemeLimpet)Model.GetDataObject("appthemedirectorydefault");
@@ -20,9 +20,10 @@
     var propertyList = (PropertyLimpetList)Model.GetDataObject("propertylist");
     var propertyCheckboxes = new List<PropertyLimpet>();
     var nodList = false;
-    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var date = articleData.Info.GetXmlPropertyDate("genxml/textbox/publisheddate");
+    var dateFormat = date.ToString("dd/MM/yyyy");
 
-    AddProcessDataResx(appThemeView, true);
+    AddProcessDataResx(appTheme, true);
 }
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
 
@@ -43,29 +44,74 @@
                             returnUrl = DNNrocketUtils.NavigateURL(sessionParams.TabId);;                
                         }
                     }
-                    <a href="@returnUrl" class="bigbutton"><i class="fas fa-angle-left"></i>@ResourceKey("Theme.back", sessionParams.CultureCode)</a>
+                    <a href="@returnUrl" class="bigbutton"><i class="fas fa-angle-up"></i>@ResourceKey("Theme.back", sessionParams.CultureCode)</a>
                 </div>
 
                 <div class="articledetailflex">
 
                     <div class="articledetail-left">
 
-                        <div class="image">
-                            <img class="imgrollovertarget has-ratio" alt="@articleData.Name" src="@ImageUrl(articleData.GetImage(0).RelPath,640,0)" />
-                        </div>
-
                         <h1 class="title">@articleData.Name</h1>
 
-                        @if (articleData.GetProperties().Count > 0)
-                        {
-                            <p class="subtitle">@articleData.GetProperties().First().Name</p>
-                        }
-                        
-                        <div class="articledetail-section">@BreakOf(articleData.Summary)</div>
+                        <div class="articledetail-section article-tags">
+                            @foreach (var p in articleData.GetProperties())
+                            {
+                                if (p.IsInGroup("thematique"))
+                                {
+                                <span>@p.Name</span>
+                                }
+                            }
+                        </div>
 
-                        <div>@HtmlOf(articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))</div>
-                        
-                        <div class="articledetail-section"><a href="/fr-fr/a-table-" class="bigbutton linebutton">@ResourceKey("Theme.carte", sessionParams.CultureCode)</a></div>
+                        @if (articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/articlesummary") != "")
+                        {
+                        <div class="articledetail-section summary">@BreakOf(articleData.Summary)</div>
+                        }
+
+                        <div class="articledetail-section">
+                        <div class="article-infos">
+                            <div>
+                                <span>Auteur(s) :</span>
+                                @foreach (var p in articleData.GetProperties())
+                                {
+                                    if (p.IsInGroup("auteur"))
+                                    {
+                                    <span class="commalist">@p.Name</span>
+                                    }
+                                }
+                            </div>
+                            <div class="sep">|</div>
+                            <div>@ResourceKey("Theme.publicationdate", sessionParams.CultureCode) : @dateFormat</div>
+                            <div class="sep">|</div>
+                            <div>
+                                <span>Type(s) de document :</span>
+                                @foreach (var p in articleData.GetProperties())
+                                {
+                                    if (p.IsInGroup("type"))
+                                    {
+                                    <span class="commalist">@p.Name</span>
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="article-markers">
+                            @foreach (var p in articleData.GetProperties())
+                            {
+                                if (p.IsInGroup("territoire"))
+                                {
+                                <span class="commalist">@p.Name</span>
+                                }
+                            }
+                        </div>
+                        </div>
+
+                        @if (articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/richtext") != "")
+                        {
+                        <div class="articledetail-section">
+                            <div><strong>En savoir plus :</strong></div>
+                            @HtmlOf(articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
+                        </div>
+                        }
 
                         @if (articleData.GetImages().Count > 1)
                         {
@@ -85,40 +131,45 @@
 
                     <div class="articledetail-right">
 
+                        <div class="articledetail-section image">
+                            <img alt="@articleData.Name" src="@ImageUrl(articleData.GetImage(0).RelPath,300,0)" />
+                        </div>
+
                         <div class="articledetail-section">
-                            <div class="h3-headline"><i class="far fa-user-circle fa-lg"></i>@ResourceKey("Theme.contact", sessionParams.CultureCode)</div>
-                            <div class="block">
-                                <h4>@articleData.Name</h4>
-                                @if (articleData.Info.GetXmlProperty("genxml/textbox/phone") != "")
+                            <div class="ads-icon"><i class="far fa-user-circle fa-lg"></i></div>
+                            <div class="h4-headline">Référent</div>
+                            @foreach (var p in articleData.GetProperties())
+                            {
+                                if (p.IsInGroup("referent"))
                                 {
-									var clictel = articleData.Info.GetXmlProperty("genxml/textbox/mobile");
-                                    <br />@ResourceKey("Theme.tel", sessionParams.CultureCode) <a href="tel:@clictel">@articleData.Info.GetXmlProperty("genxml/textbox/phone")</a>
+                                <strong>@p.Name</strong>
+                                <div class="referent-desc">@p.Summary</div>
                                 }
-                                @if (articleData.Info.GetXmlProperty("genxml/textbox/email") != "")
-                                {
-                                    <br />@ResourceKey("Theme.email", sessionParams.CultureCode) <span>:</span> @EmailOf(articleData.Info, "genxml/textbox/email")
-                                }
-                            </div>
+                            }
                         </div>
 
                         @if (articleData.Getlinks().Count > 0 || articleData.GetDocs().Count > 0)
                         {
                             <div class="articledetail-section" id="linklistcontainer">
-                                <div class="h3-headline"><i class="far fa-file-alt fa-lg"></i>@ResourceKey("Theme.linksdownloads", sessionParams.CultureCode)</div>
-                                <div class="docslinks">
+                                <div class="ads-icon"><i class="far fa-file-alt fa-lg"></i></div>
+                                <div class="h4-headline">Ressources</div>
+                                <div class="article-infos article-alert">
+                                Vous devez être adhérent de l'URIOPSS Occitanie afin d'accéder aux ressources.
+                                </div> 
+                                <div class="article-docs">
                                 @foreach (var lk in articleData.Getlinks())
                                 {
                                     if (!lk.Hidden)
                                     {
                                         <a target="_blank" href="@lk.Url" class="panel-block">
-                                            <i class="fas fa-link" aria-hidden="true"></i>@lk.Name
+                                            <i class="fas fa-link fa-fw" aria-hidden="true"></i>@lk.Name
                                         </a>
                                     }
                                 }
                                 @foreach (var doc in articleData.GetDocList())
                                 {
                                     <a target="_blank" href="/@doc.GetXmlProperty("genxml/hidden/documentpatharticledoc")" class="panel-block">
-                                        <i class="fas fa-file-pdf" aria-hidden="true"></i>@doc.GetXmlProperty("genxml/textbox/documentnamearticledoc")
+                                        <i class="fas fa-file-pdf fa-fw" aria-hidden="true"></i>@doc.GetXmlProperty("genxml/textbox/documentnamearticledoc")
                                     </a>
                                 }
                                 </div>

@@ -7,12 +7,12 @@
 @using System.Globalization;
 @using Rocket.AppThemes.Components;
 
-@{
+@{ 
     var sessionParams = (SessionParams)Model.SessionParamsData;
     var articleDataList = (ArticleLimpetList)Model.GetDataObject("articlelist");
     var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
     var categoryList = (CategoryLimpetList)Model.GetDataObject("categorylist");
-    var appTheme = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
     var appThemeDefault = (AppThemeLimpet)Model.GetDataObject("appthemedefault");
     var appThemeDirectory = (AppThemeSystemLimpet)Model.GetDataObject("appthemedirectory");
     var appThemeDirectoryDefault = (AppThemeLimpet)Model.GetDataObject("appthemedirectorydefault");
@@ -21,19 +21,18 @@
     var propertyList = (PropertyLimpetList)Model.GetDataObject("propertylist");
     var moduleSettings = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
     var propertyCheckboxes = new List<PropertyLimpet>();
-    var nodList = false;
-    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
-
-    AddProcessDataResx(appThemeView, true);
+    AddProcessDataResx(appTheme, true);
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/");
 }
-@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
 
-<div class="container">
+<div class="articlewrapper">
 
-<h1 class="title">Category name</h1>
+    <div class="h1-headline">Rechercher</div>
 
-@if (articleDataList.GetArticleList().Count > 0)
-{
+    @RenderTemplate("SearchBanner.cshtml", appThemeDirectoryDefault, Model, false)
+
+    @if (articleDataList.GetArticleList().Count > 0)
+    {
 <div class="articlelist">
 
     @foreach (ArticleLimpet articleData in articleDataList.GetArticleList())
@@ -44,38 +43,76 @@
         var date = articleData.Info.GetXmlPropertyDate("genxml/textbox/publisheddate");
         var dateFormat = date.ToString("dd/MM/yyyy");
 
-        <div class="article">
-            <div class="article-image">
-                <a href="@(hreflink)" title="@articleData.Name" onclick="$('#simplisity_loader').show();">
-                    <img src="@ImageUrl(articleData.GetImage(0).RelPath,120,0)" alt="@articleData.GetImage(0).Alt" />
-                </a>
-            </div>
-            <div class="article-content">
-                <h2><a href="@(hreflink)" title="@articleData.Name" onclick="$('#simplisity_loader').show();">@articleData.Name</a></h2>
-                <div class="article-tags"><div>Handicap, CD09, Dossier de presse</div></div>
-                <div class="article-summary">@BreakOf(articleData.Summary)</div>
-                <div class="article-infos">Auteur : URIOPSS&nbsp;&nbsp;|&nbsp;&nbsp;@ResourceKey("Theme.publicationdate", sessionParams.CultureCode) : @dateFormat</div>
-                <div>
-                    @if (articleData.Info.GetXmlProperty("genxml/textbox/phone") != "")
+<div class="article">
+    <div class="article-image">
+        <a href="@(hreflink)" title="@articleData.Name" onclick="$('#simplisity_loader').show();">
+            <img src="@ImageUrl(articleData.GetImage(0).RelPath,120,0)" alt="@articleData.GetImage(0).Alt" />
+        </a>
+    </div>
+    <div class="article-content">
+        <h2><a href="@(hreflink)" title="@articleData.Name" onclick="$('#simplisity_loader').show();">@articleData.Name</a></h2>
+        <div class="article-tags">
+            @foreach (var p in articleData.GetProperties())
+            {
+                if (p.IsInGroup("thematique"))
+                {
+<span>@p.Name</span>    }
+}
+        </div>
+        <div class="article-summary truncate">@BreakOf(articleData.Summary)</div>
+        <div class="article-infos">
+            <div>
+                <span>Auteur(s) :</span>
+                @foreach (var p in articleData.GetProperties())
+                {
+                    if (p.IsInGroup("auteur"))
                     {
-                        var clictel = articleData.Info.GetXmlProperty("genxml/textbox/mobile");
-                        <a href="tel:@clictel">@articleData.Info.GetXmlProperty("genxml/textbox/phone")</a>
-                    }	
-                </div>
+<span class="commalist">@p.Name</span>}
+}
+            </div>
+            <div class="sep">|</div>
+            <div>@ResourceKey("Theme.publicationdate", sessionParams.CultureCode) : @dateFormat</div>
+            <div class="sep">|</div>
+            <div>
+                <span>Type(s) de document :</span>
+                @foreach (var p in articleData.GetProperties())
+                {
+                    if (p.IsInGroup("type"))
+                    {
+<span class="commalist">@p.Name</span>}
+}
             </div>
         </div>
-    }
-
-</div>
-
-<div class="w3-row w3-padding-16 w3-center">
-    @RenderTemplate("articlePaging.cshtml", appThemeDirectoryDefault, Model, true)
-</div>
-
+        <div class="article-markers">
+            @foreach (var p in articleData.GetProperties())
+            {
+                if (p.IsInGroup("territoire"))
+                {
+<span class="commalist">@p.Name</span>}
 }
-else
-{
-    <div class="h2-headline">Aucun résultat</div>
-}
+        </div>
+    </div>
+</div>}
 
 </div>
+
+                @RenderTemplate("articlePaging.cshtml", appThemeDirectoryDefault, Model, false) }
+            else
+            {
+<div class="h2-headline">Aucun résultat</div>}
+
+</div>
+
+<script>
+
+    $(document).ready(function () {
+
+        $(function () {
+            $('.truncate').succinct({
+                size: 200
+            });
+        });
+
+    });
+
+</script>
