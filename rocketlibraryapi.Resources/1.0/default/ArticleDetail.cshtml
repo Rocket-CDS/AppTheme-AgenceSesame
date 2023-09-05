@@ -195,7 +195,7 @@
             simplisity_setSessionField('searchtext', '');
         });
 
-        $(document).simplisityStartUp('/Desktopmodules/dnnrocket/api/rocket/action', { "systemkey": "rocketdirectoryapi"});
+        $(document).simplisityStartUp('/Desktopmodules/dnnrocket/api/rocket/action', { "systemkey": "@(articleData.SystemKey)"});
         $('#simplisity_loader').hide();
 
     });
