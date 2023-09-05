@@ -1,0 +1,90 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using RocketDirectoryAPI.Components;
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketPortal.Components;
+@using DNNrocketAPI.Components;
+@using System.Globalization;
+@using Rocket.AppThemes.Components;
+
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
+
+@{
+    var sessionParams = (SessionParams)Model.SessionParamsData;
+    var portalContent = (PortalCatalogLimpet)Model.GetDataObject("portalcontent");
+    var articleDataList = (ArticleLimpetList)Model.GetDataObject("articlelist");
+    var categoryData = (CategoryLimpet)Model.GetDataObject("categorydata");
+}
+
+<div class="searchbar searchdata">
+    <div class="searchbar-item">
+        <div class="searchbar-label">Par mot-clé</div>
+        <div class="searchbar-input">
+            @TextBox(new SimplisityInfo(), "genxml/textbox/searchtext", " class='simplisity_sessionfield actionentrykey' autocomplete='off' ", sessionParams.Get("searchtext"))
+            <span class="searchbar-btn clearsearch" style="display:none;" onclick="clearSearch();return false;">@ButtonIcon(ButtonTypes.cancel)</span>
+            <span class="searchbar-btn simplisity_click dosearch" onclick="doSearchReload();return false;">@ButtonIcon(ButtonTypes.search)</span>
+        </div>
+    </div>
+    <div class="searchbar-item">
+        <div class="searchbar-label">Par date</div>
+        <div class="searchbar-daterange">
+            <div class="searchbar-input searchbar-item">
+                <div class="searchbar-inputpre">Du :</div>
+                <input type="date">
+            </div>
+            <div class="searchbar-input searchbar-item">
+                <div class="searchbar-inputpre">Au :</div>
+                <input type="date">
+                <span class="searchbar-btn">@ButtonIcon(ButtonTypes.search)</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        if ($('.actionentrykey').val() !== '') {
+            $('.actionentrykey').focus();
+            $('.clearsearch').show();
+            $('.dosearch').hide();
+            var tmpStr = $('.actionentrykey').val();
+            $('.actionentrykey').val('');
+            $('.actionentrykey').val(tmpStr);
+            $('#searchtext').addClass('w3-theme-light');
+        }
+        else {
+            $('#searchtext').removeClass('w3-theme-light');
+            $('.clearsearch').hide();
+            $('.dosearch').show();
+        }
+
+        $('.actionentrykey').unbind('keypress');
+        $('.actionentrykey').on('keypress', function (e) {
+            if (e.keyCode == 13) {
+                doSearchReload();
+                return false; // prevent the button click from happening
+            }
+        });
+
+    });
+
+    function clearSearch() {
+        $('#searchtext').val('');
+        doSearchReload();
+    }
+
+    function doSearchReload() {
+        simplisity_setSessionField('searchtext', $('#searchtext').val());
+        simplisity_setSessionField('pagesize', $('#pagesize').val());
+        simplisity_setSessionField('orderbyref', $('#orderbyref').val());
+        $('.simplisity_loader').show();
+        @{
+        var urlparams = new Dictionary<string, string>();
+        urlparams.Add("page", "1");
+        }
+        window.location.href = '@(DNNrocketUtils.NavigateURL(sessionParams.TabId, urlparams))';
+    }
+
+</script>

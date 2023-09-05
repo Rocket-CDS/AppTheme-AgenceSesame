@@ -1,4 +1,4 @@
-﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+﻿﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
 @using RocketDirectoryAPI.Components;
 @using DNNrocketAPI;
 @using Simplisity;
@@ -153,24 +153,45 @@
                             <div class="articledetail-section simplisity_panel" id="linklistcontainer">
                                 <div class="ads-icon"><i class="far fa-file-alt fa-lg"></i></div>
                                 <div class="h4-headline">Ressources</div>
-                                <div class="article-infos article-alert">
-                                Vous devez être adhérent de l'URIOPSS Occitanie afin d'accéder aux ressources.
-                                </div> 
+
+                                @if (!UserUtils.IsAuthorised())
+                                {
+                                <div class="article-infos article-alert">Vous devez être adhérent de l'URIOPSS Occitanie afin d'accéder aux ressources.</div>
+                                }
+                                
                                 <div class="article-docs">
                                 @foreach (var lk in articleData.Getlinks())
                                 {
                                     if (!lk.Hidden)
                                     {
-                                        <a target="_blank" href="@lk.Url" class="panel-block">
-                                            <i class="fas fa-link fa-fw" aria-hidden="true"></i>@lk.Name
-                                        </a>
+                                        if (UserUtils.IsAuthorised())
+                                        {
+                                            <a target="_blank" href="@lk.Url" class="panel-block">
+                                                <i class="fas fa-link fa-fw" aria-hidden="true"></i>@lk.Name
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <span class="panel-block">
+                                                <i class="fas fa-link fa-fw" aria-hidden="true"></i>@lk.Name
+                                            </span>
+                                        }
                                     }
                                 }
                                 @foreach (var doc in articleData.GetDocs())
                                 {
-                                    <a class="panel-block simplisity_filedownload" s-cmd="remote_publicdownload" s-fields='{"articleid":"@(articleData.ArticleId.ToString())","dockey":"@(doc.DocKey)"}'>
-                                        <i class="fas fa-file-pdf fa-fw" aria-hidden="true"></i> @doc.Name
-                                    </a>
+                                    if (UserUtils.IsAuthorised())
+                                    {
+                                        <a class="panel-block simplisity_filedownload" s-cmd="remote_publicdownload" s-fields='{"articleid":"@(articleData.ArticleId.ToString())","dockey":"@(doc.DocKey)"}'>
+                                            <i class="fas fa-file-pdf fa-fw" aria-hidden="true"></i>@doc.Name
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <span class="panel-block">
+                                            <i class="fas fa-file-pdf fa-fw" aria-hidden="true"></i>@doc.Name
+                                        </span>
+                                    }
                                 }
                                 </div>
                             </div>
