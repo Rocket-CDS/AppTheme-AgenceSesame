@@ -150,7 +150,7 @@
 
                         @if (articleData.Getlinks().Count > 0 || articleData.GetDocs().Count > 0)
                         {
-                            <div class="articledetail-section" id="linklistcontainer">
+                            <div class="articledetail-section simplisity_panel" id="linklistcontainer">
                                 <div class="ads-icon"><i class="far fa-file-alt fa-lg"></i></div>
                                 <div class="h4-headline">Ressources</div>
                                 <div class="article-infos article-alert">
@@ -166,10 +166,10 @@
                                         </a>
                                     }
                                 }
-                                @foreach (var doc in articleData.GetDocList())
+                                @foreach (var doc in articleData.GetDocs())
                                 {
-                                    <a target="_blank" href="/@doc.GetXmlProperty("genxml/hidden/documentpatharticledoc")" class="panel-block">
-                                        <i class="fas fa-file-pdf fa-fw" aria-hidden="true"></i>@doc.GetXmlProperty("genxml/textbox/documentnamearticledoc")
+                                    <a class="panel-block simplisity_filedownload" s-cmd="remote_publicdownload" s-fields='{"articleid":"@(articleData.ArticleId.ToString())","dockey":"@(doc.DocKey)"}'>
+                                        <i class="fas fa-file-pdf fa-fw" aria-hidden="true"></i> @doc.Name
                                     </a>
                                 }
                                 </div>
@@ -194,6 +194,9 @@
             $('#simplisity_loader').show();
             simplisity_setSessionField('searchtext', '');
         });
+
+        $(document).simplisityStartUp('/Desktopmodules/dnnrocket/api/rocket/action', { "systemkey": "rocketdirectoryapi"});
+        $('#simplisity_loader').hide();
 
     });
 
