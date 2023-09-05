@@ -30,13 +30,12 @@
         <div class="searchbar-label">Par date</div>
         <div class="searchbar-daterange">
             <div class="searchbar-input searchbar-item">
-                <div class="searchbar-inputpre">Du :</div>
-                <input type="date">
+                <div class="searchbar-inputpre">@ResourceKey("DNNrocket.from") :</div>
+                @TextBox(new SimplisityInfo(), "genxml/textbox/searchdate1", " class='simplisity_sessionfield' autocomplete='off' ", sessionParams.Get("searchdate1"), false, 0, "","date")
             </div>
             <div class="searchbar-input searchbar-item">
-                <div class="searchbar-inputpre">Au :</div>
-                <input type="date">
-                <span class="searchbar-btn">@ButtonIcon(ButtonTypes.search)</span>
+                <div class="searchbar-inputpre">@ResourceKey("DNNrocket.to") :</div>
+                @TextBox(new SimplisityInfo(), "genxml/textbox/searchdate2", " class='simplisity_sessionfield' autocomplete='off' ", sessionParams.Get("searchdate2"), false, 0, "","date")
             </div>
         </div>
     </div>
@@ -72,11 +71,15 @@
 
     function clearSearch() {
         $('#searchtext').val('');
+        $('#searchdate1').val('');
+        $('#searchdate2').val('');
         doSearchReload();
     }
 
     function doSearchReload() {
         simplisity_setSessionField('searchtext', $('#searchtext').val());
+        simplisity_setSessionField('searchdate1', $('#searchdate1').val());
+        simplisity_setSessionField('searchdate2', $('#searchdate2').val());
         simplisity_setSessionField('pagesize', $('#pagesize').val());
         simplisity_setSessionField('orderbyref', $('#orderbyref').val());
         $('.simplisity_loader').show();
