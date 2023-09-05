@@ -50,7 +50,7 @@
             </thead>
             @foreach (ArticleLimpet articleData in articleDataList.GetArticleList())
             {
-                <tr class=" simplisity_click" s-cmd="articleadmin_editarticle" s-fields='{"articleid":"@articleData.ArticleId","track":"true"}' style="cursor:pointer;">
+                <tr class=" simplisity_click" s-cmd="articleadmin_editarticle" s-fields='{"articleid":"@articleData.ArticleId","moduleid":"@sessionParams.ModuleId","track":"true"}' style="cursor:pointer;">
                     <td style="width:54px;">
                         @if (articleData.IsHidden)
                         {
