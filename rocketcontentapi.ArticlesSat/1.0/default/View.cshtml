@@ -61,7 +61,7 @@
             }
 			<div class="article-content">
 				<h2><a href="@(detailurl)">@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</a></h2>
-				<p class="article-infos"><span>@ResourceKey("Articles.published") </span>@DateOf(info,"genxml/textbox/newsdate",Model.SessionParamsData.CultureCode,"d")</p>
+				<p class="article-infos">@DateOf(info,"genxml/textbox/newsdate",Model.SessionParamsData.CultureCode,"d")</p>
 			 </div>
         </article>
 
