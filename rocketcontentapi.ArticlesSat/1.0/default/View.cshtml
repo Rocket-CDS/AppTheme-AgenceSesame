@@ -34,12 +34,14 @@
         // Changement format de date (dd/MM/yyy)
         var date = info.GetXmlPropertyDate("genxml/textbox/newsdate");
         var dateFormat = date.ToString("dd/MM/yyyy");
-        string[] urlparams = { "eid", lp.ToString(), info.GetXmlProperty("genxml/lang/genxml/textbox/title") };
         var indexMain = 0;
         var datalist = articleRowData.GetImageList();
-        var detailurl = DNNrocketUtils.NavigateURL(moduleDataSrc.Record.GetXmlPropertyInt("genxml/settings/linktab"), urlparams);
+        
+		var seotitle = DNNrocketUtils.UrlFriendly(info.GetXmlProperty("genxml/lang/genxml/textbox/title"));
+		string[] urlparams = { "eid", lp.ToString(), seotitle};
+		var detailurl = DNNrocketUtils.NavigateURL(moduleDataSrc.Record.GetXmlPropertyInt("genxml/settings/linktab"), urlparams);
+		
         <article>
-            <!-- IMAGE - REMOVE IT IN A MODULE LEVEL TEMPLATE IF NOT NEEDED-->
             @foreach (var imgInfo in datalist)
             {
                 indexMain++;
@@ -57,8 +59,8 @@
                 }
 
             }
-            <!-- IMAGE END -->
             <h2><a href="@(detailurl)">@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</a></h2>
+			<p class="article-infos"><span>@ResourceKey("Articles.published") </span>@DateOf(info,"genxml/textbox/newsdate",Model.SessionParamsData.CultureCode,"d")</p>		
         </article>
 
 
