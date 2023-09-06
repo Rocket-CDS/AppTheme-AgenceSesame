@@ -21,19 +21,20 @@
     AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppTheme-AgenceSesame/rocketcontentapi.Articles/1.0/resx");
 
 }
-
-
-
 @{var lp = 1; }
+
 <div class="blogsat">
     <div class="h4-headline">@ResourceKey("Articles.latestnews")</div>
     @foreach (var articleRowData in articleData.GetRows())
     {
         var info = articleRowData.Info;
-        string[] urlparams = { "eid", lp.ToString(), info.GetXmlProperty("genxml/lang/genxml/textbox/title") };
         var indexMain = 0;
         var datalist = articleRowData.GetImageList();
-        var detailurl = DNNrocketUtils.NavigateURL(moduleDataSrc.Record.GetXmlPropertyInt("genxml/settings/linktab"), urlparams);
+        
+		var seotitle = DNNrocketUtils.UrlFriendly(info.GetXmlProperty("genxml/lang/genxml/textbox/title"));
+		string[] urlparams = { "eid", lp.ToString(), seotitle};
+		var detailurl = DNNrocketUtils.NavigateURL(moduleDataSrc.Record.GetXmlPropertyInt("genxml/settings/linktab"), urlparams);
+		
         <article>
             <h3><a href="@(detailurl)">@DateOf(info,"genxml/textbox/newsdate",Model.SessionParamsData.CultureCode,"d") - @info.GetXmlProperty("genxml/lang/genxml/textbox/title")</a></h3>
         </article>
