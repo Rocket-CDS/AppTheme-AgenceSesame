@@ -213,18 +213,11 @@ else
                     var headingHide = info.GetXmlPropertyBool("genxml/checkbox/hideheading");
                     var hideRow = info.GetXmlPropertyBool("genxml/checkbox/hiderow");
 
-                    /*** PERFECT LINK ***/
-                    var title = info.GetXmlProperty("genxml/lang/genxml/textbox/title");
-                    title = title.Replace(" ", "-");
-                    title = title.ToLower();
-                    byte[] tempBytes;
-                    tempBytes = System.Text.Encoding.GetEncoding("ISO-8859-8").GetBytes(title);
-                    title = System.Text.Encoding.UTF8.GetString(tempBytes);
-                    /*** END OF PERFECT LINK ***/
-
-                    string[] urlparams = { "eid", lp.ToString(), title};
-                    var detailurl = DNNrocketUtils.NavigateURL(moduleData.Record.GetXmlPropertyInt("genxml/settings/linktab"), urlparams);
-                    var indexMain = 0;
+                    var seotitle = DNNrocketUtils.UrlFriendly(info.GetXmlProperty("genxml/lang/genxml/textbox/title"));
+					string[] urlparams = { "eid", lp.ToString(), seotitle};
+					var detailurl = DNNrocketUtils.NavigateURL(moduleData.Record.GetXmlPropertyInt("genxml/settings/linktab"), urlparams);
+                    
+					var indexMain = 0;
                     var datalist = articleRowData.GetImageList();
 
                     if (!hideRow)
@@ -234,7 +227,7 @@ else
                                 // Changement format de date (dd/MM/yyy)
                                 var date = info.GetXmlPropertyDate("genxml/textbox/newsdate");
                             }
-                            <h2>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
+                            <h2><a href="@(detailurl)">@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</a></h2>
 
                            <div class="formatdate">
                                <span class="fd-day">@date.ToString("dd")</span>
