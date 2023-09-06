@@ -36,15 +36,16 @@
                 @if (info.GetXmlProperty("genxml/lang/genxml/textbox/company") != "")
                 {
                     <h1>@info.GetXmlProperty("genxml/lang/genxml/textbox/company")</h1>
-                    <div class="contact-item">
-                        <div class="ci-header">
-                            <span class="ri-location"></span>
-                        </div>
-                        <div class="ci-content">
-                            @if (info.GetXmlProperty("genxml/textbox/adress") != "")
-                            {
-                                <p>@BreakOf(info, "genxml/textbox/adress")</p>
-                            }
+                }
+                <div class="contact-item">
+                    <div class="ci-header">
+                        <span class="ri-location"></span>
+                    </div>
+                    <div class="ci-content">
+                        @if (info.GetXmlProperty("genxml/textbox/adress") != "")
+                        {
+                            <p>@BreakOf(info, "genxml/textbox/adress")</p>
+                        }
                         <p>
                             @if (info.GetXmlProperty("genxml/textbox/tel1") != "")
                             {
@@ -63,28 +64,27 @@
                                 <div>@EmailOf(info, "genxml/textbox/email")</div>
                             }
                         </p>
-                        </div>
                     </div>
-                    
-                    <!-- To display contacts -->
-                    @RenderTemplate("DisplayContacts.cshtml", moduleData.ModuleRef, appThemeView, Model, true)
+                </div>
 
-                    if (info.GetXmlProperty("genxml/lang/genxml/textbox/extrainfo") != "")
-                    {
-                        <div class="contact-item">
-                            <div class="ci-header">
-                                <span class="ri-clock"></span>
-                            </div>
-                            <div class="ci-content">@BreakOf(info, "genxml/lang/genxml/textbox/extrainfo")</div>
-                        </div>
-                    }
+                <!-- To display contacts -->
+            @RenderTemplate("DisplayContacts.cshtml", moduleData.ModuleRef, appThemeView, Model, true)
+
+                @if (info.GetXmlProperty("genxml/lang/genxml/textbox/extrainfo") != "")
+                {
+                <div class="contact-item">
+                    <div class="ci-header">
+                        <span class="ri-clock"></span>
+                    </div>
+                    <div class="ci-content">@BreakOf(info, "genxml/lang/genxml/textbox/extrainfo")</div>
+                </div>
                 }
             </div>
-            @if(info.GetXmlProperty("genxml/lang/genxml/textbox/map") != "")
+            @if (info.GetXmlProperty("genxml/lang/genxml/textbox/map") != "")
             {
                 <div class="contact-map">@HtmlOf(info, "genxml/lang/genxml/textbox/map")</div>
             }
-        
+
         </div>
     </div>
 }
