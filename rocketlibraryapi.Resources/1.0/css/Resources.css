@@ -194,7 +194,6 @@ MEDIA QUERIES
             screen and (-webkit-min-device-pixel-ratio: 3.0) and (max-width: 2940px) and (orientation: portrait),
             screen and (-webkit-min-device-pixel-ratio: 2.0) and (max-width: 1960px) and (orientation: portrait) {
 .article {display:block;}
-.article-image img {width:100%;height:auto;}
 .articledetailflex {display:block;}
 .articledetail-left {width:auto;margin:0 0 40px 0;}
 .articledetail-right {flex:initial;}
