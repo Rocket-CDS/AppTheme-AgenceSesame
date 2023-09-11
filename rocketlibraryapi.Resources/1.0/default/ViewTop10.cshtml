@@ -33,7 +33,7 @@
     {
         var urlparams = new Dictionary<string, string>();
         urlparams.Add("articleid", articleData.ArticleId.ToString());
-        var hreflink = DNNrocketUtils.NavigateURL(sessionParams.TabId, urlparams, articleData.Name);
+        var hreflink = DNNrocketUtils.NavigateURL(moduleSettings.DetailPageTabId(), urlparams, articleData.Name);
         var date = articleData.Info.GetXmlPropertyDate("genxml/textbox/publisheddate");
         var dateFormat = date.ToString("dd/MM/yyyy");
 
