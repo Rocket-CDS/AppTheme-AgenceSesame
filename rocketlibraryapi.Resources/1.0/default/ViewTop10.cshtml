@@ -27,12 +27,6 @@
 
 <div class="articlewrapper">
 
-    <div class="h1-headline">Rechercher</div>
-
-    @RenderTemplate("SearchBanner.cshtml", appTheme, Model, false)
-
-    @if (articleDataList.GetArticleList().Count > 0)
-    {
 <div class="articlelist">
 
     @foreach (ArticleLimpet articleData in articleDataList.GetArticleList())
@@ -94,12 +88,7 @@
     </div>
 </div>}
 
-</div>
-
-                @RenderTemplate("articlePaging.cshtml", appTheme, Model, false) }
-            else
-            {
-<div class="h2-headline">Aucun résultat</div>}
+</div> 
 
 </div>
 
