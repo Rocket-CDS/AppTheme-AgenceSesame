@@ -10,5 +10,10 @@
 			<name><![CDATA[Category Menu (2 levels)]]></name>
 			<cmd>catmenu</cmd>
 		</genxml>
+		<genxml>
+			<file><![CDATA[ViewTop10.cshtml]]></file>
+			<name><![CDATA[Top 10]]></name>
+			<cmd>list</cmd>
+		</genxml>
 	</moduletemplates>
 </genxml>
