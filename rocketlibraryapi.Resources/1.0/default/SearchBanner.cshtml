@@ -19,9 +19,9 @@
 
 <div class="searchbar searchdata">
     <div class="searchbar-item">
-        <div class="searchbar-label">Par mot-clé</div>
+        <div class="searchbar-label">Par mots-clés</div>
         <div class="searchbar-input">
-            @TextBox(new SimplisityInfo(), "genxml/textbox/searchtext", " class='simplisity_sessionfield actionentrykey' autocomplete='off' ", sessionParams.Get("searchtext"))
+            @TextBox(new SimplisityInfo(), "genxml/textbox/searchtext", " class='simplisity_sessionfield actionentrykey searchinput' autocomplete='off' ", sessionParams.Get("searchtext"))
         </div>
     </div>
     <div class="searchbar-item">
@@ -29,14 +29,14 @@
         <div class="searchbar-daterange">
             <div class="searchbar-input searchbar-item">
                 <div class="searchbar-inputpre">Du :</div>
-                @TextBox(new SimplisityInfo(), "genxml/textbox/searchdate1", " class='simplisity_sessionfield' autocomplete='off' ", sessionParams.Get("searchdate1"), false, 0, "","date")
+                @TextBox(new SimplisityInfo(), "genxml/textbox/searchdate1", " class='simplisity_sessionfield dateinput' autocomplete='off' ", sessionParams.Get("searchdate1"), false, 0, "","date")
             </div>
             <div class="searchbar-input searchbar-item">
                 <div class="searchbar-inputpre">Au :</div>
-                @TextBox(new SimplisityInfo(), "genxml/textbox/searchdate2", " class='simplisity_sessionfield' autocomplete='off' ", sessionParams.Get("searchdate2"), false, 0, "","date")
-                <span class="searchbar-btn clearsearch" style="display:none;" onclick="clearSearch();return false;">@ButtonIcon(ButtonTypes.cancel)</span>
-                <span class="searchbar-btn simplisity_click dosearch" onclick="doSearchReload();return false;">@ButtonIcon(ButtonTypes.search)</span>
+                @TextBox(new SimplisityInfo(), "genxml/textbox/searchdate2", " class='simplisity_sessionfield dateinput' autocomplete='off' ", sessionParams.Get("searchdate2"), false, 0, "","date")
             </div>
+            <span class="searchbar-btn clearsearch" style="display:none;" onclick="clearSearch();return false;">@ButtonIcon(ButtonTypes.cancel)</span>
+            <span class="searchbar-btn simplisity_click dosearch" onclick="doSearchReload();return false;">@ButtonIcon(ButtonTypes.search)</span>
         </div>
     </div>
 </div>

@@ -113,6 +113,12 @@
                         </div>
                         }
 
+                        <div class="articledetail-section">
+                            <div class="article-infos">
+                                <div>Dernière modification : dd/mm/YYYY</div>
+                            </div>
+                        </div>
+
                         @if (articleData.GetImages().Count > 1)
                         {
                         <div class="articledetail-section articlegallery">
@@ -156,7 +162,10 @@
 
                                 @if (!UserUtils.IsAuthorised())
                                 {
-                                <div class="article-infos article-alert">Vous devez être adhérent de l'URIOPSS Occitanie afin d'accéder aux ressources.</div>
+                                <div class="article-infos article-alert">
+                                    Vous devez être adhérent de l'URIOPSS Occitanie afin d'accéder aux ressources.
+                                    <a href="/login" class="bigbutton">Se connecter</a>
+                                </div>
                                 }
                                 
                                 <div class="article-docs">
