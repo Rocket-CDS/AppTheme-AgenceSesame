@@ -1,4 +1,4 @@
-﻿﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
 @using RocketDirectoryAPI.Components;
 @using DNNrocketAPI;
 @using Simplisity;
@@ -6,7 +6,6 @@
 @using DNNrocketAPI.Components;
 @using System.Globalization;
 @using Rocket.AppThemes.Components;
-
 @{
     var sessionParams = (SessionParams)Model.SessionParamsData;
     var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
@@ -22,7 +21,6 @@
     var nodList = false;
     var date = articleData.Info.GetXmlPropertyDate("genxml/textbox/publisheddate");
     var dateFormat = date.ToString("dd/MM/yyyy");
-
     AddProcessDataResx(appTheme, true);
 }
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
