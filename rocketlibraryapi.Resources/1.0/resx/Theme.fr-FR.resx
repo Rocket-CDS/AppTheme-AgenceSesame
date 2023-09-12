@@ -204,4 +204,7 @@
   <data name="publicationdate.Text" xml:space="preserve">
     <value>Date de publication</value>
   </data>
+  <data name="internal.Text" xml:space="preserve">
+    <value>Interne</value>
+  </data>
 </root>
