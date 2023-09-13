@@ -8,18 +8,19 @@
 .article-image {margin:0 40px 0 0;}
 .article-content {flex:1;}
 .article-content h2 {font-size:24px;line-height:30px;margin:0;}
-.article-tags {margin:10px 0;text-transform:uppercase;font-size:13px;line-height:16px;font-weight:600;color:#3c95c0;}
+.article-tags {margin:10px 0;text-transform:uppercase;font-size:13px;line-height:18px;font-weight:600;color:#3c95c0;}
 .article-tags span {margin-right:8px;}
 .article-tags span:last-child {margin-right:0;}
 .article-tags span:before {font-family:'Font Awesome 5 Free';font-weight:900;content:"\f02b";margin-right:4px;}
 .article-summary {font-size:16px;line-height:24px;margin:0 0 10px 0;}
-.article-infos {font-size:13px;line-height:16px;font-weight:600;color:#3c95c0;padding:5px 0;}
+.article-infos {font-size:13px;line-height:18px;font-weight:600;color:#3c95c0;padding:5px 0;}
 .article-infos div {display:inline-block;}
 .article-infos div.sep {padding:0 5px;}
 span.commalist:after {content:', ';}
 span.commalist:last-child:after {content:'';}
-.article-markers {font-size:13px;line-height:16px;font-weight:600;color:#3c95c0;}
+.article-markers {font-size:13px;line-height:18px;font-weight:600;color:#3c95c0;}
 .article-markers:before {font-family:'Font Awesome 5 Free';font-weight:900;content:"\f3c5";margin-right:4px;}
+.article-internal {background:#f7af31;color:white;padding:0 5px;border-radius:2px;}
 
 /* Detail */
 .articledetail {}
@@ -126,6 +127,7 @@ span.rf-checkbox:after {content:"";display:none;position:relative;}
     transform: rotate(45deg);
     width: 6px;
 }
+.clearfilters {float:right;font-size:14px;line-height:18px;color:#3c95c0;cursor:pointer;margin:10px 0 0 0;}
 
 /* Search */
 .searchbar {display:flex;margin:20px 0 40px 0;padding:0 0 20px 0;border-bottom:#eee solid 2px;font-size:14px;}
