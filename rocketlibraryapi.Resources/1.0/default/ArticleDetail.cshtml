@@ -51,6 +51,13 @@
 
                         <h1 class="title">@articleData.Name</h1>
 
+                        @if (articleData.Info.GetXmlPropertyBool("genxml/checkbox/internal"))
+                        {
+                        <div class="article-infos">
+                            <div class="article-internal">Document interne</div>
+                        </div>
+                        }
+
                         <div class="articledetail-section article-tags">
                             @foreach (var p in articleData.GetProperties())
                             {

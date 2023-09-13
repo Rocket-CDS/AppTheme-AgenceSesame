@@ -51,6 +51,12 @@
     </div>
     <div class="article-content">
         <h2><a href="@(hreflink)" title="@articleData.Name" onclick="$('#simplisity_loader').show();">@articleData.Name</a></h2>
+        @if (articleData.Info.GetXmlPropertyBool("genxml/checkbox/internal"))
+        {
+        <div class="article-infos">
+            <div class="article-internal">Document interne</div>
+        </div>
+        }
         <div class="article-tags">
             @foreach (var p in articleData.GetProperties())
             {
@@ -92,7 +98,8 @@
 }
         </div>
     </div>
-</div>}
+</div>
+}
 
 </div>
 
