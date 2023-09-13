@@ -30,6 +30,8 @@
 
     <h4>Filtrer les documents par :</h4>
 
+    <span class="clearfilters" style="display:none;" onclick="clearFilters();return false;">@ButtonIcon(ButtonTypes.cancel)</span>
+
     @{
         var propertyCheckboxes = new List<PropertyLimpet>();
     }
@@ -58,7 +60,24 @@
 	$(document).ready(function () {
         $('.simplisity_loader').hide();
         simplisity_setSessionField('disablecache', 'false');
+
+        $(".rocket-filtercheckbox").off("change");
+        $(".rocket-filtercheckbox").on("change", function() {
+          setCategoryMenuSessionParams();
+        } );
+
+        showCancelFilters();
+
     });
+
+    function clearFilters() {
+        $(".rocket-filtercheckbox").off("change");
+        $('.rocket-filtercheckbox').prop('checked', false);
+        $(".rocket-filtercheckbox").on("change", function() {
+          setCategoryMenuSessionParams();
+        } );       
+        setCategoryMenuSessionParams();
+    }
 
 	function setCategoryMenuSessionParams() {
 
@@ -76,10 +95,21 @@
 
         simplisity_setSessionField('disablecache', 'true');
 
+        showCancelFilters();
+
 		$('.simplisity_loader').show();
 
         $('#a-articlecontainer').getSimplisity('/Desktopmodules/dnnrocket/api/rocket/action', 'remote_publiclist', '{"moduleref":"@(sessionParams.ModuleRef)","moduleid":"@(sessionParams.ModuleId)","tabid":"@(sessionParams.TabId)","catid":"@(sessionParams.Get("catid"))","systemkey":"@(moduleSettings.SystemKey)","template":"ArticleList.cshtml"}', '');
 
 	}
+
+    function showCancelFilters() {
+        var len = $('.filters input[type=checkbox]:checked').length;
+        if (len > 0) {
+            $(".clearfilters").show();
+        } else if (len === 0) {
+            $(".clearfilters").hide();
+        }
+    }
 
 </script>
