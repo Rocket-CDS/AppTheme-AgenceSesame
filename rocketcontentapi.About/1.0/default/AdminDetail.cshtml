@@ -51,35 +51,3 @@
         @RenderTemplate("ArticleLink.cshtml", appThemeSystem, Model, true)
     </div>
 </div>
-
-<script>
-    var myCodeMirror;
-
-    $(document).ready(function () {
-
-        $('.a-savebutton').attr('s-before', 'saveeditordata');
-
-        showCodeMirror();
-
-    });
-
-    function saveeditordata() {
-        $('#htmltext').val(myCodeMirror.getValue());
-    }
-
-    function showCodeMirror() {
-        setTimeout(() => {
-            // pause to allow codemirror.js to load.
-            $('#editorwrapper').show();
-
-            myCodeMirror = CodeMirror.fromTextArea(document.getElementById("htmltext"), {
-                mode: 'htmlmixed',
-                theme: "night"
-            });
-
-            myCodeMirror.setSize($('#editorwrapper').width(), $('#editorwrapper').height());
-            $('#htmltext').focus();
-        }, 300);
-    }
-</script>
-

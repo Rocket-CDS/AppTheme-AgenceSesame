@@ -8,52 +8,48 @@
 
 @{
     var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
-    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");  
+}
 
+@foreach (var articleRowData in articleData.GetRows())
+{
+    var info = articleRowData.Info;
     var cssClass = "";
     if (moduleData.Record.GetXmlProperty("genxml/setting/cssclass") != "")
     {
         cssClass = "class=" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass");
     }
+    <div @(cssClass)>
+    <div class="citation-window">
+    <div class="citation-content">
+        <h2>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
+        <hr />
+        <div class="citation-text">@info.GetXmlProperty("genxml/lang/genxml/textbox/content")</div>
+        <div class="citation-link">
+            @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 1)
+            {
+                var tabddlvalue = PagesUtils.NavigateURL(info.GetXmlPropertyInt("genxml/select/linktab"));
+                var anchor = "";
+                if (info.GetXmlProperty("genxml/textbox/linkanchor") != "")
+                {
+                    anchor = "#" + info.GetXmlProperty("genxml/textbox/linkanchor");
+                }
+                <a class="bigbutton" href="@(tabddlvalue)@(anchor)">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
+            }
+            @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 2)
+            {
+                var externalURL = info.GetXmlProperty("genxml/textbox/externalhref");
+                var blank = "";
+                if (info.GetXmlPropertyBool("genxml/checkbox/blank"))
+                {
+                    blank = "_blank";
+                }
+                <a class="bigbutton" href="@(externalURL)" @(blank)>@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
+            }
+        </div>
+    </div>
+    </div>
+    </div>
 }
-
-<div class="citation-window">
-    @foreach (var articleRowData in articleData.GetRows())
-    {
-        var info = articleRowData.Info;
-        // var imageurl = info.GetXmlProperty("genxml/imgs/genxml[1]/hidden/imageurl");
-        if (!info.GetXmlPropertyBool("genxml/checkbox/hiderow"))
-        {
-            <div class="citation-content">
-                <h2>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
-                <hr />
-                <div class="citation-text">@info.GetXmlProperty("genxml/lang/genxml/textbox/content")</div>
-                <div class="citation-link">
-                    @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 1)
-                    {
-                        var tabddlvalue = PagesUtils.NavigateURL(info.GetXmlPropertyInt("genxml/select/linktab"));
-                        var anchor = "";
-                        if (info.GetXmlProperty("genxml/textbox/linkanchor") != "")
-                        {
-                            anchor = "#" + info.GetXmlProperty("genxml/textbox/linkanchor");
-                        }
-                        <a class="bigbutton" href="@(tabddlvalue)@(anchor)">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
-                    }
-                    @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 2)
-                    {
-                        var externalURL = info.GetXmlProperty("genxml/textbox/externalhref");
-                        var blank = "";
-                        if (info.GetXmlPropertyBool("genxml/checkbox/blank"))
-                        {
-                            blank = "_blank";
-                        }
-                        <a class="bigbutton" href="@(externalURL)" @(blank)>@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
-                    }
-
-                </div>
-            </div>
-        }
-    }
-</div>
 
 

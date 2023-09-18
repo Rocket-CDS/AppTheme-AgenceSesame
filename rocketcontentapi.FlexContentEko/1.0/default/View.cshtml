@@ -63,13 +63,10 @@
                 {
                     @RenderTemplate("layout4.cshtml", moduleData.ModuleRef, appThemeView, Model, true)
                 }
-                if (info.GetXmlProperty("genxml/lang/genxml/textbox/htmltext") != "")
-                {
-                    @RenderTemplate("htmltext.cshtml", moduleData.ModuleRef, appThemeView, Model, true)
-                }
             }
         }
     
     </div>
 
 </div>
+

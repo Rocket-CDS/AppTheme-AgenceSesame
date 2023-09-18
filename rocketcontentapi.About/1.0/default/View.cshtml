@@ -9,64 +9,54 @@
 @{
     var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
     var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-
 }
 
 @foreach (var articleRowData in articleData.GetRows())
 {
     var info = articleRowData.Info;
-    // var imageurl = info.GetXmlProperty("genxml/imgs/genxml[1]/hidden/imageurl");
-    if (!info.GetXmlPropertyBool("genxml/checkbox/hiderow"))
+    var datalist = articleRowData.GetImageList();
+    var imgInfo = datalist.First();
+    var articleImage = new ArticleImage(imgInfo, "articleimage");
+    var width = info.GetXmlPropertyInt("genxml/imagelist/genxml/hidden/width");
+    var cssClass = "";
+    if (moduleData.Record.GetXmlProperty("genxml/settings/cssclass") != "")
     {
-
-        var datalist = articleRowData.GetImageList();
-        var imgInfo = datalist.First();
-        var articleImage = new ArticleImage(imgInfo, "articleimage");
-        var width = info.GetXmlPropertyInt("genxml/imagelist/genxml/hidden/width");
-
-        var cssClass = "";
-        if (moduleData.Record.GetXmlProperty("genxml/settings/cssclass") != "")
-        {
-            cssClass = "class=" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass") + "";
-        }
-
-        <div @(cssClass)>
-            <div class="about-content">
-                <img src="@ThumbnailImageUrl(articleImage.RelPath, width)" />
-
-                @if (info.GetXmlProperty("genxml/lang/genxml/textbox/content") != "")
-                {
-                    <div class="about-text">
-                        @info.GetXmlProperty("genxml/lang/genxml/textbox/content")
-                    </div>
-                }
-                @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 1)
-                {
-                    var tabddlvalue = PagesUtils.NavigateURL(info.GetXmlPropertyInt("genxml/select/linktab"));
-                    if (info.GetXmlProperty("genxml/lang/genxml/textbox/linkanchor") != "")
-                    {
-                        tabddlvalue = tabddlvalue + "#" + info.GetXmlProperty("genxml/lang/genxml/textbox/linkanchor");
-                    }
-                    <div class="about-link">
-                        <a href="@(tabddlvalue)">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
-                    </div>
-                }
-                @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 2)
-                {
-                    var externalURL = info.GetXmlProperty("genxml/textbox/externalhref");
-                    var blank = "";
-                    if (info.GetXmlPropertyBool("genxml/checkbox/blank"))
-                    {
-                        blank = "_blank";
-                    }
-                    <div class="about-link">
-                        <a href="@(externalURL)" target="@(blank)">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
-                    </div>
-                }
-            </div>
-        </div>
-
+        cssClass = "class=" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass") + "";
     }
+    <div @(cssClass)>
+        <div class="about-content">
+            <img src="@ThumbnailImageUrl(articleImage.RelPath, width)" />
+            @if (info.GetXmlProperty("genxml/lang/genxml/textbox/content") != "")
+            {
+                <div class="about-text">
+                    @info.GetXmlProperty("genxml/lang/genxml/textbox/content")
+                </div>
+            }
+            @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 1)
+            {
+                var tabddlvalue = PagesUtils.NavigateURL(info.GetXmlPropertyInt("genxml/select/linktab"));
+                if (info.GetXmlProperty("genxml/lang/genxml/textbox/linkanchor") != "")
+                {
+                    tabddlvalue = tabddlvalue + "#" + info.GetXmlProperty("genxml/lang/genxml/textbox/linkanchor");
+                }
+                <div class="about-link">
+                    <a href="@(tabddlvalue)">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
+                </div>
+            }
+            @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 2)
+            {
+                var externalURL = info.GetXmlProperty("genxml/textbox/externalhref");
+                var blank = "";
+                if (info.GetXmlPropertyBool("genxml/checkbox/blank"))
+                {
+                    blank = "_blank";
+                }
+                <div class="about-link">
+                    <a href="@(externalURL)" target="@(blank)">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
+                </div>
+            }
+        </div>
+    </div>
 }
 
 

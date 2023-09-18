@@ -10,7 +10,7 @@
     var appThemeSystem = (AppThemeSystemLimpet)Model.GetDataObject("appthemesystem");
 }
 
-<script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+@RenderTemplate("CKEditor4.cshtml", appThemeSystem, Model, true)
 
 <a href="http://manager.rocket-cds.org/Aides-aux-modules/SVGBlocks" title="@ResourceKey("DNNrocket.help")" target="_blank" class="w3-button w3-circle w3-blue">?</a>
 

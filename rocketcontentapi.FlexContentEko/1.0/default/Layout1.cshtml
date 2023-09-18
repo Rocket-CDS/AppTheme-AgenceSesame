@@ -34,8 +34,7 @@
 
                 if (articleImage.RelPath != "")
                 {
-                    
-                    <div><img src="@ThumbnailImageUrl(articleImage.RelPath, info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/width"), info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/height"))" /></div>
+                    <div><img src="@ThumbnailImageUrl(articleImage.RelPath, info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/width"), info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/height"))" alt="@(alt)" /></div>
                 }
             }
         </div>
@@ -89,14 +88,19 @@
         <!-- TEXT SECTION -->
         @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
 
+        <!-- HTML SECTION -->
+        @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/htmltext"))
+
         <!-- LINK SECTION -->
         <div class="newspaper-link">
             @RenderTemplate("Links.cshtml", moduleData.ModuleRef, appThemeView, Model, true)
         </div>
 
         <!-- DOCUMENTS SECTION -->
-        @RenderTemplate("documents.cshtml", moduleData.ModuleRef, appThemeView, Model, true)
-
+        <div class="documents">
+            @RenderTemplate("Documents.cshtml", moduleData.ModuleRef, appThemeView, Model, true)
+        </div>
     </div>
+
 
 </div>
