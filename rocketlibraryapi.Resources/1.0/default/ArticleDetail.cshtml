@@ -154,7 +154,10 @@
                                 if (p.IsInGroup("referent"))
                                 {
                                 <strong>@p.Name</strong>
-                                <div class="referent-desc">@p.Summary</div>
+                                <div class="referent-desc">
+                                    <div>@p.Summary</div>
+                                    <div>@EmailOf(p.Info, "genxml/textbox/referentemail")</div>
+                                </div>
                                 }
                             }
                         </div>
