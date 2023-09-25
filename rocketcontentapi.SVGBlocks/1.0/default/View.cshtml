@@ -28,42 +28,52 @@
 
 <div @(cssClass)>
 
-    <!-- Header Section -->
-    @{
-        var moduleTitle = articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headertitle");
-    }
-    @if (moduleTitle != "")
-    {
-        var headerStyle = articleData.Info.GetXmlProperty("genxml/header/headerstyle");
-        if (headerStyle == "")
-        {
-            headerStyle = "h2";
-        }
-        var headerAlignText = articleData.Info.GetXmlProperty("genxml/header/headeralign");
-        var headerAnchor = "";
-        if (articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor") != "")
-        {
-            headerAnchor = "id=" + articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor");
-        }
-        if (headerStyle == "h1")
-        {
-            <h1 style="text-align:@headerAlignText;" @(headerAnchor)>@moduleTitle</h1>
-        }
-        if (headerStyle == "h2")
-        {
-            <h2 style="text-align:@headerAlignText;" @(headerAnchor)>@moduleTitle</h2>
-        }
-        if (headerStyle == "h3")
-        {
-            <h3 style="text-align:@headerAlignText;" @(headerAnchor)>@moduleTitle</h3>
-        }
-        if (headerStyle == "h4")
-        {
-            <h4 style="text-align:@headerAlignText;" @(headerAnchor)>@moduleTitle</h4>
-        }
-    }
-
     <div class="svgblockswrapper">
+
+        <!-- Header Section -->
+        @{
+            var moduleTitle = articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headertitle");
+            var moduleText = articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headertext");
+        }
+        @if (moduleTitle != "")
+        {
+            var headerStyle = articleData.Info.GetXmlProperty("genxml/header/headerstyle");
+            if (headerStyle == "")
+            {
+                headerStyle = "h2";
+            }
+            var headerAlignText = articleData.Info.GetXmlProperty("genxml/header/headeralign");
+            if (headerAlignText == "")
+            {
+                headerAlignText = "start";
+            }
+            var headerAnchor = "";
+            if (articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor") != "")
+            {
+                headerAnchor = " id=" + articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor");
+            }
+            if (headerStyle == "h1")
+            {
+                <h1 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h1>
+            }
+            if (headerStyle == "h2")
+            {
+                <h2 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h2>
+            }
+            if (headerStyle == "h3")
+            {
+                <h3 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h3>
+            }
+            if (headerStyle == "h4")
+            {
+                <h4 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h4>
+            }
+        }
+        @if (moduleText != "")
+        {
+            <p>@moduleText</p>
+        }
+
         <div class="svgblocks">
             @foreach (var articleRowData in articleData.GetRows())
             {
@@ -73,28 +83,48 @@
                 var hStyle = info.GetXmlProperty("genxml/select/headingstyle");
                 var headingHide = info.GetXmlPropertyBool("genxml/checkbox/hideheading");
                 var hideRow = info.GetXmlPropertyBool("genxml/checkbox/hiderow");
-                var cssRow = "";
-                if (moduleData.Record.GetXmlProperty("genxml/textbox/cssclass") != "")
+
+                if (!hideRow)
                 {
-                    cssRow = "class=" + moduleData.Record.GetXmlProperty("genxml/textbox/cssclass");
-                }
-
-                <div @(cssRow)>
-                    <div class="svgblock">
-                        <div class="svgblockicon">
-                            @HtmlOf(info, "genxml/lang/genxml/textbox/svgcode")
+                    var cssClassRow = "";
+                    if (info.GetXmlProperty("genxml/textbox/cssclass") != "")
+                    {
+                        cssClassRow = info.GetXmlProperty("genxml/textbox/cssclass");
+                    } 
+                    if (info.GetXmlPropertyInt("genxml/select/rbllink") == 0)
+                    {
+                        <div class="svgblock @(cssClassRow)">
+                            <div class="svgblockicon">@HtmlOf(info, "genxml/lang/genxml/textbox/svgcode")</div>
+                            <h3>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h3>
+                            <p>@info.GetXmlProperty("genxml/lang/genxml/textbox/resume")</p>
                         </div>
-
-                        <h3>
-                            @info.GetXmlProperty("genxml/lang/genxml/textbox/title")
-                        </h3>
-
-                        <p>
-                            @info.GetXmlProperty("genxml/lang/genxml/textbox/resume")
-                        </p>
-                    </div>
-                </div>
+                    }
+                    if (info.GetXmlPropertyInt("genxml/select/rbllink") == 1)
+                    {
+                        var tabddlvalue = PagesUtils.NavigateURL(info.GetXmlPropertyInt("genxml/select/linktab"));
+                        var anchor = "";
+                        if (info.GetXmlProperty("genxml/textbox/linkanchor") != "")
+                        {
+                            anchor = "#" + info.GetXmlProperty("genxml/textbox/linkanchor");
+                        }
+                        <a class="svgblock @(cssClassRow)" href="@(tabddlvalue)@(anchor)">
+                            <div class="svgblockicon">@HtmlOf(info, "genxml/lang/genxml/textbox/svgcode")</div>
+                            <h3>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h3>
+                            <p>@info.GetXmlProperty("genxml/lang/genxml/textbox/resume")</p>
+                        </a>
+                    }
+                    if (info.GetXmlPropertyInt("genxml/select/rbllink") == 2)
+                    {
+                        var externalURL = info.GetXmlProperty("genxml/textbox/externalhref");
+                        <a class="svgblock @(cssClassRow)" href="@(externalURL)" target="_blank">
+                            <div class="svgblockicon">@HtmlOf(info, "genxml/lang/genxml/textbox/svgcode")</div>
+                            <h3>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h3>
+                            <p>@info.GetXmlProperty("genxml/lang/genxml/textbox/resume")</p>
+                        </a>
+                    }
+                }
             }
         </div>
     </div>
+
 </div>

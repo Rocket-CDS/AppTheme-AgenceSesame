@@ -31,35 +31,48 @@
 
     <div class="faqwrapper">
 
-    <!-- HEADER SECTION -->
+    <!-- Header Section -->
     @{
-        var headerStyle = articleData.Info.GetXmlProperty("genxml/header/headerstyle");
         var moduleTitle = articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headertitle");
-    }
-
-    @if (headerStyle == "")
-    {
-        headerStyle = "h1";
+        var moduleText = articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headertext");
     }
     @if (moduleTitle != "")
     {
+        var headerStyle = articleData.Info.GetXmlProperty("genxml/header/headerstyle");
+        if (headerStyle == "")
+        {
+            headerStyle = "h2";
+        }
         var headerAlignText = articleData.Info.GetXmlProperty("genxml/header/headeralign");
-        if (headerStyle.ToLower() == "h1")
+        if (headerAlignText == "")
         {
-            <h1 id="@articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor")" style="text-align: @headerAlignText;">@moduleTitle</h1>
+            headerAlignText = "start";
         }
-        if (headerStyle.ToLower() == "h2")
+        var headerAnchor = "";
+        if (articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor") != "")
         {
-            <h2 id="@articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor")" style="text-align: @headerAlignText;">@moduleTitle</h2>
+            headerAnchor = " id=" + articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor");
         }
-        if (headerStyle.ToLower() == "h3")
+        if (headerStyle == "h1")
         {
-            <h3 id="@articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor")" style="text-align: @headerAlignText;">@moduleTitle</h3>
+            <h1 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h1>
         }
-        if (headerStyle.ToLower() == "h4")
+        if (headerStyle == "h2")
         {
-            <h4 id="@articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor")" style="text-align: @headerAlignText;">@moduleTitle</h4>
+            <h2 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h2>
         }
+        if (headerStyle == "h3")
+        {
+            <h3 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h3>
+        }
+        if (headerStyle == "h4")
+        {
+            <h4 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h4>
+        }
+    }
+    @if (moduleText != "")
+    {
+        <p>@moduleText</p>
     }
 
     <div id="accordion" class="faq">

@@ -27,15 +27,8 @@
 
     AddProcessDataResx(appThemeView, true);
     AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
+    AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/");
 }
-
-
-<div class="w3-row">
-    <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
-        <label>@ResourceKey("DNNrocket.cssClass")</label>
-        @TextBox(info, "genxml/textbox/cssclass", "class='w3-input w3-border' autocomplete='off' ", "", false, 0)
-    </div>
-</div>
 
 <!-- require Key for saving -->
 @HiddenField(info, "genxml/config/rowkey")
@@ -46,6 +39,8 @@
     <div class="w3-bar" style="cursor: pointer;">
         <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink headingtablink" onclick="openSection('heading')">@ResourceKey("DNNrocket.heading")</div>
         <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink htmltablink" onclick="openSection('svg')">@ResourceKey("DNNrocket.svgCode")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink linkstablink" onclick="openSection('links')">@ResourceKey("DNNrocket.link")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink advancedtablink" onclick="openSection('advanced')">@ResourceKey("DNNrocket.advanced")</div>
     </div>
 
     <div id="heading" class='w3-row sectionname'>
@@ -77,9 +72,24 @@
             <div class='w3-col' style='width:0px;height:600px;'></div>
         </div>
     </div>
-    <div id="other" class='w3-row sectionname' style="display:none">
-        @RenderTemplate("AdminRowExtra.cshtml", appThemeAdmin, Model, true)
+
+    <div id="links" class='w3-row w3-margin-top sectionname' style="display:none">
+        <div class='w3-col m12 w3-padding '>
+            @RenderTemplate("ArticleLink.cshtml", appThemeSystem, Model, true)
+        </div>
     </div>
+
+    <div id="advanced" class='w3-row w3-margin-top sectionname' style="display:none">
+        <div class='w3-col m12 w3-padding'>
+            <label>@ResourceKey("DNNrocket.cssClass")</label>
+            @TextBox(info, "genxml/textbox/cssclass", "class='w3-input w3-border' autocomplete='off'", "", true, 0)
+        </div>
+        <div class='w3-quarter w3-padding'>
+            <label>@ResourceKey("DNNrocket.hiderow")</label><br />
+            @CheckBox(info, "genxml/checkbox/hiderow", "", "class='w3-check' ", false, false, 0)
+        </div>
+    </div>
+
 </div>
 
 

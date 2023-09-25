@@ -33,6 +33,7 @@
         <!-- Header Section -->
         @{
             var moduleTitle = articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headertitle");
+            var moduleText = articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headertext");
         }
         @if (moduleTitle != "")
         {
@@ -42,27 +43,35 @@
                 headerStyle = "h2";
             }
             var headerAlignText = articleData.Info.GetXmlProperty("genxml/header/headeralign");
+            if (headerAlignText == "")
+            {
+                headerAlignText = "start";
+            }
             var headerAnchor = "";
             if (articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor") != "")
             {
-                headerAnchor = "id=" + articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor");
+                headerAnchor = " id=" + articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor");
             }
             if (headerStyle == "h1")
             {
-                <h1 style="text-align:@headerAlignText;" @(headerAnchor)>@moduleTitle</h1>
+                <h1 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h1>
             }
             if (headerStyle == "h2")
             {
-                <h2 style="text-align:@headerAlignText;" @(headerAnchor)>@moduleTitle</h2>
+                <h2 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h2>
             }
             if (headerStyle == "h3")
             {
-                <h3 style="text-align:@headerAlignText;" @(headerAnchor)>@moduleTitle</h3>
+                <h3 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h3>
             }
             if (headerStyle == "h4")
             {
-                <h4 style="text-align:@headerAlignText;" @(headerAnchor)>@moduleTitle</h4>
+                <h4 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h4>
             }
+        }
+        @if (moduleText != "")
+        {
+            <p>@moduleText</p>
         }
 
         <div class="gblocks">
@@ -71,7 +80,6 @@
                 Model.SetDataObject("articlerow", articleRowData);
                 var info = articleRowData.Info;
                 var hideRow = info.GetXmlPropertyBool("genxml/checkbox/hiderow");
-
                 var articleImage = articleRowData.GetImage(0);
                 var width = moduleData.Record.GetXmlPropertyInt("genxml/settings/width");
                 var height = moduleData.Record.GetXmlPropertyInt("genxml/settings/height");
@@ -128,6 +136,19 @@
                                 <h3>@info.GetXmlProperty("genxml/lang/genxml/textbox/text")</h3>
                             </div>
                         </a>
+                    }
+                    else
+                    {
+                        <div class="gblock @(cssClassRow)">
+                            <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@info.GetXmlProperty("genxml/lang/genxml/textbox/title")" />
+                            @{
+                                var title = info.GetXmlProperty("genxml/lang/genxml/textbox/title");
+                            }
+                            <div class="gblockstext">
+                                <h2>@title</h2>
+                                <h3>@info.GetXmlProperty("genxml/lang/genxml/textbox/text")</h3>
+                            </div>
+                        </div>
                     }
                 }
             }

@@ -33,6 +33,7 @@
         <!-- Header Section -->
         @{
             var moduleTitle = articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headertitle");
+            var moduleText = articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headertext");
         }
         @if (moduleTitle != "")
         {
@@ -45,24 +46,28 @@
             var headerAnchor = "";
             if (articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor") != "")
             {
-                headerAnchor = "id=" + articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor");
+                headerAnchor = " id=" + articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor");
             }
             if (headerStyle == "h1")
             {
-                <h1 style="text-align:@headerAlignText;" @(headerAnchor)>@moduleTitle</h1>
+                <h1 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h1>
             }
             if (headerStyle == "h2")
             {
-                <h2 style="text-align:@headerAlignText;" @(headerAnchor)>@moduleTitle</h2>
+                <h2 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h2>
             }
             if (headerStyle == "h3")
             {
-                <h3 style="text-align:@headerAlignText;" @(headerAnchor)>@moduleTitle</h3>
+                <h3 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h3>
             }
             if (headerStyle == "h4")
             {
-                <h4 style="text-align:@headerAlignText;" @(headerAnchor)>@moduleTitle</h4>
+                <h4 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h4>
             }
+        }
+        @if (moduleText != "")
+        {
+            <p>@moduleText</p>
         }
 
         <ul class="links">

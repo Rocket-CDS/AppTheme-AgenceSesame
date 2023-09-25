@@ -34,8 +34,7 @@
 <a href="http://manager.rocket-cds.org/Aides-aux-modules/Logos" title="@ResourceKey("DNNrocket.help")" target="_blank" class="w3-button w3-circle w3-blue">?</a>
 
 <div class="w3-row w3-padding">
-    <label><b>@ResourceKey("DNNrocket.moduletitle")</b></label>&nbsp;@EditFlag(sessionParams)
-    @TextBox(info, "genxml/lang/genxml/textbox/title", " type='text' class='w3-input w3-card w3-border w3-round-large' ", "", false)
+    @RenderTemplate("ArticleHeader.cshtml", appThemeSystem, Model, true)
 </div>
 <div class='w3-row w3-padding'>
     @RenderTemplate("ArticleImagesLinks.cshtml", appThemeSystem, Model, true)

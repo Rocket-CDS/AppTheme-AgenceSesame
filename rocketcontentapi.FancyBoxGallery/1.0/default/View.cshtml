@@ -20,37 +20,75 @@
 {
     var info = articleRowData.Info;
     <div @(cssClass)>
-        @if (!info.GetXmlPropertyBool("genxml/checkbox/hiderow"))
-        {
+
             <div class="gallery-wrapper">
-                @if (info.GetXmlProperty("genxml/lang/genxml/textbox/title") != "")
+
+            <!-- Header Section -->
+            @{
+                var moduleTitle = articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headertitle");
+                var moduleText = articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headertext");
+            }
+            @if (moduleTitle != "")
+            {
+                var headerStyle = articleData.Info.GetXmlProperty("genxml/header/headerstyle");
+                if (headerStyle == "")
                 {
-                    <h2>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
+                    headerStyle = "h2";
                 }
-                <hr />
-                @{
-                    var datalist = articleRowData.GetImageList();
-                    var index = 0;
-                    var group = articleRowData.RowKey;
-                    var width = moduleData.Record.GetXmlPropertyInt("genxml/settings/width");
-                    var height = moduleData.Record.GetXmlPropertyInt("genxml/settings/height");
+                var headerAlignText = articleData.Info.GetXmlProperty("genxml/header/headeralign");
+                if (headerAlignText == "")
+                {
+                    headerAlignText = "start";
                 }
-                <div class="gallery">
-                    @foreach (var imgInfo in datalist)
+                var headerAnchor = "";
+                if (articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor") != "")
+                {
+                    headerAnchor = " id=" + articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor");
+                }
+                if (headerStyle == "h1")
+                {
+                    <h1 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h1>
+                }
+                if (headerStyle == "h2")
+                {
+                    <h2 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h2>
+                }
+                if (headerStyle == "h3")
+                {
+                    <h3 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h3>
+                }
+                if (headerStyle == "h4")
+                {
+                    <h4 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h4>
+                }
+            }
+            @if (moduleText != "")
+            {
+                <p>@moduleText</p>
+            }
+
+            @{
+                var datalist = articleRowData.GetImageList();
+                var index = 0;
+                var group = articleRowData.RowKey;
+                var width = moduleData.Record.GetXmlPropertyInt("genxml/settings/width");
+                var height = moduleData.Record.GetXmlPropertyInt("genxml/settings/height");
+            }
+            <div class="gallery">
+                @foreach (var imgInfo in datalist)
+                {
+                    index++;
+                    var articleImage = new ArticleImage(imgInfo, "articleimage");
+                    var alt = info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage");
+                    if (articleImage.RelPath != "")
                     {
-                        index++;
-                        var articleImage = new ArticleImage(imgInfo, "articleimage");
-                        var alt = info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage");
-                        if (articleImage.RelPath != "")
-                        {
-                            <a data-fancybox="@(group)" data-caption="@(alt)" href="@(articleImage.RelPath)">
-                                <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@(alt)" />
-                            </a>
-                        }
+                        <a data-fancybox="@(group)" data-caption="@(alt)" href="@(articleImage.RelPath)">
+                            <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@(alt)" />
+                        </a>
                     }
-                </div>
+                }
             </div>
-        }
+        </div>
     </div>
 }
 
