@@ -29,6 +29,7 @@
 {
     var info = articleRowData.Info;
     <div @(cssClass)>
+    <div class="contactsat-infos">
         <div class="h4-headline">
             @ResourceKey("DNNrocket.contactus")
         </div>
@@ -69,6 +70,7 @@
                 @info.GetXmlProperty("genxml/textbox/extrainfo")
             }
         </p>
+    </div>
     </div>
 }
 
