@@ -137,19 +137,6 @@
                             </div>
                         </a>
                     }
-                    else
-                    {
-                        <div class="gblock @(cssClassRow)">
-                            <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@info.GetXmlProperty("genxml/lang/genxml/textbox/title")" />
-                            @{
-                                var title = info.GetXmlProperty("genxml/lang/genxml/textbox/title");
-                            }
-                            <div class="gblockstext">
-                                <h2>@title</h2>
-                                <h3>@info.GetXmlProperty("genxml/lang/genxml/textbox/text")</h3>
-                            </div>
-                        </div>
-                    }
                 }
             }
         </div>
