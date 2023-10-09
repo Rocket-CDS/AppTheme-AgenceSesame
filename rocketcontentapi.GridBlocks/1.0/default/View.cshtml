@@ -109,9 +109,9 @@
                     {
                         var tabddlvalue = PagesUtils.NavigateURL(info.GetXmlPropertyInt("genxml/select/linktab"));
                         var anchor = "";
-                        if (info.GetXmlProperty("genxml/textbox/linkanchor") != "")
+                        if (info.GetXmlProperty("genxml/lang/genxml/textbox/linkanchor") != "")
                         {
-                            anchor = "#" + info.GetXmlProperty("genxml/textbox/linkanchor");
+                            anchor = "#" + info.GetXmlProperty("genxml/lang/genxml/textbox/linkanchor");
                         }
                         <a class="grid-item grid-item@(gridsize) @(cssClassRow)" href="@(tabddlvalue)@(anchor)">
                             <div class="refsimg" style="background-image:url('@ImageUrl(articleImage.RelPath, "", "")');">
