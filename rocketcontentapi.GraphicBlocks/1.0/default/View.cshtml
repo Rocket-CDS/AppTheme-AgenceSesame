@@ -108,9 +108,9 @@
                     {
                         var tabddlvalue = PagesUtils.NavigateURL(info.GetXmlPropertyInt("genxml/select/linktab"));
                         var anchor = "";
-                        if (info.GetXmlProperty("genxml/textbox/linkanchor") != "")
+                        if (info.GetXmlProperty("genxml/lang/genxml/textbox/linkanchor") != "")
                         {
-                            anchor = "#" + info.GetXmlProperty("genxml/textbox/linkanchor");
+                            anchor = "#" + info.GetXmlProperty("genxml/lang/genxml/textbox/linkanchor");
                         }
                         <a class="gblock @(cssClassRow)" href="@(tabddlvalue)@(anchor)">
                             <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@info.GetXmlProperty("genxml/lang/genxml/textbox/title")" />
