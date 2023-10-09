@@ -87,9 +87,9 @@
                     {
                         var tabddlvalue = PagesUtils.NavigateURL(info.GetXmlPropertyInt("genxml/select/linktab"));
                         var anchor = "";
-                        if (info.GetXmlProperty("genxml/textbox/linkanchor") != "")
+                        if (info.GetXmlProperty("genxml/lang/genxml/textbox/linkanchor") != "")
                         {
-                            anchor = "#" + info.GetXmlProperty("genxml/textbox/linkanchor");
+                            anchor = "#" + info.GetXmlProperty("genxml/lang/genxml/textbox/linkanchor");
                         }
                         <a href="@(tabddlvalue)@(anchor)" class="linkitem">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
                     }
