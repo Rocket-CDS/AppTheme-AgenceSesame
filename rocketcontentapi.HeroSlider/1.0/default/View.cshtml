@@ -72,28 +72,29 @@
                             {
                                 <p>@info.GetXmlProperty("genxml/lang/genxml/textbox/text")</p>
                             }
+                            @if (info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle") != "")
+                            {
+                                if (info.GetXmlPropertyInt("genxml/select/rbllink") == 1)
+                                {
+                                    var tabddlvalue = PagesUtils.NavigateURL(info.GetXmlPropertyInt("genxml/select/linktab"));
+                                    var anchor = "";
+                                    if (info.GetXmlProperty("genxml/textbox/linkanchor") != "")
+                                    {
+                                        anchor = "#" + info.GetXmlProperty("genxml/textbox/linkanchor");
+                                    }
+                                    <a href="@(tabddlvalue)@(anchor)" class="bigbutton">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
+                                }
+                                if (info.GetXmlPropertyInt("genxml/select/rbllink") == 2)
+                                {
+                                    var blank = "";
+                                    if (info.GetXmlPropertyBool("genxml/checkbox/blank"))
+                                    {
+                                        blank = "_blank";
+                                    }
+                                    <a href="@info.GetXmlProperty("genxml/textbox/externalhref")" target="@(blank)" class="bigbutton">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
+                                }
+                            }
                         </div>
-
-                        <!-- Bouton de redirection avec gestion type de lien -->
-                        @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 1)
-                        {
-                            var tabddlvalue = PagesUtils.NavigateURL(info.GetXmlPropertyInt("genxml/select/linktab"));
-                            var anchor = "";
-                            if (info.GetXmlProperty("genxml/lang/genxml/textbox/linkanchor") != "")
-                            {
-                                anchor = "#" + info.GetXmlProperty("genxml/lang/genxml/textbox/linkanchor");
-                            }
-                            <a href="@(tabddlvalue)@(anchor)">@info.GetXmlProperty("genxml/textbox/linktitle")</a>
-                        }
-                        @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 2)
-                        {
-                            var blank = "";
-                            if (info.GetXmlPropertyBool("genxml/checkbox/blank"))
-                            {
-                                blank = "_blank";
-                            }
-                            <a href="@info.GetXmlProperty("genxml/textbox/externalhref")" target="@(blank)">@info.GetXmlProperty("genxml/textbox/linktitle")</a>
-                        }
                     </li>
                 }
             }
