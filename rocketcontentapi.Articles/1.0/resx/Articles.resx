@@ -118,18 +118,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="readmore.Text" xml:space="preserve">
-    <value>Lire la suite</value>
+    <value>Read more</value>
   </data>
   <data name="back.Text" xml:space="preserve">
-    <value>Retour</value>
+    <value>Back</value>
   </data>
   <data name="published.Text" xml:space="preserve">
-    <value>Publié le</value>
+    <value>Published on</value>
   </data>
   <data name="latestnews.Text" xml:space="preserve">
-    <value>Dernières actualités</value>
+    <value>Latest news</value>
   </data>
   <data name="allnews.Text" xml:space="preserve">
-    <value>Toutes les actualités</value>
+    <value>All news</value>
   </data>
 </root>
