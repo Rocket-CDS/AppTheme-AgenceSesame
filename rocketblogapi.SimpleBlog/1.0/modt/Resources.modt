@@ -1,0 +1,19 @@
+﻿<genxml>
+	<moduletemplates list="true">
+		<genxml>
+			<file><![CDATA[View.cshtml]]></file>
+			<name><![CDATA[List View]]></name>
+			<cmd>list</cmd>
+		</genxml>
+		<genxml>
+			<file><![CDATA[Categories.cshtml]]></file>
+			<name><![CDATA[Categories]]></name>
+			<cmd>catmenu</cmd>
+		</genxml>
+		<genxml>
+			<file><![CDATA[Filters.cshtml]]></file>
+			<name><![CDATA[Filters]]></name>
+			<cmd>catmenu</cmd>
+		</genxml>
+	</moduletemplates>
+</genxml>

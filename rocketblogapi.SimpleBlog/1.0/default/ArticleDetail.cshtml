@@ -1,0 +1,225 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using RocketDirectoryAPI.Components;
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketPortal.Components;
+@using DNNrocketAPI.Components;
+@using System.Globalization;
+@using Rocket.AppThemes.Components;
+
+@{
+    var sessionParams = (SessionParams)Model.SessionParamsData;
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var categoryList = (CategoryLimpetList)Model.GetDataObject("categorylist");
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
+    var appThemeDefault = (AppThemeLimpet)Model.GetDataObject("appthemedefault");
+    var appThemeDirectory = (AppThemeSystemLimpet)Model.GetDataObject("appthemedirectory");
+    var appThemeDirectoryDefault = (AppThemeLimpet)Model.GetDataObject("appthemedirectorydefault");
+    var catalogSettings = (CatalogSettingsLimpet)Model.GetDataObject("catalogsettings");
+    var propertyList = (PropertyLimpetList)Model.GetDataObject("propertylist");
+    var propertyCheckboxes = new List<PropertyLimpet>();
+    var nodList = false;
+    var date = articleData.Info.GetXmlPropertyDate("genxml/textbox/publisheddate");
+    var dateFormat = date.ToString("dd/MM/yyyy");
+
+    AddProcessDataResx(appTheme, true);
+}
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
+
+<div class="articledetail">
+
+                <div class="articledetail-back">
+                    @{
+                        var returnUrl = "";
+                        if (sessionParams.GetInt("catid") > 0)
+                        {
+                            var categoryData = new CategoryLimpet(portalData.PortalId, sessionParams.GetInt("catid"), sessionParams.CultureCode, "");
+                            var urlparams = new Dictionary<string, string>();
+                            urlparams.Add("catid", categoryData.CategoryId.ToString());
+                            returnUrl = DNNrocketUtils.NavigateURL(sessionParams.TabId, urlparams, categoryData.Name);;
+                        }
+                        else
+                        {
+                            returnUrl = DNNrocketUtils.NavigateURL(sessionParams.TabId);;                
+                        }
+                    }
+                    <a href="@returnUrl" class="bigbutton"><i class="fas fa-angle-up"></i>@ResourceKey("Theme.back", sessionParams.CultureCode)</a>
+                </div>
+
+                <div class="articledetailflex">
+
+                    <div class="articledetail-left">
+
+                        <h1 class="title">@articleData.Name</h1>
+
+                        <div class="article-infos">
+                            <div>
+                                <span>Auteur(s) :</span>
+                                @foreach (var p in articleData.GetProperties())
+                                {
+                                    if (p.IsInGroup("Auteur"))
+                                    {
+                                    <span class="commalist">@p.Name</span>
+                                    }
+                                }
+                            </div>
+                            <div class="sep">|</div>
+                            <div>
+                                <span>Type(s) de document :</span>
+                                @foreach (var p in articleData.GetProperties())
+                                {
+                                    if (p.IsInGroup("Type"))
+                                    {
+                                    <span class="commalist">@p.Name</span>
+                                    }
+                                }
+                            </div>
+                            <div class="sep">|</div>
+                            <div>
+                                <span>Territoire(s) :</span>
+                                @foreach (var p in articleData.GetProperties())
+                                {
+                                    if (p.IsInGroup("Territoire"))
+                                    {
+                                    <span class="commalist">@p.Name</span>
+                                    }
+                                }
+                            </div>
+                        </div>
+
+                        <div class="articledetail-section article-infos">
+                            <div>@ResourceKey("Theme.publicationdate", sessionParams.CultureCode) : @dateFormat</div>
+                        </div>
+                        
+                        <div class="articledetail-section summary">@BreakOf(articleData.Summary)</div>
+
+                        @if (articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/richtext") != "")
+                        {
+                            <div class="articledetail-section">
+                                <div><strong>En savoir plus :</strong></div>
+                                @HtmlOf(articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
+                            </div>
+                        }
+
+                        <div class="articledetail-section article-tags">
+                            <div>
+                                @foreach (var c in articleData.GetCategories())
+                                {
+                                    <span>@c.Name</span>
+                                }
+                            </div>
+                        </div>
+
+                        @if (articleData.GetImages().Count > 1)
+                        {
+                        <div class="articledetail-section articlegallery">
+                            @{var imgLp = 1;}
+                            @foreach (var i in articleData.GetImages())
+                            {
+                            <a data-fancybox="gallery" data-caption="" href="@ImageUrl(i.RelPath,640,0)">
+                            <img src="@ImageUrl(i.RelPath,120,0)" alt="" />
+                            </a>
+                            
+                            }
+                        </div>
+                        }
+
+                    </div>
+
+                    <div class="articledetail-right">
+
+                        <div class="articledetail-section image">
+                            <img alt="@articleData.Name" src="@ImageUrl(articleData.GetImage(0).RelPath,300,0)" />
+                        </div>
+
+                        <div class="articledetail-section">
+                            <div class="ads-icon"><i class="far fa-user-circle fa-lg"></i></div>
+                            <div class="h4-headline">Référent</div>
+                            @foreach (var p in articleData.GetProperties())
+                            {
+                                if (p.IsInGroup("Referent"))
+                                {
+                                <strong>@p.Name</strong><br />
+                                @p.Summary
+                                }
+                            }
+                        </div>
+
+                        @if (articleData.Getlinks().Count > 0 || articleData.GetDocs().Count > 0)
+                        {
+                            <div class="articledetail-section" id="linklistcontainer">
+                                <div class="ads-icon"><i class="far fa-file-alt fa-lg"></i></div>
+                                <div class="h4-headline">Ressources</div>
+                                <div class="article-infos article-alert">
+                                Vous devez être adhérent de l'URIOPSS Occitanie afin d'accéder aux ressources.
+                                </div> 
+                                <div class="article-docs">
+                                @foreach (var lk in articleData.Getlinks())
+                                {
+                                    if (!lk.Hidden)
+                                    {
+                                        <a target="_blank" href="@lk.Url" class="panel-block">
+                                            <i class="fas fa-link fa-fw" aria-hidden="true"></i>@lk.Name
+                                        </a>
+                                    }
+                                }
+                                @foreach (var doc in articleData.GetDocList())
+                                {
+                                    <a target="_blank" href="/@doc.GetXmlProperty("genxml/hidden/documentpatharticledoc")" class="panel-block">
+                                        <i class="fas fa-file-pdf fa-fw" aria-hidden="true"></i>@doc.GetXmlProperty("genxml/textbox/documentnamearticledoc")
+                                    </a>
+                                }
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+
+                </div>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('.returnlink').unbind('click');
+        $('.returnlink').on('click', function (e) {
+            $('#simplisity_loader').show();
+            simplisity_setSessionField('searchtext', '');
+        });
+        $('.navgocolink').unbind('click');
+        $('.navgocolink').on('click', function (e) {
+            $('#simplisity_loader').show();
+            simplisity_setSessionField('searchtext', '');
+        });
+
+    });
+
+    $("[data-fancybox]").fancybox({
+    lang : 'fr',
+    i18n : {
+        'fr' : {
+            CLOSE       : 'Fermer',
+            NEXT        : 'Suivant',
+            PREV        : 'Précédent',
+            ERROR       : 'Le contenu demandé ne peut pas être chargé.<br />Veuillez réessayer plus tard.',
+            PLAY_START  : 'Démarrer le diaporama',
+            PLAY_STOP   : 'Mettre en pause le diaporama',
+            FULL_SCREEN : 'Plein écran',
+            THUMBS      : 'Vignettes',
+            DOWNLOAD    : 'Télécharger',
+            SHARE       : 'Partager',
+            ZOOM        : 'Zoomer'
+        }
+    }
+    });
+
+    function setSessionParams() {
+        simplisity_setSessionField('searchtext', $('#searchtext').val());
+        $('#simplisity_loader').show();
+        window.location.href = '';
+    }
+
+</script>
+
+</div>

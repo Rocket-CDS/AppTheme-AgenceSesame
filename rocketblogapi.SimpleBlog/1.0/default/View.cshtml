@@ -1,0 +1,29 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using RocketDirectoryAPI.Components;
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketPortal.Components;
+@using DNNrocketAPI.Components;
+@using System.Globalization;
+@using Rocket.AppThemes.Components;
+
+<div id="catalog-mapview-tag" class="catalog-mapview-container">
+    @{
+        Model.SetSetting("searchview", "false");
+        var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
+        var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+        var appThemeView = (AppThemeLimpet)Model.GetDataObject("apptheme");
+        if (articleData != null)
+        {
+            @RenderTemplate("ArticleDetail.cshtml", appThemeView, Model, false)
+        }
+        else
+        {
+            @RenderTemplate("ArticleList.cshtml", appThemeView, Model, false)
+        }
+    }
+</div>
+
+<div id="simplisity_loader" class="loader-wrapper" style="display:none;">
+    <div class="loader is-loading"></div>
+</div>
