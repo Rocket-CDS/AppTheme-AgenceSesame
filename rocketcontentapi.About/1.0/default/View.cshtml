@@ -14,9 +14,12 @@
 @foreach (var articleRowData in articleData.GetRows())
 {
     var info = articleRowData.Info;
-    var datalist = articleRowData.GetImageList();
-    var imgInfo = datalist.First();
-    var articleImage = new ArticleImage(imgInfo, "articleimage");
+    var imglist = articleRowData.GetImages();
+    var articleImage = new ArticleImage(new SimplisityInfo(), "articleimage");
+    if (imglist.Count > 0)
+    {
+        articleImage = imglist.First();
+    }
     var width = info.GetXmlPropertyInt("genxml/imagelist/genxml/hidden/width");
     var cssClass = "";
     if (moduleData.Record.GetXmlProperty("genxml/settings/cssclass") != "")

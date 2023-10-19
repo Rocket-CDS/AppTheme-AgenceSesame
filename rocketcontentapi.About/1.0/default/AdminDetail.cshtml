@@ -1,29 +1,7 @@
 @inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketContentAPI.Components;
-@using DNNrocketAPI.Components;
-@using RocketPortal.Components;
-
-@{
-    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
-    var articleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
-    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
-    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
-    var appThemeSystem = (AppThemeSystemLimpet)Model.GetDataObject("appthemesystem");
-    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
-    var globalSettings = new SystemGlobalData();
-    var sessionParams = Model.SessionParamsData;
-
-    var info = new SimplisityInfo();
-    if (articleRowData != null && articleRowData.Info != null)
-    {
-        info = articleRowData.Info;
-    }
-    AddProcessDataResx(appThemeView, true);
-    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
-}
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
 
 <!-- require Key for saving -->
 @HiddenField(info, "genxml/config/rowkey")
@@ -41,13 +19,13 @@
 <div class="w3-row w3-padding">
     <label>@ResourceKey("DNNrocket.image")</label>
     <div class="w3-row w3-border w3-card w3-round-large w3-padding">
-        @RenderTemplate("ArticleImage.cshtml", appThemeSystem, Model, true)
+        [INJECT:appthemesystem,ArticleImage.cshtml]
     </div>
 </div>
 
 <div class="w3-row w3-padding">
     <label>@ResourceKey("DNNrocket.link")</label>
     <div class="w3-row w3-border w3-card w3-round-large w3-padding">
-        @RenderTemplate("ArticleLink.cshtml", appThemeSystem, Model, true)
+        [INJECT:appthemesystem,ArticleLink.cshtml]
     </div>
 </div>
