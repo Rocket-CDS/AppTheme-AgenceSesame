@@ -1,33 +1,21 @@
 ﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
-@using DNNrocketAPI.Components;
-@using Simplisity;
-@using RocketContentAPI.Components;
-@using RocketPortal.Components;
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
 
 @{
-    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
-    var articleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
     var contactLP = 0;
     var contactId = 1;
-    var datalist = articleRowData.GetLinkList();
-    var globalSettings = new SystemGlobalData();
-    var sessionParams = Model.SessionParamsData;
     var fieldId = "multi";
-    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-    var appThemeSystem = (AppThemeSystemLimpet)Model.GetDataObject("appthemesystem");
-    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
-    AddProcessDataResx(appThemeView, true);
-    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
 }
-
 <div class="w3-row linklistdatasection">
     <div class="w3-bar">
-        <div class="w3-button w3-bar-item w3-theme-action w3-padding simplisity_click" s-post="#a-articledata" s-list=".@articleData.ImageListName,.@articleData.DocumentListName,.@articleData.LinkListName" s-cmd="article_addlink" s-fields='{"moduleref":"@(moduleData.ModuleRef)"}'>@ButtonIcon(ButtonTypes.add)</div>
+        <div class="w3-button w3-bar-item w3-theme-action w3-padding simplisity_click" s-post="#a-articledata" s-list=".@articleData.ImageListName,.@articleData.DocumentListName,.@articleData.LinkListName" s-cmd="article_addlink" s-fields='{"moduleref":"@(moduleData.ModuleRef)","moduleid":"@moduleData.ModuleId","tabid":"@moduleData.TabId"}'>@ButtonIcon(ButtonTypes.add)</div>
         <div class="w3-button w3-bar-item w3-pale-yellow w3-padding simplisity_itemundo" s-recylebin="linklistbin" s-return="#linklistdata" s-removelist=".linklist" style="display: none;">@ButtonIcon(ButtonTypes.undo)</div>
     </div>
 
     <ul id="linklistdata" class="w3-ul">
-        @foreach (var contactInfo in datalist)
+        @foreach (var contactInfo in articleRowData.GetLinkList())
         {
             <li class="linklist w3-display-container w3-padding w3-border-0" style="list-style-type:none;">
                 @SortableListIndex(contactInfo, contactLP)
