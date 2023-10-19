@@ -1,34 +1,7 @@
 @inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketContentAPI.Components;
-@using DNNrocketAPI.Components;
-@using RocketPortal.Components;
-
-@{
-    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
-    var articleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
-    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
-    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
-    var appThemeSystem = (AppThemeSystemLimpet)Model.GetDataObject("appthemesystem");
-    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
-    var globalSettings = new SystemGlobalData();
-    var sessionParams = Model.SessionParamsData;
-    if (sessionParams == null)
-    {
-        sessionParams = new SessionParams(new SimplisityInfo());
-    }
-    var info = new SimplisityInfo();
-    if (articleRowData != null && articleRowData.Info != null)
-    {
-        info = articleRowData.Info;
-    }
-
-    AddProcessDataResx(appThemeView, true);
-    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
-    AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/");
-}
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
 
 <!-- require Key for saving -->
 @HiddenField(info, "genxml/config/rowkey")
@@ -60,7 +33,7 @@
             }
             @RadioButtonList(info, "genxml/select/layout", "0,1,2,3,4", imgLayoutList, "class='  ' ", "0", "", false, 0)
         </div>
-        @RenderTemplate("ArticleHeading.cshtml", appThemeSystem, Model, true)
+        [INJECT:appthemesystem,ArticleHeading.cshtml]
     </div>
 
     <div id="html" class='w3-row sectionname' style="display:none">
@@ -73,7 +46,7 @@
     </div>
     <div id="imgs" class='w3-row sectionname' style="display:none">
         <div class='w3-padding '>
-            @RenderTemplate("ArticleImagesSize.cshtml", appThemeSystem, Model, true)
+            [INJECT:appthemesystem,ArticleImagesSize.cshtml]
         </div>
         <div class="w3-padding">
             @CheckBox(info, "genxml/checkbox/openfancybox", "", "class='w3-check' style='margin-right:6px;' ", false, false, 0)<label>@ResourceKey("DNNrocket.openfancy")</label>
@@ -82,13 +55,13 @@
 
     <div id="docs" class='w3-row sectionname' style="display:none">
         <div class='w3-col m12 w3-padding '>
-            @RenderTemplate("ArticleDocuments.cshtml", appThemeSystem, Model, true)
+            [INJECT:appthemesystem,ArticleDocuments.cshtml]
         </div>
     </div>
 
     <div id="links" class='w3-row sectionname' style="display:none">
         <div class='w3-col m12 w3-padding '>
-            @RenderTemplate("ArticleLinks.cshtml", appThemeSystem, Model, true)
+            [INJECT:appthemesystem,ArticleLinks.cshtml]
         </div>
     </div>
     <div id="htmltext" class='w3-row sectionname' style="display:none">
