@@ -1,10 +1,7 @@
 @inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
-@using DNNrocketAPI.Components;
-
-@{
-    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
-    var appThemeSystem = (AppThemeSystemLimpet)Model.GetDataObject("appthemesystem");
-}
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
 
 @RenderTemplate("CKEditor4.cshtml", appThemeSystem, Model, true)
 
@@ -12,9 +9,9 @@
 
 <div class="w3-row">
     <div id="articledetailpanel" class="w3-threequarter">
-        @RenderTemplate("AdminRow.cshtml", appThemeAdmin, Model, true)
+        [INJECT:appthemeadmin,AdminRow.cshtml]
     </div>
     <div class="w3-quarter">
-        @RenderTemplate("AdminRowSelect.cshtml", appThemeSystem, Model, true)
+        [INJECT:appthemesystem,AdminRowSelect.cshtml]
     </div>
 </div>
