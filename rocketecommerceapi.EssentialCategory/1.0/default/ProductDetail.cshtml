@@ -23,7 +23,8 @@
 <div class="productdetailflex">
     <div class="productdetail">
             <!-- Back btn -->
-            <button type="button" class="w3-button" onclick="history.back();" style="float:right;">@ResourceKey("DNNrocket.back")</button>
+            <a class="w3-button" href="@PagesUtils.NavigateURL(moduleSettings.ListPageTabId())" style="float:right;">@ResourceKey("DNNrocket.back")</a>
+
 			<h1>@(productData.Name)</h1>
 			<div class="productref">@(productData.Ref)</div>
         <div class="productquickview">
