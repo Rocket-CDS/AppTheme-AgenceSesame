@@ -1,16 +1,10 @@
 ﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketContentAPI.Components;
 @using DNNrocketAPI.Components;
-@using RocketPortal.Components;
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
 
-@{
-    var articleRow = (ArticleRowLimpet)Model.GetDataObject("articlerow");
-    var info = articleRow.Info;
-}
-
-@foreach (var linkInfo in articleRow.GetLinkList())
+@foreach (var linkInfo in articleRowData.GetLinkList())
 {
     if (linkInfo.GetXmlPropertyInt("genxml/radio/linktypearticlelink") == 1)
     {

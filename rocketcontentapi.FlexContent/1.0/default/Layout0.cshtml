@@ -1,18 +1,23 @@
 ﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
 @AssigDataModel(Model)
 @AddProcessDataResx(appThemeView, true)
 <!--inject-->
 
 <div class="flexcontent-div @info.GetXmlProperty("genxml/lang/genxml/textbox/cssclass")">
-<div class="flexcontent-text">
+    <div class="flexcontent-text">
         [INJECT:appthemesystem,ArticleRowHeaderView.cshtml]
         @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
         @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/htmltext"))
+        @if (articleRowData.GetLinkList().Count() > 0) {
         <div class="newspaper-link">
-            @RenderTemplate("Links.cshtml", moduleData.ModuleRef, appThemeView, Model, true)
+            [INJECT:appthemeview,Links.cshtml]
         </div>
+        }
+        @if (articleRowData.GetDocList().Count() > 0) {
         <div class="documents">
-            @RenderTemplate("Documents.cshtml", moduleData.ModuleRef, appThemeView, Model, true)
+            [INJECT:appthemeview,Documents.cshtml]
         </div>
+        }
     </div>
 </div>

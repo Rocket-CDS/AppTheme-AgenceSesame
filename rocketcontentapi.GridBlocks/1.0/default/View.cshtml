@@ -1,28 +1,13 @@
 ﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketContentAPI.Components;
 @using DNNrocketAPI.Components;
-@using RocketPortal.Components;
-
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
 @{
-    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
-    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
-    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
-    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
-    var globalSettings = new SystemGlobalData();
-
-    AddProcessDataResx(appThemeView);
-    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
-
-    var headingArticleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
-    var hinfo = headingArticleRowData.Info;
-
     var cssClass = "";
-    if (moduleData.Record.GetXmlProperty("genxml/settings/cssclass") != "")
+    if (moduleData.GetSetting("cssclass") != "")
     {
-        cssClass = "class=" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass");
+        cssClass = "class=" + moduleData.GetSetting("cssclass");
     }
 }
 
@@ -30,64 +15,17 @@
 
     <div class="grid-wrapper">
 
-        <!-- Header Section -->
-        @{
-            var moduleTitle = articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headertitle");
-            var moduleText = articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headertext");
-        }
-        @if (moduleTitle != "")
-        {
-            var headerStyle = articleData.Info.GetXmlProperty("genxml/header/headerstyle");
-            if (headerStyle == "")
-            {
-                headerStyle = "h2";
-            }
-            var headerAlignText = articleData.Info.GetXmlProperty("genxml/header/headeralign");
-            var headerAnchor = "";
-            if (articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor") != "")
-            {
-                headerAnchor = " id=" + articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor");
-            }
-            if (headerStyle == "h1")
-            {
-                <h1 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h1>
-                <hr />
-            }
-            if (headerStyle == "h2")
-            {
-                <h2 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h2>
-                <hr />
-            }
-            if (headerStyle == "h3")
-            {
-                <h3 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h3>
-                <hr />
-            }
-            if (headerStyle == "h4")
-            {
-                <h4 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h4>
-
-            }
-        }
-        @if (moduleText != "")
-        {
-            <p>@moduleText</p>
-        }
+        [INJECT:appthemesystem,ArticleHeaderView.cshtml]
 
         <div class="grid-refs">
             <div class="grid-sizer"></div>
             @foreach (var articleRowData in articleData.GetRows())
             {
-                Model.SetDataObject("articlerow", articleRowData);
-                var info = articleRowData.Info;
                 var hideRow = info.GetXmlPropertyBool("genxml/checkbox/hiderow");
-                var gridsize = info.GetXmlProperty("genxml/select/gridsize");
-                var datalist = articleRowData.GetImageList();
-                var imgInfo = datalist.First();
-                var articleImage = new ArticleImage(imgInfo, "articleimage");
-
                 if (!hideRow)
                 {
+                    var gridsize = articleRowData.Info.GetXmlProperty("genxml/select/gridsize");
+                    var articleImage = articleRowData.GetImage(0);
                     var cssClassRow = "";
                     if (info.GetXmlProperty("genxml/textbox/cssclass") != "")
                     {
@@ -144,7 +82,6 @@
 
 <script>
     $(document).ready(function () {
-
         // Isotope
         var $grid = $('.grid-refs').isotope({
             itemSelector: '.grid-item',
@@ -157,6 +94,5 @@
         $grid.imagesLoaded().progress(function () {
             $grid.isotope('layout');
         });
-
     });
 </script>

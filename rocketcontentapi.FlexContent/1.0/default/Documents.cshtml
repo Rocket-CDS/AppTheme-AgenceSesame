@@ -1,43 +1,19 @@
 ﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketContentAPI.Components;
-@using DNNrocketAPI.Components;
-@using RocketPortal.Components;
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
 
-@{ var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
-                var articleRow = (ArticleRowLimpet)Model.GetDataObject("articlerow");
-                var info = articleRow.Info;
-}
-
-@foreach (var docInfo in articleRow.GetDocList())
+@foreach (var docInfo in articleRowData.GetDocList())
 {
     var docURL = docInfo.GetXmlProperty("genxml/hidden/documentpatharticledoc");
-
-    if (docInfo.GetXmlPropertyBool("genxml/checkbox/forcedownload"))
-    {
-        <div><a href="@(docURL)" download>
-            @if (docInfo.GetXmlProperty("genxml/textbox/name") != "")
-            {
-                @docInfo.GetXmlProperty("genxml/lang/genxml/textbox/name")
-            }
-            else
-            {
-                @docInfo.GetXmlProperty("genxml/textbox/documentnamearticledoc")
-            }
-        </a></div>
-    }
-    else
-    {
-        <div><a href="@(docURL)" target="_blank">
-            @if (docInfo.GetXmlProperty("genxml/lang/genxml/textbox/name") != "")
-            {
-                @docInfo.GetXmlProperty("genxml/lang/genxml/textbox/name")
-            }
-            else
-            {
-                @docInfo.GetXmlProperty("genxml/textbox/documentnamearticledoc")
-            }
-        </a></div>
-    }
+    <div><a href="@(docURL)" target="_blank">
+        @if (docInfo.GetXmlProperty("genxml/lang/genxml/textbox/name") != "")
+        {
+            @docInfo.GetXmlProperty("genxml/lang/genxml/textbox/name")
+        }
+        else
+        {
+            @docInfo.GetXmlProperty("genxml/textbox/documentnamearticledoc")
+        }
+    </a></div>
 }

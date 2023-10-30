@@ -1,108 +1,56 @@
 ﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketContentAPI.Components;
 @using DNNrocketAPI.Components;
-@using RocketPortal.Components;
-
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
 
 @{
-    var articleRow = (ArticleRowLimpet)Model.GetDataObject("articlerow");
-    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var datalist = articleRowData.GetImages();
     var index = 0;
-    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
-    var info = articleRow.Info;
-    var datalist = articleRow.GetImageList();
-    var group = articleRow.RowKey;
-
+    var group = articleRowData.RowKey;
 }
 
-<div class="flexcontent-div fcd-flex fcd-reverse @info.GetXmlProperty("genxml/textbox/cssclass")">
+<div class="flexcontent-div fcd-flex fcd-reverse @rowData.GetXmlProperty("genxml/textbox/cssclass")">
     <div class="flexcontent-text">
-        @{
-            var layout = info.GetXmlPropertyInt("genxml/select/layout");
-            var hStyle = info.GetXmlProperty("genxml/select/headingstyle");
-            var headingHide = info.GetXmlPropertyBool("genxml/checkbox/hideheading");
-        }
-
-        <!-- HEADING SECTION -->
-        @if (!headingHide)
-        {
-            var title = info.GetXmlProperty("genxml/lang/genxml/textbox/title");
-
-            if (hStyle == "")
-            {
-                hStyle = "h1";
-            }
-            if (title != "")
-            {
-                var alignText = info.GetXmlProperty("genxml/select/headingalign");
-                if (hStyle.ToLower() == "h1")
-                {
-                    <h1 id="@info.GetXmlProperty("genxml/lang/genxml/textbox/anchor")" style="text-align: @alignText;">@title</h1>
-                }
-                if (hStyle.ToLower() == "h2")
-                {
-                    <h2 id="@info.GetXmlProperty("genxml/lang/genxml/textbox/anchor")" style="text-align: @alignText;">@title</h2>
-                }
-                if (hStyle.ToLower() == "h3")
-                {
-                    <h3 id="@info.GetXmlProperty("genxml/lang/genxml/textbox/anchor")" style="text-align: @alignText;">@title</h3>
-                }
-                if (hStyle.ToLower() == "h4")
-                {
-                    <h4 id="@info.GetXmlProperty("genxml/lang/genxml/textbox/anchor")" style="text-align: @alignText;">@title</h4>
-                }
-            }
-        }
-
-        <!-- TEXT SECTION -->
+        [INJECT:appthemesystem,ArticleRowHeaderView.cshtml]
         @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
-
-        <!-- HTML SECTION -->
         @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/htmltext"))
-
-        <!-- LINK SECTION -->
+        @if (articleRowData.GetLinkList().Count() > 0) {
         <div class="newspaper-link">
-            @RenderTemplate("Links.cshtml", moduleData.ModuleRef, appThemeView, Model, true)
+            [INJECT:appthemeview,Links.cshtml]
         </div>
-
-        <!-- DOCUMENTS SECTION -->
+        }
+        @if (articleRowData.GetDocList().Count() > 0) {
         <div class="documents">
-            @RenderTemplate("Documents.cshtml", moduleData.ModuleRef, appThemeView, Model, true)
+            [INJECT:appthemeview,Documents.cshtml]
         </div>
-        
+        }
     </div>
-
-    <!-- MEDIA SECTION -->
-    <div class="flexcontent-media">
-        <!-- IMAGES SECTION -->
-        <div class="fcd-images">
-            @foreach (var imgInfo in datalist)
+    <div class="flexcontent-media fcm-bottom">
+        <div class="fcd-images ">
+            @foreach (ArticleImage articleImage in datalist)
             {
                 index++;
-                var alt = info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage");
-                var articleImage = new ArticleImage(imgInfo, "articleimage");
-                if (!articleImage.Hidden)
+                if (articleImage.RelPath != "")
                 {
-                    if (info.GetXmlPropertyBool("genxml/checkbox/openfancybox"))
+                    if (rowData.GetXmlPropertyBool("genxml/checkbox/openfancybox"))
                     {
-                        <div><a data-fancybox="@(group)" data-caption="@(alt)" href="@(ThumbnailImageUrl(articleImage.RelPath))">
-                            <img src="@ThumbnailImageUrl(articleImage.RelPath, info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/width"), info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/height"))" alt="@(alt)" />
-                        </a></div>
+                        <div>
+                            <a data-fancybox="@(group)" data-caption="@(articleImage.Alt)" href="@(ImageUrl(articleImage.RelPath,0,0))">
+                                <img src="@ImageUrl(articleImage.RelPath, articleImage.Width, articleImage.Height)" alt="@(articleImage.Alt)" />
+                            </a>
+                        </div>
                     }
                     else
                     {
-                        <div><img src="@ThumbnailImageUrl(articleImage.RelPath, info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/width"), info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/height"))" alt="@(alt)" /></div>
+                        <div><img src="@ImageUrl(articleImage.RelPath, articleImage.Width, articleImage.Height)" alt="@(articleImage.Alt)" /></div>
                     }
                 }
             }
         </div>
-        <!-- VIDEO SECTION --> 
-        @if (info.GetXmlProperty("genxml/lang/genxml/textbox/video") != "")
+        @if (rowData.GetXmlProperty("genxml/lang/genxml/textbox/video") != "")
         {
-            <div class="fcd-video"><div class="video-container">@HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/video"))</div></div>
+            <div class="fcd-video"><div class="video-container">@HtmlOf(rowData.GetXmlProperty("genxml/lang/genxml/textbox/video"))</div></div>
         }
     </div>
 </div>
