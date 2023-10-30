@@ -1,23 +1,12 @@
 ﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketContentAPI.Components;
 @using DNNrocketAPI.Components;
-@using RocketPortal.Components;
-
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
 
 @{
-    var articleRow = (ArticleRowLimpet)Model.GetDataObject("articlerow");
-    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
-    var info = articleRow.Info;
-    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
-    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
     var group = articleRow.RowKey;
-}
-
-@{
-    var datalist = articleRow.GetImageList();
+    var datalist = articleRowData.GetImages();
     var index = 0;
 }
 <div class="flexcontent-div @info.GetXmlProperty("genxml/textbox/cssclass")">
@@ -26,32 +15,31 @@
 
         <!-- IMAGES SECTION -->
         <div class="fcd-images ">
-            @foreach (var imgInfo in datalist)
+            @foreach (ArticleImage articleImage in datalist)
             {
                 index++;
-                var alt = info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage");
-                var articleImage = new ArticleImage(imgInfo, "articleimage");
-
                 if (articleImage.RelPath != "")
                 {
-                    if (info.GetXmlPropertyBool("genxml/checkbox/openfancybox"))
+                    if (rowData.GetXmlPropertyBool("genxml/checkbox/openfancybox"))
                     {
-                        <div><a data-fancybox="@(group)" data-caption="@(alt)" href="@(ThumbnailImageUrl(articleImage.RelPath))">
-                            <img src="@ThumbnailImageUrl(articleImage.RelPath, info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/width"), info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/height"))" alt="@(alt)" />
-                        </a></div>
+                        <div>
+                            <a data-fancybox="@(group)" data-caption="@(articleImage.Alt)" href="@(ImageUrl(articleImage.RelPath))">
+                                <img src="@ImageUrl(articleImage.RelPath, articleImage.Width, articleImage.Height)" alt="@(articleImage.Alt)" />
+                            </a>
+                        </div>
                     }
                     else
                     {
-                        <div><img src="@ThumbnailImageUrl(articleImage.RelPath, info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/width"), info.GetXmlPropertyInt("genxml/imagelist/genxml[" + index + "]/hidden/height"))" alt="@(alt)" /></div>
+                        <div><img src="@ImageUrl(articleImage.RelPath, articleImage.Width, articleImage.Height)" alt="@(articleImage.Alt)" /></div>
                     }
                 }
             }
         </div>
 
         <!-- VIDEO SECTION-->
-        @if (info.GetXmlProperty("genxml/lang/genxml/textbox/video") != "")
+        @if (rowData.GetXmlProperty("genxml/lang/genxml/textbox/video") != "")
         {
-            <div class="fcd-video"><div class="video-container">@HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/video"))</div></div>
+            <div class="fcd-video"><div class="video-container">@HtmlOf(rowData.GetXmlProperty("genxml/lang/genxml/textbox/video"))</div></div>
         }
 
     </div>
