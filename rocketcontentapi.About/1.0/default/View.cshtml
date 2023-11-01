@@ -17,7 +17,7 @@
     var cssClass = "";
     if (moduleData.GetSetting("cssclass") != "")
     {
-        cssClass = "class=" + moduleData.GetSetting("cssclass") + "";
+        cssClass = " class='" + moduleData.GetSetting("cssclass") + "' ";
     }
     <div @(cssClass)>
         <div class="about-content">
