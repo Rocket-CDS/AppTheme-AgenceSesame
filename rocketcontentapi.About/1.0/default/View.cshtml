@@ -28,7 +28,13 @@
                     @info.GetXmlProperty("genxml/lang/genxml/textbox/content")
                 </div>
             }
-            [INJECT:appthemesystem,ArticleLinksView.cshtml]
+            @foreach (var linkData in articleRowData.Getlinks())
+            {    
+                if (!linkData.Hidden)
+                {
+                    <a href="@(linkData.Url)" target="@(linkData.Target)">@linkData.Name</a>
+                }
+            }
         </div>
     </div>
 }
