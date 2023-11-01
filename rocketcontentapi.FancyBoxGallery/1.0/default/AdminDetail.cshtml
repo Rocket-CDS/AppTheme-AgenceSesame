@@ -1,43 +1,16 @@
 @inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketContentAPI.Components;
-@using DNNrocketAPI.Components;
-@using RocketPortal.Components;
-
-@{
-    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
-    var articleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
-    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
-    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
-    var appThemeSystem = (AppThemeSystemLimpet)Model.GetDataObject("appthemesystem");
-    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
-    var globalSettings = new SystemGlobalData();
-    var sessionParams = Model.SessionParamsData;
-
-    var info = new SimplisityInfo();
-    if (articleRowData != null && articleRowData.Info != null)
-    {
-        info = articleRowData.Info;
-    }
-    AddProcessDataResx(appThemeView, true);
-    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
-    AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppThemes-W3-CSS/rocketcontentapi.Labels/1.0/resx");
-    AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppTheme-AgenceSesame/resx/");
-    AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/");
-}
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
 
 <!-- require Key for saving -->
-@HiddenField(info, "genxml/config/rowkey")
-@HiddenField(info, "genxml/lang/genxml/config/rowkeylang", "", articleRowData.RowKey)
+@RowKey(rowData)
 
 <a href="http://manager.rocket-cds.org/Aides-aux-modules/FancyBoxGallery" title="@ResourceKey("DNNrocket.help")" target="_blank" class="w3-button w3-circle w3-blue">?</a>
 
 <div class="w3-row w3-padding">
-    <label><b>@ResourceKey("DNNrocket.moduletitle")</b></label>&nbsp;@EditFlag(sessionParams)
-    @TextBox(info, "genxml/lang/genxml/textbox/title", " type='text' class='w3-input w3-card w3-border w3-round-large' ", "", false)
+    [INJECT:appthemesystem,ArticleHeader.cshtml]
 </div>
 <div class='w3-row w3-padding'>
-    @RenderTemplate("ArticleImages.cshtml", appThemeSystem, Model, true)
+    [INJECT:appthemesystem,ArticleImages.cshtml]
 </div>
