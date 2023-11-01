@@ -129,4 +129,7 @@
   <data name="allnews.Text" xml:space="preserve">
     <value>All news</value>
   </data>
+  <data name="hideimages.Text" xml:space="preserve">
+    <value>Hide Images</value>
+  </data>
 </root>

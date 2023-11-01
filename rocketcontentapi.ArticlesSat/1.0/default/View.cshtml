@@ -24,9 +24,12 @@
             var articleImage = articleRowData.GetImage(0);
 
             <article>
+                @if (!moduleData.GetSettingBool("hideimages"))
+                {
                 <div class="article-img">
-                    <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@(articleImage.Alt)" />
-                </div>
+                    <img src="@ImageUrl(articleImage.RelPathWebp, width, height)" alt="@(articleImage.Alt)" />
+                </div>                    
+                }
                 <div class="article-content">
                     <h2><a href="@(DetailUrl(moduleData.GetSettingInt("listpage"), title, articleRowData.RowKey))">@title</a></h2>
                     <p class="article-infos">@DateOf(rowData,"genxml/textbox/newsdate", sessionParams.CultureCode,"d MMM yyyy")</p>
