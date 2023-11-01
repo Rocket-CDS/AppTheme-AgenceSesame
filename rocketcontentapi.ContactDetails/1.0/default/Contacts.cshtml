@@ -17,7 +17,7 @@
     <ul id="linklistdata" class="w3-ul">
         @foreach (var contactInfo in articleRowData.GetLinkList())
         {
-            <li class="linklist w3-display-container w3-padding w3-border-0" style="list-style-type:none;">
+            <li class="linklist w3-display-container w3-border-0" style="list-style-type:none;">
                 @SortableListIndex(contactInfo, contactLP)
 
                 <label class="w3-center w3-large">@ResourceKey("DNNrocket.contact") N°@(contactId)</label>
