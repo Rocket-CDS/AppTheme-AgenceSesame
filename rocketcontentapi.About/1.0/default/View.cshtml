@@ -1,10 +1,9 @@
 ﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketContentAPI.Components;
 @using DNNrocketAPI.Components;
-@using RocketPortal.Components;
-
+@using RocketContentAPI.Components;
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
 
 @{
     var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
@@ -14,50 +13,22 @@
 @foreach (var articleRowData in articleData.GetRows())
 {
     var info = articleRowData.Info;
-    var imglist = articleRowData.GetImages();
-    var articleImage = new ArticleImage(new SimplisityInfo(), "articleimage");
-    if (imglist.Count > 0)
-    {
-        articleImage = imglist.First();
-    }
-    var width = info.GetXmlPropertyInt("genxml/imagelist/genxml/hidden/width");
+    var articleImage = articleRowData.GetImage(0);
     var cssClass = "";
-    if (moduleData.Record.GetXmlProperty("genxml/settings/cssclass") != "")
+    if (moduleData.GetSetting("cssclass") != "")
     {
-        cssClass = "class=" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass") + "";
+        cssClass = "class=" + moduleData.GetSetting("cssclass") + "";
     }
     <div @(cssClass)>
         <div class="about-content">
-            <img src="@ThumbnailImageUrl(articleImage.RelPath, width)" />
+            <img src="@ImageUrl(articleImage.RelPath, moduleData.GetSettingInt("width"), moduleData.GetSettingInt("height"))" />
             @if (info.GetXmlProperty("genxml/lang/genxml/textbox/content") != "")
             {
                 <div class="about-text">
                     @info.GetXmlProperty("genxml/lang/genxml/textbox/content")
                 </div>
             }
-            @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 1)
-            {
-                var tabddlvalue = PagesUtils.NavigateURL(info.GetXmlPropertyInt("genxml/select/linktab"));
-                if (info.GetXmlProperty("genxml/lang/genxml/textbox/linkanchor") != "")
-                {
-                    tabddlvalue = tabddlvalue + "#" + info.GetXmlProperty("genxml/lang/genxml/textbox/linkanchor");
-                }
-                <div class="about-link">
-                    <a href="@(tabddlvalue)">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
-                </div>
-            }
-            @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 2)
-            {
-                var externalURL = info.GetXmlProperty("genxml/textbox/externalhref");
-                var blank = "";
-                if (info.GetXmlPropertyBool("genxml/checkbox/blank"))
-                {
-                    blank = "_blank";
-                }
-                <div class="about-link">
-                    <a href="@(externalURL)" target="@(blank)">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
-                </div>
-            }
+            [INJECT:appthemesystem,ArticleLinksView.cshtml]
         </div>
     </div>
 }

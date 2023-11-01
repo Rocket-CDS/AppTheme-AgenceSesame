@@ -1,0 +1,30 @@
+@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
+
+<!-- require Key for saving -->
+@RowKey(rowData)
+
+<a href="http://manager.rocket-cds.org/Aides-aux-modules/About" title="@ResourceKey("DNNrocket.help")" target="_blank" class="w3-button w3-circle w3-blue">?</a>
+
+<div class="w3-row w3-padding">
+    <div class="w3-col">
+        <label>@ResourceKey("DNNRocket.content")</label>&nbsp;@EditFlag(sessionParams)
+        @TextArea(info, "genxml/lang/genxml/textbox/content", "class='w3-input w3-border w3-margin-bottom' autocomplete='off' MaxLength='500' row='4'", "", false)
+    </div>
+</div>
+
+<div class="w3-row w3-padding">
+    <label>@ResourceKey("DNNrocket.image")</label>
+    <div class="w3-row w3-border w3-card w3-round-large w3-padding">
+        [INJECT:appthemesystem,ArticleImage.cshtml]
+    </div>
+</div>
+
+<div class="w3-row w3-padding">
+    <label>@ResourceKey("DNNrocket.link")</label>
+    <div class="w3-row w3-border w3-card w3-round-large w3-padding">
+        [INJECT:appthemesystem,ArticleLink.cshtml]
+    </div>
+</div>
