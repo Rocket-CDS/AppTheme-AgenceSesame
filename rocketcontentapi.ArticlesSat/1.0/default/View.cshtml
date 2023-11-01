@@ -1,27 +1,15 @@
 ﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketContentAPI.Components;
 @using DNNrocketAPI.Components;
-@using RocketPortal.Components;
-
-
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+@AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppTheme-AgenceSesame/rocketcontentapi.Articles/1.0/resx")
+<!--inject-->
 @{
-    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
-    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
-    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
-
-    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
-    var globalSettings = new SystemGlobalData();
-    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-    var moduleDataSrc = new ModuleContentLimpet(moduleData.PortalId, moduleData.DataRef, moduleData.SystemKey);
-    var limit = moduleData.Record.GetXmlPropertyInt("genxml/settings/limit");
-
-    // Path to the resx file
-    AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppTheme-AgenceSesame/rocketcontentapi.Articles/1.0/resx");
-
+    var limit = moduleData.GetSettingInt("limit");
+    var width = moduleData.GetSettingInt("width");
+    var height = moduleData.GetSettingInt("height");
+    var allNewsUrl = PagesUtils.NavigateURL(moduleData.GetSettingInt("listpage"));
 }
-
 
 
 @{var lp = 1; }
@@ -29,53 +17,30 @@
     <h3>@ResourceKey("Articles.latestnews")</h3>
     @foreach (var articleRowData in articleData.GetRows())
     {
-
-        var info = articleRowData.Info;
-        // Changement format de date (dd/MM/yyy)
-        var date = info.GetXmlPropertyDate("genxml/textbox/newsdate");
-        var dateFormat = date.ToString("dd/MM/yyyy");
-        var indexMain = 0;
-        var datalist = articleRowData.GetImageList();
-        
-		var seotitle = DNNrocketUtils.UrlFriendly(info.GetXmlProperty("genxml/lang/genxml/textbox/title"));
-		string[] urlparams = { "eid", lp.ToString(), seotitle};
-		var detailurl = DNNrocketUtils.NavigateURL(moduleDataSrc.Record.GetXmlPropertyInt("genxml/settings/linktab"), urlparams);
-		
-        <article>
-            @foreach (var imgInfo in datalist)
-            {
-                indexMain++;
-                var alt = info.GetXmlProperty("genxml/imagelist/genxml[" + indexMain + "]/hidden/imagealtarticleimage");
-
-                var articleImage = new ArticleImage(imgInfo, "articleimage");
-                var width = moduleData.Record.GetXmlPropertyInt("genxml/settings/width");
-                var height = moduleData.Record.GetXmlPropertyInt("genxml/settings/height");
-
-                if (indexMain == 1)
-                {
-                    <div class="article-img">
-                        <img src="@ThumbnailImageUrl(articleImage.RelPath, width, height)" />
-                    </div>
-                }
-
-            }
-			<div class="article-content">
-				<h2><a href="@(detailurl)">@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</a></h2>
-				<p class="article-infos">@DateOf(info,"genxml/textbox/newsdate",Model.SessionParamsData.CultureCode,"d")</p>
-			 </div>
-        </article>
-
-
-        if (lp == limit)
+        if (!articleRowData.GetBool("genxml/checkbox/hiderow"))
         {
-            break;
+            var rowData = articleRowData.Info;
+            var title = rowData.GetXmlProperty("genxml/lang/genxml/textbox/title");
+            var articleImage = articleRowData.GetImage(0);
+
+            <article>
+                <div class="article-img">
+                    <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@(articleImage.Alt)" />
+                </div>
+                <div class="article-content">
+                    <h2><a href="@(DetailUrl(moduleData.GetSettingInt("listpage"), title, articleRowData.RowKey))">@title</a></h2>
+                    <p class="article-infos">@DateOf(rowData,"genxml/textbox/newsdate", sessionParams.CultureCode,"d MMM yyyy")</p>
+                </div>
+            </article>
+            if (lp == limit)
+            {
+                break;
+            }
         }
         lp++;
     }
 
-
-    @{var tabddlvalue = PagesUtils.NavigateURL(moduleDataSrc.Record.GetXmlPropertyInt("genxml/settings/listlinktab"));}
     <div class="blogsat-link">
-        <a class="bigbutton" href="@(tabddlvalue)">@ResourceKey("Articles.allnews")</a>
+        <a class="bigbutton" href="@(allNewsUrl)">@ResourceKey("Articles.allnews")</a>
     </div>
 </div>
