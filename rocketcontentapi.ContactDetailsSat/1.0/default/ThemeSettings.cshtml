@@ -1,22 +1,12 @@
 ﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketContentAPI.Components;
-@using DNNrocketAPI.Components;
-@using RocketPortal.Components;
-
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
 @{
-    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
-    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-    var info = new SimplisityInfo(moduleData.Record);
-    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
-    var articleRow = (ArticleRowLimpet)Model.GetDataObject("articlerow");
-
-    AddProcessDataResx(appThemeAdmin, true);
-    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
-
+    var info = moduleDataInfo;
     //NOTE: xPath for module settings must use "genxml/settings/*"
 }
+
 <div class="w3-row">
     @CheckBox(info, "genxml/settings/companyname", ResourceKey("DNNrocket.companyName").ToString(), "class='w3-check contactCb' ")</br>
     @CheckBox(info, "genxml/settings/adress", ResourceKey("DNNrocket.adress").ToString(), "class='w3-check contactCb' ")</br>
