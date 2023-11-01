@@ -1,0 +1,32 @@
+@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
+<!-- require Key for saving -->
+@RowKey(rowData)
+
+<div class='w3-row w3-padding'>
+    <div class='w3-col m12 w3-padding'>
+        <div class='w3-right'>
+            @CheckBox(info, "genxml/checkbox/hiderow", "&nbsp;" + ResourceKey("DNNrocket.hide").ToString(), "class='w3-check' ", false, false, 0)
+        </div>
+    </div>
+</div>
+
+<div class="w3-row">
+    <div class="w3-col">
+        <label>@ResourceKey("DNNrocket.title")</label>
+        @TextBox(info, "genxml/lang/genxml/textbox/title", "class='w3-input w3-border w3-margin-bottom' autocomplete='off' MaxLength='200'", "", false)
+    </div>
+</div>
+
+<div class="w3-row">
+    <div class="w3-col">
+        <label>@ResourceKey("DNNrocket.content")</label>
+        @TextBox(info, "genxml/lang/genxml/textbox/content", "class='w3-input w3-border w3-margin-bottom' autocomplete='off' MaxLength='200'", "", false)
+    </div>
+</div>
+
+<div class="w3-row w3-border w3-round w3-margin-bottom">
+    [INJECT:appthemesystem,ArticleLink.cshtml]
+</div>

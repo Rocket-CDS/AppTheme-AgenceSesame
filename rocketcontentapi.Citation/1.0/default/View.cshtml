@@ -1,55 +1,34 @@
 ﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketContentAPI.Components;
-@using DNNrocketAPI.Components;
-@using RocketPortal.Components;
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
+
+<a href="http://manager.rocket-cds.org/Aides-aux-modules/Citation" title="@ResourceKey("DNNrocket.help")" target="_blank" class="w3-button w3-circle w3-blue">?</a>
 
 
-@{
-    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
-    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");  
-}
-
-@foreach (var articleRowData in articleData.GetRows())
-{
-    var info = articleRowData.Info;
-    var cssClass = "";
-    if (moduleData.Record.GetXmlProperty("genxml/setting/cssclass") != "")
-    {
-        cssClass = "class=" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass");
-    }
-    <div @(cssClass)>
-    <div class="citation-window">
-    <div class="citation-content">
-        <h2>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
-        <hr />
-        <div class="citation-text">@info.GetXmlProperty("genxml/lang/genxml/textbox/content")</div>
-        <div class="citation-link">
-            @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 1)
+<div class="@(moduleData.GetSetting("cssclass"))">
+    <div class="citation-window">   
+        <div class="citation-content">
+        @foreach (var articleRowData in articleData.GetRows())
+        {
+            if (!articleRowData.GetBool("genxml/checkbox/hiderow"))
             {
-                var tabddlvalue = PagesUtils.NavigateURL(info.GetXmlPropertyInt("genxml/select/linktab"));
-                var anchor = "";
-                if (info.GetXmlProperty("genxml/textbox/linkanchor") != "")
-                {
-                    anchor = "#" + info.GetXmlProperty("genxml/textbox/linkanchor");
+                <h2>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
+                <hr />
+                <div class="citation-text">@rowData.GetXmlProperty("genxml/lang/genxml/textbox/content")</div>
+                <div class="citation-link">
+                @foreach (var linkData in articleRowData.Getlinks())
+                {    
+                    if (!linkData.Hidden)
+                    {
+                        <a class="bigbutton" href="@(linkData.Url)" target="@(linkData.Target)">@linkData.Name</a>
+                    }
                 }
-                <a class="bigbutton" href="@(tabddlvalue)@(anchor)">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
+                </div>
             }
-            @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 2)
-            {
-                var externalURL = info.GetXmlProperty("genxml/textbox/externalhref");
-                var blank = "";
-                if (info.GetXmlPropertyBool("genxml/checkbox/blank"))
-                {
-                    blank = "_blank";
-                }
-                <a class="bigbutton" href="@(externalURL)" @(blank)>@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
-            }
+        }
         </div>
     </div>
-    </div>
-    </div>
-}
+</div>
 
 
