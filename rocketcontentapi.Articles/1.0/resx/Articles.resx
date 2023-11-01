@@ -120,9 +120,6 @@
   <data name="readmore.Text" xml:space="preserve">
     <value>Read more</value>
   </data>
-  <data name="back.Text" xml:space="preserve">
-    <value>Back</value>
-  </data>
   <data name="published.Text" xml:space="preserve">
     <value>Published on</value>
   </data>
