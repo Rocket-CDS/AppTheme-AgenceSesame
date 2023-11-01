@@ -1,45 +1,16 @@
 @inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketContentAPI.Components;
-@using DNNrocketAPI.Components;
-@using RocketPortal.Components;
-
-@{
-    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
-    var articleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
-    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
-    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
-    var appThemeSystem = (AppThemeSystemLimpet)Model.GetDataObject("appthemesystem");
-    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
-    var globalSettings = new SystemGlobalData();
-    var sessionParams = Model.SessionParamsData;
-    if (sessionParams == null)
-    {
-        sessionParams = new SessionParams(new SimplisityInfo());
-    }
-    var info = new SimplisityInfo();
-    if (articleRowData != null && articleRowData.Info != null)
-    {
-        info = articleRowData.Info;
-    }
-
-    AddProcessDataResx(appThemeView, true);
-    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
-
-}
-
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
 <!-- require Key for saving -->
-@HiddenField(info, "genxml/config/rowkey")
-@HiddenField(info, "genxml/lang/genxml/config/rowkeylang", "", articleRowData.RowKey)
+@RowKey(rowData)
 
 <div class='w3-row w3-padding'>
     <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
-        <label>@ResourceKey("DNNrocket.cssClass")</label>		&nbsp;@EditFlag(sessionParams)
-        @TextBox(info, "genxml/lang/genxml/textbox/cssclass", "class='w3-input w3-border' autocomplete='off'", "", true, 0)
+        <label>@ResourceKey("DNNrocket.title")</label>		&nbsp;@EditFlag(sessionParams)
+        @TextBox(rowData, "genxml/lang/genxml/textbox/title", "class='w3-input w3-border' autocomplete='off'", "", true, 0)
     </div>
     <div class='w3-col m12 w3-padding '>
-        @RenderTemplate("ArticleDocuments.cshtml", appThemeSystem, Model, true)
+        [INJECT:appthemesystem,ArticleDocuments.cshtml]
     </div>
 </div>

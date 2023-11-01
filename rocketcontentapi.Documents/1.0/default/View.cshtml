@@ -1,116 +1,37 @@
 ﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketContentAPI.Components;
 @using DNNrocketAPI.Components;
-@using RocketPortal.Components;
+@using RocketContentAPI.Components;
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
 
-@{
-    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
-    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
-    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
-    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
-    var globalSettings = new SystemGlobalData();
-
-    AddProcessDataResx(appThemeView);
-    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
-
-    var headingArticleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
-    var hInfo = headingArticleRowData.Info;
-
-    var cssClass = "";
-    if (moduleData.Record.GetXmlProperty("genxml/setting/cssclass") != "")
-    {
-        cssClass = "class=" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass");
-    }
-}
-
-<div @(cssClass)>
+<div class="@moduleData.GetSetting("cssclass")">
 
     <div class="docswrapper">
-        <!-- Header Section -->
-        @{
-            var moduleTitle = articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headertitle");
-        }
-        @if (moduleTitle != "")
+        [INJECT:appthemesystem,ArticleHeaderView.cshtml]       
+        @foreach (var articleRowData in articleData.GetRows())
         {
-            var headerStyle = articleData.Info.GetXmlProperty("genxml/header/headerstyle");
-            if (headerStyle == "")
+            if (articleRowData.Get("genxml/lang/genxml/textbox/title") != "")
             {
-                headerStyle = "h2";
+                <h2>@articleRowData.Get("genxml/lang/genxml/textbox/title")</h2>      
             }
-            var headerAlignText = articleData.Info.GetXmlProperty("genxml/header/headeralign");
-            var headerAnchor = "";
-            if (articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor") != "")
-            {
-                headerAnchor = "id=" + articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor");
-            }
-            if (headerStyle == "h1")
-            {
-                <h1 style="text-align:@headerAlignText;" @(headerAnchor)>@moduleTitle</h1>
-            }
-            if (headerStyle == "h2")
-            {
-                <h2 style="text-align:@headerAlignText;" @(headerAnchor)>@moduleTitle</h2>
-            }
-            if (headerStyle == "h3")
-            {
-                <h3 style="text-align:@headerAlignText;" @(headerAnchor)>@moduleTitle</h3>
-            }
-            if (headerStyle == "h4")
-            {
-                <h4 style="text-align:@headerAlignText;" @(headerAnchor)>@moduleTitle</h4>
-            }
-        }
-
-        <ul class="docs">
-            @foreach (var articleRowData in articleData.GetRows())
-            {
-                Model.SetDataObject("articlerow", articleRowData);
-                var info = articleRowData.Info;
-                var hideRow = info.GetXmlPropertyBool("genxml/checkbox/hiderow");
-
-                if (!hideRow)
+    
+            <ul class="docs">
+                @if (!articleRowData.GetBool("genxml/checkbox/hiderow"))
                 {
-                    <!-- Documents -->
-                    if (!info.GetXmlPropertyBool("genxml/checkbox/documenthiddenarticledoc") && info.GetXmlProperty("genxml/documentlist/genxml/hidden/documentpatharticledoc") != "")
-                    {
-                        <li>
-                            @{
-                                var docURL = info.GetXmlProperty("genxml/documentlist/genxml/hidden/documentpatharticledoc");
-                                if (info.GetXmlPropertyBool("genxml/checkbox/openinnewtab"))
-                                {
-                                    <a href="@(docURL)" target="_blank" class="docitem">
-                                        @if (info.GetXmlProperty("genxml/lang/genxml/textbox/name") != "")
-                                        {
-                                            @info.GetXmlProperty("genxml/lang/genxml/textbox/name")
-
-                                        }
-                                        else
-                                        {
-                                            @info.GetXmlProperty("genxml/textbox/documentnamearticledoc")
-                                        }
-                                    </a>
-                                }
-                                else
-                                {
-                                    <a href="@(docURL)" download="@info.GetXmlProperty("genxml/textbox/documentnamearticledoc")" class="docitem">
-                                        @if (info.GetXmlProperty("genxml/textbox/name") != "")
-                                        {
-                                            @info.GetXmlProperty("genxml/lang/genxml/textbox/name")
-                                        }
-                                        else
-                                        {
-                                            @info.GetXmlProperty("genxml/textbox/documentnamearticledoc")
-                                        }
-                                    </a>
-                                }
+                    <li>
+                        @foreach (ArticleDoc documentData in articleRowData.GetDocs())
+                        {
+                            if (!documentData.Hidden)
+                            {
+                                <div>
+                                    <a href="@(documentData.RelPath)" target="_blank" >@documentData.Name</a>
+                                </div>
                             }
-                        </li>
-                    }
+                        }
+                    </li>
                 }
-            }
-        </ul>
+            </ul>
+        }
     </div>
 </div>
