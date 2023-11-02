@@ -3,35 +3,20 @@
 @AddProcessDataResx(appThemeView, true)
 <!--inject-->
 
-@{
-   
-    var columns = "";
-    if (moduleData.GetSetting("columns") != "default")
-    {
-        columns = moduleData.GetSetting("columns");
-    }
+<div class="@moduleData.GetSetting("cssclass")">
 
-    var cssClass = "";
-    if (moduleData.GetSetting("cssclass") != "")
-    {
-        cssClass = "class='" + moduleData.GetSetting("cssclass") + "' ";
-    }
-
-}
-
-<div @(cssClass)>
-
-    <div class="flexcontent-wrapper @(columns)">
+    <div class="flexcontent-wrapper @(moduleData.GetSetting("columns"))">
 
         @foreach (var articleRowData in articleData.GetRows())
         {
-            Model.SetDataObject("articlerow", articleRowData);
-            var info = articleRowData.Info;
-            var layout = info.GetXmlPropertyInt("genxml/select/layout");
-            var hideRow = info.GetXmlPropertyBool("genxml/checkbox/hiderow");
+            Model.SetDataObject("articlerow", articleRowData); // needed to pass rowData 
+            var rowData = articleRowData.Info;
+            var layout = rowData.GetXmlPropertyInt("genxml/select/layout");
+            var hideRow = rowData.GetXmlPropertyBool("genxml/checkbox/hiderow");
 
             if (!hideRow)
             {
+                // Cannot use INJECT because we will get multiple defined vars.
                 @RenderTemplate("layout" + layout + ".cshtml", moduleData.ModuleRef, appThemeView, Model, true)
             }
         }

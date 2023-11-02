@@ -3,17 +3,12 @@
 @AddProcessDataResx(appThemeView, true)
 <!--inject-->
 
-@foreach (var docInfo in articleRowData.GetDocList())
+@foreach (ArticleDoc documentData in articleRowData.GetDocs())
 {
-    var docURL = docInfo.GetXmlProperty("genxml/hidden/documentpatharticledoc");
-    <div><a href="@(docURL)" target="_blank">
-        @if (docInfo.GetXmlProperty("genxml/lang/genxml/textbox/name") != "")
-        {
-            @docInfo.GetXmlProperty("genxml/lang/genxml/textbox/name")
-        }
-        else
-        {
-            @docInfo.GetXmlProperty("genxml/textbox/documentnamearticledoc")
-        }
-    </a></div>
+    if (!documentData.Hidden)
+    {
+        <div>
+            <a href="@(documentData.RelPath)" target="_blank" >@documentData.Name</a>
+        </div>
+    }
 }

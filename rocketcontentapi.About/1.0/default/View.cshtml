@@ -5,11 +5,6 @@
 @AddProcessDataResx(appThemeView, true)
 <!--inject-->
 
-@{
-    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
-    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-}
-
 @foreach (var articleRowData in articleData.GetRows())
 {
     var info = articleRowData.Info;

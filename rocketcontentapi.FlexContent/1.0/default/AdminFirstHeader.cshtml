@@ -1,8 +1,5 @@
 @inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
-@using DNNrocketAPI.Components;
+@AssigDataModel(Model)
+<!--inject-->
 
-@{
-    var appThemeSystem = (AppThemeSystemLimpet)Model.GetDataObject("appthemesystem");
-}
-
-@RenderTemplate("CKEditor4.cshtml", appThemeSystem, Model, true)
+[INJECT:appthemesystem,CKEditor4.cshtml]

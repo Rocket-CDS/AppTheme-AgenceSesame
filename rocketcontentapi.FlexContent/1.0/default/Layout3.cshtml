@@ -4,12 +4,6 @@
 @AddProcessDataResx(appThemeView, true)
 <!--inject-->
 
-@{
-    var datalist = articleRowData.GetImages();
-    var index = 0;
-    var group = articleRowData.RowKey;
-}
-
 <div class="flexcontent-div fcd-flex fcd-reverse @rowData.GetXmlProperty("genxml/textbox/cssclass")">
     <div class="flexcontent-text">
         [INJECT:appthemesystem,ArticleRowHeaderView.cshtml]
@@ -28,15 +22,14 @@
     </div>
     <div class="flexcontent-media fcm-bottom">
         <div class="fcd-images ">
-            @foreach (ArticleImage articleImage in datalist)
+            @foreach (ArticleImage articleImage in articleRowData.GetImages())
             {
-                index++;
                 if (articleImage.RelPath != "")
                 {
                     if (rowData.GetXmlPropertyBool("genxml/checkbox/openfancybox"))
                     {
                         <div>
-                            <a data-fancybox="@(group)" data-caption="@(articleImage.Alt)" href="@(ImageUrl(articleImage.RelPath,0,0))">
+                            <a data-fancybox="@(articleRowData.RowKey)" data-caption="@(articleImage.Alt)" href="@(ImageUrl(articleImage.RelPath,0,0))">
                                 <img src="@ImageUrl(articleImage.RelPath, articleImage.Width, articleImage.Height)" alt="@(articleImage.Alt)" />
                             </a>
                         </div>

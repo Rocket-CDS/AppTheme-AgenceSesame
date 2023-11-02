@@ -4,24 +4,17 @@
 @AddProcessDataResx(appThemeView, true)
 <!--inject-->
 
-@{
-    var datalist = articleRowData.GetImages();
-    var index = 0;
-    var group = articleRowData.RowKey;
-}
-
 <div class="flexcontent-div @rowData.GetXmlProperty("genxml/textbox/cssclass")">
     <div class="flexcontent-media">
         <div class="fcd-images ">
-            @foreach (ArticleImage articleImage in datalist)
+            @foreach (ArticleImage articleImage in articleRowData.GetImages())
             {
-                index++;
                 if (articleImage.RelPath != "")
                 {
                     if (rowData.GetXmlPropertyBool("genxml/checkbox/openfancybox"))
                     {
                         <div>
-                            <a data-fancybox="@(group)" data-caption="@(articleImage.Alt)" href="@(ImageUrl(articleImage.RelPath,0,0))">
+                            <a data-fancybox="@(articleRowData.RowKey)" data-caption="@(articleImage.Alt)" href="@(ImageUrl(articleImage.RelPath,0,0))">
                                 <img src="@ImageUrl(articleImage.RelPath, articleImage.Width, articleImage.Height)" alt="@(articleImage.Alt)" />
                             </a>
                         </div>
@@ -42,7 +35,8 @@
         [INJECT:appthemesystem,ArticleRowHeaderView.cshtml]
         @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
         @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/htmltext"))
-        @if (articleRowData.GetLinkList().Count() > 0) {
+        @if (articleRowData.GetLinkList().Count() > 0) 
+        {
         <div class="newspaper-link">
             [INJECT:appthemeview,Links.cshtml]
         </div>
