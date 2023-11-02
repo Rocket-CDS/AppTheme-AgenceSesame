@@ -26,7 +26,7 @@
         <a class="article-back bigbutton" href="@rtnUrl">@ResourceKey("DNNrocket.back")</a>
         <h1>@rowDetail.Get("genxml/lang/genxml/textbox/title")</h1>
         <div class="article-img">
-            <img src="@ImageUrl(mainImage.RelPath, moduleData.GetSettingInt("detailwidth"), moduleData.GetSettingInt("detailheight"))" alt="@(mainImage.Alt)" />
+                <img src="@ImageUrl(mainImage.RelPathWebp, moduleData.GetSettingInt("detailwidth"), moduleData.GetSettingInt("detailheight"))" alt="@(mainImage.Alt)" />
         </div>
 
         <p class="article-infos"><span>@ResourceKey("Articles.published") </span>@DateOf(info,"genxml/textbox/newsdate",sessionParams.CultureCode,"dd MMM yyyy")</p>
@@ -67,8 +67,8 @@
         <div class="article-gallery">
             @foreach (var articleImage in rowDetail.GetImages())
             {
-                <a data-fancybox="@(group)" data-caption="@(articleImage.Alt)" href="@ImageUrl(articleImage.RelPath,0,0)">
-                        <img src="@ImageUrl(articleImage.RelPath, 120, 120)" alt="@(articleImage.Alt)" />
+                <a data-fancybox="@(group)" data-caption="@(articleImage.Alt)" href="@ImageUrl(articleImage.RelPathWebp,0,0)">
+                        <img src="@ImageUrl(articleImage.RelPathWebp, 120, 120)" alt="@(articleImage.Alt)" />
                 </a>
             }
         </div>
@@ -103,7 +103,7 @@ else
                                 <span class="fd-day">@date.ToString("dd")</span>
                                 <span class="fd-month">@date.ToString("MMM")</span>
                             </div>
-                        <div class="article-img"><img src="@ImageUrl(articleImage.RelPath, moduleData.GetSettingInt("listwidth"), moduleData.GetSettingInt("listheight"))" alt="@(articleImage.Alt)" /></div>
+                            <div class="article-img"><img src="@ImageUrl(articleImage.RelPathWebp, moduleData.GetSettingInt("listwidth"), moduleData.GetSettingInt("listheight"))" alt="@(articleImage.Alt)" /></div>
                             <p>@articleRowData.Get("genxml/lang/genxml/textbox/resume")</p>
                             <a class="bigbutton" href="@(detailurl)">@ResourceKey("Articles.readmore")</a>
                         </article>

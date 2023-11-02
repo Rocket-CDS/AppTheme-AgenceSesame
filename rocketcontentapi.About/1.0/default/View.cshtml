@@ -16,7 +16,7 @@
     }
     <div @(cssClass)>
         <div class="about-content">
-            <img src="@ImageUrl(articleImage.RelPath, moduleData.GetSettingInt("width"), moduleData.GetSettingInt("height"))" />
+            <img src="@ImageUrl(articleImage.RelPathWebp, moduleData.GetSettingInt("width"), moduleData.GetSettingInt("height"))" />
             @if (info.GetXmlProperty("genxml/lang/genxml/textbox/content") != "")
             {
                 <div class="about-text">
