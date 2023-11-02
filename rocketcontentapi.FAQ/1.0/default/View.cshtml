@@ -1,96 +1,23 @@
 ﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketContentAPI.Components;
 @using DNNrocketAPI.Components;
-@using RocketPortal.Components;
+@using RocketContentAPI.Components;
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
 
-
-@{
-    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
-    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
-    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
-    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
-    var globalSettings = new SystemGlobalData();
-
-    AddProcessDataResx(appThemeView);
-    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
-
-    var headingArticleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
-    var hInfo = headingArticleRowData.Info;
-
-    var cssClass = "";
-    if (moduleData.Record.GetXmlProperty("genxml/setting/cssclass") != "")
-    {
-        cssClass = "class=" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass");
-    }
-
-}
-<div @(cssClass)>
+<div class="@moduleData.GetSetting("cssclass")">
 
     <div class="faqwrapper">
-
-    <!-- Header Section -->
-    @{
-        var moduleTitle = articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headertitle");
-        var moduleText = articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headertext");
-    }
-    @if (moduleTitle != "")
-    {
-        var headerStyle = articleData.Info.GetXmlProperty("genxml/header/headerstyle");
-        if (headerStyle == "")
-        {
-            headerStyle = "h2";
-        }
-        var headerAlignText = articleData.Info.GetXmlProperty("genxml/header/headeralign");
-        if (headerAlignText == "")
-        {
-            headerAlignText = "start";
-        }
-        var headerAnchor = "";
-        if (articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor") != "")
-        {
-            headerAnchor = " id=" + articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor");
-        }
-        if (headerStyle == "h1")
-        {
-            <h1 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h1>
-        }
-        if (headerStyle == "h2")
-        {
-            <h2 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h2>
-        }
-        if (headerStyle == "h3")
-        {
-            <h3 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h3>
-        }
-        if (headerStyle == "h4")
-        {
-            <h4 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h4>
-        }
-    }
-    @if (moduleText != "")
-    {
-        <p>@moduleText</p>
-    }
-
+    [INJECT:appthemesystem,ArticleHeaderView.cshtml]
     <div id="accordion" class="faq">
         @foreach (var articleRowData in articleData.GetRows())
         {
-            var info = articleRowData.Info;
-            var rowCssClass = "";
-            if (info.GetXmlProperty("genxml/textbox/cssclass") != "")
-            {
-                rowCssClass = "class=" + info.GetXmlProperty("genxml/textbox/cssclass");
-            }
-            <div @(rowCssClass)>
-                <div class="accordion-header" style="cursor:pointer;">
-                    <div class="faq-cat">@info.GetXmlProperty("genxml/lang/genxml/textbox/categorie")</div>
-                    <h4>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h4>
+            var rowData = articleRowData.Info;
+            <div class="@moduleData.GetSetting("rowcssclass")">
+                <div class="accordion-header" onclick="$('.@(articleRowData.RowKey)').toggle();" style="cursor:pointer;">
+                    <h4>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h4>
                 </div>
-                <div class="accordion-content" style="display:none;">@HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))</div>
-                <hr />
+                    <div class="accordion-content @(articleRowData.RowKey)" style="display:none;">@HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))</div>
             </div>
         }
     </div>
@@ -101,12 +28,6 @@
 
 <script type="text/javascript">
     jQuery(document).ready(function () {
-        $('#accordion').accordion({
-            header: ".accordion-header",
-            heightStyle: "content",
-            collapsible: true,
-            active: false
-        });
     });
 </script>
 
