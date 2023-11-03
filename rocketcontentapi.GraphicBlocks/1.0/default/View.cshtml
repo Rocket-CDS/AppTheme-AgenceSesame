@@ -19,7 +19,7 @@
             @foreach (var articleRowData in articleData.GetRows())
             {
                 var rowData = articleRowData.Info;
-                var hideRow = info.GetXmlPropertyBool("genxml/checkbox/hiderow");
+                var hideRow = rowData.GetXmlPropertyBool("genxml/checkbox/hiderow");
                 if (!hideRow)
                 {
                     var title = rowData.GetXmlProperty("genxml/lang/genxml/textbox/title");

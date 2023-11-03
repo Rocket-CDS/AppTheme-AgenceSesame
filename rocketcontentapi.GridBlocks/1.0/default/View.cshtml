@@ -12,60 +12,51 @@
 
         <div class="grid-refs">
             <div class="grid-sizer"></div>
+
             @foreach (var articleRowData in articleData.GetRows())
             {
-                var hideRow = info.GetXmlPropertyBool("genxml/checkbox/hiderow");
+                var rowData = articleRowData.Info;
+                var hideRow = rowData.GetXmlPropertyBool("genxml/checkbox/hiderow");
                 if (!hideRow)
                 {
                     var gridsize = articleRowData.Info.GetXmlProperty("genxml/select/gridsize");
+                    var title = rowData.GetXmlProperty("genxml/lang/genxml/textbox/title");
                     var articleImage = articleRowData.GetImage(0);
-                    var cssClassRow = "";
-                    if (info.GetXmlProperty("genxml/textbox/cssclass") != "")
+
+                    foreach (var linkData in articleRowData.Getlinks())
                     {
-                        cssClassRow = info.GetXmlProperty("genxml/textbox/cssclass");
-                    }
-                    if (info.GetXmlPropertyInt("genxml/select/rbllink") == 0)
-                    {
-                        <div class="grid-item grid-item@(gridsize) @(cssClassRow)">
-                            <div class="refsimg" style="background-image:url('@ImageUrl(articleImage.RelPath, "", "")');">
-                                <div class="refsoverlay"><h4>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h4></div>
-                                <div class="refstext">
-                                    <h3>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h3>
-                                    <p>@info.GetXmlProperty("genxml/lang/genxml/textbox/title2")</p>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                    if (info.GetXmlPropertyInt("genxml/select/rbllink") == 1)
-                    {
-                        var tabddlvalue = PagesUtils.NavigateURL(info.GetXmlPropertyInt("genxml/select/linktab"));
-                        var anchor = "";
-                        if (info.GetXmlProperty("genxml/lang/genxml/textbox/linkanchor") != "")
+                        if (!linkData.Hidden)
                         {
-                            anchor = "#" + info.GetXmlProperty("genxml/lang/genxml/textbox/linkanchor");
+                            var cssClassRow = "";
+                            if (rowData.GetXmlProperty("genxml/textbox/cssclass") != "")
+                            {
+                                cssClassRow = rowData.GetXmlProperty("genxml/textbox/cssclass");
+                            }
+                            if (linkData.IsDisabled)
+                            {
+                                <div class="grid-item grid-item@(gridsize) @(cssClassRow)">
+                                    <div class="refsimg" style="background-image:url('@ImageUrl(articleImage.RelPath, "", "")');">
+                                        <div class="refsoverlay"><h4>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h4></div>
+                                        <div class="refstext">
+                                            <h3>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h3>
+                                            <p>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title2")</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <a class="grid-item grid-item@(gridsize) @(cssClassRow)" href="@(linkData.Url)" target="@(linkData.Target)">
+                                    <div class="refsimg" style="background-image:url('@ImageUrl(articleImage.RelPath, "", "")');">
+                                        <div class="refsoverlay">@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</div>
+                                        <div class="refstext">
+                                            <h3 class="refstext-line1">@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h3>
+                                            <h4 class="refstext-line2">@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title2")</h4>
+                                        </div>
+                                    </div>
+                                </a>
+                            }
                         }
-                        <a class="grid-item grid-item@(gridsize) @(cssClassRow)" href="@(tabddlvalue)@(anchor)">
-                            <div class="refsimg" style="background-image:url('@ImageUrl(articleImage.RelPath, "", "")');">
-                                <div class="refsoverlay">@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</div>
-                                <div class="refstext">
-                                    <h3 class="refstext-line1">@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h3>
-                                    <h4 class="refstext-line2">@info.GetXmlProperty("genxml/lang/genxml/textbox/title2")</h4>
-                                </div>
-                            </div>
-                        </a>
-                    }
-                    if (info.GetXmlPropertyInt("genxml/select/rbllink") == 2)
-                    {
-                        var externalURL = info.GetXmlProperty("genxml/textbox/externalhref");
-                        <a class="grid-item grid-item@(gridsize) @(cssClassRow)" href="@(externalURL)" target="_blank">
-                            <div class="refsimg" style="background-image:url('@ImageUrl(articleImage.RelPath, "", "")');">
-                                <div class="refsoverlay">@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</div>
-                                <div class="refstext">
-                                    <h3 class="refstext-line1">@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h3>
-                                    <h4 class="refstext-line2">@info.GetXmlProperty("genxml/lang/genxml/textbox/title2")</h4>
-                                </div>
-                            </div>
-                        </a>
                     }
                 }
             }
