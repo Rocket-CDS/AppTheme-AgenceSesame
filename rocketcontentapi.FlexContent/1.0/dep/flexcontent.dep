@@ -15,5 +15,10 @@
 			<url>https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js</url>
 		  <ecofriendly>false</ecofriendly>
 	  </genxml>
+		<genxml>
+			<ctrltype><![CDATA[js]]></ctrltype>
+			<url>{jquery}</url>
+			<ecofriendly>false</ecofriendly>
+		</genxml>
 	</deps>
 </genxml>

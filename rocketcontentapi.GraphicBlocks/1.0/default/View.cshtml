@@ -4,6 +4,11 @@
 @AddProcessDataResx(appThemeView, true)
 <!--inject-->
 
+@{
+    var width = moduleData.GetSettingInt("width");
+    var height = moduleData.GetSettingInt("height");
+}
+
 <div class="@(moduleData.GetSetting("cssclass"))">
 
     <div class="gblockswrapper">
@@ -13,57 +18,46 @@
         <div class="gblocks">
             @foreach (var articleRowData in articleData.GetRows())
             {
+                var rowData = articleRowData.Info;
                 var hideRow = info.GetXmlPropertyBool("genxml/checkbox/hiderow");
                 if (!hideRow)
                 {
+                    var title = rowData.GetXmlProperty("genxml/lang/genxml/textbox/title");
                     var articleImage = articleRowData.GetImage(0);
-                    var width = moduleData.GetSettingInt("width");
-                    var height = moduleData.GetSettingInt("height");
-                    var title = articleRowData.Info.GetXmlProperty("genxml/lang/genxml/textbox/title");
-                    var cssClassRow = "";
-                    if (info.GetXmlProperty("genxml/textbox/cssclass") != "")
-                    {
-                        cssClassRow = info.GetXmlProperty("genxml/textbox/cssclass");
-                    } 
-                    if (info.GetXmlPropertyInt("genxml/select/rbllink") == 0)
-                    {
-                        <div class="gblock @(cssClassRow)">
-                            <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@title" />
-                            <div class="gblockstext">
-                            <h2>@title</h2>
-                                <h3>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/text")</h3>
-                            </div>
-                        </div>
-                    }
-                    if (info.GetXmlPropertyInt("genxml/select/rbllink") == 1)
-                    {
-                        var tabddlvalue = PagesUtils.NavigateURL(info.GetXmlPropertyInt("genxml/select/linktab"));
-                        var anchor = "";
-                        if (info.GetXmlProperty("genxml/lang/genxml/textbox/linkanchor") != "")
+
+                    foreach (var linkData in articleRowData.Getlinks())
+                    {                        
+                        if (!linkData.Hidden)
                         {
-                            anchor = "#" + info.GetXmlProperty("genxml/lang/genxml/textbox/linkanchor");
+                            var cssClassRow = "";
+                            if (info.GetXmlProperty("genxml/textbox/cssclass") != "")
+                            {
+                                cssClassRow = info.GetXmlProperty("genxml/textbox/cssclass");
+                            }
+                            if (linkData.IsDisabled)
+                            {
+                                <div class="gblock @(cssClassRow)">
+                                <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@title" />
+                                <div class="gblockstext">
+                                    <h2>@title</h2>
+                                    <h3>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/text")</h3>
+                                </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <a class="gblock @(cssClassRow)" href="@(linkData.Url)" target="@(linkData.Target)">
+                                <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@title" />
+                                <div class="gblockstext">
+                                    <h2>@title</h2>
+                                    <h3>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/text")</h3>
+                                </div>
+                                </a>
+                            }
                         }
-                        <a class="gblock @(cssClassRow)" href="@(tabddlvalue)@(anchor)">
-                            <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@title" />
-                            <div class="gblockstext">
-                            <h2>@title</h2>
-                                <h3>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/text")</h3>
-                            </div>
-                        </a>
-                    }
-                    if (info.GetXmlPropertyInt("genxml/select/rbllink") == 2)
-                    {
-                        var externalURL = info.GetXmlProperty("genxml/textbox/externalhref");
-                        <a class="gblock @(cssClassRow)" href="@(externalURL)" target="_blank">
-                            <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@title" />
-                            <div class="gblockstext">
-                            <h2>@title</h2>
-                                <h3>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/text")</h3>
-                            </div>
-                        </a>
                     }
                 }
             }
-        </div>
+        </a>
     </div>
 </div>

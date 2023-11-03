@@ -3,6 +3,7 @@
     <genxml>
       <ctrltype><![CDATA[js]]></ctrltype>
       <url><![CDATA[{appthemefolder}/js/responsiveslides.min.js]]></url>
-    </genxml>
+		<ecofriendly>true</ecofriendly>
+	</genxml>
 	</deps>
 </genxml>

@@ -3,6 +3,7 @@
     <genxml>
       <ctrltype><![CDATA[js]]></ctrltype>
       <url>{jquery}</url>
-    </genxml>
+		<ecofriendly>true</ecofriendly>
+	</genxml>
   </deps>
 </genxml>

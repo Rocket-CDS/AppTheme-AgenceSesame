@@ -1,97 +1,70 @@
 ﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketContentAPI.Components;
 @using DNNrocketAPI.Components;
-@using RocketPortal.Components;
-
+@using RocketContentAPI.Components;
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
 
 @{
-    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
-    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
-    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
-    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
-    var globalSettings = new SystemGlobalData();
 
-    var headingArticleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
-    var hInfo = headingArticleRowData.Info;
     var mask = "";
-
-    AddProcessDataResx(appThemeView);
-    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
-
-    var cssClass = "";
-    if (moduleData.Record.GetXmlProperty("genxml/setting/cssclass") != "")
-    {
-        cssClass = "class=" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass");
-    }
-
-    if (moduleData.Record.GetXmlPropertyBool("genxml/settings/mask"))
+    if (moduleData.GetSettingBool("genxml/settings/mask"))
     {
         mask = "rs-mask";
     }
-
-    var crop = moduleData.Record.GetXmlProperty("genxml/settings/crop");
-
+    var crop = moduleData.GetSetting("genxml/settings/crop");
+    var width = moduleData.GetSettingInt("width");
+    var height = moduleData.GetSettingInt("height");
+    var separationLine = moduleData.GetSettingBool("separation");
 }
-<div @(cssClass)>
+<div @(moduleData.GetSetting("cssclass"))>
     <div class="slider-container @(mask)">
         <ul class="rslides" id="heroslider">
             @foreach (var articleRowData in articleData.GetRows())
             {
-                Model.SetDataObject("articlerow", articleRowData);
-                var info = articleRowData.Info;
-                var hideRow = info.GetXmlPropertyBool("genxml/checkbox/hiderow");
-
-                var datalist = articleRowData.GetImageList();
-                var imgInfo = datalist.First();
-                var articleImage = new ArticleImage(imgInfo, "articleimage");
-
-                var width = moduleData.Record.GetXmlPropertyInt("genxml/settings/width");
-                var height = moduleData.Record.GetXmlPropertyInt("genxml/settings/height");
-
-                var separationLine = moduleData.Record.GetXmlPropertyBool("genxml/settings/separation");
+                rowData = articleRowData.Info;
+                var hideRow = rowData.GetXmlPropertyBool("genxml/checkbox/hiderow");
                 if (!hideRow)
                 {
-                    <li style="background: url('@ImageUrl(articleImage.RelPathWebp, width, height, "", "webp")') center @(crop) no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;" class="@info.GetXmlProperty("genxml/lang/genxml/textbox/cssclass")">
+                    var articleImage = articleRowData.GetImage(0);
+                    <li style="background: url('@ImageUrl(articleImage.RelPathWebp, width, height, "", "webp")') center @(crop) no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;" class="@rowData.GetXmlProperty("genxml/lang/genxml/textbox/cssclass")">
                         <div class="caption">
-                            @if (info.GetXmlProperty("genxml/lang/genxml/textbox/title") != "")
+                            @if (rowData.GetXmlProperty("genxml/lang/genxml/textbox/title") != "")
                             {
-                                <h2>@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
+                                <h2>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
                             }
                             @if (separationLine)
                             {
                                 <hr />
                             }
-                            @if (info.GetXmlProperty("genxml/lang/genxml/textbox/title2") != "")
+                            @if (rowData.GetXmlProperty("genxml/lang/genxml/textbox/title2") != "")
                             {
-                                <h3>@info.GetXmlProperty("genxml/lang/genxml/textbox/title2")</h3>
+                                <h3>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title2")</h3>
                             }
-                            @if (info.GetXmlProperty("genxml/lang/genxml/textbox/text") != "")
+                            @if (rowData.GetXmlProperty("genxml/lang/genxml/textbox/text") != "")
                             {
-                                <p>@info.GetXmlProperty("genxml/lang/genxml/textbox/text")</p>
+                                <p>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/text")</p>
                             }
-                            @if (info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle") != "")
+                            @if (rowData.GetXmlProperty("genxml/lang/genxml/textbox/linktitle") != "")
                             {
-                                if (info.GetXmlPropertyInt("genxml/select/rbllink") == 1)
+                                if (rowData.GetXmlPropertyInt("genxml/select/rbllink") == 1)
                                 {
-                                    var tabddlvalue = PagesUtils.NavigateURL(info.GetXmlPropertyInt("genxml/select/linktab"));
+                                    var tabddlvalue = PagesUtils.NavigateURL(rowData.GetXmlPropertyInt("genxml/select/linktab"));
                                     var anchor = "";
-                                    if (info.GetXmlProperty("genxml/textbox/linkanchor") != "")
+                                    if (rowData.GetXmlProperty("genxml/textbox/linkanchor") != "")
                                     {
-                                        anchor = "#" + info.GetXmlProperty("genxml/textbox/linkanchor");
+                                        anchor = "#" + rowData.GetXmlProperty("genxml/textbox/linkanchor");
                                     }
-                                    <a href="@(tabddlvalue)@(anchor)" class="bigbutton">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
+                                    <a href="@(tabddlvalue)@(anchor)" class="bigbutton">@rowData.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
                                 }
-                                if (info.GetXmlPropertyInt("genxml/select/rbllink") == 2)
+                                if (rowData.GetXmlPropertyInt("genxml/select/rbllink") == 2)
                                 {
                                     var blank = "";
-                                    if (info.GetXmlPropertyBool("genxml/checkbox/blank"))
+                                    if (rowData.GetXmlPropertyBool("genxml/checkbox/blank"))
                                     {
                                         blank = "_blank";
                                     }
-                                    <a href="@info.GetXmlProperty("genxml/textbox/externalhref")" target="@(blank)" class="bigbutton">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
+                                    <a href="@rowData.GetXmlProperty("genxml/textbox/externalhref")" target="@(blank)" class="bigbutton">@rowData.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
                                 }
                             }
                         </div>

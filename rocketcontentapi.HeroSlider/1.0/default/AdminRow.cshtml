@@ -4,8 +4,7 @@
 <!--inject-->
 
 <!-- require Key for saving -->
-@HiddenField(info, "genxml/config/rowkey")
-@HiddenField(info, "genxml/lang/genxml/config/rowkeylang", "", articleRowData.RowKey)
+@RowKey(rowData)
 
 <div class='w3-row w3-padding'>
     <div class="w3-bar" style="cursor: pointer;">
@@ -15,32 +14,19 @@
     </div>
 
     <div id="heading" class='w3-row sectionname' style="display:none">
-        <div class='w3-row w3-margin-top w3-border'>
-            <div class="w3-half">
-                <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
-                    <label>@ResourceKey("DNNrocket.title1")</label>		&nbsp;@EditFlag(sessionParams)
-                    @TextBox(info, "genxml/lang/genxml/textbox/title", " class='w3-input w3-border' autocomplete='off'", "", false, 0)
-                </div>
-            </div>
+        <div class='w3-row w3-padding' style='min-width: 200px;'>
+            <label>@ResourceKey("DNNrocket.title1")</label>		&nbsp;@EditFlag(sessionParams)
+            @TextBox(info, "genxml/lang/genxml/textbox/title", " class='w3-input w3-border' autocomplete='off'", "", false, 0)
         </div>
-        <div class='w3-row w3-margin-top w3-border'>
-            <div class="w3-half">
-                <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
-                    <label>@ResourceKey("DNNrocket.title2")</label>		&nbsp;@EditFlag(sessionParams)
-                    @TextBox(info, "genxml/lang/genxml/textbox/title2", " class='w3-input w3-border' autocomplete='off' ", "", false, 0)
-                </div>
-            </div>
+        <div class='w3-row w3-padding' style='min-width: 200px;'>
+            <label>@ResourceKey("DNNrocket.title2")</label>		&nbsp;@EditFlag(sessionParams)
+            @TextBox(info, "genxml/lang/genxml/textbox/title2", " class='w3-input w3-border' autocomplete='off' ", "", false, 0)
         </div>
-        <div class='w3-row w3-margin-top w3-border'>
-            <div class="w3-half">
-                <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
-                    <label>@ResourceKey("DNNrocket.content")</label>		&nbsp;@EditFlag(sessionParams)
-                    @TextArea(info, "genxml/lang/genxml/textbox/text", " rows='4' class='w3-input w3-border' autocomplete='off' ", "", false, 0)
-                </div>
-            </div>
+        <div class='w3-row w3-padding' style='min-width: 200px;'>
+            <label>@ResourceKey("DNNrocket.content")</label>		&nbsp;@EditFlag(sessionParams)
+            @TextArea(info, "genxml/lang/genxml/textbox/text", " rows='4' class='w3-input w3-border' autocomplete='off' ", "", false, 0)
         </div>
-        <!-- CSS CLASS FOR THE ROW -->
-        <div class='w3-col m6'>
+        <div class='w3-row w3-padding' style='min-width: 200px;'>
             <label>@ResourceKey("DNNrocket.cssClass")</label>
             @TextBox(info, "genxml/lang/genxml/textbox/cssclass", " class='w3-input w3-border' autocomplete='off'", "", false, 0)
         </div>
