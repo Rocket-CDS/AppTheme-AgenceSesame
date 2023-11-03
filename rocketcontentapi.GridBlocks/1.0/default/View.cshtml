@@ -3,15 +3,8 @@
 @AssigDataModel(Model)
 @AddProcessDataResx(appThemeView, true)
 <!--inject-->
-@{
-    var cssClass = "";
-    if (moduleData.GetSetting("cssclass") != "")
-    {
-        cssClass = "class=" + moduleData.GetSetting("cssclass");
-    }
-}
 
-<div @(cssClass)>
+<div class="@(moduleData.GetSetting("cssclass"))">
 
     <div class="grid-wrapper">
 

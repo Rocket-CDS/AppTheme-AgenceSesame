@@ -1,0 +1,14 @@
+﻿<genxml>
+	<deps list="true">
+		<genxml>
+			<ctrltype><![CDATA[js]]></ctrltype>
+			<url>https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js</url>
+			<ecofriendly>true</ecofriendly>		
+		</genxml>
+		<genxml>
+			<ctrltype><![CDATA[js]]></ctrltype>
+			<url>https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js</url>
+			<ecofriendly>true</ecofriendly>
+	  </genxml>
+	</deps>
+</genxml>
