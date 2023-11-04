@@ -1,41 +1,23 @@
 ﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketContentAPI.Components;
 @using DNNrocketAPI.Components;
-@using RocketPortal.Components;
-
+@using RocketContentAPI.Components;
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
 
 @{
-    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
-    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
-    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
-    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
-    var globalSettings = new SystemGlobalData();
 
-    var headingArticleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
-    var hInfo = headingArticleRowData.Info;
-
-    AddProcessDataResx(appThemeView);
-    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
-
-    var width = moduleData.Record.GetXmlProperty("genxml/settings/width");
-    var height = moduleData.Record.GetXmlProperty("genxml/settings/height");
-
-    var zoom = moduleData.Record.GetXmlPropertyInt("genxml/settings/zoom");
-    var mapLong = moduleData.Record.GetXmlPropertyInt("genxml/settings/long");
-    var mapLat = moduleData.Record.GetXmlPropertyInt("genxml/settings/lat");
-
-    var cssClass = "";
-    if (moduleData.Record.GetXmlProperty("genxml/setting/cssclass") != "")
-    {
-        cssClass = "class=" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass");
-    }
+    var width = moduleData.GetSettingInt("width");
+    var height = moduleData.GetSettingInt("height");
+    var zoom = moduleData.GetSettingInt("zoom");
+    var mapLong = moduleData.GetSettingInt("long");
+    var mapLat = moduleData.GetSettingInt("lat");
 }
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.js" integrity="sha512-SeiQaaDh73yrb56sTW/RgVdi/mMqNeM2oBwubFHagc5BkixSpP1fvqF47mKzPGWYSSy4RwbBunrJBQ4Co8fRWA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<div class="@(moduleData.GetSettingInt("cssclass"))">
+    [INJECT:appthemesystem,ArticleHeaderView.cshtml]
+    <div id="map-canvas" style="width:@(width)%;height:@(height)px"></div>
+</div>
 
 <script type="text/javascript">
     var map = '';
@@ -51,10 +33,12 @@
 
       var markers = [
     @foreach (var articleRowData in articleData.GetRows())
-    {
-        Model.SetDataObject("articlerow", articleRowData);
+    {        
         var info = articleRowData.Info;
-        @:L.marker([@info.GetXmlProperty("genxml/lang/genxml/textbox/latitude"), @info.GetXmlProperty("genxml/lang/genxml/textbox/longitude")]).bindPopup('@info.GetXmlProperty("genxml/lang/genxml/textbox/title")'),
+        if (articleRowData.Get("genxml/textbox/lat") != "" && articleRowData.Get("genxml/textbox/long") != "")
+        {
+            @:L.marker([@articleRowData.Get("genxml/textbox/lat"), @articleRowData.Get("genxml/textbox/long")]).bindPopup('@articleRowData.Get("genxml/lang/genxml/textbox/title")'),            
+        }
     }
     ];
         var group = L.featureGroup(markers).addTo(map);
@@ -70,37 +54,3 @@
     }
 </script>
 
-<div @(cssClass)>
-    <!-- HEADER SECTION -->
-    @{
-        var headerStyle = articleData.Info.GetXmlProperty("genxml/header/headerstyle");
-        var moduleTitle = articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headertitle");
-    }
-
-    @if (headerStyle == "")
-    {
-        headerStyle = "h1";
-    }
-    @if (moduleTitle != "")
-    {
-        var headerAlignText = articleData.Info.GetXmlProperty("genxml/header/headeralign");
-        if (headerStyle.ToLower() == "h1")
-        {
-            <h1 id="@articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor")" style="text-align: @headerAlignText;">@moduleTitle</h1>
-        }
-        if (headerStyle.ToLower() == "h2")
-        {
-            <h2 id="@articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor")" style="text-align: @headerAlignText;">@moduleTitle</h2>
-        }
-        if (headerStyle.ToLower() == "h3")
-        {
-            <h3 id="@articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor")" style="text-align: @headerAlignText;">@moduleTitle</h3>
-        }
-        if (headerStyle.ToLower() == "h4")
-        {
-            <h4 id="@articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor")" style="text-align: @headerAlignText;">@moduleTitle</h4>
-        }
-    }
-    <!-- The map is displayed here -->
-    <div id="map-canvas" style="width:@(width);height:@(height)px"></div>
-</div>

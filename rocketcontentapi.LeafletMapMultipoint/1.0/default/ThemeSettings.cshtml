@@ -1,34 +1,24 @@
 ﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketContentAPI.Components;
-@using DNNrocketAPI.Components;
-@using RocketPortal.Components;
-
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeAdmin, true)
+<!--inject-->
 @{
-    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
-    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-    var info = new SimplisityInfo(moduleData.Record);
-
-    AddProcessDataResx(appThemeAdmin, true);
-    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
-
+    var info = moduleDataInfo;
     //NOTE: xPath for module settings must use "genxml/settings/*"
 }
 
 <div class="w3-row">
     <div class="w3-third w3-padding">
-        <label>@ResourceKey("DNNrocket.mapWidth") (px)</label>
-        <!-- you have to write the unit of measure -->
-        @TextBox(info, "genxml/settings/width", " class='w3-input w3-border'", "100%")
+        <label>@ResourceKey("DNNrocket.width") %</label>
+        @TextBox(info, "genxml/settings/width", " class='w3-input w3-border'", "100",false,0,"","number")
     </div>
     <div class="w3-third w3-padding">
-        <label>@ResourceKey("DNNrocket.mapHeight") (px)</label>
-        @TextBox(info, "genxml/settings/height", " class='w3-input w3-border'", "640")
+        <label>@ResourceKey("DNNrocket.height") (px)</label>
+        @TextBox(info, "genxml/settings/height", " class='w3-input w3-border'", "640",false,0,"","number")
     </div>
     <div class="w3-third w3-padding">
-        <label>@ResourceKey("DNNrocket.zoom") %</label>
-        @TextBox(info, "genxml/settings/zoom", " class='w3-input w3-border'", "50")
+        <label>@ResourceKey("LeafletMapMultipoint.zoom") %</label>
+        @TextBox(info, "genxml/settings/zoom", " class='w3-input w3-border'", "50",false,0,"","number")
     </div>
 </div>
 <div class="w3-row">
