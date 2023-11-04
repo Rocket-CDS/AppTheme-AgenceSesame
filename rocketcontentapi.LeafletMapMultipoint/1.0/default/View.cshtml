@@ -35,7 +35,7 @@
     @foreach (var articleRowData in articleData.GetRows())
     {        
         var info = articleRowData.Info;
-        if (articleRowData.Get("genxml/textbox/lat") != "" && articleRowData.Get("genxml/textbox/long") != "")
+        if (!articleRowData.IsHidden && articleRowData.Get("genxml/textbox/lat") != "" && articleRowData.Get("genxml/textbox/long") != "")
         {
             @:L.marker([@articleRowData.Get("genxml/textbox/lat"), @articleRowData.Get("genxml/textbox/long")]).bindPopup('@articleRowData.Get("genxml/lang/genxml/textbox/title")'),            
         }
