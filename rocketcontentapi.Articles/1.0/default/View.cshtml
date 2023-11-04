@@ -90,7 +90,7 @@ else
             <div class="blog">
                 @foreach (var articleRowData in articleData.GetRows())
                 {
-                    if (!articleRowData.GetBool("genxml/checkbox/hiderow"))
+                    if (!articleRowData.IsHidden)
                     {
                         var title = articleRowData.Get("genxml/lang/genxml/textbox/title");
                         var detailurl = DetailUrl(moduleData.GetSettingInt("listtabid"), title, articleRowData.RowKey).ToString();

@@ -12,9 +12,8 @@
             Model.SetDataObject("articlerow", articleRowData); // needed to pass rowData 
             var rowData = articleRowData.Info;
             var layout = rowData.GetXmlPropertyInt("genxml/select/layout");
-            var hideRow = rowData.GetXmlPropertyBool("genxml/checkbox/hiderow");
 
-            if (!hideRow)
+            if (!articleRowData.IsHidden)
             {
                 // Cannot use INJECT because we will get multiple defined vars.
                 @RenderTemplate("layout" + layout + ".cshtml", moduleData.ModuleRef, appThemeView, Model, true)

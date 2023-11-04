@@ -33,7 +33,14 @@
             }
             @RadioButtonList(rowData, "genxml/select/layout", "0,1,2,3,4", imgLayoutList, "class='  ' ", "0", "", false, 0)
         </div>
+
         [INJECT:appthemesystem,ArticleRowHeader.cshtml]
+
+        <div class='w3-right w3-padding'>
+            <label>@ResourceKey("DNNrocket.hiderow")</label><br />
+            @CheckBoxRowIsHidden(rowData)
+        </div>
+
     </div>
 
     <div id="html" class='w3-row sectionname' style="display:none">
@@ -82,11 +89,7 @@
     </div>
 
     <div id="advanced" class='w3-row sectionname' style="display:none">
-        <div class='w3-quarter w3-padding'>
-            <label>@ResourceKey("DNNrocket.hiderow")</label><br />
-            @CheckBox(rowData, "genxml/checkbox/hiderow", "", "class='w3-check' ", false, false, 0)
-        </div>
-        <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
+        <div class='w3-half w3-padding' style='min-width: 200px;'>
             <label>@ResourceKey("DNNrocket.cssClass")</label>
             @TextBox(rowData, "genxml/textbox/cssclass", "class='w3-input w3-border' autocomplete='off'", "", true, 0)
         </div>

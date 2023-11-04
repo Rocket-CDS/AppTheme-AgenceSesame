@@ -1,111 +1,37 @@
 ﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketContentAPI.Components;
 @using DNNrocketAPI.Components;
-@using RocketPortal.Components;
-
-
+@using RocketContentAPI.Components;
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
 @{
-    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
-    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-
-    var cssClass = "";
-    if (moduleData.Record.GetXmlProperty("genxml/setting/cssclass") != "")
-    {
-        cssClass = "class=" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass");
-    }
-
     var width = moduleData.Record.GetXmlPropertyInt("genxml/settings/width");
     var height = moduleData.Record.GetXmlPropertyInt("genxml/settings/height");
 }
-
-@foreach (var articleRowData in articleData.GetRows())
-{
-    var info = articleRowData.Info;
-    <div @(cssClass)>
-        <div class="labelswrapper">
-
-            <!-- Header Section -->
-            @{
-                var moduleTitle = articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headertitle");
-                var moduleText = articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headertext");
-            }
-            @if (moduleTitle != "")
+<div class="@(moduleData.GetSetting("cssclass"))">
+    <div class="labelswrapper">
+        [INJECT: appthemesystem,ArticleHeaderView.cshtml]
+        <div class="labels">
+            @foreach (var articleRowData in articleData.GetRows())
             {
-                var headerStyle = articleData.Info.GetXmlProperty("genxml/header/headerstyle");
-                if (headerStyle == "")
+                if (!articleRowData.IsHidden)
                 {
-                    headerStyle = "h2";
-                }
-                var headerAlignText = articleData.Info.GetXmlProperty("genxml/header/headeralign");
-                if (headerAlignText == "")
-                {
-                    headerAlignText = "start";
-                }
-                var headerAnchor = "";
-                if (articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor") != "")
-                {
-                    headerAnchor = " id=" + articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor");
-                }
-                if (headerStyle == "h1")
-                {
-                    <h1 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h1>
-                }
-                if (headerStyle == "h2")
-                {
-                    <h2 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h2>
-                }
-                if (headerStyle == "h3")
-                {
-                    <h3 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h3>
-                }
-                if (headerStyle == "h4")
-                {
-                    <h4 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h4>
-                }
-            }
-            @if (moduleText != "")
-            {
-                <p>@moduleText</p>
-            }
-            
-            <div class="labels">
-                @{
-                    var datalist = articleRowData.GetImageList();
-                    var index = 0;
-                }
-                @foreach (var imgInfo in datalist)
-                {
-                    var articleImage = new ArticleImage(imgInfo, "articleimage");
-                    if (articleImage.RelPath != "")
+                    var rowData = articleRowData.Info;
+                    var linkData = articleRowData.Getlink(0);
+                    var articleImage = articleRowData.GetImage(0);
+                    if (linkData.IsDisabled)
                     {
-                        index++;
-                        <div class="label">
-                            @{
-                                if (@info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imageredirectlink") != "")
-                                {
-                                    var blank = "";
-                                    if (info.GetXmlPropertyBool("genxml/imagelist/genxml[" + @index + "]/checkbox/blank"))
-                                    {
-                                        blank = "_blank";
-                                    }
-                                    <a href="@info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imageredirectlink")" target="@(blank)">
-                                        <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage")" />
-                                    </a>
-                                }
-                                else
-                                {
-                                    <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@info.GetXmlProperty("genxml/imagelist/genxml[" + @index + "]/hidden/imagealtarticleimage")" />
-                                }
-                            }
-                        </div>
+                        <img src="@ImageUrl(articleImage.RelPathWebp, width, height)" alt="@(articleImage.Alt)" />                    
                     }
+                    else
+                    {
+                        <a href="@(linkData.Url)" target="@(linkData.Target)">
+                            <img src="@ImageUrl(articleImage.RelPathWebp, width, height)" alt="@(articleImage.Alt)" />
+                        </a>
+                    }                    
                 }
-            </div>
-            
+            }
         </div>
     </div>
-}
-
+</div>
 
