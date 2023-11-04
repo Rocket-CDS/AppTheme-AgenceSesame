@@ -1,29 +1,12 @@
 ﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketContentAPI.Components;
 @using DNNrocketAPI.Components;
-@using RocketPortal.Components;
+@using RocketContentAPI.Components;
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
 
-
-@{
-    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
-    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");  
-}
-
-@foreach (var articleRowData in articleData.GetRows())
-{
-    var info = articleRowData.Info;
-    var cssClass = "";
-    if (moduleData.Record.GetXmlProperty("genxml/setting/cssclass") != "")
-    {
-        cssClass = "class=" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass");
-    }
-    <div @(cssClass)>
-    <div class="htmltext">
-        @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/htmltext"))
-    </div>
-    </div>
-}
-
-
+<div class="@(moduleData.GetSetting("cssclass"))">
+<div class="htmltext">
+    @HtmlOf(rowData.GetXmlProperty("genxml/lang/genxml/textbox/htmltext"))
+</div>
+</div>
