@@ -1,38 +1,16 @@
 @inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
-@using RocketDirectoryAPI.Components;
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketPortal.Components;
 @using DNNrocketAPI.Components;
-@using System.Globalization;
-@using Rocket.AppThemes.Components;
-
+@using RocketDirectoryAPI.Components;
+@AssigDataModel(Model)
+@AddProcessDataResx(appTheme, true)
+<!--inject-->
 @{
-    var info = new SimplisityInfo();
-    var articleData = (ArticleLimpet)Model.List.First();
-    if (articleData.Info != null)
-    {
-        info = articleData.Info;
-    }
-    var portalCatalog = (PortalCatalogLimpet)Model.GetDataObject("portalcatalog");
-    var appThemeSystem = (AppThemeSystemLimpet)Model.GetDataObject("appthemesystem");
-    var appThemeDirectory = (AppThemeSystemLimpet)Model.GetDataObject("appthemedirectory");
-    var sessionParams = Model.SessionParamsData;
-    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
-    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("apptheme");
-    var systemData = (SystemLimpet)Model.GetDataObject("systemdata");
-
-    AddProcessDataResx(appThemeAdmin, true);
-    AddProcessData("resourcepath", systemData.SystemRelPath + "/App_LocalResources/");
-
     var moduleedit = sessionParams.Info.GetXmlPropertyBool("r/moduleedit");
     var sfieldDict = new Dictionary<string, string>();
     sfieldDict.Add("articleid", articleData.ArticleId.ToString());
     sfieldDict.Add("moduleedit", moduleedit.ToString());
     sfieldDict.Add("tabid", sessionParams.TabId.ToString());
 }
-@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/Images/App_LocalResources/")
-@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources")
 
 @RenderLanguageSelector("articleadmin_editarticle", sfieldDict, appThemeDirectory, Model)
 
@@ -93,7 +71,7 @@
                             @CKEditor4(info, "genxml/lang/genxml/textbox/richtext", true)
                         </div>
                         <div class=" w3-row w3-padding">
-                            @RenderTemplate("AdminExtra.cshtml", appThemeAdmin, Model, true)
+                            @RenderTemplate("AdminExtra.cshtml", appTheme, Model, true)
                         </div>
                     </div>
 
@@ -121,14 +99,14 @@
                 </div>
                 <div class="w3-third w3-padding-small">
 
-                    <div onclick="$('#categoriestab').toggle();$('#categoriestabexpand').toggle();" class="w3-button w3-block w3-theme-l3 w3-left-align  w3-margin-top">
+                    <div onclick="$('#categoriestab').toggle();$('#categoriestabexpand').toggle();" class="w3-button w3-block w3-theme-l3 w3-left-align ">
                         @ResourceKey("RC.categories")
                         <span id="categoriestabexpand" class="material-icons w3-right" style="display:none;">
                             unfold_more
                         </span>
                     </div>
                     <div id="categoriestab" class='w3-row sectionname a-articlecategorylist w3-border w3-padding' style="">
-                        @RenderTemplate("ArticleCategoryList.cshtml", appThemeDirectory, Model, true)
+                        [INJECT:appthemedirectory,ArticleCategoryList.cshtml]
                     </div>
 
                     <div onclick="$('#propertiestab').toggle();$('#propertiestabexpand').toggle();" class="w3-button w3-block w3-theme-l3 w3-left-align  w3-margin-top">
@@ -138,7 +116,7 @@
                         </span>
                     </div>
                     <div id="propertiestab" class='w3-row sectionname a-articlepropertylist w3-border w3-padding' style="">
-                        @RenderTemplate("ArticlePropertyList.cshtml", appThemeDirectory, Model, true)
+                        [INJECT:appthemedirectory,ArticlePropertyList.cshtml]
                     </div>
 
                     <div onclick="$('#imgs').toggle();$('#imgsexpand').toggle();" class="w3-button w3-block w3-theme-l3 w3-left-align w3-margin-top">
