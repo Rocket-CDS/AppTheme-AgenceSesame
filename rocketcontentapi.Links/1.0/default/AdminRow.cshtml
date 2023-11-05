@@ -1,47 +1,28 @@
 @inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketContentAPI.Components;
 @using DNNrocketAPI.Components;
-@using RocketPortal.Components;
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeAdmin, true)
+<!--inject-->
+<!-- require Key for saving -->
+@RowKey(rowData)
 
 @{
-    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
-    var articleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
-    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
-    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
-    var appThemeSystem = (AppThemeSystemLimpet)Model.GetDataObject("appthemesystem");
-    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
-    var globalSettings = new SystemGlobalData();
-    var sessionParams = Model.SessionParamsData;
-    if (sessionParams == null)
+    var hidecssclass = "";
+    if (!UserUtils.IsAdministrator())
     {
-        sessionParams = new SessionParams(new SimplisityInfo());
+        hidecssclass = " w3-hide ";
     }
-    var info = new SimplisityInfo();
-    if (articleRowData != null && articleRowData.Info != null)
-    {
-        info = articleRowData.Info;
-    }
-
-    AddProcessDataResx(appThemeView, true);
-    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
-    AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppTheme-AgenceSesame/resx/");
-    AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/");
 }
-<!-- require Key for saving -->
-@HiddenField(info, "genxml/config/rowkey")
-@HiddenField(info, "genxml/lang/genxml/config/rowkeylang", "", articleRowData.RowKey)
 
 <div class='w3-row w3-padding'>
-    <div class='w3-col m12'>
-        @RenderTemplate("ArticleLink.cshtml", appThemeSystem, Model, true)
-    </div>
-    <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
+
+    <div class='w3-third w3-margin-bottom @(hidecssclass)' style='min-width: 200px;'>
         <label>@ResourceKey("DNNrocket.cssClass")</label>
         @TextBox(info, "genxml/textbox/cssclass", "class='w3-input w3-border' autocomplete='off'", "", true, 0)
     </div>
+
+    [INJECT:appthemesystem,ArticleLinks.cshtml]
+
 </div>
 
 

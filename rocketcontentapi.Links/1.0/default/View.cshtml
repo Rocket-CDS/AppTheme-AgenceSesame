@@ -1,111 +1,28 @@
 ﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketContentAPI.Components;
 @using DNNrocketAPI.Components;
-@using RocketPortal.Components;
+@using RocketContentAPI.Components;
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
 
-@{
-    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
-    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
-    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
-    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
-    var globalSettings = new SystemGlobalData();
-
-    AddProcessDataResx(appThemeView);
-    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContent/App_LocalResources/");
-
-    var headingArticleRowData = (ArticleRowLimpet)Model.GetDataObject("articlerow");
-    var hInfo = headingArticleRowData.Info;
-
-    var cssClass = "";
-    if (moduleData.Record.GetXmlProperty("genxml/setting/cssclass") != "")
-    {
-        cssClass = "class=" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass");
-    }
-}
-
-<div @(cssClass)>
+<div class="@(moduleData.GetSetting("cssclass"))">
 
     <div class="linkswrapper">
 
-        <!-- Header Section -->
-        @{
-            var moduleTitle = articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headertitle");
-            var moduleText = articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headertext");
-        }
-        @if (moduleTitle != "")
-        {
-            var headerStyle = articleData.Info.GetXmlProperty("genxml/header/headerstyle");
-            if (headerStyle == "")
-            {
-                headerStyle = "h2";
-            }
-            var headerAlignText = articleData.Info.GetXmlProperty("genxml/header/headeralign");
-            var headerAnchor = "";
-            if (articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor") != "")
-            {
-                headerAnchor = " id=" + articleData.Info.GetXmlProperty("genxml/lang/genxml/header/headeranchor");
-            }
-            if (headerStyle == "h1")
-            {
-                <h1 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h1>
-            }
-            if (headerStyle == "h2")
-            {
-                <h2 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h2>
-            }
-            if (headerStyle == "h3")
-            {
-                <h3 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h3>
-            }
-            if (headerStyle == "h4")
-            {
-                <h4 style="text-align:@headerAlignText;"@(headerAnchor)>@moduleTitle</h4>
-            }
-        }
-        @if (moduleText != "")
-        {
-            <p>@moduleText</p>
-        }
+        [INJECT:appthemesystem,ArticleHeaderView.cshtml]
 
         <ul class="links">
-            @foreach (var articleRowData in articleData.GetRows())
-            {
-                Model.SetDataObject("articlerow", articleRowData);
-                var info = articleRowData.Info;
-                var cssRow = "";
-                if (info.GetXmlProperty("genxml/textbox/cssclass") != "")
-                {
-                    cssRow = "class=" + info.GetXmlProperty("genxml/textbox/cssclass");
-                }
 
-                <li @(cssRow)>
-                    <!-- Lien interne -->
-                    @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 1)
-                    {
-                        var tabddlvalue = PagesUtils.NavigateURL(info.GetXmlPropertyInt("genxml/select/linktab"));
-                        var anchor = "";
-                        if (info.GetXmlProperty("genxml/lang/genxml/textbox/linkanchor") != "")
-                        {
-                            anchor = "#" + info.GetXmlProperty("genxml/lang/genxml/textbox/linkanchor");
-                        }
-                        <a href="@(tabddlvalue)@(anchor)">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
-                    }
-                    <!-- Lien externe -->
-                    @if (info.GetXmlPropertyInt("genxml/select/rbllink") == 2)
-                    {
-                        var externalURL = info.GetXmlProperty("genxml/textbox/externalhref");
-                        var blank = "";
-                        if (@info.GetXmlPropertyBool("genxml/checkbox/blank"))
-                        {
-                            blank = "_blank";
-                        }
-                        <a href="@(externalURL)" target="@(blank)">@info.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
-                    }
-                </li>
+            @foreach (var linkData in articleRowData.Getlinks())
+            {
+                if (!linkData.Hidden)
+                {
+                    <li class="@(rowData.GetXmlProperty("genxml/textbox/cssclass"))">
+                        <a href="@(linkData.Url)" target="@(linkData.Target)">@linkData.Name</a>
+                    </li>
+                }
             }
+
         </ul>
 
     </div>
