@@ -3,15 +3,8 @@
 @AssigDataModel(Model)
 @AddProcessDataResx(appThemeView, true)
 <!--inject-->
-@{
-    var cssClass = "";
-    if (moduleData.GetSetting("cssclass") != "")
-    {
-        cssClass = "class=" + moduleData.GetSetting("cssclass");
-    }
-}
 
-<div @(cssClass)>
+<div class="@(moduleData.GetSetting("cssclass"))">
 
     <div class="svgblockswrapper">
 
@@ -20,44 +13,28 @@
         <div class="svgblocks">
             @foreach (var articleRowData in articleData.GetRows())
             {
-                var hideRow = info.GetXmlPropertyBool("genxml/checkbox/hiderow");
+                rowData = articleRowData.Info;
+                var hideRow = rowData.GetXmlPropertyBool("genxml/checkbox/hiderow");
                 if (!hideRow)
                 {
-                    var cssClassRow = "";
-                    if (info.GetXmlProperty("genxml/textbox/cssclass") != "")
-                    {
-                        cssClassRow = info.GetXmlProperty("genxml/textbox/cssclass");
-                    } 
-                    if (info.GetXmlPropertyInt("genxml/select/rbllink") == 0)
+                    var linkData = articleRowData.Getlink(0);
+                    var cssClassRow = rowData.GetXmlProperty("genxml/textbox/cssclass");
+
+                    if (linkData.IsDisabled)
                     {
                         <div class="svgblock @(cssClassRow)">
-                            <div class="svgblockicon">@HtmlOf(info, "genxml/lang/genxml/textbox/svgcode")</div>
+                            <div class="svgblockicon">@HtmlOf(rowData, "genxml/lang/genxml/textbox/svgcode")</div>
                             <h3>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h3>
                             <p>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/resume")</p>
                         </div>
                     }
-                    if (info.GetXmlPropertyInt("genxml/select/rbllink") == 1)
+                    else
                     {
-                        var tabddlvalue = PagesUtils.NavigateURL(info.GetXmlPropertyInt("genxml/select/linktab"));
-                        var anchor = "";
-                        if (info.GetXmlProperty("genxml/lang/genxml/textbox/linkanchor") != "")
-                        {
-                            anchor = "#" + info.GetXmlProperty("genxml/lang/genxml/textbox/linkanchor");
-                        }
-                        <a class="svgblock @(cssClassRow)" href="@(tabddlvalue)@(anchor)">
-                            <div class="svgblockicon">@HtmlOf(info, "genxml/lang/genxml/textbox/svgcode")</div>
+                        <a class="svgblock @(cssClassRow)" href="@(linkData.Url)" target="@(linkData.Target)">
+                            <div class="svgblockicon">@HtmlOf(rowData, "genxml/lang/genxml/textbox/svgcode")</div>
                             <h3>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h3>
                             <p>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/resume")</p>
-                        </a>
-                    }
-                    if (info.GetXmlPropertyInt("genxml/select/rbllink") == 2)
-                    {
-                        var externalURL = info.GetXmlProperty("genxml/textbox/externalhref");
-                        <a class="svgblock @(cssClassRow)" href="@(externalURL)" target="_blank">
-                            <div class="svgblockicon">@HtmlOf(info, "genxml/lang/genxml/textbox/svgcode")</div>
-                            <h3>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h3>
-                            <p>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/resume")</p>
-                        </a>
+                        </a>                        
                     }
                 }
             }
