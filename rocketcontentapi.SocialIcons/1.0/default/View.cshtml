@@ -1,73 +1,52 @@
 ﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketContentAPI.Components;
 @using DNNrocketAPI.Components;
-@using RocketPortal.Components;
+@using RocketContentAPI.Components;
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
 
-
-@{
-    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
-    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
-    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
-    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
-    var globalSettings = new SystemGlobalData();
-
-    var cssClass = "";
-    if (moduleData.Record.GetXmlProperty("genxml/setting/cssclass") != "")
+<div class="@(moduleData.GetSetting("cssclass"))">
+    @if (info.GetXmlProperty("genxml/lang/genxml/textbox/title") != "")
     {
-        cssClass = "class=" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass");
+        <div class="h4-headline">@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</div>
     }
-}
 
-@foreach (var articleRowData in articleData.GetRows())
-{
-    var info = articleRowData.Info;
-
-    <div @(cssClass)>
-        @if (info.GetXmlProperty("genxml/lang/genxml/textbox/title") != "")
+    <div id="@articleRowData.RowKey" class="socialicons si-colored">
+        @if (info.GetXmlProperty("genxml/textbox/twitter") != "")
         {
-            <div class="h4-headline">@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</div>
+            <a href="@info.GetXmlProperty("genxml/textbox/twitter")" class="twittericon" title="twitter" target="_blank"><span class="ri-twitter"></span></a>
         }
 
-        <div id="@articleRowData.RowKey" class="socialicons si-colored">
-            @if (info.GetXmlProperty("genxml/textbox/twitter") != "")
-            {
-                <a href="@info.GetXmlProperty("genxml/textbox/twitter")" class="twittericon" target="_blank"><span class="ri-twitter"></span></a>
-            }
+        @if (info.GetXmlProperty("genxml/textbox/linkedin") != "")
+        {
+            <a href="@info.GetXmlProperty("genxml/textbox/linkedin")" class="linkedinicon" title="linkedin" target="_blank"><span class="ri-linkedin"></span></a>
+        }
 
-            @if (info.GetXmlProperty("genxml/textbox/linkedin") != "")
-            {
-                <a href="@info.GetXmlProperty("genxml/textbox/linkedin")" class="linkedinicon" target="_blank"><span class="ri-linkedin"></span></a>
-            }
-
-            @if (info.GetXmlProperty("genxml/textbox/facebook") != "")
-            {
-                <a href="@info.GetXmlProperty("genxml/textbox/facebook")" class="facebookicon" target="_blank"><span class="ri-facebook"></span></a>
-            }
-            @if (info.GetXmlProperty("genxml/textbox/youtube") != "")
-            {
-                <a href="@info.GetXmlProperty("genxml/textbox/youtube")" class="youtubeicon" target="_blank"><span class="ri-youtube"></span></a>
-            }
-            @if (info.GetXmlProperty("genxml/textbox/pinterest") != "")
-            {
-                <a href="@info.GetXmlProperty("genxml/textbox/pinterest")" class="pinteresticon" target="_blank"><span class="ri-pinterest"></span></a>
-            }
-            @if (info.GetXmlProperty("genxml/textbox/instagram") != "")
-            {
-                <a href="@info.GetXmlProperty("genxml/textbox/instagram")" class="instagramicon" target="_blank"><span class="ri-instagram"></span></a>
-            }
-            @if (info.GetXmlProperty("genxml/textbox/tripadvisor") != "")
-            {
-                <a href="@info.GetXmlProperty("genxml/textbox/tripadvisor")" class="tripadvisoricon" target="_blank"><span class="ri-tripadvisor"></span></a>
-            }
-            @if (info.GetXmlProperty("genxml/textbox/rss") != "")
-            {
-                <a href="@info.GetXmlProperty("genxml/textbox/rss")" class="rssicon" target="_blank"><span class="ri-rss"></span></a>
-            }
-        </div>
+        @if (info.GetXmlProperty("genxml/textbox/facebook") != "")
+        {
+            <a href="@info.GetXmlProperty("genxml/textbox/facebook")" class="facebookicon" title="facebook" target="_blank"><span class="ri-facebook"></span></a>
+        }
+        @if (info.GetXmlProperty("genxml/textbox/youtube") != "")
+        {
+            <a href="@info.GetXmlProperty("genxml/textbox/youtube")" class="youtubeicon" title="youtube" target="_blank"><span class="ri-youtube"></span></a>
+        }
+        @if (info.GetXmlProperty("genxml/textbox/pinterest") != "")
+        {
+            <a href="@info.GetXmlProperty("genxml/textbox/pinterest")" class="pinteresticon" title="pinterest" target="_blank"><span class="ri-pinterest"></span></a>
+        }
+        @if (info.GetXmlProperty("genxml/textbox/instagram") != "")
+        {
+            <a href="@info.GetXmlProperty("genxml/textbox/instagram")" class="instagramicon" title="instagram" target="_blank"><span class="ri-instagram"></span></a>
+        }
+        @if (info.GetXmlProperty("genxml/textbox/tripadvisor") != "")
+        {
+            <a href="@info.GetXmlProperty("genxml/textbox/tripadvisor")" class="tripadvisoricon" title="tripadvisor" target="_blank"><span class="ri-tripadvisor"></span></a>
+        }
+        @if (info.GetXmlProperty("genxml/textbox/rss") != "")
+        {
+            <a href="@info.GetXmlProperty("genxml/textbox/rss")" class="rssicon" title="rss" target="_blank"><span class="ri-rss"></span></a>
+        }
     </div>
-}
+</div>
 
 
