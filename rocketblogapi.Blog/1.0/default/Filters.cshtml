@@ -1,0 +1,22 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@AssigDataModel(Model)
+@AddProcessDataResx(appTheme, true)
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
+<!--inject-->
+
+<div class="filters">
+
+    <h4>Filtrer par :</h4>
+
+    @foreach (var g in catalogSettings.GetPropertyGroups())
+    {
+        <h5>@g.Value</h5>
+        foreach (var p in propertyDataList.GetPropertyList(g.Key))
+        {
+        <div>@p.Name</div>                
+        }
+    }
+
+</div>

@@ -1,32 +1,10 @@
 ﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
-@using RocketDirectoryAPI.Components;
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketPortal.Components;
 @using DNNrocketAPI.Components;
-@using System.Globalization;
-@using Rocket.AppThemes.Components;
-
-@{
-    var sessionParams = (SessionParams)Model.SessionParamsData;
-    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
-    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
-    var categoryList = (CategoryLimpetList)Model.GetDataObject("categorylist");
-    var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
-    var appThemeDefault = (AppThemeLimpet)Model.GetDataObject("appthemedefault");
-    var appThemeDirectory = (AppThemeSystemLimpet)Model.GetDataObject("appthemedirectory");
-    var appThemeDirectoryDefault = (AppThemeLimpet)Model.GetDataObject("appthemedirectorydefault");
-    var catalogSettings = (CatalogSettingsLimpet)Model.GetDataObject("catalogsettings");
-    var propertyList = (PropertyLimpetList)Model.GetDataObject("propertylist");
-    var propertyCheckboxes = new List<PropertyLimpet>();
-    var nodList = false;
-    var date = articleData.Info.GetXmlPropertyDate("genxml/textbox/publisheddate");
-    var dateFormat = date.ToString("dd/MM/yyyy");
-
-    AddProcessDataResx(appTheme, true);
-}
+@using RocketDirectoryAPI.Components;
+@AssigDataModel(Model)
+@AddProcessDataResx(appTheme, true)
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
-
+<!--inject-->
 <div class="articledetail">
 
                 <div class="articledetail-back">
@@ -44,7 +22,7 @@
                             returnUrl = DNNrocketUtils.NavigateURL(sessionParams.TabId);;                
                         }
                     }
-                    <a href="@returnUrl" class="bigbutton"><i class="fas fa-angle-up"></i>@ResourceKey("Theme.back", sessionParams.CultureCode)</a>
+                    <a href="@returnUrl" class="bigbutton"><i class="fas fa-angle-up"></i>@ResourceKey("DNNrocket.back", sessionParams.CultureCode)</a>
                 </div>
 
                 <div class="articledetailflex">
@@ -89,7 +67,7 @@
                         </div>
 
                         <div class="articledetail-section article-infos">
-                            <div>@ResourceKey("Theme.publicationdate", sessionParams.CultureCode) : @dateFormat</div>
+                <div>@ResourceKey("Theme.publicationdate", sessionParams.CultureCode) : @DateOf(articleData.Info, "genxml/textbox/publisheddate", sessionParams.CultureCode)</div>
                         </div>
                         
                         <div class="articledetail-section summary">@BreakOf(articleData.Summary)</div>

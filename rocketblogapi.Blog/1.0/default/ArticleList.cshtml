@@ -1,41 +1,31 @@
 ﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
-@using RocketDirectoryAPI.Components;
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketPortal.Components;
 @using DNNrocketAPI.Components;
-@using System.Globalization;
-@using Rocket.AppThemes.Components;
-
-@{
-    var sessionParams = (SessionParams)Model.SessionParamsData;
-    var articleDataList = (ArticleLimpetList)Model.GetDataObject("articlelist");
-    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
-    var categoryList = (CategoryLimpetList)Model.GetDataObject("categorylist");
-    var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
-    var appThemeDefault = (AppThemeLimpet)Model.GetDataObject("appthemedefault");
-    var appThemeDirectory = (AppThemeSystemLimpet)Model.GetDataObject("appthemedirectory");
-    var appThemeDirectoryDefault = (AppThemeLimpet)Model.GetDataObject("appthemedirectorydefault");
-    var categoryData = (CategoryLimpet)Model.GetDataObject("categorydata");
-    var catalogSettings = (CatalogSettingsLimpet)Model.GetDataObject("catalogsettings");
-    var propertyList = (PropertyLimpetList)Model.GetDataObject("propertylist");
-    var moduleSettings = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-    var propertyCheckboxes = new List<PropertyLimpet>();
-    var nodList = false;
-
-    AddProcessDataResx(appTheme, true);
-}
+@using RocketDirectoryAPI.Components;
+@AssigDataModel(Model)
+@AddProcessDataResx(appTheme, true)
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
-
+<!--inject-->
+@{
+    var articleList = articleDataList.GetArticleList();
+}
 <div class="articlewrapper">
 
-<h1>Category name</h1>
+@if (sessionParams.GetInt("catid") == 0)
+{
+    <h1>@portalData.Name</h1>
+}
+else
+{
+    <h1>@categoryData.Name</h1>
+}
 
-@if (articleDataList.GetArticleList().Count > 0)
+[INJECT:appthemedirectorydefault,SearchBanner.cshtml]
+
+@if (articleList.Count > 0)
 {
 <div class="articlelist">
 
-    @foreach (ArticleLimpet articleData in articleDataList.GetArticleList())
+    @foreach (ArticleLimpet articleData in articleList)
     {
         var urlparams = new Dictionary<string, string>();
         urlparams.Add("articleid", articleData.ArticleId.ToString());
@@ -112,7 +102,7 @@
 }
 else
 {
-    <div class="h2-headline">Aucun résultat</div>
+        <div class="h2-headline">@ResourceKey("DNNrocket.notfound")</div>
 }
 
 </div>

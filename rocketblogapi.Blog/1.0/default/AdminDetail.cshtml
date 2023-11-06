@@ -5,22 +5,18 @@
 @AddProcessDataResx(appTheme, true)
 <!--inject-->
 @{
-    var moduleedit = sessionParams.Info.GetXmlPropertyBool("r/moduleedit");
     var sfieldDict = new Dictionary<string, string>();
     sfieldDict.Add("articleid", articleData.ArticleId.ToString());
-    sfieldDict.Add("moduleedit", moduleedit.ToString());
+    sfieldDict.Add("moduleedit", sessionParams.GetBool("moduleedit").ToString());
     sfieldDict.Add("tabid", sessionParams.TabId.ToString());
 }
-
 @RenderLanguageSelector("articleadmin_editarticle", sfieldDict, appThemeDirectory, Model)
-
-<script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
 
 <div id="articleedit">
 
     <div id="articleeditcontent" class='w3-animate-opacity '>
 
-        @RenderTemplate("AdminDetailButtons.cshtml", appThemeDirectory, Model, true)
+        [INJECT:appthemedirectory,AdminDetailButtons.cshtml]
 
         <div id="articledatasection" class="">
             <div class='w3-row'>
@@ -173,19 +169,6 @@
 
     $(document).ready(function () {
 
-        @if (!moduleedit)
-        {
-            <text>
-                selectMenu('articleadmin');
-            </text>
-        }
-        else
-        {
-            <text>
-                $(document).simplisityStartUp('/Desktopmodules/dnnrocket/api/rocket/action', { systemkey: '@(systemData.SystemKey)', debug: false });
-                $('.simplisity_loader').hide();
-            </text>
-        }
 
         $('.action_tageditor').tagEditor({
             delimiter: ', ', /* space and comma */
