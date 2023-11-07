@@ -30,9 +30,6 @@
     <Reference Include="RocketEcommerceAPI">
       <HintPath>..\..\..\bin\RocketEcommerceAPI.dll</HintPath>
     </Reference>
-    <Reference Include="RocketIntraMenu">
-      <HintPath>..\..\..\bin\RocketIntraMenu.dll</HintPath>
-    </Reference>
     <Reference Include="RocketPortal">
       <HintPath>..\..\..\bin\RocketPortal.dll</HintPath>
     </Reference>

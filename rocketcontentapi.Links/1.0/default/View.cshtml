@@ -6,25 +6,22 @@
 <!--inject-->
 
 <div class="@(moduleData.GetSetting("cssclass"))">
-
     <div class="linkswrapper">
-
-        [INJECT:appthemesystem,ArticleHeaderView.cshtml]
-
+        [INJECT: appthemesystem,ArticleHeaderView.cshtml]
         <ul class="links">
-
-            @foreach (var linkData in articleRowData.Getlinks())
+            @foreach (var articleRowData in articleData.GetRows())
             {
-                if (!linkData.Hidden)
+                if (!articleRowData.IsHidden)
                 {
-                    <li>
-                        <a href="@(linkData.Url)" target="@(linkData.Target)">@linkData.Name</a>
-                    </li>
+                    var linkData = articleRowData.Getlink(0);
+                    if (!linkData.Hidden)
+                    {
+                        <li class="@(rowData.GetXmlProperty("genxml/textbox/cssclass"))">
+                            <a href="@(linkData.Url)" target="@(linkData.Target)">@linkData.Name</a>
+                        </li>
+                    }
                 }
             }
-
         </ul>
-
     </div>
-
 </div>

@@ -6,8 +6,18 @@
 @RowKey(rowData)
 
 <div class='w3-row w3-padding'>
-    [INJECT:appthemesystem,ArticleLinks.cshtml]
+    [INJECT:appthemesystem,ArticleLink.cshtml]
 </div>
 
+<div class='w3-row w3-padding'>
+    <div class='w3-half w3-padding' style='min-width: 200px;'>
+        <label>@ResourceKey("DNNrocket.cssClass")</label>
+        @TextBox(rowData, "genxml/textbox/cssclass", "class='w3-input w3-border' autocomplete='off'", "", false, 0)
+    </div>
+    <div class='w3-half m2 w3-padding'>
+        <label>@ResourceKey("DNNrocket.hiderow")</label><br />
+        @CheckBoxRowIsHidden(rowData)
+    </div>
+</div>
 
 
