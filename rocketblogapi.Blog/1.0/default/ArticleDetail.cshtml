@@ -95,8 +95,8 @@
                             @{var imgLp = 1;}
                             @foreach (var i in articleData.GetImages())
                             {
-                            <a data-fancybox="gallery" data-caption="" href="@ImageUrl(i.RelPath,640,0)">
-                            <img src="@ImageUrl(i.RelPath,120,0)" alt="" />
+                        <a data-fancybox="gallery" data-caption="" href="@ImageUrl(i.RelPathWebp,640,0)">
+                            <img src="@ImageUrl(i.RelPathWebp,120,0)" alt="" />
                             </a>
                             
                             }
@@ -108,7 +108,7 @@
                     <div class="articledetail-right">
 
                         <div class="articledetail-section image">
-                            <img alt="@articleData.Name" src="@ImageUrl(articleData.GetImage(0).RelPath,300,0)" />
+                <img alt="@articleData.Name" src="@ImageUrl(articleData.GetImage(0).RelPathWebp,300,0)" />
                         </div>
 
                         <div class="articledetail-section">
