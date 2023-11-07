@@ -14,18 +14,20 @@
     </div>
     <div class="w3-third w3-padding">
         <label>@ResourceKey("DNNrocket.width") (px)</label>
-        @TextBox(info, "genxml/settings/width", "type='number' class='w3-input w3-border'", "200")
+        @TextBox(info, "genxml/settings/width", "type='number' class='w3-input w3-border'", "240")
     </div>
     <div class="w3-third w3-padding">
         <label>@ResourceKey("DNNrocket.height") (px)</label>
-        @TextBox(info, "genxml/settings/height", "type='number' class='w3-input w3-border'", "150")
+        @TextBox(info, "genxml/settings/height", "type='number' class='w3-input w3-border'", "120")
     </div>
     <div class="w3-third w3-padding">
         <label>@ResourceKey("DNNrocket.listpage")</label>
         @TabSelectListOnTabId(info, "genxml/settings/listpage", "class='w3-input w3-border'" )
     </div>
+
     <div class="w3-third w3-padding">
-        <label>&nbsp;</label><br/>
-        @CheckBox(info, "genxml/settings/hideimages", "&nbsp;" + @ResourceKey("Articles.hideimages").ToString(), "class='w3-check'" )
+        <br />
+        @CheckBox(info, "genxml/settings/ecomode", "&nbsp;" + ResourceKey("DNNrocket.ecomode").ToString(), " class='w3-check' ", false)
     </div>
+
 </div>
