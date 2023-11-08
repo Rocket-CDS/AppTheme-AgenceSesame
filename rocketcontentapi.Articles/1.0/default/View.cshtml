@@ -6,13 +6,10 @@
 @AddProcessData("resourcepath", "/DesktopModules/RocketThemes/AppTheme-AgenceSesame/rocketcontentapi.Articles/1.0/resx")
 <!--inject-->
 @{
-    var cssClass = "";
-    if (moduleData.Record.GetXmlProperty("genxml/settings/cssclass") != "")
-    {
-        cssClass = "class=" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass") + "";
-    }
-    var rowDetail = articleData.GetRow(sessionParams.Get("rowkey"));
+    var rowDetail = articleData.GetRowById(sessionParams.Get("eid"));
 }
+
+<div class="@(moduleData.GetSetting("cssclass"))">
 
 @if (rowDetail != null)
 {
@@ -20,7 +17,6 @@
     var group = rowDetail.RowKey;
     var mainImage = rowDetail.GetImage(0);
 
-    <div @(cssClass)>
     <article class="blog-detail">
 
         <a class="article-back bigbutton" href="@rtnUrl">@ResourceKey("DNNrocket.back")</a>
@@ -76,43 +72,41 @@
         <hr />
     
     </article>
-    </div>
 
 }
 else
 {
-    <div @(cssClass)>
-        <div class="blogwrapper">
-            <div class="blogheader">
-                [INJECT:appthemesystem,ArticleHeaderView.cshtml]
-            <hr class="small-hr" />
-            </div>
-            <div class="blog">
-                @foreach (var articleRowData in articleData.GetRows())
+    <div class="blogwrapper">
+        <div class="blogheader">
+            [INJECT:appthemesystem,ArticleHeaderView.cshtml]
+        <hr class="small-hr" />
+        </div>
+        <div class="blog">
+            @foreach (var articleRowData in articleData.GetRows())
+            {
+                if (!articleRowData.IsHidden)
                 {
-                    if (!articleRowData.IsHidden)
-                    {
-                        var title = articleRowData.Get("genxml/lang/genxml/textbox/title");
-                        var detailurl = DetailUrl(moduleData.GetSettingInt("listtabid"), title, articleRowData.RowKey).ToString();
-                        var date = articleRowData.GetDate("genxml/textbox/newsdate");
-                        var articleImage = articleRowData.GetImage(0);
+                    var title = articleRowData.Get("genxml/lang/genxml/textbox/title");
+                    var detailurl = DetailUrl(moduleData.GetSettingInt("listtabid"), title, articleRowData.eId).ToString();
+                    var date = articleRowData.GetDate("genxml/textbox/newsdate");
+                    var articleImage = articleRowData.GetImage(0);
 
-                        <article>
-                        <h2><a href="@(detailurl)">@title</a></h2>
-                            <div class="formatdate">
-                                <span class="fd-day">@date.ToString("dd")</span>
-                                <span class="fd-month">@date.ToString("MMM")</span>
-                            </div>
-                            <div class="article-img"><img src="@ImageUrl(articleImage.RelPathWebp, moduleData.GetSettingInt("listwidth"), moduleData.GetSettingInt("listheight"))" alt="@(articleImage.Alt)" /></div>
-                            <p>@articleRowData.Get("genxml/lang/genxml/textbox/resume")</p>
-                            <a class="bigbutton" href="@(detailurl)">@ResourceKey("Articles.readmore")</a>
-                        </article>
-                    }
+                    <article>
+                    <h2><a href="@(detailurl)">@title</a></h2>
+                        <div class="formatdate">
+                            <span class="fd-day">@date.ToString("dd")</span>
+                            <span class="fd-month">@date.ToString("MMM")</span>
+                        </div>
+                        <div class="article-img"><img src="@ImageUrl(articleImage.RelPathWebp, moduleData.GetSettingInt("listwidth"), moduleData.GetSettingInt("listheight"))" alt="@(articleImage.Alt)" /></div>
+                        <p>@articleRowData.Get("genxml/lang/genxml/textbox/resume")</p>
+                        <a class="bigbutton" href="@(detailurl)">@ResourceKey("Articles.readmore")</a>
+                    </article>
                 }
-            </div>
+            }
         </div>
     </div>
 }
+</div>
 
 <script type="text/javascript">
     $("[data-fancybox]").fancybox({
