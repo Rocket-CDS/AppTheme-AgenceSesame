@@ -12,7 +12,7 @@
             {
                 <h2>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
                 <hr />
-                <div class="citation-text">@rowData.GetXmlProperty("genxml/lang/genxml/textbox/content")</div>
+                <div class="citation-text">@BreakOf(rowData, "genxml/lang/genxml/textbox/content")</div>
                 <div class="citation-link">
                 @foreach (var linkData in articleRowData.Getlinks())
                 {    
@@ -27,5 +27,3 @@
         </div>
     </div>
 </div>
-
-
