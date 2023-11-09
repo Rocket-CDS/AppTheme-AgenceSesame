@@ -38,7 +38,7 @@
                             <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@title" />
                             <div class="gblockstext">
                                 <h2>@title</h2>
-                                <h3>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/text")</h3>
+                                <h3>@BreakOf(rowData, "genxml/lang/genxml/textbox/text")</h3>
                             </div>
                             </div>
                         }
@@ -48,7 +48,7 @@
                             <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@title" />
                             <div class="gblockstext">
                                 <h2>@title</h2>
-                                <h3>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/text")</h3>
+                                <h3>@BreakOf(rowData, "genxml/lang/genxml/textbox/text")</h3>
                             </div>
                             </a>
                         }
