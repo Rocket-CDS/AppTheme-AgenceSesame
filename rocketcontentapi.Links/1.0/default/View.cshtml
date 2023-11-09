@@ -9,17 +9,13 @@
     <div class="linkswrapper">
         [INJECT: appthemesystem,ArticleHeaderView.cshtml]
         <ul class="links">
-            @foreach (var articleRowData in articleData.GetRows())
+            @foreach (var linkData in articleRowData.Getlinks())
             {
-                if (!articleRowData.IsHidden)
+                if (!linkData.Hidden && !linkData.IsDisabled)
                 {
-                    var linkData = articleRowData.Getlink(0);
-                    if (!linkData.Hidden)
-                    {
-                        <li class="@(rowData.GetXmlProperty("genxml/textbox/cssclass"))">
-                            <a href="@(linkData.Url)" target="@(linkData.Target)">@linkData.Name</a>
-                        </li>
-                    }
+                    <li>
+                        <a href="@(linkData.Url)" target="@(linkData.Target)">@linkData.Name</a>
+                    </li>
                 }
             }
         </ul>

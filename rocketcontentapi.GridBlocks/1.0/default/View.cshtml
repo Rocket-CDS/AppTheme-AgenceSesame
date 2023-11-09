@@ -25,37 +25,34 @@
 
                     foreach (var linkData in articleRowData.Getlinks())
                     {
-                        if (!linkData.Hidden)
+                        var cssClassRow = "";
+                        if (rowData.GetXmlProperty("genxml/textbox/cssclass") != "")
                         {
-                            var cssClassRow = "";
-                            if (rowData.GetXmlProperty("genxml/textbox/cssclass") != "")
-                            {
-                                cssClassRow = rowData.GetXmlProperty("genxml/textbox/cssclass");
-                            }
-                            if (linkData.IsDisabled)
-                            {
-                                <div class="grid-item grid-item@(gridsize) @(cssClassRow)">
-                                    <div class="refsimg" style="background-image:url('@ImageUrl(articleImage.RelPath, "", "")');">
-                                        <div class="refsoverlay"><h4>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h4></div>
-                                        <div class="refstext">
-                                            <h3>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h3>
-                                            <p>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title2")</p>
-                                        </div>
+                            cssClassRow = rowData.GetXmlProperty("genxml/textbox/cssclass");
+                        }
+                        if (linkData.IsDisabled || linkData.Hidden)
+                        {
+                            <div class="grid-item grid-item@(gridsize) @(cssClassRow)">
+                                <div class="refsimg" style="background-image:url('@ImageUrl(articleImage.RelPath, "", "")');">
+                                    <div class="refsoverlay"><h4>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h4></div>
+                                    <div class="refstext">
+                                        <h3>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h3>
+                                        <p>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title2")</p>
                                     </div>
                                 </div>
-                            }
-                            else
-                            {
-                                <a class="grid-item grid-item@(gridsize) @(cssClassRow)" href="@(linkData.Url)" target="@(linkData.Target)">
-                                    <div class="refsimg" style="background-image:url('@ImageUrl(articleImage.RelPath, "", "")');">
-                                        <div class="refsoverlay">@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</div>
-                                        <div class="refstext">
-                                            <h3 class="refstext-line1">@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h3>
-                                            <h4 class="refstext-line2">@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title2")</h4>
-                                        </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <a class="grid-item grid-item@(gridsize) @(cssClassRow)" href="@(linkData.Url)" target="@(linkData.Target)">
+                                <div class="refsimg" style="background-image:url('@ImageUrl(articleImage.RelPath, "", "")');">
+                                    <div class="refsoverlay">@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</div>
+                                    <div class="refstext">
+                                        <h3 class="refstext-line1">@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h3>
+                                        <h4 class="refstext-line2">@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title2")</h4>
                                     </div>
-                                </a>
-                            }
+                                </div>
+                            </a>
                         }
                     }
                 }

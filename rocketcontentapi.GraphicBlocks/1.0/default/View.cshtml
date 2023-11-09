@@ -24,36 +24,33 @@
                 {
                     var title = rowData.GetXmlProperty("genxml/lang/genxml/textbox/title");
                     var articleImage = articleRowData.GetImage(0);
-
                     foreach (var linkData in articleRowData.Getlinks())
                     {                        
-                        if (!linkData.Hidden)
+                        var cssClassRow = "";
+                        if (info.GetXmlProperty("genxml/textbox/cssclass") != "")
                         {
-                            var cssClassRow = "";
-                            if (info.GetXmlProperty("genxml/textbox/cssclass") != "")
-                            {
-                                cssClassRow = info.GetXmlProperty("genxml/textbox/cssclass");
-                            }
-                            if (linkData.IsDisabled)
-                            {
-                                <div class="gblock @(cssClassRow)">
-                                <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@title" />
-                                <div class="gblockstext">
-                                    <h2>@title</h2>
-                                    <h3>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/text")</h3>
-                                </div>
-                                </div>
-                            }
-                            else
-                            {
-                                <a class="gblock @(cssClassRow)" href="@(linkData.Url)" target="@(linkData.Target)">
-                                <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@title" />
-                                <div class="gblockstext">
-                                    <h2>@title</h2>
-                                    <h3>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/text")</h3>
-                                </div>
-                                </a>
-                            }
+                            cssClassRow = info.GetXmlProperty("genxml/textbox/cssclass");
+                        }
+                        if (linkData.IsDisabled || linkData.Hidden)
+                        {
+
+                            <div class="gblock @(cssClassRow)">
+                            <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@title" />
+                            <div class="gblockstext">
+                                <h2>@title</h2>
+                                <h3>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/text")</h3>
+                            </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <a class="gblock @(cssClassRow)" href="@(linkData.Url)" target="@(linkData.Target)">
+                            <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@title" />
+                            <div class="gblockstext">
+                                <h2>@title</h2>
+                                <h3>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/text")</h3>
+                            </div>
+                            </a>
                         }
                     }
                 }
