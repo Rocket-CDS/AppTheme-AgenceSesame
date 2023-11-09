@@ -27,7 +27,7 @@
                 var rowData = articleRowData.Info;
                 var title = rowData.GetXmlProperty("genxml/lang/genxml/textbox/title");
                 <article>
-                    <h3><a href="@(DetailUrl(moduleData.GetSettingInt("listpage"), title, articleRowData.RowKey))">@DateOf(rowData,"genxml/textbox/newsdate", sessionParams.CultureCode,"d MMM yyyy") - @title</a></h3>
+                    <h3><a href="@(DetailUrl(moduleData.GetSettingInt("listpage"), title, articleRowData.eId))">@DateOf(rowData,"genxml/textbox/newsdate", sessionParams.CultureCode,"d MMM yyyy") - @title</a></h3>
                 </article>
                 if (lp == limit)
                 {
@@ -59,7 +59,7 @@ else
                     <img src="@ImageUrl(articleImage.RelPathWebp, width, height)" alt="@(articleImage.Alt)" />
                 </div>                    
                 <div class="article-content">
-                    <h2><a href="@(DetailUrl(moduleData.GetSettingInt("listpage"), title, articleRowData.RowKey))">@title</a></h2>
+                        <h2><a href="@(DetailUrl(moduleData.GetSettingInt("listpage"), title, articleRowData.eId))">@title</a></h2>
                     <p class="article-infos">@DateOf(rowData,"genxml/textbox/newsdate", sessionParams.CultureCode,"d MMM yyyy")</p>
                 </div>
             </article>
