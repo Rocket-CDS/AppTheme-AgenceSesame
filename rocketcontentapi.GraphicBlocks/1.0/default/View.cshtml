@@ -27,9 +27,9 @@
                     foreach (var linkData in articleRowData.Getlinks())
                     {                        
                         var cssClassRow = "";
-                        if (info.GetXmlProperty("genxml/textbox/cssclass") != "")
+                        if (rowData.GetXmlProperty("genxml/textbox/cssclass") != "")
                         {
-                            cssClassRow = info.GetXmlProperty("genxml/textbox/cssclass");
+                            cssClassRow = rowData.GetXmlProperty("genxml/textbox/cssclass");
                         }
                         if (linkData.IsDisabled || linkData.Hidden)
                         {
