@@ -45,28 +45,15 @@
                             {
                                 <p>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/text")</p>
                             }
-                            @if (rowData.GetXmlProperty("genxml/lang/genxml/textbox/linktitle") != "")
-                            {
-                                if (rowData.GetXmlPropertyInt("genxml/select/rbllink") == 1)
+
+                            @{
+                                var linkData in articleRowData.Getlinks(0)
+                                if (!linkData.Hidden && !linkData.IsDisabled)
                                 {
-                                    var tabddlvalue = PagesUtils.NavigateURL(rowData.GetXmlPropertyInt("genxml/select/linktab"));
-                                    var anchor = "";
-                                    if (rowData.GetXmlProperty("genxml/textbox/linkanchor") != "")
-                                    {
-                                        anchor = "#" + rowData.GetXmlProperty("genxml/textbox/linkanchor");
-                                    }
-                                    <a href="@(tabddlvalue)@(anchor)" class="bigbutton">@rowData.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
-                                }
-                                if (rowData.GetXmlPropertyInt("genxml/select/rbllink") == 2)
-                                {
-                                    var blank = "";
-                                    if (rowData.GetXmlPropertyBool("genxml/checkbox/blank"))
-                                    {
-                                        blank = "_blank";
-                                    }
-                                    <a href="@rowData.GetXmlProperty("genxml/textbox/externalhref")" target="@(blank)" class="bigbutton">@rowData.GetXmlProperty("genxml/lang/genxml/textbox/linktitle")</a>
+                                    <a href="@(linkData.Url)" class="bigbutton" target="@(linkData.Target)">@linkData.Name</a>
                                 }
                             }
+
                         </div>
                     </li>
                 }
