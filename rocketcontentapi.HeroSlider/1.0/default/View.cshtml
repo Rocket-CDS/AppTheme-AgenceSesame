@@ -47,7 +47,7 @@
                             }
 
                             @{
-                                var linkData = articleRowData.Getlinks(0)
+                                var linkData = articleRowData.Getlink(0);
                                 if (!linkData.Hidden && !linkData.IsDisabled)
                                 {
                                     <a href="@(linkData.Url)" class="bigbutton" target="@(linkData.Target)">@linkData.Name</a>
