@@ -11,11 +11,6 @@
         [INJECT:appthemesystem,ArticleHeaderView.cshtml]       
         @foreach (var articleRowData in articleData.GetRows())
         {
-            if (articleRowData.Get("genxml/lang/genxml/textbox/title") != "")
-            {
-                <h2>@articleRowData.Get("genxml/lang/genxml/textbox/title")</h2>      
-            }
-    
             <ul class="docs">
                 @if (!articleRowData.GetBool("genxml/checkbox/hiderow"))
                 {
@@ -24,9 +19,7 @@
                         {
                             if (!documentData.Hidden)
                             {
-                                <div>
-                                    <a href="@(documentData.RelPath)" target="_blank" >@documentData.Name</a>
-                                </div>
+                                <a href="@(documentData.RelPath)" target="_blank" >@documentData.Name</a>
                             }
                         }
                     </li>

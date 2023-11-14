@@ -1,16 +1,10 @@
 @inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
 @AssigDataModel(Model)
-@AddProcessDataResx(appThemeView, true)
+@AddProcessDataResx(appThemeAdmin, true)
 <!--inject-->
 <!-- require Key for saving -->
 @RowKey(rowData)
 
 <div class='w3-row w3-padding'>
-    <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
-        <label>@ResourceKey("DNNrocket.title")</label>		&nbsp;@EditFlag(sessionParams)
-        @TextBox(rowData, "genxml/lang/genxml/textbox/title", "class='w3-input w3-border' autocomplete='off'", "", true, 0)
-    </div>
-    <div class='w3-col m12 w3-padding '>
-        [INJECT:appthemesystem,ArticleDocuments.cshtml]
-    </div>
+    [INJECT:appthemesystem,ArticleDocuments.cshtml]
 </div>
