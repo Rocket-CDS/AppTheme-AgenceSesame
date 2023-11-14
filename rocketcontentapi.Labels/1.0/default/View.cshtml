@@ -12,13 +12,11 @@
     <div class="labelswrapper">
         [INJECT: appthemesystem,ArticleHeaderView.cshtml]
         <div class="labels">
-            @foreach (var articleRowData in articleData.GetRows())
+            @foreach (var articleImage in articleRowData.GetImages())
             {
-                if (!articleRowData.IsHidden)
+                var linkData = new ArticleLink(articleImage.Info, "articlelink");
+                if (!linkData.Hidden)
                 {
-                    var rowData = articleRowData.Info;
-                    var linkData = articleRowData.Getlink(0);
-                    var articleImage = articleRowData.GetImage(0);
                     if (linkData.IsDisabled)
                     {
                         <img src="@ImageUrl(articleImage.RelPathWebp, width, height)" alt="@(articleImage.Alt)" />                    
@@ -28,7 +26,7 @@
                         <a href="@(linkData.Url)" target="@(linkData.Target)">
                             <img src="@ImageUrl(articleImage.RelPathWebp, width, height)" alt="@(articleImage.Alt)" />
                         </a>
-                    }                    
+                    }
                 }
             }
         </div>

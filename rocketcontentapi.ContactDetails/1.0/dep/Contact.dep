@@ -1,8 +1,9 @@
 ﻿<genxml>
   <deps list="true">
     <genxml>
-			<ctrltype><![CDATA[css]]></ctrltype>
-			<url><![CDATA[/DesktopModules/RocketThemes/AppTheme-AgenceSesame/rocket-icons-v1.0/style.css]]></url>
-		</genxml>
+		<ctrltype><![CDATA[css]]></ctrltype>
+		<url><![CDATA[/DesktopModules/RocketThemes/AppTheme-AgenceSesame/rocket-icons-v1.0/style.css]]></url>
+		<ecofriendly>true</ecofriendly>
+	</genxml>
   </deps>
 </genxml>
