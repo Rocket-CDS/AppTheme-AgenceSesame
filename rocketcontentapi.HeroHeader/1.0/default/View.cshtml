@@ -13,12 +13,10 @@
     {
         mask = "tih-mask";
     }
-
     var articleImage = articleRowData.GetImage(0);
     var width = moduleData.GetSettingInt("width");
     var height = moduleData.GetSettingInt("height");
     var separationLine = moduleData.GetSettingBool("separation");
-
 }
 
 <div class="@(moduleData.GetSetting("cssclass"))">
@@ -28,12 +26,19 @@
                                             -o-background-size: cover;
                                             background-size: cover;">
         <div class="caption">
-            <h2>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
+
+            @if (rowData.GetXmlProperty("genxml/lang/genxml/textbox/title") != "")
+            {
+                <h2>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
+            }
             @if (separationLine)
             {
                 <hr />
             }
-            <h3>@BreakOf(info, "genxml/lang/genxml/textbox/text")</h3>
+            @if (rowData.GetXmlProperty("genxml/lang/genxml/textbox/text") != "")
+            {
+                <h3>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/text")</h3>
+            }
         </div>
     </div>
 </div>
