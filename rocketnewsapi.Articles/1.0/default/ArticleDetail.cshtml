@@ -9,6 +9,10 @@
 
     @{
         var mainImage = articleData.GetImage(0);
+        var widthlist = moduleData.GetSettingInt("widthlist");
+        var heightlist = moduleData.GetSettingInt("heightlist");
+        var widthdetail = moduleData.GetSettingInt("widthdetail");
+        var heightdetail = moduleData.GetSettingInt("heightdetail");
     }
 
     <article class="blog-detail">
@@ -16,7 +20,7 @@
         <a class="article-back bigbutton" href="@ListUrl(moduleData.ListPageTabId(), categoryData)">@ResourceKey("DNNrocket.back")</a>
         <h1>@articleData.Name</h1>
         <div class="article-img">
-            <img src="@ImageUrl(mainImage.RelPathWebp, moduleData.GetSettingInt("detailwidth"), moduleData.GetSettingInt("detailheight"))" alt="@(mainImage.Alt)" />
+            <img src="@ImageUrl(mainImage.RelPathWebp, widthdetail, heightdetail)" alt="@(mainImage.Alt)" />
         </div>
 
         <p class="article-infos"><span>@ResourceKey("Articles.published") </span>@DateOf(articleData.Info, articleData.PublishedDateXPath, false, sessionParams.CultureCode)</p>

@@ -9,16 +9,25 @@
 
 <div class="w3-row">
     <div class="w3-quarter w3-padding">
+        <label>@ResourceKey("DNNrocket.width") (List)</label>
+        @TextBox(info, "genxml/settings/widthlist", "type='number' class='w3-input w3-border'", "200")
+    </div>
+    <div class="w3-quarter w3-padding">
+        <label>@ResourceKey("DNNrocket.height") (List)</label>
+        @TextBox(info, "genxml/settings/heightlist", "type='number' class='w3-input w3-border'", "150")
+    </div>
+    <div class="w3-quarter w3-padding">
         <label>@ResourceKey("DNNrocket.rowlimit")</label>
         @TextBox(info, "genxml/settings/limit", "type='number' class='w3-input w3-border'", "0")
     </div>
+</div>
+<div class="w3-row">
     <div class="w3-quarter w3-padding">
-        <label>@ResourceKey("DNNrocket.width") (px)</label>
-        @TextBox(info, "genxml/settings/width", "type='number' class='w3-input w3-border'", "200")
+        <label>@ResourceKey("DNNrocket.width") (Detail)</label>
+        @TextBox(info, "genxml/settings/widthdetail", "type='number' class='w3-input w3-border'", "400")
     </div>
     <div class="w3-quarter w3-padding">
-        <label>@ResourceKey("DNNrocket.height") (px)</label>
-        @TextBox(info, "genxml/settings/height", "type='number' class='w3-input w3-border'", "150")
+        <label>@ResourceKey("DNNrocket.height") (Detail)</label>
+        @TextBox(info, "genxml/settings/heightdetail", "type='number' class='w3-input w3-border'", "400")
     </div>
-
 </div>
