@@ -1,0 +1,39 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@AssigDataModel(Model)
+@AddProcessDataResx(appTheme, true)
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
+<!--inject-->
+@if (articleDataList != null)
+{
+    var articleList = articleDataList.GetArticleList();
+    var lp = 0;
+
+    <div class="w3-container ">
+
+        <ul class="w3-ul w3-card-4">
+        @foreach (ArticleLimpet articleData in articleList)
+        {
+
+            <li class="w3-bar">
+                <a href="@DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData)" title="@articleData.Name" onclick="$('#simplisity_loader').show();">
+                <img src="@ImageUrl(articleData.GetImage(0).RelPathWebp,100,100)" class="w3-bar-item w3-circle "  alt="@articleData.GetImage(0).Alt" />               
+                <div class="w3-bar-item">
+                    <span class="w3-large">@articleData.Name</span><br>
+                    <span class="w3-hide-small">@Succinct(articleData.Summary, 100)</span>
+                </div>
+                </a>
+            </li>
+
+            if (lp >= 1)
+            {
+                break;
+            }
+            lp += 1;
+        }
+        </ul>
+
+    </div>    
+}
+

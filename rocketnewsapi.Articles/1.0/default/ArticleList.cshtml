@@ -1,0 +1,38 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@AssigDataModel(Model)
+@AddProcessDataResx(appTheme, true)
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
+<!--inject-->
+@{
+    var articleList = articleDataList.GetArticleList();
+}
+<div class="@(moduleData.GetSetting("cssclass"))">
+
+    <div class="blogwrapper">
+
+        <div class="blog">
+        @foreach (ArticleLimpet articleData in articleDataList.GetArticleList())
+        {
+            var articleImage = articleData.GetImage(0);
+            <article>
+                <h2><a href="@DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData)">@articleData.Name</a></h2>
+                <div class="formatdate">
+                    <span class="fd-day">@articleData.PublishedDate.ToString("dd")</span>
+                    <span class="fd-month">@articleData.PublishedDate.ToString("MMM")</span>
+                </div>
+                <div class="article-img"><img src="@ImageUrl(articleImage.RelPathWebp, moduleData.GetSettingInt("listwidth"), moduleData.GetSettingInt("listheight"))" alt="@(articleImage.Alt)" /></div>
+                <p>@Succinct(articleData.Summary, 100)</p>
+                <a class="bigbutton" href="@(DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData))">@ResourceKey("Articles.readmore")</a>
+            </article>
+        }
+        </div>
+
+        <div class="w3-row w3-padding-16 w3-center">
+                @RenderTemplate("articlePaging.cshtml", appThemeDirectoryDefault, Model, false)
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,91 @@
+@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@AssigDataModel(Model)
+@AddProcessDataResx(appTheme, true)
+<!--inject-->
+@{
+    var sfieldDict = new Dictionary<string, string>();
+    sfieldDict.Add("articleid", articleData.ArticleId.ToString());
+    sfieldDict.Add("moduleedit", sessionParams.GetBool("moduleedit").ToString());
+    sfieldDict.Add("tabid", sessionParams.TabId.ToString());
+}
+@RenderLanguageSelector("articleadmin_editarticle", sfieldDict, appThemeDirectory, Model)
+
+<div id="articleedit">
+
+    <div id="articleeditcontent" class='w3-animate-opacity '>
+
+        [INJECT:appthemedirectory,AdminDetailButtons.cshtml]
+
+        <div id="articledatasection" class="">
+            <div class='w3-row'>
+                <div class="w3-twothird w3-padding-small">
+                    <div id="generaltab" class='w3-row w3-margin-top sectionname w3-border'>
+                        <div class='w3-row'>
+                            <div class="w3-third">
+                                <div class='w3-col w3-padding'>
+                                    <label>@ResourceKey("RC.ref")</label>
+                                    @TextBox(info, articleData.RefXPath, " class='w3-input w3-border' autocomplete='off' ", "", false, 0)
+                                </div>
+                            </div>
+                            <div class="w3-third">
+                                <div class='w3-col w3-padding'>
+                                    <label>Statut</label>
+                                    <div>
+                                        @CheckBox(info, articleData.HiddenXPath, "&nbsp;" + ResourceKey("DNNrocket.hidden"), " class='w3-check' ")
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" w3-row">
+                            <div class="w3-twothird w3-padding">
+                                <label>@ResourceKey("RC.name")</label>&nbsp;@EditFlag(sessionParams)
+                                @TextBox(info, articleData.NameXPath, " class='w3-input w3-border' autocomplete='off' ", "", true, 0)
+                            </div>
+                            <div class="w3-third w3-padding">
+                                <label>@ResourceKey("DNNrocket.date")</label>
+                                @TextBoxDate(info, articleData.PublishedDateXPath, " class='w3-input w3-border' autocomplete='off'", DateTime.Today.ToString("O"), false, 0)
+                            </div>
+                        </div>
+                        <div class=" w3-row w3-padding">
+                            <label>Résumé</label>&nbsp;@EditFlag(sessionParams)
+                            @TextArea(info, articleData.SummaryXPath, " class='w3-input w3-border' rows='8' autocomplete='off' ", "", true, 0)
+                        </div>
+
+                        <div class='w3-col m12 w3-padding'>
+                            @EditFlag(sessionParams)
+                            <div class='w3-col m12'>
+                                @CKEditor4(info, "genxml/lang/genxml/textbox/richtext", true)
+                            </div>
+                        </div>
+                        <div class='w3-col m12 w3-padding'>
+                            <label>HTML</label>&nbsp;@EditFlag(sessionParams)
+                            @TextArea(info, "genxml/lang/genxml/textbox/htmltext", " class='w3-input w3-border' rows='8' ", "", true, 0)
+                        </div>
+                        <div class='w3-col m12 w3-padding'>
+                            <label>@ResourceKey("DNNrocket.videocode")</label>&nbsp;@EditFlag(sessionParams)
+                            @TextArea(info, "genxml/lang/genxml/textbox/video", " class='w3-input w3-border' rows='8' ", "", true, 0)
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="w3-third w3-padding-small">
+                    [INJECT:appthemedirectory,ArticleImagesBlock.cshtml]
+                    [INJECT:appthemedirectory,ArticleLinksBlock.cshtml]
+                    [INJECT:appthemedirectory,ArticleDocumentsBlock.cshtml]
+                </div>
+            </div>
+        </div>
+
+        @RenderXml(info)
+
+        <div class="w3-padding">
+            <i>ID: </i> @info.ItemID <i> GuidKey:</i> @info.GUIDKey
+        </div>
+
+    </div>
+
+</div>

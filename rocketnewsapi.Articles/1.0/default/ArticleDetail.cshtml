@@ -1,0 +1,70 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@AssigDataModel(Model)
+@AddProcessDataResx(appTheme, true)
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
+<!--inject-->
+<div class="@(moduleData.GetSetting("cssclass"))">
+
+    @{
+        var mainImage = articleData.GetImage(0);
+    }
+
+    <article class="blog-detail">
+
+        <a class="article-back bigbutton" href="@ListUrl(moduleData.ListPageTabId(), categoryData)">@ResourceKey("DNNrocket.back")</a>
+        <h1>@articleData.Name</h1>
+        <div class="article-img">
+            <img src="@ImageUrl(mainImage.RelPathWebp, moduleData.GetSettingInt("detailwidth"), moduleData.GetSettingInt("detailheight"))" alt="@(mainImage.Alt)" />
+        </div>
+
+        <p class="article-infos"><span>@ResourceKey("Articles.published") </span>@DateOf(articleData.Info, articleData.PublishedDateXPath, false, sessionParams.CultureCode)</p>
+
+        <div class="article-content">
+
+            @HtmlOf(articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
+
+            @foreach (var linkData in articleData.Getlinks())
+            {
+                if (!linkData.Hidden)
+                {
+                    <a href="@(linkData.Url)" target="@(linkData.Target)">@linkData.Name</a>
+                }
+            }
+
+            @foreach (ArticleDoc documentData in articleData.GetDocs())
+            {
+                if (!documentData.Hidden)
+                {
+                    <div>
+                        <a href="@(documentData.RelPath)" target="_blank">@documentData.Name</a>
+                    </div>
+                }
+            }
+
+
+            @if (articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/htmltext") != "")
+            {
+                <div><div class="video-container">@HtmlOf(articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/htmltext"))</div></div>
+            }
+
+            @if (articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/video") != "")
+            {
+                <div><div class="video-container">@HtmlOf(articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/video"))</div></div>
+            }
+        </div>
+        <div class="article-gallery">
+            @foreach (var articleImage in articleData.GetImages())
+            {
+                <a data-fancybox="group@(articleData.ArticleId)" data-caption="@(articleImage.Alt)" href="@ImageUrl(articleImage.RelPathWebp,0,0)">
+                    <img src="@ImageUrl(articleImage.RelPathWebp, 120, 120)" alt="@(articleImage.Alt)" />
+                </a>
+            }
+        </div>
+
+        <hr />
+
+    </article>
+
+</div>
