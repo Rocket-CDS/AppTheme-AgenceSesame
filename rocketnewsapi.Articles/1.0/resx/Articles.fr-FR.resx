@@ -129,4 +129,10 @@
   <data name="allnews.Text" xml:space="preserve">
     <value>Toutes les actualités</value>
   </data>
+  <data name="hideimages.Text" xml:space="preserve">
+    <value>Cacher les images</value>
+  </data>
+  <data name="share.Text" xml:space="preserve">
+    <value>Partager</value>
+  </data>
 </root>

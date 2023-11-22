@@ -130,6 +130,9 @@
     <value>All news</value>
   </data>
   <data name="hideimages.Text" xml:space="preserve">
-    <value>Hide Images</value>
+    <value>Hide images</value>
+  </data>
+  <data name="share.Text" xml:space="preserve">
+    <value>Share</value>
   </data>
 </root>
