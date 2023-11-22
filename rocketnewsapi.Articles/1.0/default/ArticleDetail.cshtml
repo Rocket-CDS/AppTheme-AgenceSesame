@@ -31,35 +31,36 @@
 
         <div class="article-content">
 
-            @HtmlOf(articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
-
-            @foreach (var linkData in articleData.Getlinks())
-            {
-                if (!linkData.Hidden)
-                {
-                    <a href="@(linkData.Url)" target="@(linkData.Target)">@linkData.Name</a>
-                }
-            }
-
-            @foreach (ArticleDoc documentData in articleData.GetDocs())
-            {
-                if (!documentData.Hidden)
-                {
-                    <div>
-                        <a href="@(documentData.RelPath)" target="_blank">@documentData.Name</a>
-                    </div>
-                }
-            }
-
-
-            @if (articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/htmltext") != "")
-            {
-                <div><div class="video-container">@HtmlOf(articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/htmltext"))</div></div>
-            }
-
             @if (articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/video") != "")
             {
-                <div><div class="video-container">@HtmlOf(articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/video"))</div></div>
+                <div class="video-container">@HtmlOf(articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/video"))</div>
+            }
+
+            @HtmlOf(articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
+            @HtmlOf(articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/htmltext"))
+
+            @if (articleData.GetLinkList().Count() > 0) 
+            {
+            <div class="newspaper-link">
+                @foreach (var linkData in articleData.Getlinks())
+                {    
+                    if (!linkData.Hidden)
+                    {
+                        <div><a href="@(linkData.Url)" target="@(linkData.Target)">@linkData.Name</a></div>
+                    }
+                }
+            </div>
+            }
+            @if (articleData.GetDocList().Count() > 0) {
+            <div class="documents">
+                @foreach (ArticleDoc documentData in articleData.GetDocs())
+                {
+                    if (!documentData.Hidden)
+                    {
+                        <div><a href="@(documentData.RelPath)" target="_blank" >@documentData.Name</a></div>
+                    }
+                }
+            </div>
             }
 
         </div>
@@ -75,7 +76,7 @@
 
         <hr />
 
-        <div class="fb-share-button" data-href="#" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">@ResourceKey("Articles.share")</a></div>
+        <div class="fb-share-button" data-href="@DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData)" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">@ResourceKey("Articles.share")</a></div>
 
     </article>
 
