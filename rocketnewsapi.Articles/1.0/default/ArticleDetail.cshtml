@@ -33,7 +33,7 @@
 
             @if (articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/video") != "")
             {
-                <div class="video-container">@HtmlOf(articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/video"))</div>
+                <div class="article-video"><div class="video-container">@HtmlOf(articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/video"))</div></div>
             }
 
             @HtmlOf(articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))

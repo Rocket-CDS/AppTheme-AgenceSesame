@@ -28,7 +28,7 @@
                     <span class="fd-month">@articleData.PublishedDate.ToString("MMM")</span>
                 </div>
                     <div class="article-img"><img src="@ImageUrl(articleImage.RelPathWebp, widthlist, heightlist)" alt="@(articleImage.Alt)" /></div>
-                <p>@Succinct(articleData.Summary, 100)</p>
+                <p>@Succinct(articleData.Summary, 200)</p>
                 <a class="bigbutton" href="@(DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData))">@ResourceKey("Articles.readmore")</a>
             </article>
         }
