@@ -27,15 +27,15 @@
                     <span class="fd-day">@articleData.PublishedDate.ToString("dd")</span>
                     <span class="fd-month">@articleData.PublishedDate.ToString("MMM")</span>
                 </div>
-                    <div class="article-img"><img src="@ImageUrl(articleImage.RelPathWebp, widthlist, widthlist)" alt="@(articleImage.Alt)" /></div>
+                    <div class="article-img"><img src="@ImageUrl(articleImage.RelPathWebp, widthlist, heightlist)" alt="@(articleImage.Alt)" /></div>
                 <p>@Succinct(articleData.Summary, 100)</p>
                 <a class="bigbutton" href="@(DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData))">@ResourceKey("Articles.readmore")</a>
             </article>
         }
         </div>
 
-        <div class="w3-row w3-padding-16 w3-center">
-                @RenderTemplate("articlePaging.cshtml", appThemeDirectoryDefault, Model, false)
+        <div class="blog-paging">
+            @RenderTemplate("articlePaging.cshtml", appThemeDirectoryDefault, Model, false)
         </div>
 
     </div>
