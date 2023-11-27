@@ -10,33 +10,30 @@
     {
         <div class="h4-headline">@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</div>
     }
-
     <div id="@articleRowData.RowKey" class="socialicons si-colored">
-        @if (info.GetXmlProperty("genxml/textbox/twitter") != "")
-        {
-            <a href="@info.GetXmlProperty("genxml/textbox/twitter")" class="twittericon" title="twitter" target="_blank"><span class="ri-twitter"></span></a>
-        }
-
-        @if (info.GetXmlProperty("genxml/textbox/linkedin") != "")
-        {
-            <a href="@info.GetXmlProperty("genxml/textbox/linkedin")" class="linkedinicon" title="linkedin" target="_blank"><span class="ri-linkedin"></span></a>
-        }
-
         @if (info.GetXmlProperty("genxml/textbox/facebook") != "")
         {
             <a href="@info.GetXmlProperty("genxml/textbox/facebook")" class="facebookicon" title="facebook" target="_blank"><span class="ri-facebook"></span></a>
         }
-        @if (info.GetXmlProperty("genxml/textbox/youtube") != "")
+        @if (info.GetXmlProperty("genxml/textbox/linkedin") != "")
         {
-            <a href="@info.GetXmlProperty("genxml/textbox/youtube")" class="youtubeicon" title="youtube" target="_blank"><span class="ri-youtube"></span></a>
-        }
-        @if (info.GetXmlProperty("genxml/textbox/pinterest") != "")
-        {
-            <a href="@info.GetXmlProperty("genxml/textbox/pinterest")" class="pinteresticon" title="pinterest" target="_blank"><span class="ri-pinterest"></span></a>
+            <a href="@info.GetXmlProperty("genxml/textbox/linkedin")" class="linkedinicon" title="linkedin" target="_blank"><span class="ri-linkedin"></span></a>
         }
         @if (info.GetXmlProperty("genxml/textbox/instagram") != "")
         {
             <a href="@info.GetXmlProperty("genxml/textbox/instagram")" class="instagramicon" title="instagram" target="_blank"><span class="ri-instagram"></span></a>
+        }
+        @if (info.GetXmlProperty("genxml/textbox/youtube") != "")
+        {
+            <a href="@info.GetXmlProperty("genxml/textbox/youtube")" class="youtubeicon" title="youtube" target="_blank"><span class="ri-youtube-play"></span></a>
+        }
+        @if (info.GetXmlProperty("genxml/textbox/twitter") != "")
+        {
+            <a href="@info.GetXmlProperty("genxml/textbox/twitter")" class="twittericon" title="twitter" target="_blank"><span class="ri-twitter"></span></a>
+        }
+        @if (info.GetXmlProperty("genxml/textbox/pinterest") != "")
+        {
+            <a href="@info.GetXmlProperty("genxml/textbox/pinterest")" class="pinteresticon" title="pinterest" target="_blank"><span class="ri-pinterest"></span></a>
         }
         @if (info.GetXmlProperty("genxml/textbox/tripadvisor") != "")
         {
