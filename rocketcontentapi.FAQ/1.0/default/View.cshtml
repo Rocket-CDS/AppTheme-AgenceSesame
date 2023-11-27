@@ -13,11 +13,11 @@
         @foreach (var articleRowData in articleData.GetRows())
         {
             var rowData = articleRowData.Info;
-            <div class="@moduleData.GetSetting("rowcssclass")">
-                <div class="accordion-header" onclick="$('.@(articleRowData.RowKey)').toggle();" style="cursor:pointer;">
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="$('.@(articleRowData.RowKey)').slideToggle();" style="cursor:pointer;">
                     <h4>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h4>
                 </div>
-                    <div class="accordion-content @(articleRowData.RowKey)" style="display:none;">@HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))</div>
+                    <div class="accordion-content @(articleRowData.RowKey)" style="display:none;">@HtmlOf(rowData.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))</div>
             </div>
         }
     </div>
@@ -25,12 +25,3 @@
     </div>
 
 </div>
-
-<script type="text/javascript">
-    jQuery(document).ready(function () {
-    });
-</script>
-
-
-
-
