@@ -1,4 +1,4 @@
-@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
 @AssigDataModel(Model)
 @AddProcessDataResx(appThemeView, true)
 <!--inject-->
@@ -23,22 +23,36 @@
                         <p>@BreakOf(info, "genxml/textbox/adress")</p>
                     }
                     <p>
-                        @if (rowData.GetXmlProperty("genxml/textbox/tel1") != "")
+                    @if (rowData.GetXmlProperty("genxml/textbox/tel1") != "")
+                    {
+                        if (rowData.GetXmlProperty("genxml/textbox/clicktel1") != "")
                         {
-                            <div>@ResourceKey("DNNrocket.tel1") : @rowData.GetXmlProperty("genxml/textbox/tel1")</div>
+                        <div>@ResourceKey("DNNrocket.tel1") : <a href="tel:@rowData.GetXmlProperty("genxml/textbox/clicktel1")">@rowData.GetXmlProperty("genxml/textbox/tel1")</a></div>
                         }
-                        @if (rowData.GetXmlProperty("genxml/textbox/tel2") != "")
+                        else
                         {
-                            <div>@ResourceKey("DNNrocket.tel2") : @rowData.GetXmlProperty("genxml/textbox/tel2")</div>
+                        <div>@ResourceKey("DNNrocket.tel1") : @rowData.GetXmlProperty("genxml/textbox/tel1")</div>
                         }
-                        @if (rowData.GetXmlProperty("genxml/textbox/fax") != "")
+                    }
+                    @if (rowData.GetXmlProperty("genxml/textbox/tel2") != "")
+                    {
+                        if (rowData.GetXmlProperty("genxml/textbox/clicktel2") != "")
                         {
-                            <div>@ResourceKey("DNNrocket.fax") : @rowData.GetXmlProperty("genxml/textbox/fax")</div>
+                        <div>@ResourceKey("DNNrocket.tel2") : <a href="tel:@rowData.GetXmlProperty("genxml/textbox/clicktel2")">@rowData.GetXmlProperty("genxml/textbox/tel2")</a></div>
                         }
-                        @if (rowData.GetXmlProperty("genxml/textbox/email") != "")
+                        else
                         {
-                            <div>@EmailOf(info, "genxml/textbox/email")</div>
+                        <div>@ResourceKey("DNNrocket.tel2") : @rowData.GetXmlProperty("genxml/textbox/tel2")</div>
                         }
+                    }
+                    @if (rowData.GetXmlProperty("genxml/textbox/fax") != "")
+                    {
+                        <div>@ResourceKey("DNNrocket.fax") : @rowData.GetXmlProperty("genxml/textbox/fax")</div>
+                    }
+                    @if (rowData.GetXmlProperty("genxml/textbox/email") != "")
+                    {
+                        <div>@EmailOf(info, "genxml/textbox/email")</div>
+                    }
                     </p>
                 </div>
             </div>

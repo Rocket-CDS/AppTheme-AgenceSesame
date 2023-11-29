@@ -10,7 +10,6 @@
 
 <div class='w3-row w3-padding'>
     <div class="w3-col m12 w3-padding">
-        <!-- display company -->
         <div class="w3-row w3-padding">
             <label>@ResourceKey("DNNrocket.moduletitle")</label>&nbsp;@EditFlag(sessionParams)
             @TextBox(info, "genxml/lang/genxml/textbox/title", " class='w3-input w3-border' ", "", true)
@@ -19,48 +18,50 @@
             <label>@ResourceKey("DNNrocket.companyName")</label>&nbsp;@EditFlag(sessionParams)
             @TextBox(info, "genxml/lang/genxml/textbox/company", " class='w3-input w3-border' ", "", true)
         </div>
-        <!-- display adress -->
         <div class="w3-row w3-padding">
             <label>@ResourceKey("DNNrocket.adress")</label>
-            @TextArea(info, "genxml/textbox/adress", " class='w3-input w3-border' ", "", false)
+            @TextArea(info, "genxml/textbox/adress", " rows='4' class='w3-input w3-border' ", "", false)
         </div>
-        <!-- display tel1 -->
         <div class="w3-half w3-padding">
             <label>@ResourceKey("DNNrocket.tel1")</label>
             @TextBox(info, "genxml/textbox/tel1", " class='w3-input w3-border' ", "", false)
         </div>
-        <!-- display tel2 -->
+        <div class="w3-half w3-padding">
+            <label>Clic @ResourceKey("DNNrocket.tel1")</label>
+            @TextBox(info, "genxml/textbox/clicktel1", " class='w3-input w3-border' ", "", false)
+        </div>
         <div class="w3-half w3-padding">
             <label>@ResourceKey("DNNrocket.tel2")</label>
             @TextBox(info, "genxml/textbox/tel2", " class='w3-input w3-border' ", "", false)
         </div>
-        <!-- display fax -->
+        <div class="w3-half w3-padding">
+            <label>Clic @ResourceKey("DNNrocket.tel2")</label>
+            @TextBox(info, "genxml/textbox/clicktel2", " class='w3-input w3-border' ", "", false)
+        </div>
         <div class="w3-half w3-padding">
             <label>@ResourceKey("DNNrocket.fax")</label>
             @TextBox(info, "genxml/textbox/fax", " class='w3-input w3-border' ", "", false)
         </div>
-        <!-- display email -->
         <div class="w3-half w3-padding">
             <label>@ResourceKey("DNNrocket.email")</label>
             @TextBox(info, "genxml/textbox/email", " class='w3-input w3-border' ", "", false)
         </div>
 
-        <!-- TEMPLATE CONTACTS -->
+        <!-- CONTACTS -->
         <br />
         <div class="w3-row w3-padding">
             <label>@ResourceKey("DNNrocket.addcontact")</label>
             [INJECT:appthemeadmin,Contacts.cshtml]
         </div>
         <br />
-        <!-- display extra info -->
+
         <div class="w3-row w3-padding">
             <label>@ResourceKey("DNNrocket.extraInfo")&nbsp;@EditFlag(sessionParams)</label>
-            @TextArea(info, "genxml/lang/genxml/textbox/extrainfo", " class='w3-input w3-border' ", "", true)
+            @TextArea(info, "genxml/lang/genxml/textbox/extrainfo", " rows='4' class='w3-input w3-border' ", "", true)
         </div>
-        <!-- display map -->
         <div class="w3-row w3-padding">
             <label>@ResourceKey("DNNrocket.codegooglemap")</label>
-            @TextArea(info, "genxml/lang/genxml/textbox/map", " rows='5' class='w3-input w3-border' ", "", true)
+            @TextArea(info, "genxml/lang/genxml/textbox/map", " rows='4' class='w3-input w3-border' ", "", true)
         </div>
     </div>
 </div>
