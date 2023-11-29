@@ -1,4 +1,4 @@
-@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
 @AssigDataModel(Model)
 @AddProcessDataResx(appThemeView, true)
 
@@ -19,11 +19,25 @@
             }
             @if (moduleData.Record.GetXmlPropertyBool("genxml/settings/tel1"))
             {
+                if (info.GetXmlProperty("genxml/textbox/clicktel1") != "")
+                {
+                <div>@ResourceKey("DNNrocket.tel1") : <a href="tel:@info.GetXmlProperty("genxml/textbox/clicktel1")">@info.GetXmlProperty("genxml/textbox/tel1")</a></div>
+                }
+                else
+                {
                 <div>@ResourceKey("DNNrocket.tel1") : @info.GetXmlProperty("genxml/textbox/tel1")</div>
+                }
             }
             @if (moduleData.Record.GetXmlPropertyBool("genxml/settings/tel2"))
             {
+                if (info.GetXmlProperty("genxml/textbox/clicktel2") != "")
+                {
+                <div>@ResourceKey("DNNrocket.tel2") : <a href="tel:@info.GetXmlProperty("genxml/textbox/clicktel2")">@info.GetXmlProperty("genxml/textbox/tel2")</a></div>
+                }
+                else
+                {
                 <div>@ResourceKey("DNNrocket.tel2") : @info.GetXmlProperty("genxml/textbox/tel2")</div>
+                }
             }
             @if (moduleData.Record.GetXmlPropertyBool("genxml/settings/fax"))
             {
