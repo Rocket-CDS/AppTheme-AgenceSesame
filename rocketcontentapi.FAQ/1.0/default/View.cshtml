@@ -12,12 +12,20 @@
     <div id="accordion" class="faq">
         @foreach (var articleRowData in articleData.GetRows())
         {
+            var contentId = "content" + articleRowData.RowKey + sessionParams.ModuleId;
             var rowData = articleRowData.Info;
-            <div class="accordion-item">
-                <div class="accordion-header" onclick="$('.@(articleRowData.RowKey)').slideToggle();" style="cursor:pointer;">
+                var defaultOpenClass = "";
+                var defaultOpenStyle = "display:none;";
+                if (articleRowData.GetBool("genxml/checkbox/defaultopen"))
+                {
+                    defaultOpenClass = " accordion-active a-active" + sessionParams.ModuleId;
+                    defaultOpenStyle = "";
+                }
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="slideAccordianFAQ('@(contentId)','@(sessionParams.ModuleId)')" style="cursor:pointer;">
                     <h4>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h4>
                 </div>
-                    <div class="accordion-content @(articleRowData.RowKey)" style="display:none;">@HtmlOf(rowData.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))</div>
+                    <div id="@(contentId)" class="accordion-content @(defaultOpenClass)" style="@(defaultOpenStyle)">@HtmlOf(rowData.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))</div>
             </div>
         }
     </div>

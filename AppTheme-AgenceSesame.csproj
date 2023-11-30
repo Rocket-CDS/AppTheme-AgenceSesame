@@ -48,7 +48,6 @@
     <Folder Include="rocketcontentapi.ContactDetailsSat\1.0\dep\" />
     <Folder Include="rocketcontentapi.Documents\1.0\dep\" />
     <Folder Include="rocketcontentapi.FAQ\1.0\dep\" />
-    <Folder Include="rocketcontentapi.FAQ\1.0\js\" />
     <Folder Include="rocketcontentapi.HeroHeader\1.0\dep\" />
     <Folder Include="rocketcontentapi.LeafletMapMultipoint\1.0\js\" />
     <Folder Include="rocketcontentapi.Links\1.0\dep\" />
