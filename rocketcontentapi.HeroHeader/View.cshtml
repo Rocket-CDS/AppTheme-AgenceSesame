@@ -1,0 +1,51 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeAdmin, true)
+<!--inject-->
+@{
+    var info = moduleDataInfo;
+    //NOTE: xPath for module settings must use "genxml/settings/*"
+}
+
+@{
+    var mask = "";
+    if (moduleData.GetSettingBool("mask"))
+    {
+        mask = "tih-mask";
+    }
+    var articleImage = articleRowData.GetImage(0);
+    var width = moduleData.GetSettingInt("width");
+    var height = moduleData.GetSettingInt("height");
+    var separationLine = moduleData.GetSettingBool("separation");
+    var crop = rowData.GetXmlProperty("genxml/select/crop");
+    if (crop == "")
+    {
+        crop = "center";
+    }
+}
+
+<div class="@(moduleData.GetSetting("cssclass"))">
+    <div class="topimageheader @(mask)" style="background:url('@ImageUrl(articleImage.RelPathWebp, width, height, "", "webp")') center @(crop) no-repeat;
+                                            -webkit-background-size: cover;
+                                            -moz-background-size: cover;
+                                            -o-background-size: cover;
+                                            background-size: cover;">
+        <div class="caption">
+            @if (rowData.GetXmlProperty("genxml/lang/genxml/textbox/title") != "")
+            {
+                <h2>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
+            }
+            @if (separationLine)
+            {
+                <hr />
+            }
+            @if (rowData.GetXmlProperty("genxml/lang/genxml/textbox/text") != "")
+            {
+                <h3>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/text")</h3>
+            }
+        </div>
+    </div>
+</div>
+
+
+

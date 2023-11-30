@@ -1,0 +1,32 @@
+@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
+
+<!-- require Key for saving -->
+@RowKey(info)
+
+<a href="http://manager.rocket-cds.org/Aides-aux-modules/HeroHeader" title="@ResourceKey("DNNrocket.help")" target="_blank" class="w3-button w3-circle w3-blue">?</a>
+
+<div class="w3-row w3-padding">
+    <div class="w3-col">
+        <label>@ResourceKey("DNNrocket.title1")</label>&nbsp;@EditFlag(sessionParams)
+        @TextBox(info, "genxml/lang/genxml/textbox/title", " type='text' class='w3-input w3-card w3-border w3-round-large' ", "", false)
+    </div>
+</div>
+
+<div class="w3-row w3-padding">
+    <div class="w3-col">
+        <label>@ResourceKey("DNNrocket.title2")</label>&nbsp;@EditFlag(sessionParams)
+        @TextBox(info, "genxml/lang/genxml/textbox/text", " type='text' class='w3-input w3-card w3-border w3-round-large' ", "", false)
+    </div>
+</div>
+
+<div class="w3-row w3-padding">
+    <label>@ResourceKey("DNNrocket.backgroundimage")</label>
+    [INJECT:appthemesystem,ArticleImage.cshtml]
+    <div class="w3-third w3-padding">
+        <label>@ResourceKey("DNNrocket.crop")</label>
+        @DropDownList(info, "genxml/select/crop", "center,top,bottom", ResourceKey("DNNrocket.position").ToString(), "class='w3-select w3-border'", "false")
+    </div>
+</div>

@@ -1,0 +1,37 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeAdmin, true)
+<!--inject-->
+@{
+    var info = moduleDataInfo;
+    //NOTE: xPath for module settings must use "genxml/settings/*"
+}
+
+<div class="w3-row">
+    <div class="w3-third w3-padding">
+        <label>@ResourceKey("DNNrocket.imageresize") (px)</label>
+        @TextBox(info, "genxml/settings/imageresize", " class='w3-input w3-border'", "1600")
+    </div>
+    <div class="w3-third w3-padding">
+        <label>@ResourceKey("DNNrocket.width") (px)</label>
+        @TextBox(info, "genxml/settings/width", " class='w3-input w3-border'", "1600")
+    </div>
+    <div class="w3-third w3-padding">
+        <label>@ResourceKey("DNNrocket.height") (px)</label>
+        @TextBox(info, "genxml/settings/height", " class='w3-input w3-border'", "0")
+    </div>
+</div>
+<div class="w3-row">
+    <div class="w3-third w3-padding">
+        <label>@ResourceKey("DNNrocket.cssClass")</label>
+        @TextBox(info, "genxml/settings/cssclass", " class='w3-input w3-border'  ", "")
+    </div>
+    <div class="w3-third w3-padding">
+        <label>@ResourceKey("DNNrocket.hr")</label><br />
+        @CheckBox(info, "genxml/settings/separation", "", "class='w3-check' ", false, false, 0)
+    </div>
+    <div class="w3-third w3-padding">
+        <label>@ResourceKey("DNNrocket.mask")</label><br />
+        @CheckBox(info, "genxml/settings/mask", "", "class='w3-check' ", false, false, 0)
+    </div>
+</div>
