@@ -6,13 +6,11 @@
 <!--inject-->
 
 @{
-
     var mask = "";
     if (moduleData.GetSettingBool("genxml/settings/mask"))
     {
         mask = "rs-mask";
     }
-    var crop = moduleData.GetSetting("genxml/settings/crop");
     var width = moduleData.GetSettingInt("width");
     var height = moduleData.GetSettingInt("height");
     var separationLine = moduleData.GetSettingBool("separation");
@@ -23,6 +21,11 @@
             @foreach (var articleRowData in articleData.GetRows())
             {
                 rowData = articleRowData.Info;
+                var crop = rowData.GetXmlProperty("genxml/select/crop");
+                if (crop == "")
+                {
+                    crop = "center";
+                }
                 var hideRow = rowData.GetXmlPropertyBool("genxml/checkbox/hiderow");
                 if (!hideRow)
                 {
@@ -45,7 +48,6 @@
                             {
                                 <p>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/text")</p>
                             }
-
                             @{
                                 var linkData = articleRowData.Getlink(0);
                                 if (!linkData.Hidden && !linkData.IsDisabled)
@@ -53,7 +55,6 @@
                                     <a href="@(linkData.Url)" class="bigbutton" target="@(linkData.Target)">@linkData.Name</a>
                                 }
                             }
-
                         </div>
                     </li>
                 }
