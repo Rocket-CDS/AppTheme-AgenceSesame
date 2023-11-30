@@ -23,7 +23,7 @@
                     if (linkData.IsDisabled)
                     {
                         <div class="svgblock @(cssClassRow)">
-                            <div class="svgblockicon">@HtmlOf(rowData, "genxml/lang/genxml/textbox/svgcode")</div>
+                            <div class="svgblockicon">@HtmlOf(rowData, "genxml/textbox/svgcode")</div>
                             <h3>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h3>
                             <p>@BreakOf(rowData, "genxml/lang/genxml/textbox/resume")</p>
                         </div>
@@ -31,7 +31,7 @@
                     else
                     {
                         <a class="svgblock @(cssClassRow)" href="@(linkData.Url)" target="@(linkData.Target)">
-                            <div class="svgblockicon">@HtmlOf(rowData, "genxml/lang/genxml/textbox/svgcode")</div>
+                            <div class="svgblockicon">@HtmlOf(rowData, "genxml/textbox/svgcode")</div>
                             <h3>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h3>
                             <p>@BreakOf(rowData, "genxml/lang/genxml/textbox/resume")</p>
                         </a>                        
