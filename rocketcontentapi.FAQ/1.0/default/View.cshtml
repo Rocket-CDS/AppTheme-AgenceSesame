@@ -22,7 +22,7 @@
                 defaultOpenStyle = "";
             }
             <div class="accordion-item">
-                    <div class="accordion-header" onclick="slideAccordianFAQ('@(contentId)','@(sessionParams.ModuleId)')" style="cursor:pointer;">
+                    <div class="accordion-header" onclick="slideAccordionFAQ('@(contentId)','@(sessionParams.ModuleId)')" style="cursor:pointer;">
                         <h4>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h4>
                     </div>
                     <div id="@(contentId)" class="accordion-content @(defaultOpenClass)" style="@(defaultOpenStyle)">@HtmlOf(rowData.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))</div>
