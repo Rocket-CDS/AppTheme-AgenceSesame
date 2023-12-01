@@ -9,7 +9,7 @@
 
     <div class="faqwrapper">
     [INJECT:appthemesystem,ArticleHeaderView.cshtml]
-    <div id="accordion" class="faq">
+    <div class="faq">
         @foreach (var articleRowData in articleData.GetRows())
         {
             var contentId = "content" + articleRowData.RowKey + sessionParams.ModuleId;
