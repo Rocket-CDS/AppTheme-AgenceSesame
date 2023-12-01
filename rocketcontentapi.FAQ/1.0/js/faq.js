@@ -1,4 +1,4 @@
-﻿function slideAccordianFAQ(contentId, moduleId) {
+﻿function slideAccordionFAQ(contentId, moduleId) {
     if ($('.a-active' + moduleId).attr('id') == contentId) {
         $('.a-active' + moduleId).slideUp();
         $('.a-active' + moduleId).removeClass('accordion-active');
