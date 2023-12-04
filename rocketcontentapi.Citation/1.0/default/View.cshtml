@@ -13,7 +13,7 @@
                 <h2>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
                 <hr />
                 <div class="citation-text">@BreakOf(rowData, "genxml/lang/genxml/textbox/content")</div>
-                @foreach (var linkData in articleRowData.Getlinks())
+                foreach (var linkData in articleRowData.Getlinks())
                 {    
                     if (linkData.IsDisabled || linkData.Hidden)
                     {
