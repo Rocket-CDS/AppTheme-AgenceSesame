@@ -23,10 +23,13 @@
 <div class="w3-row">
     <div class="w3-col">
         <label>@ResourceKey("DNNrocket.content")</label>
-        @TextArea(info, "genxml/lang/genxml/textbox/content", " rows='4' class='w3-input w3-border' autocomplete='off' ", "", false, 0)
+        @TextArea(info, "genxml/lang/genxml/textbox/content", " rows='4' class='w3-input w3-border w3-margin-bottom' autocomplete='off' ", "", false, 0)
     </div>
 </div>
 
-<div class="w3-row w3-border w3-round w3-margin-bottom w3-margin-top">
+<div class="w3-row">
+    <label>@ResourceKey("DNNrocket.link")</label>
+    <div class="w3-row w3-border w3-round w3-margin-bottom">
     [INJECT:appthemesystem,ArticleLink.cshtml]
+    </div>
 </div>
