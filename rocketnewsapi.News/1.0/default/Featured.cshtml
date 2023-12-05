@@ -1,0 +1,83 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@AssigDataModel(Model)
+@AddProcessDataResx(appTheme, true)
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
+<!--inject-->
+
+@if (articleDataList != null)
+{
+    var limit = moduleData.GetSettingInt("limit");
+    var widthlist = moduleData.GetSettingInt("widthlist");
+    var heightlist = moduleData.GetSettingInt("heightlist");
+    var widthdetail = moduleData.GetSettingInt("widthdetail");
+    var heightdetail = moduleData.GetSettingInt("heightdetail");
+
+    var allNewsUrl = DNNrocketUtils.NavigateURL(moduleData.GetSettingInt("listpage"));
+    var lp = 1;
+
+    if (moduleData.GetSettingBool("ecomode"))
+    {
+        <div class="blogsat">
+            <div class="h4-headline">@ResourceKey("News.latestnews")</div>
+            @foreach (ArticleLimpet articleData in articleDataList.GetArticleList())
+            {
+                if (!articleData.Hidden)
+                {
+                    var articleImage = articleData.GetImage(0);
+                    <article>
+                        <h3>
+                            <a href="@(DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData))">
+                                @DateOf(articleData.Info,articleData.PublishedDateXPath, sessionParams.CultureCode,"d MMM yyyy") - @articleData.Name
+                            </a>
+                        </h3>
+                    </article>
+                    if (lp == limit)
+                    {
+                        break;
+                    }
+                    lp++;
+                }
+            }
+            <div class="blogsat-link">
+                    <a href="@ListUrl(moduleData.ListPageTabId(), categoryData)">@ResourceKey("News.allnews")</a>
+            </div>
+        </div>
+    }
+    else
+    {
+    <div class="blogsat">
+        <h3>@ResourceKey("News.latestnews")</h3>
+        @foreach (ArticleLimpet articleData in articleDataList.GetArticleList())
+        {
+            if (!articleData.Hidden)
+            {
+                var articleImage = articleData.GetImage(0);
+                <article>
+                    @if (articleImage.RelPathWebp != "")
+                    {
+                    <div class="article-img">
+                        <img src="@ImageUrl(articleImage.RelPathWebp, widthlist, heightlist)" alt="@(articleImage.Alt)" />
+                    </div>
+                    }                  
+                    <div class="article-content">
+                        <h2><a href="@(DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData))">@articleData.Name</a></h2>
+                        <p class="article-infos">@DateOf(articleData.Info,articleData.PublishedDateXPath, sessionParams.CultureCode,"d MMM yyyy")</p>
+                    </div>
+                </article>
+                if (lp == limit)
+                {
+                    break;
+                }
+                lp++;
+            }
+        }
+        <div class="blogsat-link">
+            <a href="@ListUrl(moduleData.ListPageTabId(), categoryData)">@ResourceKey("News.allnews")</a>
+        </div>
+    </div>
+    }
+
+}
+
