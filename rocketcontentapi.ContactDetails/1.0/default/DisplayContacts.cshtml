@@ -3,24 +3,24 @@
 @AddProcessDataResx(appThemeView, true)
 <!--inject-->
 
-@foreach (var linkInfo in articleRowData.GetLinkList())
+@foreach (var contactInfo in articleRowData.GetLinkList())
 {
-    if (linkInfo.GetXmlProperty("genxml/textbox/contactmulti") != "")
+    if (contactInfo.GetXmlProperty("genxml/textbox/contactmulti") != "")
     {
     <div class="contact-item">
         <div class="ci-content">
-            <h3>@linkInfo.GetXmlProperty("genxml/textbox/contactmulti")</h3>
-            @if (linkInfo.GetXmlProperty("genxml/textbox/namemulti") != "")
+            <h3>@contactInfo.GetXmlProperty("genxml/textbox/contactmulti")</h3>
+            @if (contactInfo.GetXmlProperty("genxml/textbox/namemulti") != "")
             {
-                <div>@info.GetXmlProperty("genxml/textbox/namemulti")</div>
+                <div>@contactInfo.GetXmlProperty("genxml/textbox/namemulti")</div>
             }
-            @if (linkInfo.GetXmlProperty("genxml/textbox/mobilemulti") != "")
+            @if (contactInfo.GetXmlProperty("genxml/textbox/mobilemulti") != "")
             {
-                <div>@ResourceKey("DNNrocket.mobile") : @linkInfo.GetXmlProperty("genxml/textbox/mobilemulti")</div>
+                <div>@ResourceKey("DNNrocket.mobile") : @contactInfo.GetXmlProperty("genxml/textbox/mobilemulti")</div>
             }
-            @if (linkInfo.GetXmlProperty("genxml/textbox/emailmulti") != "")
+            @if (contactInfo.GetXmlProperty("genxml/textbox/emailmulti") != "")
             {
-                <div>@EmailOf(info, "genxml/textbox/emailmulti")</div>
+                <div>@EmailOf(contactInfo, "genxml/textbox/emailmulti")</div>
             }
         </div>
     </div>

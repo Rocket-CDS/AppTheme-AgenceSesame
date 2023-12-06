@@ -6,7 +6,6 @@
 @{
     var contactLP = 0;
     var contactId = 1;
-    var fieldId = "multi";
 }
 <div class="w3-row linklistdatasection">
     <div class="w3-bar">
@@ -24,19 +23,19 @@
                 <div class="w3-container w3-padding w3-card">
                     <div class="w3-col m6 w3-padding">
                         <label>@ResourceKey("DNNrocket.contact")</label>
-                        @TextBox(contactInfo, "genxml/textbox/contact" + fieldId, " class='w3-input w3-border' ", "", false, contactLP)
+                        @TextBox(contactInfo, "genxml/textbox/contactmulti", " class='w3-input w3-border' ", "", false, contactLP)
                     </div>
                     <div class="w3-col m6 w3-padding">
                         <label>@ResourceKey("DNNrocket.name")</label>
-                        @TextBox(contactInfo, "genxml/textbox/name" + fieldId, " class='w3-input w3-border' ", "", false, contactLP)
+                        @TextBox(contactInfo, "genxml/textbox/namemulti", " class='w3-input w3-border' ", "", false, contactLP)
                     </div>
                     <div class="w3-col m6 w3-padding">
                         <label>@ResourceKey("DNNrocket.mobile")</label>
-                        @TextBox(contactInfo, "genxml/textbox/mobile" + fieldId, " class='w3-input w3-border' ", "", false, contactLP)
+                        @TextBox(contactInfo, "genxml/textbox/mobilemulti", " class='w3-input w3-border' ", "", false, contactLP)
                     </div>
                     <div class="w3-col m6 w3-padding">
                         <label>@ResourceKey("DNNrocket.email")</label>
-                        @TextBox(contactInfo, "genxml/textbox/email" + fieldId, " class='w3-input w3-border' ", "", false, contactLP)
+                        @TextBox(contactInfo, "genxml/textbox/emailmulti", " class='w3-input w3-border' ", "", false, contactLP)
                     </div>
                     <div class="simplisity_removelistitem w3-display-topright" s-removelist=".linklist" s-recylebin="linklistbin" style="cursor: pointer;">
                         @ButtonIcon(ButtonTypes.remove)
