@@ -1,0 +1,25 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@AssigDataModel(Model)
+@AddProcessDataResx(appTheme, true)
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
+<!--inject-->
+
+<div id="rocket-example1" class="rocket-example1-container">
+    @{
+        Model.SetSetting("searchview", "false");
+        if (articleData != null)
+        {
+            @RenderTemplate("ArticleDetail.cshtml", appTheme, Model, false)
+        }
+        else
+        {
+            @RenderTemplate("ArticleList.cshtml", appTheme, Model, false)
+        }
+    }
+</div>
+
+<div id="simplisity_loader" class="loader-wrapper" style="display:none;">
+    <div class="loader is-loading"></div>
+</div>

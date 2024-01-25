@@ -1,0 +1,103 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using RocketDirectoryAPI.Components;
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketPortal.Components;
+@using DNNrocketAPI.Components;
+@using System.Globalization;
+@using Rocket.AppThemes.Components;
+
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
+
+@{
+    var sessionParams = (SessionParams)Model.SessionParamsData;
+    var articleDataList = (ArticleLimpetList)Model.GetDataObject("articlelist");
+    var rowcount = articleDataList.SessionParamData.RowCount;
+    var page = articleDataList.SessionParamData.Page;
+    var pagesize = articleDataList.SessionParamData.PageSize;
+    var pagechapter = 5;
+    var lastpage = 0;
+    var catid = articleDataList.CategoryId;
+    var r = (page - 1) / pagechapter;
+    var BeginPage = 0;
+    var EndPage = 0;
+    if (pagesize > 0)
+    {
+        lastpage = System.Convert.ToInt32(rowcount / pagesize);
+        if (rowcount % pagesize > 0)
+        {
+            lastpage += 1;
+        }
+        BeginPage = pagechapter * r + 1;
+        EndPage = Math.Min(pagechapter * (r + 1), lastpage);
+    }
+}
+
+@functions {
+
+    private string PagingUrl(int tabid, int pagenumber, int catid)
+    {
+        if (catid > 0)
+        {
+            return DNNrocketUtils.NavigateURL(tabid, new Dictionary<string, string>() { { "catid", catid.ToString() },{ "page", pagenumber.ToString() } });
+        }
+        else
+        {
+            return DNNrocketUtils.NavigateURL(tabid, new Dictionary<string, string>() { { "page", pagenumber.ToString() } });
+        }
+    }
+
+}
+
+@if (pagesize > 0 && lastpage > 1)
+{
+
+    <nav class="pagination" role="navigation">
+
+        @if (BeginPage != 1)
+        {
+            <a href="@PagingUrl(sessionParams.TabId, 1, catid)" class="pagination-previous" onclick="$('.simplisity_loader').show()"><i class="fas fa-step-backward"></i></a>
+        }
+
+        <ul class="pagination-list">
+
+        @if (BeginPage != 1)
+        {
+            if (page >= 6)
+            {
+                <li><a href="@PagingUrl(sessionParams.TabId, (BeginPage - 1), catid)" class="pagination-link" onclick="$('.simplisity_loader').show()"><i class="fas fa-ellipsis-h"></i></a></li>
+            }
+        }
+
+        @for (int i = BeginPage; i < (EndPage + 1); i++)
+        {
+            var selected = "";
+            if (i == page)
+            {
+                selected = "is-current";
+            }
+            if (i <= lastpage)
+            {
+                <li><a href="@PagingUrl(sessionParams.TabId, i, catid)" class="pagination-link @selected" onclick="$('.simplisity_loader').show()">@(i)</a></li>
+            }
+        }
+
+        @if (page < lastpage)
+        {
+            if (EndPage != lastpage)
+            {
+                <li><a href="@PagingUrl(sessionParams.TabId, (EndPage + 1), catid)" class="pagination-link" onclick="$('.simplisity_loader').show()"><i class="fas fa-ellipsis-h"></i></a></li>
+            }
+        }    
+
+        </ul>
+
+        @if (page < lastpage)
+        {
+            <a href="@PagingUrl(sessionParams.TabId, lastpage, catid)" class="pagination-next" onclick="$('.simplisity_loader').show()"><i class="fas fa-step-forward"></i></a>
+        }
+
+    </nav>
+
+}
