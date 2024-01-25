@@ -1,0 +1,31 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@AssigDataModel(Model)
+@AddProcessDataResx(appTheme, true)
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
+<!--inject-->
+@{
+    var displayList = new List<int>();
+}
+<div class="rocket-tags blog-tags">
+    <div class="h3-headline">@ResourceKey("Blog.tags")</div>
+    <ul class="blogtaglist">
+    @foreach (var g in moduleData.GetPropertyModuleGroups(catalogSettings))
+    {
+        foreach (var p in propertyDataList.GetPropertyTagList(g.Key))
+        {
+            if (!displayList.Contains(p.Key))
+            {
+                <li>
+                    @TagButton(p.Key, p.Value, "rocket-tagbuttonOff", "rocket-tagbuttonOn",sessionParams)
+                </li>
+                displayList.Add(p.Key);
+            }
+        }
+    }
+    </ul>
+    <div class="blogtagclear">@TagButton(0, "Effacer", "rocket-tagbuttonOff", "rocket-tagbuttonOff",sessionParams)</div>
+</div>
+
+@TagJsApiCall(moduleData.SystemKey,"#rocket-blog", "rocket-tagbuttonOff", "rocket-tagbuttonOn", sessionParams)

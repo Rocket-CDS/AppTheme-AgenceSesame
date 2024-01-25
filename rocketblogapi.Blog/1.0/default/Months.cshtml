@@ -1,0 +1,43 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@using Simplisity;
+@AssigDataModel(Model)
+@AddProcessDataResx(appTheme, true)
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
+<!--inject-->
+<div class="blog-archives">
+    @{
+        var monthidx = 1;
+    }
+    @foreach (var a in RocketDirectoryAPIUtils.GetArticlesByMonth(systemData.SystemKey, DateTime.Now, 12, "publisheddate", sessionParams.GetInt("catid")))
+    {
+        if (a.Value.Count > 0)
+        {
+            <div class="blog-archives-item rocket-monthdates rocket-monthdates@(monthidx)" monthidx="@(monthidx)" onclick="setSelected($(this).attr('monthidx'));doDateSearchReload('@a.Key.ToString("yyyy-MM-dd")','@a.Key.AddMonths(1).AddDays(-1).ToString("yyyy-MM-dd")')">
+                @a.Key.ToString("MMMM yyyy")
+                <span class="count">@a.Value.Count<span class="material-icons-outlined">article</span></span>
+            </div>
+        }
+        monthidx += 1;
+    }
+</div>
+
+@DateJsApiCall(moduleData.SystemKey, "#rocket-blog", sessionParams)
+
+<script>
+    $(document).ready(function () {
+        if (simplisity_getSessionField('searchdate1') != '')
+        {
+            setSelected(simplisity_getSessionField('monthidx'));
+        }
+        $('.rocket-tagbutton').click(function(){
+            $('.rocket-monthdates').removeClass('selmonth');
+        });
+    });
+    function setSelected(monthidx) {
+        $('.rocket-monthdates').removeClass('selmonth');
+        $('.rocket-monthdates' + monthidx).addClass('selmonth');
+        simplisity_setSessionField('monthidx', monthidx);
+    }
+</script>

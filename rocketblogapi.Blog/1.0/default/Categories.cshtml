@@ -8,11 +8,12 @@
 
 <div class="categories">
 
-        <h4>Catégories :</h4>
+    <h4>@ResourceKey("DNNrocket.categories") :</h4>
 
-        <a href="@DNNrocketUtils.NavigateURL(sessionParams.TabId)">@ResourceKey("Products.allproducts")</a>
+    <div class="w3-bar-block w3-light-grey">
+        <a href="@DNNrocketUtils.NavigateURL(sessionParams.TabId)" onclick="clearDateSearch();$('.simplisity_loader').show();" class="w3-bar-item w3-button">@ResourceKey("DNNrocket.all")</a>
 
-    @foreach (var c in categoryDataList.GetCategoryTree())
+        @foreach (var c in categoryDataList.GetCategoryTree())
         {
             if (!c.Hidden && !c.HiddenByCulture && c.Level == 0)
             {
@@ -23,23 +24,29 @@
                     catDict.Add("catid", c.CategoryId.ToString());
                     if (l.Count == 0)
                     {
-                        <a href="@DNNrocketUtils.NavigateURL(sessionParams.TabId, catDict, c.Name)" onclick="$('.simplisity_loader').show()">@c.Name</a> 
+                        <a href="@DNNrocketUtils.NavigateURL(sessionParams.TabId, catDict, c.Name)" class="w3-bar-item w3-button" onclick="clearDateSearch();$('.simplisity_loader').show();">@c.Name (@c.GetArticles().RecordCount)</a>
                     }
                     else
                     {
-                        <a href="@DNNrocketUtils.NavigateURL(sessionParams.TabId, catDict, c.Name)" onclick="$('.simplisity_loader').show()">@c.Name</a>
-                        <div class="subcat">
+                        <a href="@DNNrocketUtils.NavigateURL(sessionParams.TabId, catDict, c.Name)" class="w3-bar-item w3-button" onclick="clearDateSearch();$('.simplisity_loader').show();">@c.Name (@c.GetArticles().RecordCount)</a>
+                        <div class="w3-margin-left">
                             @foreach (var child in l)
                             {
                                 var catDict2 = new Dictionary<string, string>();
                                 catDict2.Add("catid", child.CategoryId.ToString());
-                                <a href="@DNNrocketUtils.NavigateURL(sessionParams.TabId, catDict2, child.Name)" onclick="$('.simplisity_loader').show()">@child.Name</a>
+                                <a href="@DNNrocketUtils.NavigateURL(sessionParams.TabId, catDict2, child.Name)" class="w3-bar-item w3-button" onclick="clearDateSearch();$('.simplisity_loader').show();">@child.Name  (@child.GetArticles().RecordCount)</a>
                             }
                         </div>
                     }
                 }
             }
         }
-
+    </div>
 </div>
 
+<script>
+    function clearDateSearch() {
+        simplisity_setSessionField('searchdate1', '');
+        simplisity_setSessionField('searchdate2', '');
+    }
+</script>

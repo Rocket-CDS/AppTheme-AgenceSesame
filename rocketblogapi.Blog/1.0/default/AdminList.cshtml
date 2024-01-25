@@ -23,27 +23,20 @@
             </thead>
             @foreach (ArticleLimpet articleData in articleDataList.GetArticleList())
             {
-                <tr class=" simplisity_click" s-cmd="articleadmin_editarticle" s-fields='{"articleid":"@articleData.ArticleId","track":"true"}' style="cursor:pointer;">
-                    <td style="width:54px;">
+                    <tr class=" simplisity_click" s-cmd="articleadmin_editarticle" s-fields='{"articleid":"@articleData.ArticleId","track":"true"}' style="cursor:pointer;">
+                        <td style="width:54px;">
                         @if (articleData.IsHidden)
                         {
-                            <span class="material-icons">
-                                hide_source
-                            </span>
+                                    <span class="material-icons">
+                                        hide_source
+                                    </span>
                         }
-                    </td>
-                    <td style="width:54px;">
-                        @if (articleData.GetImage(0) != null && articleData.GetImage(0).RelPath != "")
-                        {
-                            <img src="@ThumbnailImageUrl(articleData.GetImage(0).RelPath, 48, 48)" style="height:48px;width:48px;" class="w3-round" />
-                        }
-                        else
-                        {
-                            <img src="@ThumbnailImageUrl("/DesktopModules/DNNrocket/api/images/noimage2.png", 48, 48)" style="height:48px;width:48px;" class="w3-round" />
-                        }
-                    </td>
-                    <td><div class="w3-tiny">@articleData.Ref</div><b>@articleData.Name</b></td>
-                </tr>
+                        </td>
+                        <td style="width:54px;">
+                            <img src="@ImageUrl(articleData.GetImage(0).RelPath, 48, 48)" style="height:48px;width:48px;" class="w3-round" />
+                        </td>
+                        <td><div class="w3-tiny">@articleData.Ref</div><b>@articleData.Name</b></td>
+                    </tr>
             }
         </table>
 

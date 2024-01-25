@@ -6,49 +6,18 @@
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
 <!--inject-->
 
-<div class="filters">
-
-    <h4>Filtrer par :</h4>
-    @{
-        var propertyCheckboxes = new List<PropertyLimpet>();
-    }
-    @foreach (var g in catalogSettings.GetPropertyGroups())
+<div class="rocket-filters">
+    @foreach (var g in moduleData.GetPropertyModuleGroups(catalogSettings))
     {
-        if (moduleData.GetSettingBool("propertygroup-" + g.Key))
+        <div class="rocket-filtergroup">@g.Value</div>
+        foreach (var p in propertyDataList.GetPropertyFilterList(g.Key))
         {
-            <div class="rocket-filtergroup">@g.Value</div>
-            foreach (var p in propertyDataList.GetPropertyList(g.Key))
-            {
-                if (!propertyCheckboxes.Contains(p))
-                {
-                    propertyCheckboxes.Add(p);
-                    <div class="rocket-filtercheckwrapper">
-                        @CheckBox(infoempty, "genxml/checkbox/checkboxfilter" + p.PropertyId, "&nbsp;" + p.Name, " class='rocket-filtercheckbox simplisity_sessionfield'  onchange='setCategoryMenuSessionParams();'  ", sessionParams.Info.GetXmlPropertyBool("r/checkboxfilter" + p.PropertyId))
-                    </div>
-                }
-            }
+            <div class="rocket-filterlist">
+                @FilterCheckBox(p.Key, p.Value, "#rocket-blog", sessionParams.Info.GetXmlPropertyBool("r/" + p.Key))
+            </div>
         }
     }
 
 </div>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('.simplisity_loader').hide();
-    });
-
-    function setCategoryMenuSessionParams() {
-        @foreach (var p in propertyCheckboxes)
-        {
-            var propref = "checkboxfilter" + p.PropertyId;
-            @:simplisity_setSessionField('@(propref)', ($('#@(propref)').is(":checked") ? "true" : "false"));
-        }
-
-        simplisity_setSessionField('disablecache', 'true');
-        $('.simplisity_loader').show();
-
-        $('#dnn_ctr387_ModuleContent').getSimplisity('/Desktopmodules/dnnrocket/api/rocket/action', 'remote_publiclist', '{"moduleref":"@(sessionParams.ModuleRef)","moduleid":"@(sessionParams.ModuleId)","tabid":"@(sessionParams.TabId)","catid":"@(sessionParams.Get("catid"))","systemkey":"@(moduleSettings.SystemKey)","template":"view.cshtml"}', '');
-
-    }
-
-</script>
+@FilterJsApiCall(moduleData.SystemKey, sessionParams)

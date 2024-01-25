@@ -112,96 +112,51 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="details.Text" xml:space="preserve">
-    <value>Details</value>
+  <data name="addcomment.Text" xml:space="preserve">
+    <value>Add Comment</value>
   </data>
-  <data name="allproducts.Text" xml:space="preserve">
-    <value>All articles</value>
+  <data name="comment.Text" xml:space="preserve">
+    <value>Comment</value>
   </data>
-  <data name="categories.Text" xml:space="preserve">
-    <value>Categories</value>
+  <data name="comments.Text" xml:space="preserve">
+    <value>Comments</value>
   </data>
-  <data name="address.Text" xml:space="preserve">
-    <value>Address</value>
+  <data name="like.Text" xml:space="preserve">
+    <value>Like</value>
   </data>
-  <data name="bestcontact-email.Text" xml:space="preserve">
-    <value>Email</value>
+  <data name="postcomments.Text" xml:space="preserve">
+    <value>Post Comments</value>
   </data>
-  <data name="docs.Text" xml:space="preserve">
-    <value>Documents PDF</value>
+  <data name="rating.Text" xml:space="preserve">
+    <value>Rating</value>
   </data>
-  <data name="email.Text" xml:space="preserve">
-    <value>E-mail</value>
+  <data name="readmore.Text" xml:space="preserve">
+    <value>Read more</value>
   </data>
-  <data name="img.Text" xml:space="preserve">
-    <value>Logo</value>
+  <data name="replies.Text" xml:space="preserve">
+    <value>Replies</value>
   </data>
-  <data name="lat.Text" xml:space="preserve">
-    <value>Latitude</value>
+  <data name="turnoffcomments.Text" xml:space="preserve">
+    <value>Turn Off Comments</value>
   </data>
-  <data name="long.Text" xml:space="preserve">
-    <value>Longitude</value>
+  <data name="noresults.Text" xml:space="preserve">
+    <value>No results</value>
   </data>
-  <data name="phone.Text" xml:space="preserve">
-    <value>Telephone</value>
+  <data name="back.Text" xml:space="preserve">
+    <value>Back</value>
   </data>
-  <data name="mobile.Text" xml:space="preserve">
-    <value>Mobile Telephone</value>
+  <data name="allnews.Text" xml:space="preserve">
+    <value>All news</value>
   </data>
-  <data name="openingtimes.Text" xml:space="preserve">
-    <value>Opening Times</value>
+  <data name="news.Text" xml:space="preserve">
+    <value>News</value>
   </data>
-  <data name="mapmsg.Text" xml:space="preserve">
-    <value>FIND THE POSITION ON THE MAP AND DOUBLE CLICK TO UPDATE THE LONGITUDE AND LATITUDE.</value>
-  </data>
-  <data name="afternoon.Text" xml:space="preserve">
-    <value>Afternoon</value>
-  </data>
-  <data name="close.Text" xml:space="preserve">
-    <value>Close</value>
-  </data>
-  <data name="day.Text" xml:space="preserve">
-    <value>Day</value>
-  </data>
-  <data name="morning.Text" xml:space="preserve">
-    <value>Morning</value>
-  </data>
-  <data name="open.Text" xml:space="preserve">
-    <value>Open</value>
-  </data>
-  <data name="opentimes.Text" xml:space="preserve">
-    <value>Opening Times</value>
-  </data>
-  <data name="summary.Text" xml:space="preserve">
-    <value>Summary</value>
-  </data>
-  <data name="socialnet.Text" xml:space="preserve">
-    <value>Social Networks</value>
-  </data>
-  <data name="documents.Text" xml:space="preserve">
-    <value>Documents</value>
-  </data>
-  <data name="tagwords.Text" xml:space="preserve">
-    <value>Tag Words</value>
-  </data>
-  <data name="preferedcontact.Text" xml:space="preserve">
-    <value>Prefered Contact</value>
-  </data>
-  <data name="preferedcontact.Value" xml:space="preserve">
-    <value>tel,mob,email,none</value>
-  </data>
-  <data name="preferedcontact.ValueText" xml:space="preserve">
-    <value>Telephone, Mobile, Email, None</value>
-  </data>
-  <data name="published.Text" xml:space="preserve">
-    <value>Published</value>
-  </data>
-  <data name="publicationdate.Text" xml:space="preserve">
-    <value>Publication date</value>
+  <data name="tags.Text" xml:space="preserve">
+    <value>Tags</value>
   </data>
 </root>
