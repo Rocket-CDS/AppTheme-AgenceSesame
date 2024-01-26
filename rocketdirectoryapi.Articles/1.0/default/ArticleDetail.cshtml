@@ -19,19 +19,19 @@
         var heightdetail = moduleData.GetSettingInt("heightdetail");
     }
 
-    <article class="article-detail">
+    <article class="darticle-detail">
 
-        <a class="article-back bigbutton" href="@ListUrl(moduleData.ListPageTabId(), categoryData)">@ResourceKey("DNNrocket.back")</a>
+        <a class="darticle-back bigbutton" href="@ListUrl(moduleData.ListPageTabId(), categoryData)">@ResourceKey("DNNrocket.back")</a>
         <h1>@articleData.Name</h1>
-        <div class="article-img">
+        <div class="darticle-img">
             <img src="@ImageUrl(mainImage.RelPathWebp, widthdetail, heightdetail)" alt="@(mainImage.Alt)" />
         </div>
 
-        <div class="article-content">
+        <div class="darticle-content">
 
             @if (articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/video") != "")
             {
-                <div class="article-video"><div class="video-container">@HtmlOf(articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/video"))</div></div>
+                <div class="darticle-video"><div class="video-container">@HtmlOf(articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/video"))</div></div>
             }
 
             @HtmlOf(articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
@@ -63,7 +63,7 @@
 
         </div>
 
-        <div class="article-gallery">
+        <div class="darticle-gallery">
             @foreach (var articleImage in articleData.GetImages())
             {
                 <a data-fancybox="group@(articleData.ArticleId)" data-caption="@(articleImage.Alt)" href="@ImageUrl(articleImage.RelPathWebp,0,0)">

@@ -15,22 +15,22 @@
 }
 <div class="@(moduleData.GetSetting("cssclass"))">
 
-    <div class="articleswrapper">
+    <div class="darticleswrapper">
 
-        <div class="articles">
+        <div class="darticles">
         @foreach (ArticleLimpet articleData in articleDataList.GetArticleList())
         {
             var articleImage = articleData.GetImage(0);
             <article>
                 <h2><a href="@DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData)">@articleData.Name</a></h2>
-                <div class="article-img"><img src="@ImageUrl(articleImage.RelPathWebp, widthlist, heightlist)" alt="@(articleImage.Alt)" /></div>
+                <div class="darticle-img"><img src="@ImageUrl(articleImage.RelPathWebp, widthlist, heightlist)" alt="@(articleImage.Alt)" /></div>
                 <p>@Succinct(articleData.Summary, 200)</p>
                 <a class="bigbutton" href="@(DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData))">@ResourceKey("Articles.readmore")</a>
             </article>
         }
         </div>
 
-        <div class="articles-paging">
+        <div class="darticles-paging">
             @RenderTemplate("articlePaging.cshtml", appThemeDirectoryDefault, Model, false)
         </div>
 
