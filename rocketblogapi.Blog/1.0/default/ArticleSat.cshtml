@@ -15,8 +15,6 @@
 
     <div class="h2-headline">@ResourceKey("Blog.news")</div>
 
-    @if (articleList.Count > 0)
-    {   
     <div class="blog">
         @foreach (ArticleLimpet article in articleList)
         {
@@ -39,11 +37,6 @@
             </article>
         }
     </div>
-    }
-    else
-    {
-        <div class="h3-headline">@ResourceKey("Blog.noresults")</div>
-    }
 
     <div class="blogsatlink">
         <a href="@ListUrl(moduleData.ListPageTabId(), categoryData)" class="bigbutton">@ResourceKey("Blog.allnews")</a>
