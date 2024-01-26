@@ -13,10 +13,8 @@
 
 <div class="blog-sat">
 
-    <div class="h2-headline">@ResourceKey("Blog.news")</div>
+    <div class="h4-headline">@ResourceKey("Blog.news")</div>
 
-    @if (articleList.Count > 0)
-    {   
     <div class="blog">
         @foreach (ArticleLimpet article in articleList)
         {
@@ -25,12 +23,7 @@
             var date = article.Info.GetXmlPropertyDate("genxml/textbox/publisheddate");
             var dateFormat = date.ToShortDateString();
             <article>
-                @if (article.GetImage(0).RelPathWebp != "")
-                {
-                    <figure><a href="@DetailUrl(moduleData.DetailPageTabId(), article, categoryData)" onclick="$('#simplisity_loader').show();"><img src="@ImageUrl(article.GetImage(0).RelPathWebp, widthlist, heightlist)" alt="@article.GetImage(0).Alt" /></a></figure>                 
-                }
                 <h3><a href="@DetailUrl(moduleData.DetailPageTabId(), article, categoryData)" onclick="$('#simplisity_loader').show();">@article.Name</a></h3>
-                <div class="blogdate bloginfo">@DateOf(article.Info, article.PublishedDateXPath,sessionParams.CultureCode, "d MMMM yyy")</div>
                 <div class="article-content">
                     <div class="article-summary">
                         @article.Summary
@@ -39,11 +32,6 @@
             </article>
         }
     </div>
-    }
-    else
-    {
-        <div class="h3-headline">@ResourceKey("Blog.noresults")</div>
-    }
 
     <div class="blogsatlink">
         <a href="@ListUrl(moduleData.ListPageTabId(), categoryData)" class="bigbutton">@ResourceKey("Blog.allnews")</a>
