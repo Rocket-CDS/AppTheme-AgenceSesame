@@ -8,6 +8,7 @@
 @{
     var displayList = new List<int>();
 }
+
 <div class="rocket-tags blog-tags">
     <div class="h3-headline">@ResourceKey("Blog.tags")</div>
     <ul class="blogtaglist">
@@ -18,14 +19,14 @@
             if (!displayList.Contains(p.Key))
             {
                 <li>
-                    @TagButton(p.Key, p.Value, "rocket-tagbuttonOff", "rocket-tagbuttonOn",sessionParams)
+                    @TagButton(p.Key, p.Value ,sessionParams)
                 </li>
                 displayList.Add(p.Key);
             }
         }
     }
     </ul>
-    <div class="blogtagclear">@TagButton(0, "Effacer", "rocket-tagbuttonOff", "rocket-tagbuttonOff",sessionParams)</div>
+    <div class="blogtagclear">@TagButtonClear("Effacer", sessionParams)</div>
 </div>
 
-@TagJsApiCall(moduleData.SystemKey,"#rocket-blog", "rocket-tagbuttonOff", "rocket-tagbuttonOn", sessionParams)
+@TagJsApiCall(moduleData.SystemKey,"#rocket-blog", sessionParams)
