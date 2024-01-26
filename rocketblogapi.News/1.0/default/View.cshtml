@@ -1,0 +1,25 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@AssigDataModel(Model)
+@AddProcessDataResx(appTheme, true)
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
+<!--inject-->
+
+<div id="rocket-blog">
+    @{
+        Model.SetSetting("searchview", "false");
+        if (articleData != null)
+        {
+            <text>
+                [INJECT: apptheme, ArticleDetail.cshtml]
+            </text>
+        }
+        else
+        {
+            <text>
+                [INJECT: apptheme, ArticleList.cshtml]
+            </text>
+        }
+    }
+</div>

@@ -1,0 +1,59 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@AssigDataModel(Model)
+@AddProcessDataResx(appTheme, true)
+<!--inject-->
+@{
+    var info = moduleDataInfo;
+    //NOTE: xPath for module settings must use "genxml/settings/*"
+}
+@{
+    var groupDict = catalogSettings.GetPropertyGroups();
+}
+
+<div class='w3-row'>
+    <div class="w3-quarter w3-padding">
+        <label>@ResourceKey("DNNrocket.width") (List)</label>
+        @TextBox(info, "genxml/settings/widthlist", "type='number' class='w3-input w3-border'", "300")
+    </div>
+    <div class="w3-quarter w3-padding">
+        <label>@ResourceKey("DNNrocket.height") (List)</label>
+        @TextBox(info, "genxml/settings/heightlist", "type='number' class='w3-input w3-border'", "240")
+    </div>
+    <div class="w3-quarter w3-padding">
+        <label>@ResourceKey("DNNrocket.width") (Detail)</label>
+        @TextBox(info, "genxml/settings/widthdetail", "type='number' class='w3-input w3-border'", "800")
+    </div>
+    <div class="w3-quarter w3-padding">
+        <label>@ResourceKey("DNNrocket.height") (Detail)</label>
+        @TextBox(info, "genxml/settings/heightdetail", "type='number' class='w3-input w3-border'", "600")
+    </div>
+</div>
+
+<div class='w3-row'>
+    <div class="w3-quarter w3-padding">
+        <label>@ResourceKey("DNNrocket.pagesize")</label>
+        @DropDownList(info, "genxml/settings/pagesize", "12,24,48", "12,24,48", " style='height:40px;' class='w3-input w3-border simplisity_sessionfield ' onchange=\"doSearchReload();return false;\" title='" + @ResourceKey("DNNrocket.pagesize", sessionParams.CultureCode) + "'", "24")
+    </div>
+    <div class="w3-quarter w3-padding">
+        <label>@ResourceKey("DNNrocket.itemlimit")</label>
+        @TextBox(info, "genxml/settings/itemlimit", " class='w3-input w3-border' ", "0")
+    </div>
+    <div class="w3-quarter w3-padding">
+        <br/>
+        @CheckBox(info, "genxml/settings/turnoffcomments", "&nbsp;" + ResourceKey("Blog.turnoffcomments").ToString(), " class='w3-check'",true)
+    </div>
+</div>
+    
+<div class="w3-row  w3-padding">
+    <div class="w3-row">
+        <div class='w3-row w3-padding'>
+            <div class="w3-large w3-margin-bottom">@ResourceKey("RC.propertygroups")</div>
+            @foreach (var p in groupDict)
+            {
+                <span class="w3-padding">
+                    @FilterGroupCheckBox(info, p.Key, p.Value)
+                </span>
+            }
+        </div>
+    </div>
+</div>
