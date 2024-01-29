@@ -14,14 +14,16 @@
         {
             var contentId = "content" + articleRowData.RowKey + sessionParams.ModuleId;
             var rowData = articleRowData.Info;
+            var defaultOpenParentClass = "";
             var defaultOpenClass = "";
             var defaultOpenStyle = "display:none;";
             if (articleRowData.GetBool("genxml/checkbox/defaultopen"))
             {
-                defaultOpenClass = " accordion-active a-active" + sessionParams.ModuleId;
+                defaultOpenParentClass = "accordion-active";
+                defaultOpenClass = "a-active" + sessionParams.ModuleId;
                 defaultOpenStyle = "";
             }
-            <div class="accordion-item">
+            <div class="accordion-item @(defaultOpenParentClass)">
                     <div class="accordion-header" onclick="slideAccordionFAQ('@(contentId)','@(sessionParams.ModuleId)')" style="cursor:pointer;">
                         <h4>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h4>
                     </div>
