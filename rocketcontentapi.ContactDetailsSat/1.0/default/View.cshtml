@@ -8,7 +8,7 @@
 <div class="@moduleData.GetSetting("cssclass")">
     <div class="contactsat-infos">
         <div class="h4-headline">@ResourceKey("DNNrocket.contactus")</div>
-        <p>
+        <div class="csi-content">
             @if (moduleData.Record.GetXmlPropertyBool("genxml/settings/companyname"))
             {
                 <div><strong>@info.GetXmlProperty("genxml/lang/genxml/textbox/company")</strong></div>
