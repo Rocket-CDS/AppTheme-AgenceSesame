@@ -159,4 +159,7 @@
   <data name="tags.Text" xml:space="preserve">
     <value>Tags</value>
   </data>
+  <data name="showsatimage.Text" xml:space="preserve">
+    <value>Show image in satellite</value>
+  </data>
 </root>

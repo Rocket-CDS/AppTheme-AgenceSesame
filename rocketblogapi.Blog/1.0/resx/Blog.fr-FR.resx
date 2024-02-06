@@ -139,10 +139,10 @@
     <value>Lire la suite</value>
   </data>
   <data name="replies.Text" xml:space="preserve">
-    <value>Replies</value>
+    <value>Réponses</value>
   </data>
   <data name="turnoffcomments.Text" xml:space="preserve">
-    <value>Turn Off Comments</value>
+    <value>Désactiver les commentaires</value>
   </data>
   <data name="noresults.Text" xml:space="preserve">
     <value>Aucun résultat</value>
@@ -158,5 +158,8 @@
   </data>
   <data name="tags.Text" xml:space="preserve">
     <value>Tags</value>
+  </data>
+  <data name="showsatimage.Text" xml:space="preserve">
+    <value>Afficher l’image dans le satellite</value>
   </data>
 </root>
