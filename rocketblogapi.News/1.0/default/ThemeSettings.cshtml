@@ -38,6 +38,10 @@
         <label>@ResourceKey("DNNrocket.itemlimit")</label>
         @TextBox(info, "genxml/settings/itemlimit", " class='w3-input w3-border' ", "0")
     </div>
+	<div class="w3-quarter w3-padding">
+        <br/>
+        @CheckBox(info, "genxml/settings/satimage", "&nbsp;" + ResourceKey("Blog.showsatimage").ToString(), " class='w3-check'",false)
+    </div>
     <div class="w3-quarter w3-padding">
         <br/>
         @CheckBox(info, "genxml/settings/turnoffcomments", "&nbsp;" + ResourceKey("Blog.turnoffcomments").ToString(), " class='w3-check'",true)

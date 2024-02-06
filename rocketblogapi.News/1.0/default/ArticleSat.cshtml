@@ -23,6 +23,10 @@
             var date = article.Info.GetXmlPropertyDate("genxml/textbox/publisheddate");
             var dateFormat = date.ToShortDateString();
             <article>
+				@if (moduleData.GetSettingBool("satimage") && (article.GetImage(0).RelPathWebp != ""))
+				{
+					<figure><a href="@DetailUrl(moduleData.DetailPageTabId(), article, categoryData)" onclick="$('#simplisity_loader').show();"><img src="@ImageUrl(article.GetImage(0).RelPathWebp, widthlist, heightlist)" alt="@article.GetImage(0).Alt" /></a></figure>  
+				}
                 <h3><a href="@DetailUrl(moduleData.DetailPageTabId(), article, categoryData)" onclick="$('#simplisity_loader').show();">@article.Name</a></h3>
                 <div class="article-content">
                     <div class="article-summary">
@@ -34,7 +38,7 @@
     </div>
 
     <div class="blogsatlink">
-        <a href="@ListUrl(moduleData.ListPageTabId(), categoryData)" class="bigbutton">@ResourceKey("Blog.allnews")</a>
+        <a href="@ListUrl(moduleData.ListPageTabId(), categoryData)">@ResourceKey("Blog.allnews")</a>
     </div>
 
 </div>
