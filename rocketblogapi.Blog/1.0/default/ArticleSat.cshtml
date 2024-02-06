@@ -23,7 +23,7 @@
             var date = article.Info.GetXmlPropertyDate("genxml/textbox/publisheddate");
             var dateFormat = date.ToShortDateString();
             <article>
-                @if (article.GetImage(0).RelPathWebp != "")
+                @if (moduleData.GetSettingBool("satimage") && (article.GetImage(0).RelPathWebp != ""))
                 {
                     <figure><a href="@DetailUrl(moduleData.DetailPageTabId(), article, categoryData)" onclick="$('#simplisity_loader').show();"><img src="@ImageUrl(article.GetImage(0).RelPathWebp, widthlist, heightlist)" alt="@article.GetImage(0).Alt" /></a></figure>                 
                 }
