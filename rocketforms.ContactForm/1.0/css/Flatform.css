@@ -50,7 +50,7 @@
 /* JQuery Validate */
 .cff-required {font-size:12px;font-style:italic;margin:8px 0 0 0;}
 input.error {background:#ffd9d9 !important;}
-label.error {color:#d45252;line-height:14px;margin:8px 0 0 0;text-transform:none;}
+label.error {color:#d45252 !important;line-height:14px;margin:8px 0 0 0;text-transform:none;}
 .cff-cb label.error {margin:0 0 8px 0;}
 .cff-cb input.error ~ label:before {background:#ffd9d9;}
 
