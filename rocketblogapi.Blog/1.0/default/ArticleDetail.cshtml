@@ -31,7 +31,9 @@
         {
         <figure>
             <picture>
-                <img src="@ImageUrl(mainImage.RelPathWebp, widthdetail, heightdetail)" alt="@(mainImage.Alt)" />
+				<a data-fancybox="group@(articleData.ArticleId)" data-caption="@(mainImage.Alt)" href="@ImageUrl(mainImage.RelPathWebp,0,0)">
+                    <img src="@ImageUrl(mainImage.RelPathWebp, widthdetail, heightdetail)" alt="@(mainImage.Alt)" />
+                </a>
             </picture>
         </figure>
         }
@@ -39,6 +41,7 @@
         <div class="article-flex">
             <div class="article-content">
 
+                <p><strong>@articleData.Summary</strong></p>
                 @HtmlOf(articleData.RichText)
                 @HtmlOf(articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/htmltext"))
 
@@ -90,7 +93,7 @@
         
         <hr />
 
-        @if (articleData.GetImages().Count > 0)
+        @if (articleData.GetImages().Count > 1)
         {
         <div class="article-gallery">
             @foreach (var articleImage in articleData.GetImages())
