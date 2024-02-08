@@ -5,13 +5,3 @@
 @using RazorEngine.Text;
 @using Rocket.AppThemes.Components;
 @using RocketPortal.Components;
-
-@AssigDataModel(Model)
-<!--inject-->
-@{
-    if (DNNrocketUtils.GetCurrentLanguageCode() != "en")
-    {
-        <script type="text/javascript" src="/DesktopModules/DNNrocket/js/localization/messages_@(DNNrocketUtils.GetCurrentLanguageCode()).js"></script>
-    }
-}
-
