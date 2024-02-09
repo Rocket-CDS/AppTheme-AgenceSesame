@@ -7,8 +7,11 @@
 
 @foreach (var articleRowData in articleData.GetRows())
 {
+    var width = moduleData.Record.GetXmlPropertyInt("genxml/settings/width");
+    var height = moduleData.Record.GetXmlPropertyInt("genxml/settings/height");
     var info = articleRowData.Info;
     var articleImage = articleRowData.GetImage(0);
+    var imagealt = rowData.GetXmlProperty("genxml/lang/genxml/textbox/imagealt");
     var cssClass = "";
     if (moduleData.GetSetting("cssclass") != "")
     {
@@ -16,7 +19,7 @@
     }
     <div @(cssClass)>
         <div class="about-content">
-            <img src="@ImageUrl(articleImage.RelPathWebp, moduleData.GetSettingInt("width"), moduleData.GetSettingInt("height"))" />
+            <img src="@ImageUrl(articleImage.RelPathWebp, width, height)" alt="@imagealt" />
             @if (info.GetXmlProperty("genxml/lang/genxml/textbox/content") != "")
             {
                 <div class="about-text">
@@ -24,8 +27,8 @@
                 </div>
             }
             @foreach (var linkData in articleRowData.Getlinks())
-            {    
-                if (!linkData.Hidden)
+            {
+                if (!linkData.IsDisabled && !linkData.Hidden)
                 {
                     <a href="@(linkData.Url)" target="@(linkData.Target)">@linkData.Name</a>
                 }
