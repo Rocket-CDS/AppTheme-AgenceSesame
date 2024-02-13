@@ -90,8 +90,8 @@
         <div class="article-gallery">
             @foreach (var articleImage in articleData.GetImages())
             {
-                <a data-fancybox="group@(articleData.ArticleId)" data-caption="@(articleImage.Alt)" href="@ImageUrl(articleImage.RelPathWebp,0,0)">
-                    <img src="@ImageUrl(articleImage.RelPathWebp, 120, 120)" alt="@(articleImage.Alt)" />
+                <a data-fancybox="group@(articleData.ArticleId)" data-caption="@(articleImage.Alt)" href="@ImageUrl(articleImage.RelPath,0,0)">
+                    <img src="@ImageUrl(articleImage.RelPath, 120, 120)" alt="@(articleImage.Alt)" />
                 </a>
             }
         </div>

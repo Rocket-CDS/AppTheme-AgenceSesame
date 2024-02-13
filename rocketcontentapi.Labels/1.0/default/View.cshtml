@@ -19,12 +19,12 @@
                 {
                     if (linkData.IsDisabled)
                     {
-                        <img src="@ImageUrl(articleImage.RelPathWebp, width, height)" alt="@(articleImage.Alt)" />                    
+                        <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@(articleImage.Alt)" />                    
                     }
                     else
                     {
                         <a href="@(linkData.Url)" target="@(linkData.Target)">
-                            <img src="@ImageUrl(articleImage.RelPathWebp, width, height)" alt="@(articleImage.Alt)" />
+                            <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@(articleImage.Alt)" />
                         </a>
                     }
                 }

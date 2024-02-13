@@ -44,13 +44,13 @@
                     {
                         <div>
                             <a data-fancybox="@(articleRowData.RowKey)" data-caption="@(articleImage.Alt)" href="@(ImageUrl(articleImage.RelPath,0,0))">
-                                <img src="@ImageUrl(articleImage.RelPathWebp, articleImage.Width, articleImage.Height)" alt="@(articleImage.Alt)" />
+                                <img src="@ImageUrl(articleImage.RelPath, articleImage.Width, articleImage.Height)" alt="@(articleImage.Alt)" />
                             </a>
                         </div>
                     }
                     else
                     {
-                        <div><img src="@ImageUrl(articleImage.RelPathWebp, articleImage.Width, articleImage.Height)" alt="@(articleImage.Alt)" /></div>
+                        <div><img src="@ImageUrl(articleImage.RelPath, articleImage.Width, articleImage.Height)" alt="@(articleImage.Alt)" /></div>
                     }
                 }
             }
