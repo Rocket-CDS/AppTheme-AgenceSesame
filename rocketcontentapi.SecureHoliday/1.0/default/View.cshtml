@@ -1,0 +1,134 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
+
+@{
+    var currentlang = sessionParams.CultureCode.Substring(0, 2);
+    var redirecturl = "https://bookingpremium.secureholiday.net/" + currentlang + "/" + moduleData.GetSetting("clientnumber") + "/search?dateStart={secureholidayday1}/{secureholidaymonth1}/{secureholidayyear1}&dateEnd={secureholidayday2}/{secureholidaymonth2}/{secureholidayyear2}&productType={rbltype}";
+}
+
+<script>
+
+    $(document).ready(function () {
+
+
+        $.datepicker.setDefaults($.datepicker.regional['']);
+        if ('@(sessionParams.CultureCode)' == 'en-GB') $.datepicker.setDefaults($.datepicker.regional['en-GB']);
+        if ('@(currentlang)' == 'de') $.datepicker.setDefaults($.datepicker.regional['de']);
+        if ('@(currentlang)' == 'fr') $.datepicker.setDefaults($.datepicker.regional['fr']);
+        if ('@(currentlang)' == 'nl') $.datepicker.setDefaults($.datepicker.regional['nl']);
+        if ('@(currentlang)' == 'ca') $.datepicker.setDefaults($.datepicker.regional['ca']);
+        if ('@(currentlang)' == 'es') $.datepicker.setDefaults($.datepicker.regional['es']);
+        if ('@(currentlang)' == 'it') $.datepicker.setDefaults($.datepicker.regional['it']);
+        if ('@(currentlang)' == 'da') $.datepicker.setDefaults($.datepicker.regional['da']);
+        if ('@(currentlang)' == 'sv') $.datepicker.setDefaults($.datepicker.regional['sv']);
+
+        // use a "datatype='date'" attribute on input, "type='date'" will make chrome inject it's own popup calendar.
+        $('input[datatype=date]').datepicker();
+
+
+
+        function pad(number, length) {
+            var str = '' + number;
+            while (str.length < length) {
+                str = '0' + str;
+            }
+            return str;
+        }
+
+        $(".secureHolidaySubmitDiv").hide();
+        $(".secureHolidayFakeDiv").show();
+
+        $("#datepicker1").datepicker();
+        $("#datepicker2").datepicker();
+
+        $("#datepicker1").change(function () {
+            if ($("#datepicker1").datepicker("getDate") == null) {
+                $(".secureHolidaySubmitDiv").hide();
+                $(".secureHolidayFakeDiv").show();
+            }
+            else {
+                $("#datepicker2").datepicker("setDate", $("#datepicker1").datepicker("getDate"));
+                if ($("#datepicker2").datepicker("getDate") != null) {
+                    $(".secureHolidaySubmitDiv").show();
+                    $(".secureHolidayFakeDiv").hide();
+                }
+            }
+        });
+
+        $("#datepicker2").change(function () {
+            if ($("#datepicker1").datepicker("getDate") != null) {
+                $(".secureHolidaySubmitDiv").show();
+                $(".secureHolidayFakeDiv").hide();
+            }
+        });
+
+        $(".secureHolidaySubmitDiv").click(function () {
+
+            var pickDate1 = $("#datepicker1").datepicker("getDate");
+            if (pickDate1 != null) {
+                $("input[id*='secureholidayday1']").val(pad(pickDate1.getDate(), 2));
+                $("input[id*='secureholidaymonth1']").val(pad(pickDate1.getMonth() + 1, 2));
+                $("input[id*='secureholidayyear1']").val(pickDate1.getFullYear());
+            }
+
+            var pickDate2 = $("#datepicker2").datepicker("getDate");
+            if (pickDate2 != null) {
+                $("input[id*='secureholidayday2']").val(pad(pickDate2.getDate(), 2));
+                $("input[id*='secureholidaymonth2']").val(pad(pickDate2.getMonth() + 1, 2));
+                $("input[id*='secureholidayyear2']").val(pickDate2.getFullYear());
+
+            }
+
+            var rbltype = $("input[id*='rblType']:checked").val();
+
+            var posturl = '@(redirecturl)';
+
+            posturl = posturl.replace('{rbltype}', rbltype);
+            posturl = posturl.replace('{secureholidayday1}', pad(pickDate1.getDate(), 2));
+            posturl = posturl.replace('{secureholidaymonth1}', pad(pickDate1.getMonth() + 1, 2));
+            posturl = posturl.replace('{secureholidayyear1}', pickDate1.getFullYear());
+            posturl = posturl.replace('{secureholidayday2}', pad(pickDate2.getDate(), 2));
+            posturl = posturl.replace('{secureholidaymonth2}', pad(pickDate2.getMonth() + 1, 2));
+            posturl = posturl.replace('{secureholidayyear2}', pickDate2.getFullYear());
+
+            posturl = posturl.replace('&amp;', '&');
+            posturl = posturl.replace('&amp;', '&');
+
+            @if (moduleData.GetSettingBool("testmode"))
+            {
+                @:alert(posturl);
+            }
+            else
+            {
+                @:window.open(posturl);
+            }
+
+        });
+
+    });
+
+</script>
+
+<div class="@(moduleData.GetSetting("cssclass"))">
+    <div class="resaformwrapper">
+        <div class="resaheader">@ResourceKey("SecureHoliday.bookyourstay")</div>
+        <div class="resaform">
+            <div class="resadate resasection">
+                <div class="dateinput"><input type="text" datatype="date" id="datepicker1" placeholder="@ResourceKey("SecureHoliday.arrival")"></div>
+            </div>
+            <div class="resadate resasection">
+                <div class="dateinput"><input type="text" datatype="date" id="datepicker2" placeholder="@ResourceKey("SecureHoliday.departure")"></div>
+            </div>
+            <div class="resatype resasection">
+                <div><input type="radio" name="rblType" id="rblType1" value="E" checked="checked"><label for="rblType1">@ResourceKey("SecureHoliday.typee")</label></div>
+                <div><input type="radio" name="rblType" id="rblType2" value="L"><label for="rblType2">@ResourceKey("SecureHoliday.typel")</label></div>
+            </div>
+            <div class="resasection">
+                <div class="secureHolidaySubmitDiv" style="display:none;"><a href="#" class="bigbutton">@ResourceKey("SecureHoliday.reserve")</a></div>
+                <div class="secureHolidayFakeDiv"><a Href="javascript:void(0)" class="bigbutton">@ResourceKey("SecureHoliday.reserve")</a></div>
+            </div>
+        </div>
+    </div>
+</div>
