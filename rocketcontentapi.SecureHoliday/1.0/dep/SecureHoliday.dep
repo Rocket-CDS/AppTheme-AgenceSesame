@@ -7,12 +7,17 @@
 		</genxml>
 		<genxml>
 			<ctrltype><![CDATA[js]]></ctrltype>
-			<url>{appthemefolder}/js/jquery.datepick.xlang.eur.js</url>
+			<url>//code.jquery.com/ui/1.13.2/jquery-ui.min.js</url>
 			<ecofriendly>true</ecofriendly>
 		</genxml>
 		<genxml>
 			<ctrltype><![CDATA[css]]></ctrltype>
-			<url>//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css</url>
+			<url>//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.min.css</url>
+			<ecofriendly>true</ecofriendly>
+		</genxml>
+		<genxml>
+			<ctrltype><![CDATA[js]]></ctrltype>
+			<url>{appthemefolder}/js/jquery.datepick.xlang.eur.js</url>
 			<ecofriendly>true</ecofriendly>
 		</genxml>
 	</deps>
