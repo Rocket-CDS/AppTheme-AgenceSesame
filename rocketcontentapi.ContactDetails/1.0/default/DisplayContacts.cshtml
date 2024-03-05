@@ -8,6 +8,9 @@
     if (contactInfo.GetXmlProperty("genxml/textbox/contactmulti") != "")
     {
     <div class="contact-item">
+        <div class="ci-header">
+            <span class="ri-user"></span>
+        </div>
         <div class="ci-content">
             <h3>@contactInfo.GetXmlProperty("genxml/textbox/contactmulti")</h3>
             @if (contactInfo.GetXmlProperty("genxml/textbox/namemulti") != "")
