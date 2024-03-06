@@ -1,0 +1,33 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@using Simplisity;
+@using System.Globalization;
+@AssigDataModel(Model)
+@AddProcessDataResx(appTheme, true)
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
+<!--inject-->
+
+@{
+    var monthDate = DateTime.Now;
+    if (sessionParams.Get("year") != "" && sessionParams.Get("month") != "" && sessionParams.Get("day") != "")
+    {
+        monthDate = new DateTime(sessionParams.GetInt("year"), sessionParams.GetInt("month"), sessionParams.GetInt("day"));
+    }
+    var articleList = articleDataList.GetArticlesInDay(monthDate, "eventstartdate");
+}
+
+<h2>@monthDate.ToString("D", new CultureInfo(sessionParams.CultureCode))</h2>
+
+<div class="events-table">
+    @foreach (ArticleLimpet articleData in articleList)
+    {
+        <div class="events-table-item">
+            <figure><img src="@ImageUrl(articleData.GetImage(0).RelPath, 60, 0)" alt="@articleData.Name" /></figure>
+            <div>
+                <h3><a href="@DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData)" onclick="$('#simplisity_loader').show();">@articleData.Name</a></h3>
+                @Succinct(articleData.Summary, 120)
+            </div>
+        </div>
+    }
+</div>
