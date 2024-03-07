@@ -24,12 +24,11 @@
 .fcd-images div:last-child {margin:0 0 40px 0;}
 .fcm-bottom .fcd-images div {margin:40px 40px 0 0;}
 .fcm-bottom .fcd-images div:last-child {margin:40px 0 0 0;}
-.fcd-flex .fcd-images {margin:0 40px 0 0;display:block;text-align:center;}
+.fcd-flex .fcd-images {display:block;text-align:center;}
 .fcd-flex .fcd-images div {margin:0 0 40px 0;}
 .fcd-flex .fcd-images div:last-child {margin:0;}
 .fcd-video {margin:40px 0 0 0;}
 .fcd-flex .fcd-video {margin:0 40px 0 0;}
-.fcd-flex.fcd-reverse .fcd-images {margin:0;}
 
 /* for 980px and less - Only portrait for retina display */
 @media all and (max-width:980px),
