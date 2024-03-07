@@ -75,6 +75,7 @@
 			<queryparam>post</queryparam>
 			<tablename>rocketdirectoryapi</tablename>
 			<systemkey>rocketblogapi</systemkey>
+			<datatype>article</datatype>
 		</genxml>
 	</queryparams>
 </genxml>
