@@ -45,7 +45,7 @@
                 <div class="article-content">
                     @if (article.GetImage(0).RelPathWebp != "")
                     {
-                        <figure><a href="@DetailUrl(moduleData.DetailPageTabId(), article, categoryData)" onclick="$('#simplisity_loader').show();"><img src="@ImageUrl(article.GetImage(0).RelPathWebp, widthlist, heightlist)" alt="@article.GetImage(0).Alt" /></a></figure>                 
+                        <figure><a href="@DetailUrl(moduleData.DetailPageTabId(), article, categoryData)" onclick="$('#simplisity_loader').show();"><img src="@ImageUrl(article.GetImage(0).RelPath, widthlist, heightlist)" alt="@article.GetImage(0).Alt" /></a></figure>                 
                     }
                     <div class="article-summary">
                         @article.Summary
