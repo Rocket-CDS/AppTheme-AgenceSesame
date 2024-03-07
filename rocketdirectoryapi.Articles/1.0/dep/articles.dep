@@ -39,11 +39,13 @@
 			<queryparam>catid</queryparam>
 			<tablename>rocketdirectoryapi</tablename>
 			<systemkey>rocketdirectoryapi</systemkey>
+			<datatype>category</datatype>
 		</genxml>
 		<genxml>
 			<queryparam>id</queryparam>
 			<tablename>rocketdirectoryapi</tablename>
 			<systemkey>rocketdirectoryapi</systemkey>
+			<datatype>article</datatype>
 		</genxml>
 	</queryparams>
 	<adminpanelinterfacekeys list="true">
