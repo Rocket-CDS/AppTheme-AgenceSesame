@@ -18,7 +18,7 @@
 <div class="event-detail">
 
     <div class="eventstools">
-        <a href="@ListUrl(moduleData.ListPageTabId(), categoryData)" title="@ResourceKey("Events.back")"><span class="material-icons-outlined">home</span></a>
+        <a href="@ListUrl(moduleData.ListPageTabId(), listUrlParams)" title="@ResourceKey("RocketEventsAPI.back")"><span class="material-icons-outlined">home</span></a>
     </div>
 
     <article>
@@ -26,7 +26,7 @@
         <header>
             <h1>@articleData.Name</h1>
             <div class="eventdaterange">
-                @ResourceKey("Events.eventdate") : 
+                @ResourceKey("RocketEventsAPI.eventdate") : 
                 <strong>@DateOf(articleData.Info, "genxml/textbox/eventstartdate", sessionParams.CultureCode, "dd/MM/yyy") 
                 @DateOf(articleData.Info, "genxml/textbox/eventstarttime", sessionParams.CultureCode, "HH:mm") - 
                 @if (articleData.Info.GetXmlProperty("genxml/textbox/eventstartdate") != articleData.Info.GetXmlProperty("genxml/textbox/eventenddate"))

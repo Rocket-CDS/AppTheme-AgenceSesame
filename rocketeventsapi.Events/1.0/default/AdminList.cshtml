@@ -35,7 +35,7 @@
                         <td style="width:54px;">
                             <img src="@ImageUrl(articleData.GetImage(0).RelPath, 48, 48)" style="height:48px;width:48px;" class="w3-round" />
                         </td>
-                        <td><div class="w3-tiny">@articleData.Ref</div><b>@articleData.Name</b></td>
+                    <td><span><i>@DateOf(articleData.Info, "genxml/textbox/eventstartdate", sessionParams.CultureCode)</i></span>&nbsp;<span class="w3-tiny">@articleData.Ref</span><br/><b>@articleData.Name</b></td>
                     </tr>
             }
         </table>

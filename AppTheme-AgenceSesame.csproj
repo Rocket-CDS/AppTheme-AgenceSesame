@@ -30,8 +30,8 @@
     <Reference Include="RocketDirectoryAPI">
       <HintPath>..\..\..\bin\RocketDirectoryAPI.dll</HintPath>
     </Reference>
-    <Reference Include="RocketEcommerceAPI">
-      <HintPath>..\..\..\bin\RocketEcommerceAPI.dll</HintPath>
+    <Reference Include="RocketEventsAPI">
+      <HintPath>..\..\..\bin\RocketEventsAPI.dll</HintPath>
     </Reference>
     <Reference Include="RocketPortal">
       <HintPath>..\..\..\bin\RocketPortal.dll</HintPath>
@@ -53,6 +53,7 @@
     <Folder Include="rocketcontentapi.SecureHoliday\1.0\css\" />
     <Folder Include="rocketcontentapi.SecureHoliday\1.0\img\" />
     <Folder Include="rocketcontentapi.SecureHoliday\1.0\js\" />
+    <Folder Include="rocketeventsapi.Events\1.0\resx\" />
   </ItemGroup>
 
 </Project>

@@ -1,49 +1,26 @@
-﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+﻿@inherits RocketEventsAPI.Components.RocketEventsAPITokens<Simplisity.SimplisityRazor>
 @using DNNrocketAPI.Components;
 @using RocketDirectoryAPI.Components;
 @using Simplisity;
+@using RocketEventsAPI.Components;
 @AssigDataModel(Model)
 @AddProcessDataResx(appTheme, true)
-@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
 <!--inject-->
-
 @{
     var firstModay = DateTime.MinValue.Date;
-    var monthDate = DateTime.Now;
-    if (sessionParams.GetDate("monthdate") > DateTime.MinValue)
-    {
-        monthDate = sessionParams.GetDate("monthdate");
-    }
-    var monthDays = DateTime.DaysInMonth(monthDate.Year, monthDate.Month);
-    var articleList = articleDataList.GetArticlesInMonth(monthDate, "eventstartdate");
-    var articleDay = new Dictionary<int, List<ArticleLimpet>>();
-    foreach (var a in articleList)
-    {
-        var d = a.Info.GetXmlPropertyDate("genxml/textbox/eventstartdate").Day;
-        if (articleDay.ContainsKey(d))
-        {
-            var l = articleDay[d];
-            l.Add(a);
-            articleDay.Remove(d);
-            articleDay.Add(d, l);
-        }
-        else
-        {
-            var l = new List<ArticleLimpet>();
-            l.Add(a);
-            articleDay.Add(d, l);
-        }
-
-    }
-    var firstDayOfWeek = (int)new DateTime(monthDate.Year, monthDate.Month, 1).DayOfWeek;
-    var f = new DateTime(monthDate.Year, monthDate.Month, 1).ToLongDateString();
+    var monthDays = DateTime.DaysInMonth(monthStartDate.Year, monthStartDate.Month);
+    var eventListData = (EventListData)Model.GetDataObject("eventlistdata");
+    var articleList = eventListData.GetEventsInMonth(monthStartDate.Year, monthStartDate.Month);
+    var articleDay = eventListData.GetEventsDayListInMonth(monthStartDate.Year, monthStartDate.Month);
+    var firstDayOfWeek = (int)new DateTime(monthStartDate.Year, monthStartDate.Month, 1).DayOfWeek;
+    var f = new DateTime(monthStartDate.Year, monthStartDate.Month, 1).ToLongDateString();
 }
 <div id="calmonth@(moduleData.ModuleId)">
     <div class="month">
         <ul class="monthheader">
-            <li class="w3-button w3-left" onclick="getMonthCalendar('@monthDate.AddMonths(-1).ToString("O")');">&#10094;</li>
-            <li class="w3-button w3-right" onclick="getMonthCalendar('@monthDate.AddMonths(1).ToString("O")');">&#10095;</li>
-            <li>@monthDate.ToString("MMMM")<br><span style="font-size:12px">@DateTime.Now.ToString("yyyy")</span></li>
+            <li class="w3-left"><a style="color: inherit;text-decoration:none;" href="@ListUrl(moduleData.ListPageTabId(), new string[]{ "month", monthStartDate.AddMonths(-1).Month.ToString(), "year" , monthStartDate.AddMonths(-1).Year.ToString()})" class="w3-button">&#10094;</a></li>
+            <li class="w3-right"><a style="color: inherit;text-decoration:none;" href="@ListUrl(moduleData.ListPageTabId(), new string[]{ "month", monthStartDate.AddMonths(1).Month.ToString(), "year" , monthStartDate.AddMonths(1).Year.ToString()})" class="w3-button">&#10095;</a></li>
+            <li>@monthStartDate.ToString("MMMM")<br><span style="font-size:12px">@DateTime.Now.ToString("yyyy")</span></li>
         </ul>
     </div>
 
@@ -61,18 +38,18 @@
         @{
             int startDays = 1;
             int day = 1;
-        } 
+        }
         @while (startDays < firstDayOfWeek)
         {
             <li></li>
             startDays += 1;
         }
 
-        @while (day <= monthDays) 
+        @while (day <= monthDays)
         {
             if (articleDay.ContainsKey(day))
             {
-                <li onclick="getMonthCalendarDetail('@monthDate.Year', '@monthDate.Month', '@day');" style="cursor:pointer;"><span class="active">@day</span></li>
+                <li onclick="getMonthCalendarDetail('@day');" style="cursor:pointer;" class="activeday"><span>@day</span></li>
             }
             else
             {

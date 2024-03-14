@@ -1,44 +1,41 @@
-﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+﻿@inherits RocketEventsAPI.Components.RocketEventsAPITokens<Simplisity.SimplisityRazor>
 @using DNNrocketAPI.Components;
 @using RocketDirectoryAPI.Components;
 @using Simplisity;
+@using RocketEventsAPI.Components;
+@using System.Globalization;
 @AssigDataModel(Model)
 @AddProcessDataResx(appTheme, true)
-@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
 <!--inject-->
+@{
+    var eventList = (Dictionary<DateTime, List<ArticleLimpet>>)Model.GetDataObject("eventlistbymonth");
+}
 <div class="events-archives">
+
     @{
         var monthidx = 1;
     }
-    @foreach (var a in RocketDirectoryAPIUtils.GetArticlesByMonth(systemData.SystemKey, DateTime.Now.AddMonths(11), 12, "eventstartdate", sessionParams.GetInt("catid")))
+    @foreach (var a in eventList)
     {
         if (a.Value.Count > 0)
         {
-            <div class="events-archives-item rocket-monthdates rocket-monthdates@(monthidx) " monthidx="@(monthidx)" onclick="setSelected($(this).attr('monthidx'));doDateSearchReload('@a.Key.ToString("yyyy-MM-dd")','@a.Key.AddMonths(1).AddDays(-1).ToString("yyyy-MM-dd")')">
-                @a.Key.ToString("MMMM yyyy")
-                <span class="count">@a.Value.Count<span class="material-icons-outlined">calendar_today</span></span>
+            <div class="events-archives-item rocket-monthdates rocket-monthdates@(monthidx) ">
+                <a href="@ListUrl(moduleData.ListPageTabId(), new string[] {"month", a.Key.Month.ToString(),"year", a.Key.Year.ToString() })" monthidx="@(monthidx)" class="" onclick="setSelected($(this).attr('monthidx'));">
+                    @a.Key.ToString("MMMM yyyy")
+                    <span class="count">@a.Value.Count<span class="material-icons-outlined">calendar_today</span></span>
+                </a>
             </div>
+
         }
         monthidx += 1;
     }
-    <div class="events-archives-clear rocket-monthdates" onclick="setSelected('-1');doDateSearchReload('','')">@ResourceKey("DNNrocket.clear")</div>
+
 </div>
 
-@DateJsApiCall(moduleData.SystemKey, "#rocket-events", sessionParams)
-
 <script>
-    $(document).ready(function () {
-        if (simplisity_getSessionField('searchdate1') != '')
-        {
-            setSelected(simplisity_getSessionField('monthidx'));
-        }
-        $('.rocket-tagbutton').click(function(){
-            $('.rocket-monthdates').removeClass('selmonth');
-        });
-    });
-    function setSelected(monthidx) {
-        $('.rocket-monthdates').removeClass('selmonth');
-        $('.rocket-monthdates' + monthidx).addClass('selmonth');
+    function setSelected(monthidx, month, year) {
+        $('.rocket-monthdates').removeClass('w3-grey');
+        $('.rocket-monthdates' + monthidx).addClass('w3-grey');
         simplisity_setSessionField('monthidx', monthidx);
     }
 </script>

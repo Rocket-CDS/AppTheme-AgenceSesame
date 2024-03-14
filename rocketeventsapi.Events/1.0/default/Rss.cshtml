@@ -1,23 +1,27 @@
-﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+﻿@inherits RocketEventsAPI.Components.RocketEventsAPITokens<Simplisity.SimplisityRazor>
 @using DNNrocketAPI.Components;
 @using RocketDirectoryAPI.Components;
+@using Simplisity;
+@using RocketEventsAPI.Components;
+@using System.Globalization;
 @AssigDataModel(Model)
 @{
-    var rssList = (List<ArticleLimpet>)Model.GetDataObject("rsslist");
+    var eventListData = (EventListData)Model.GetDataObject("eventlistdata");
+    var rssList = eventListData.GetEvents(1, 999);
 }
 
-<rss xmlns:blog="http://rocket-cds.org" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" version="2.0">
+<rss xmlns:events="http://rocket-cds.org" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" version="2.0">
 
     <channel>
         
         <title><![CDATA[@catalogSettings.CatalogName]]></title>
         <link><![CDATA[@(DNNrocketUtils.NavigateURL(portalContent.ListPageTabId))]]></link>
-        <description><![CDATA[@catalogSettings.Summary <test>jsd cjhsd>< "!£$%^&*()"]]></description>
+        <description><![CDATA[@catalogSettings.Summary"]]></description>
         <pubDate><![CDATA[@DateTime.Now.ToString("r")]]></pubDate>
         <lastBuildDate><![CDATA[@DateTime.Now.ToString("r")]]></lastBuildDate>
-        <generator><![CDATA[RocketCDS Blog RSS Generator]]></generator>
+        <generator><![CDATA[RocketCDS Events RSS Generator]]></generator>
         <ttl><![CDATA[30]]></ttl>
-        <atom:link href="@RssUrl(portalData.PortalId,sessionParams.Get("cmd"),sessionParams.GetInt("months"),sessionParams.Get("sqlidx"),sessionParams.GetInt("catid"))" rel="self" type="application/rss+xml" />
+        <atom:link href="@RssEventUrl(portalData.PortalId,sessionParams.Get("cmd"),sessionParams.GetInt("month"),sessionParams.GetInt("year"),sessionParams.GetInt("months"))" rel="self" type="application/rss+xml" />
 
 @foreach (ArticleLimpet articleData in rssList)
 {
@@ -34,16 +38,14 @@
             <category><![CDATA[@c.Name]]></category>
             }
             <guid isPermaLink="true"><![CDATA[@DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData)]]></guid>
-            <pubDate><![CDATA[@articleData.Info.GetXmlPropertyDate("genxml/textbox/publisheddate").ToString("r")]]></pubDate>
             <startDate><![CDATA[@articleData.Info.GetXmlPropertyDate("genxml/textbox/eventstartdate").ToString("r")]]></startDate>
             <endDate><![CDATA[@articleData.Info.GetXmlPropertyDate("genxml/textbox/eventenddate").ToString("r")]]></endDate>
-                @if (catalogSettings.Info.GetXmlPropertyBool("genxml/checkbox/rssimage"))
+            @if (catalogSettings.Info.GetXmlPropertyBool("genxml/checkbox/rssimage"))
             {
-                var imagewidthrss = catalogSettings.Info.GetXmlPropertyInt("genxml/textbox/imagewidthrss");
-                var imageheightrss = catalogSettings.Info.GetXmlPropertyInt("genxml/textbox/imageheightrss");
-                <media:thumbnail width="@(imagewidthrss)" height="@(imageheightrss)" url="@(portalData.EngineUrlWithProtocol)@ImageUrl(articleData.GetImage(0).RelPath, imagewidthrss, imageheightrss)" />
+            var imagewidthrss = catalogSettings.Info.GetXmlPropertyInt("genxml/textbox/imagewidthrss");
+            var imageheightrss = catalogSettings.Info.GetXmlPropertyInt("genxml/textbox/imageheightrss");
+            <media:thumbnail width="@(imagewidthrss)" height="@(imageheightrss)" url="@(portalData.EngineUrlWithProtocol)@ImageUrl(articleData.GetImage(0).RelPath, imagewidthrss, imageheightrss)" />
             } 
-            <event:publishedon><![CDATA[@articleData.Info.GetXmlPropertyDate("genxml/textbox/publisheddate").ToString("r")]]></event:publishedon>
         </item>
 }
 

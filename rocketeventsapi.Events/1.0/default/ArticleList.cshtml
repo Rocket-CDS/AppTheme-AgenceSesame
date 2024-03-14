@@ -1,12 +1,13 @@
-﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+﻿@inherits RocketEventsAPI.Components.RocketEventsAPITokens<Simplisity.SimplisityRazor>
 @using DNNrocketAPI.Components;
 @using RocketDirectoryAPI.Components;
+@using RocketEventsAPI.Components;
 @AssigDataModel(Model)
 @AddProcessDataResx(appTheme, true)
-@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
 <!--inject-->
 @{
-    var articleList = articleDataList.GetArticleList();
+    var eventListData = (EventListData)Model.GetDataObject("eventlistdata");
+    var eventList = eventListData.GetEvents(sessionParams.Page, sessionParams.PageSize);
     var widthlist = moduleData.GetSettingInt("widthlist");
     var heightlist = moduleData.GetSettingInt("heightlist");
 }
@@ -15,7 +16,7 @@
 
     <div class="eventsheader">
         <div class="eventstools">
-            <a href="@RssUrl(portalData.PortalId,"rocketblogapi_rss",12,"publisheddate",sessionParams.GetInt("catid"))" target="_blank">
+            <a href="@RssEventUrl(portalData.PortalId,"rocketeventsapi_rss", monthStartDate.Month, monthStartDate.Year)" target="_blank">
                 <span class="material-icons-outlined">rss_feed</span>
             </a>
         </div>
@@ -30,39 +31,47 @@
         }
     </div>
 
-    @if (articleList.Count > 0)
-    {  
-    <div class="events">
-        @foreach (ArticleLimpet article in articleList)
-        {
-            var urlparams = new Dictionary<string, string>();
-            urlparams.Add("articleid", article.ArticleId.ToString());
-            <article>
-                @if (article.GetImage(0).RelPathWebp != "")
-                {
-                    <figure><a href="@DetailUrl(moduleData.DetailPageTabId(), article, categoryData)" onclick="$('#simplisity_loader').show();"><img src="@ImageUrl(article.GetImage(0).RelPath, widthlist, heightlist)" alt="@article.GetImage(0).Alt" /></a></figure>                 
-                }
-                <div class="eventdate">
-                    <span class="ed-day">@DateOf(article.Info, "genxml/textbox/eventstartdate", sessionParams.CultureCode, "dd")</span>
-                    <span class="ed-month">@DateOf(article.Info, "genxml/textbox/eventstartdate", sessionParams.CultureCode, "MMM")</span>
-                    <span class="ed-year">@DateOf(article.Info, "genxml/textbox/eventstartdate", sessionParams.CultureCode, "yyy")</span>
-                </div>
-                <div class="article-content">
-                    <h2><a href="@DetailUrl(moduleData.DetailPageTabId(), article, categoryData)" onclick="$('#simplisity_loader').show();">@article.Name</a></h2>
-                    <div class="article-summary">
-                        @article.Summary
-                    </div>
-                </div>
-            </article>
-        }
+    <div class="month">
+        <ul class="monthheader">
+            <li class="w3-left"><a style="color: inherit;text-decoration:none;" href="@ListUrl(moduleData.ListPageTabId(), new string[]{ "month", monthStartDate.AddMonths(-1).Month.ToString(), "year" , monthStartDate.AddMonths(-1).Year.ToString()})" class="w3-button">&#10094;</a></li>
+            <li class="w3-right"><a style="color: inherit;text-decoration:none;" href="@ListUrl(moduleData.ListPageTabId(), new string[]{ "month", monthStartDate.AddMonths(1).Month.ToString(), "year" , monthStartDate.AddMonths(1).Year.ToString()})" class="w3-button">&#10095;</a></li>
+            <li>@monthStartDate.ToString("MMMM")<br><span style="font-size:12px">@DateTime.Now.ToString("yyyy")</span></li>
+        </ul>
     </div>
+
+    @if (eventList.Count > 0)
+    {  
+        <div class="events">
+            @foreach (ArticleLimpet article in eventList)
+            {
+                var eventDate = article.Info.GetXmlPropertyDate("genxml/textbox/eventstartdate");
+                var detailUrlParams = listUrlParams.Concat(new string[] { "eventdate", eventDate.ToString("yyyy-MM-dd") }).ToArray();
+                <article>
+                    @if (article.GetImage(0).RelPathWebp != "")
+                    {
+                        <figure><a href="@DetailUrl(moduleData.DetailPageTabId(), article, detailUrlParams)" onclick="$('#simplisity_loader').show();"><img src="@ImageUrl(article.GetImage(0).RelPath, widthlist, heightlist)" alt="@article.GetImage(0).Alt" /></a></figure>
+                    }
+                    <div class="eventdate">
+                        <span class="ed-day">@DateOf(article.Info, "genxml/textbox/eventstartdate", sessionParams.CultureCode, "dd")</span>
+                        <span class="ed-month">@DateOf(article.Info, "genxml/textbox/eventstartdate", sessionParams.CultureCode, "MMM")</span>
+                        <span class="ed-year">@DateOf(article.Info, "genxml/textbox/eventstartdate", sessionParams.CultureCode, "yyy")</span>
+                    </div>
+                    <div class="article-content">
+                            <h2><a href="@DetailUrl(moduleData.DetailPageTabId(), article, detailUrlParams)" onclick="$('#simplisity_loader').show();">@article.Name</a></h2>
+                        <div class="article-summary">
+                            @article.Summary
+                        </div>
+                    </div>
+                </article>
+            }
+        </div>
     <div class="eventspaging">
-        [INJECT:appthemedirectorydefault,articlePaging.cshtml]
+            [INJECT:appthemesystem,articlePaging.cshtml]
     </div>
     }
     else
     {
-        <div class="h2-headline">@ResourceKey("Events.noresults")</div>
+        <div class="h2-headline">@ResourceKey("RocketEventsApi.noresults")</div>
     }
 
 </div>
