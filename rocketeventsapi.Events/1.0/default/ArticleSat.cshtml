@@ -1,9 +1,9 @@
-﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+﻿@inherits RocketEventsAPI.Components.RocketEventsAPITokens<Simplisity.SimplisityRazor>
 @using DNNrocketAPI.Components;
 @using RocketDirectoryAPI.Components;
+@using RocketEventsAPI.Components;
 @AssigDataModel(Model)
 @AddProcessDataResx(appTheme, true)
-@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
 <!--inject-->
 @{
     var eventList = (List<ArticleLimpet>)Model.GetDataObject("eventnextlist");
@@ -16,8 +16,9 @@
     <div class="h2-headline">@ResourceKey("RocketEventsAPI.events")</div>
 
     <div class="events">
-        @foreach (ArticleLimpet article in articleList)
+        @foreach (ArticleLimpet article in eventList)
         {
+            var eventDate = article.Info.GetXmlPropertyDate("genxml/textbox/eventstartdate");
             var detailUrlParams = listUrlParams.Concat(new string[] { "eventdate", eventDate.ToString("yyyy-MM-dd") }).ToArray();
             <article>
                 @if (article.GetImage(0).RelPathWebp != "")
