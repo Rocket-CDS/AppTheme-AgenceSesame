@@ -6,10 +6,7 @@
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
 <!--inject-->
 @{
-}
-@{
-    var eventListData = (EventListData)Model.GetDataObject("eventlistdata");
-    var eventList = eventListData.GetEvents(1, 3);
+    var eventList = (List<ArticleLimpet>)Model.GetDataObject("eventnextlist");
     var widthlist = moduleData.GetSettingInt("widthlist");
     var heightlist = moduleData.GetSettingInt("heightlist");
 }
