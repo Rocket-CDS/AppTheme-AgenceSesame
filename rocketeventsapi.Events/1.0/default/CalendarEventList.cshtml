@@ -7,8 +7,7 @@
 @AssigDataModel(Model)
 @AddProcessDataResx(appTheme, true)
 @{
-    var eventListData = (EventListData)Model.GetDataObject("eventlistdata");
-    var articleDay = eventListData.GetEventsDayListInMonth(monthStartDate.Year, monthStartDate.Month);
+    var articleDay = (Dictionary<int, List<ArticleLimpet>>)Model.GetDataObject("eventlistbyday");
 }
 <!--inject-->
 @foreach (var articleListDict in articleDay)

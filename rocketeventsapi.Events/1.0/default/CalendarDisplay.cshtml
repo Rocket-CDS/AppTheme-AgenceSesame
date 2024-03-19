@@ -3,24 +3,25 @@
 @using RocketDirectoryAPI.Components;
 @using Simplisity;
 @using RocketEventsAPI.Components;
+@using System.Globalization;
 @AssigDataModel(Model)
 @AddProcessDataResx(appTheme, true)
 <!--inject-->
 @{
     var firstModay = DateTime.MinValue.Date;
-    var monthDays = DateTime.DaysInMonth(monthStartDate.Year, monthStartDate.Month);
-    var eventListData = (EventListData)Model.GetDataObject("eventlistdata");
-    var articleList = eventListData.GetEventsInMonth(monthStartDate.Year, monthStartDate.Month);
-    var articleDay = eventListData.GetEventsDayListInMonth(monthStartDate.Year, monthStartDate.Month);
-    var firstDayOfWeek = (int)new DateTime(monthStartDate.Year, monthStartDate.Month, 1).DayOfWeek;
-    var f = new DateTime(monthStartDate.Year, monthStartDate.Month, 1).ToLongDateString();
+    var monthDays = DateTime.DaysInMonth(calMonthStartDate.Year, calMonthStartDate.Month);
+    var eventList = (List<ArticleLimpet>)Model.GetDataObject("eventmonthlist");
+    var articleDay = (Dictionary<int, List<ArticleLimpet>>)Model.GetDataObject("eventlistbyday");
+    var firstDayOfWeek = (int)new DateTime(calMonthStartDate.Year, calMonthStartDate.Month, 1).DayOfWeek;
+    var f = new DateTime(calMonthStartDate.Year, calMonthStartDate.Month, 1).ToLongDateString();
 }
+
 <div id="calmonth@(moduleData.ModuleId)">
     <div class="month">
         <ul class="monthheader">
-            <li class="w3-left"><a style="color: inherit;text-decoration:none;" href="@ListUrl(moduleData.ListPageTabId(), new string[]{ "month", monthStartDate.AddMonths(-1).Month.ToString(), "year" , monthStartDate.AddMonths(-1).Year.ToString()})" class="w3-button">&#10094;</a></li>
-            <li class="w3-right"><a style="color: inherit;text-decoration:none;" href="@ListUrl(moduleData.ListPageTabId(), new string[]{ "month", monthStartDate.AddMonths(1).Month.ToString(), "year" , monthStartDate.AddMonths(1).Year.ToString()})" class="w3-button">&#10095;</a></li>
-            <li>@monthStartDate.ToString("MMMM")<br><span style="font-size:12px">@DateTime.Now.ToString("yyyy")</span></li>
+            <li class="w3-button w3-left" onclick="getMonthCalendar('@calMonthStartDate.AddMonths(-1).Year.ToString()','@calMonthStartDate.AddMonths(-1).Month.ToString()');">&#10094;</li>
+            <li class="w3-button w3-right" onclick="getMonthCalendar('@calMonthStartDate.AddMonths(1).Year.ToString()','@calMonthStartDate.AddMonths(1).Month.ToString()');">&#10095;</li>
+            <li>@calMonthStartDate.ToString("MMMM")<br><span style="font-size:12px">@calMonthStartDate.ToString("yyyy")</span></li>
         </ul>
     </div>
 
@@ -59,4 +60,20 @@
         }
     </ul>
 </div>
+
+
+<div id="calmonthdetailmodel@(moduleData.ModuleId)" class="w3-modal w3-animate-opacity">
+    <div class="w3-modal-content" style="width:40%;">
+
+        <header class="" style="height: 38.5px;">
+            <span onclick="$('#calmonthdetailmodel@(moduleData.ModuleId)').hide();" class="w3-button w3-display-topright">&times;</span>
+        </header>
+        <div class="w3-margin-top" style="">
+            <div id="calmonthdetailcontainer@(moduleData.ModuleId)" class="w3-container">
+                [INJECT:apptheme,CalendarEventList.cshtml]
+            </div>
+        </div>
+    </div>
+</div>
+
 

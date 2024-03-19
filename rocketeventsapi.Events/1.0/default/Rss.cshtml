@@ -6,8 +6,7 @@
 @using System.Globalization;
 @AssigDataModel(Model)
 @{
-    var eventListData = (EventListData)Model.GetDataObject("eventlistdata");
-    var rssList = eventListData.GetEvents(1, 999);
+    var eventList = (List<ArticleLimpet>)Model.GetDataObject("rsslist");
 }
 
 <rss xmlns:events="http://rocket-cds.org" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" version="2.0">
@@ -21,9 +20,9 @@
         <lastBuildDate><![CDATA[@DateTime.Now.ToString("r")]]></lastBuildDate>
         <generator><![CDATA[RocketCDS Events RSS Generator]]></generator>
         <ttl><![CDATA[30]]></ttl>
-        <atom:link href="@RssEventUrl(portalData.PortalId,sessionParams.Get("cmd"),sessionParams.GetInt("month"),sessionParams.GetInt("year"),sessionParams.GetInt("months"))" rel="self" type="application/rss+xml" />
+        <atom:link href="@RssEventUrl(portalData.PortalId,sessionParams.Get("cmd"),sessionParams.GetInt("month"),sessionParams.GetInt("year"))" rel="self" type="application/rss+xml" />
 
-@foreach (ArticleLimpet articleData in rssList)
+@foreach (ArticleLimpet articleData in eventList)
 {
     var urlparams = new Dictionary<string, string>();
     urlparams.Add("articleid", articleData.ArticleId.ToString());

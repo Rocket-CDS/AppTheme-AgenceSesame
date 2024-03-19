@@ -11,18 +11,11 @@
     [INJECT:apptheme,CalendarDisplay.cshtml]
 </div>
 
-<div id="calmonthdetailmodel@(moduleData.ModuleId)" class="w3-modal w3-animate-opacity">
-    <div class="w3-modal-content calendar-popup" style="width:40%;">
-        <header>
-            <span onclick="$('#calmonthdetailmodel@(moduleData.ModuleId)').hide();" class="w3-button w3-display-topright">&times;</span>
-        </header>
-        <div id="calmonthdetailcontainer@(moduleData.ModuleId)" class="calendarlist">
-            [INJECT:apptheme,CalendarEventList.cshtml]
-        </div>
-    </div>
-</div>
-
 <script>
+    function getMonthCalendar(yearDate, monthDate) {
+        $('#calmonth@(moduleData.ModuleId)').css({ 'opacity': 0.5 });
+        $('#calmonthwrapper@(moduleData.ModuleId)').getSimplisity('/Desktopmodules/dnnrocket/api/rocket/action', 'remote_publiclist', '{"disablecache":"true","moduleref":"@(moduleData.ModuleRef)","moduleid":"@(moduleData.ModuleId)","cmdtype":"satellite","basesystemkey":"rocketdirectoryapi","systemkey":"rocketeventsapi","template":"CalendarDisplay.cshtml","calyear":"' + yearDate + '","calmonth":"' + monthDate + '"}', '')
+    }
     function getMonthCalendarDetail(d) {
         $('.a-dayselect').hide();
         $('.a-day' + d).show();
@@ -33,4 +26,3 @@
         $('#calmonth@(moduleData.ModuleId)').css({ 'opacity': 1 });
     }
 </script>
-
