@@ -18,7 +18,7 @@
 <div class="event-detail">
 
     <div class="eventstools">
-        <a href="@ListUrl(moduleData.ListPageTabId(), listUrlParams)" title="@ResourceKey("RocketEventsAPI.back")"><span class="material-icons-outlined">home</span></a>
+        <a href="@ListUrl(moduleData.ListPageTabId(), listUrlParams)" title="@ResourceKey("DNNrocket.back")"><span class="material-icons-outlined">home</span></a>
     </div>
 
     <article>
@@ -27,13 +27,19 @@
             <h1>@articleData.Name</h1>
             <div class="eventdaterange">
                 @ResourceKey("RocketEventsAPI.eventdate") : 
-                <strong>@DateOf(articleData.Info, "genxml/textbox/eventstartdate", sessionParams.CultureCode, "dd/MM/yyy") 
-                @DateOf(articleData.Info, "genxml/textbox/eventstarttime", sessionParams.CultureCode, "HH:mm") - 
+                <strong>@DateOf(articleData.Info, "genxml/textbox/eventstartdate", sessionParams.CultureCode, "dd/MM/yyy")
+                @if (!articleData.Info.GetXmlPropertyBool("genxml/checkbox/alldayevent"))
+                {
+                    <span class="material-icons-outlined">schedule</span> @DateOf(articleData.Info, "genxml/textbox/eventstarttime", sessionParams.CultureCode, "HH:mm")
+                }
                 @if (articleData.Info.GetXmlProperty("genxml/textbox/eventstartdate") != articleData.Info.GetXmlProperty("genxml/textbox/eventenddate"))
                 {
-                    @DateOf(articleData.Info, "genxml/textbox/eventenddate", sessionParams.CultureCode, "dd/MM/yyy") 
+                    <span> - </span>@DateOf(articleData.Info, "genxml/textbox/eventenddate", sessionParams.CultureCode, "dd/MM/yyy")
                 }
-                @DateOf(articleData.Info, "genxml/textbox/eventendtime", sessionParams.CultureCode, "HH:mm")
+                @if (!articleData.Info.GetXmlPropertyBool("genxml/checkbox/alldayevent"))
+                {
+                    <span class="material-icons-outlined">schedule</span> @DateOf(articleData.Info, "genxml/textbox/eventendtime", sessionParams.CultureCode, "HH:mm")
+                }
                 </strong>
             </div>
         </header>
@@ -88,7 +94,7 @@
             </div>
             <div class="article-infos">
                 <div class="share-buttons">
-                    <div class="eventinfo">Partager</div>
+                    <div class="eventinfo">@ResourceKey("DNNrocket.share")</div>
                     <div class="fb-share-button" data-href="@DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData)" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">@ResourceKey("Articles.share")</a></div>
                 </div>
                 <div class="eventinfo">@DateOf(articleData.Info, "genxml/textbox/eventstartdate", sessionParams.CultureCode, "dddd dd MMMM yyyy")</div>
