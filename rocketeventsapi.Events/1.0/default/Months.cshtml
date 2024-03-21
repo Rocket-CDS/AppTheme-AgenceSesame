@@ -15,7 +15,7 @@
     @{
         var monthidx = 1;
     }
-    @foreach (var a in eventList)
+    @foreach (var a in eventList.Reverse())
     {
         if (a.Value.Count > 0)
         {
