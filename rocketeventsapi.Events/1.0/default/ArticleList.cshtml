@@ -8,7 +8,7 @@
 @{
     var articleListData = (ArticleLimpetList)Model.GetDataObject("articlelist");
     var eventList = (List<ArticleLimpet>)Model.GetDataObject("eventnextlist");
-    if (sessionParams.Get("month") == "")
+    if (sessionParams.GetInt("month") == 0 && sessionParams.Get("searchtext") == "")
     {
         eventList.AddRange(articleListData.GetArticleList());
     }
