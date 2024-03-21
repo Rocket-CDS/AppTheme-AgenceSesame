@@ -46,34 +46,35 @@
             startDays += 1;
         }
 
-        @while (day <= monthDays)
+        @while (day <= monthDays) 
         {
+            var dayDate = new DateTime(calMonthStartDate.Year, calMonthStartDate.Month, day).Date;
+            var todayClass = "";
+            if (DateTime.Now.Date == dayDate)
+            {
+                todayClass = "today";
+            }
             if (articleDay.ContainsKey(day))
             {
-                <li onclick="getMonthCalendarDetail('@day');" style="cursor:pointer;" class="activeday"><span>@day</span></li>
+            <li onclick="getMonthCalendarDetail('@day');" style="cursor:pointer;" class="@(todayClass) activeday"><span>@day</span></li>
             }
             else
             {
-                <li>@day</li>
+            <li class="@(todayClass)">@day</li>
             }
             day++;
         }
+
     </ul>
 </div>
 
-
 <div id="calmonthdetailmodel@(moduleData.ModuleId)" class="w3-modal w3-animate-opacity">
-    <div class="w3-modal-content" style="width:40%;">
-
-        <header class="" style="height: 38.5px;">
+    <div class="w3-modal-content calendar-popup" style="width:40%;">
+        <header>
             <span onclick="$('#calmonthdetailmodel@(moduleData.ModuleId)').hide();" class="w3-button w3-display-topright">&times;</span>
         </header>
-        <div class="w3-margin-top" style="">
-            <div id="calmonthdetailcontainer@(moduleData.ModuleId)" class="w3-container">
-                [INJECT:apptheme,CalendarEventList.cshtml]
-            </div>
+        <div id="calmonthdetailcontainer@(moduleData.ModuleId)">
+            [INJECT:apptheme,CalendarEventList.cshtml]
         </div>
     </div>
 </div>
-
-

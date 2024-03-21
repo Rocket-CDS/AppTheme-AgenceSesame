@@ -14,9 +14,16 @@
 {
     var keyclass = "a-day" + articleListDict.Key;
     var articleList2 = articleListDict.Value;
-
+    var headYear = DateTime.Now.Year;
+    var headMonth = DateTime.Now.Month;
+    if (articleList2.Count > 0)
+    {
+        headYear = articleList2.First().Info.GetXmlPropertyDate("genxml/textbox/eventstartdate").Year;
+        headMonth = articleList2.First().Info.GetXmlPropertyDate("genxml/textbox/eventstartdate").Month;
+    }
+    var headerDate = new DateTime(headYear, headMonth, articleListDict.Key);
     <div class="events-table a-dayselect @(keyclass)">
-        <h2>@monthStartDate.AddDays(articleListDict.Key - 1).ToString("D", new CultureInfo(sessionParams.CultureCode))</h2>
+        <h2>@headerDate.ToString("D", new CultureInfo(sessionParams.CultureCode))</h2>
         @foreach (var articleData in articleList2)
         {
             var eventDate = articleData.Info.GetXmlPropertyDate("genxml/textbox/eventstartdate");

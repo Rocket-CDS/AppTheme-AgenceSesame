@@ -15,12 +15,12 @@
     @{
         var monthidx = 1;
     }
-    @foreach (var a in eventList)
+    @foreach (var a in eventList.Reverse())
     {
         if (a.Value.Count > 0)
         {
             <div class="events-archives-item rocket-monthdates rocket-monthdates@(monthidx) ">
-                <a href="@ListUrl(moduleData.ListPageTabId(), new string[] {"month", a.Key.Month.ToString(),"year", a.Key.Year.ToString() })" monthidx="@(monthidx)" class="" onclick="setSelected($(this).attr('monthidx'));">
+                <a href="@ListUrl(moduleData.ListPageTabId(), new string[] {"month", a.Key.Month.ToString(),"year", a.Key.Year.ToString() })" monthidx="@(monthidx)" onclick="setSelected($(this).attr('monthidx'));">
                     @a.Key.ToString("MMMM yyyy")
                     <span class="count">@a.Value.Count<span class="material-icons-outlined">calendar_today</span></span>
                 </a>
@@ -34,8 +34,6 @@
 
 <script>
     function setSelected(monthidx, month, year) {
-        $('.rocket-monthdates').removeClass('w3-grey');
-        $('.rocket-monthdates' + monthidx).addClass('w3-grey');
         simplisity_setSessionField('monthidx', monthidx);
     }
 </script>
