@@ -30,7 +30,7 @@
                 {
                     propertyCheckboxes.Add(p);
                     <div class="rocket-filtercheckwrapper">
-                        @CheckBox(new SimplisityInfo(), "genxml/checkbox/checkboxfilter" + p.PropertyId, "<span class='rf-name'>" + p.Name + "</span><span class='rf-checkbox'></span>", " class='rocket-filtercheckbox simplisity_sessionfield'  onchange='setCategoryMenuSessionParams();'  ", sessionParams.Info.GetXmlPropertyBool("r/checkboxfilter" + p.PropertyId))
+                        @CheckBox(new SimplisityInfo(), "genxml/checkbox/checkboxfilter" + p.PropertyId, "<span class='rf-name'>" + p.Name + "</span><span class='rf-checkbox'></span>", " class='rocket-filtercheckbox simplisity_sessionfield' propertyid='" + p.PropertyId + "' propertyname='" + p.Name + "'  onchange='setCategoryMenuSessionParams();'  ", sessionParams.Info.GetXmlPropertyBool("r/checkboxfilter" + p.PropertyId))
                     </div>
                 }
             }
@@ -80,6 +80,7 @@
         simplisity_setSessionField('disablecache', 'true');
 
         showCancelFilters();
+        showCheckedTags();
 
 		$('.simplisity_loader').show();
 

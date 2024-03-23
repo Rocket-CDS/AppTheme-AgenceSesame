@@ -41,6 +41,8 @@
     </div>
 </div>
 
+<div class="a-filtercheckedtags"></div>
+
 <script>
 
     $(document).ready(function () {
@@ -66,8 +68,19 @@
                 return false; // prevent the button click from happening
             }
         });
-
+        showCheckedTags();
     });
+
+    function showCheckedTags() {
+        var sList = "";
+        $('.rocket-filtercheckbox').each(function () {
+            if ($(this).is(":checked")) {
+                var trig = "$('#checkboxfilter" + $(this).attr('propertyid') + "').trigger('click');"
+                sList += '<span class="selectedfiltertags" onclick="' + trig + '">' + $(this).attr('propertyname') + '</span>';
+            }
+        });
+        $('.a-filtercheckedtags').html(sList);
+    }
 
     function clearSearch() {
         $('#searchtext').val('');
