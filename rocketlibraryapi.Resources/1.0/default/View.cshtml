@@ -1,26 +1,28 @@
-﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
-@using RocketDirectoryAPI.Components;
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketPortal.Components;
+﻿@inherits RocketLibraryAPI.Components.RocketLibraryAPITokens<Simplisity.SimplisityRazor>
 @using DNNrocketAPI.Components;
-@using System.Globalization;
-@using Rocket.AppThemes.Components;
-
-@{ 
-    var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
-    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
-}
+@using RocketDirectoryAPI.Components;
+@using Simplisity;
+@AssigDataModel(Model)
+@AddProcessDataResx(appTheme, true)
+<!--inject-->
 
 <div class="pageflex">
     <div id="a-filtercontainer" class="leftpane">
-        @RenderTemplate("Filters.cshtml", appTheme, Model, true)
+        [INJECT:apptheme,Filters.cshtml]
     </div>
     <div id="a-articlecontainer" class="contentpane2">
         @if (articleData != null)
-        {@RenderTemplate("ArticleDetail.cshtml", appTheme, Model, false)}
-        else 
-        {@RenderTemplate("ArticleList.cshtml", appTheme, Model, false)}
+        {
+            <text>
+                [INJECT: apptheme, ArticleDetail.cshtml]
+            </text>
+        }
+        else
+        {
+            <text>
+                [INJECT: apptheme, ArticleList.cshtml]
+            </text>
+        }
     </div>
 </div>
 

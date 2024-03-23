@@ -1,29 +1,11 @@
-﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
-@using RocketDirectoryAPI.Components;
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketPortal.Components;
+﻿@inherits RocketLibraryAPI.Components.RocketLibraryAPITokens<Simplisity.SimplisityRazor>
 @using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
 @using System.Globalization;
-@using Rocket.AppThemes.Components;
-
-@{ 
-    var sessionParams = (SessionParams)Model.SessionParamsData;
-    var articleDataList = (ArticleLimpetList)Model.GetDataObject("articlelist");
-    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
-    var categoryList = (CategoryLimpetList)Model.GetDataObject("categorylist");
-    var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
-    var appThemeDefault = (AppThemeLimpet)Model.GetDataObject("appthemedefault");
-    var appThemeDirectory = (AppThemeSystemLimpet)Model.GetDataObject("appthemedirectory");
-    var appThemeDirectoryDefault = (AppThemeLimpet)Model.GetDataObject("appthemedirectorydefault");
-    var categoryData = (CategoryLimpet)Model.GetDataObject("categorydata");
-    var catalogSettings = (CatalogSettingsLimpet)Model.GetDataObject("catalogsettings");
-    var propertyList = (PropertyLimpetList)Model.GetDataObject("propertylist");
-    var moduleSettings = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-    var propertyCheckboxes = new List<PropertyLimpet>();
-    AddProcessDataResx(appTheme, true);
-    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/");
-}
+@using Simplisity;
+@AssigDataModel(Model)
+@AddProcessDataResx(appTheme, true)
+<!--inject-->
 
 <div class="articlewrapper">
 
@@ -35,41 +17,41 @@
     {
 <div class="articlelist">
 
-    @foreach (ArticleLimpet articleData in articleDataList.GetArticleList())
+    @foreach (ArticleLimpet articleData2 in articleDataList.GetArticleList())
     {
         var urlparams = new Dictionary<string, string>();
-        urlparams.Add("articleid", articleData.ArticleId.ToString());
-        var hreflink = DNNrocketUtils.NavigateURL(sessionParams.TabId, urlparams, articleData.Name);
-        var date = articleData.Info.GetXmlPropertyDate("genxml/textbox/publisheddate");
+        urlparams.Add("articleid", articleData2.ArticleId.ToString());
+        var hreflink = DNNrocketUtils.NavigateURL(sessionParams.TabId, urlparams, articleData2.Name);
+        var date = articleData2.Info.GetXmlPropertyDate("genxml/textbox/publisheddate");
         var dateFormat = date.ToString("dd/MM/yyyy");
 
 <div class="article">
     <div class="article-image">
-        <a href="@(hreflink)" title="@articleData.Name" onclick="$('#simplisity_loader').show();">
-            <img src="@ImageUrl(articleData.GetImage(0).RelPath,120,0)" alt="@articleData.GetImage(0).Alt" />
+        <a href="@(hreflink)" title="@articleData2.Name" onclick="$('#simplisity_loader').show();">
+            <img src="@ImageUrl(articleData2.GetImage(0).RelPath,120,0)" alt="@articleData2.GetImage(0).Alt" />
         </a>
     </div>
     <div class="article-content">
-        <h2><a href="@(hreflink)" title="@articleData.Name" onclick="$('#simplisity_loader').show();">@articleData.Name</a></h2>
-        @if (articleData.Info.GetXmlPropertyBool("genxml/checkbox/internal"))
+        <h2><a href="@(hreflink)" title="@articleData2.Name" onclick="$('#simplisity_loader').show();">@articleData2.Name</a></h2>
+        @if (articleData2.Info.GetXmlPropertyBool("genxml/checkbox/internal"))
         {
         <div class="article-infos">
             <div class="article-internal">Document interne</div>
         </div>
         }
         <div class="article-tags">
-            @foreach (var p in articleData.GetProperties())
+            @foreach (var p in articleData2.GetProperties())
             {
                 if (p.IsInGroup("thematique"))
                 {
 <span>@p.Name</span>    }
 }
         </div>
-        <div class="article-summary truncate">@BreakOf(articleData.Summary)</div>
+        <div class="article-summary truncate">@BreakOf(articleData2.Summary)</div>
         <div class="article-infos">
             <div>
                 <span>Auteur(s) :</span>
-                @foreach (var p in articleData.GetProperties())
+                @foreach (var p in articleData2.GetProperties())
                 {
                     if (p.IsInGroup("auteur"))
                     {
@@ -81,7 +63,7 @@
             <div class="sep">|</div>
             <div>
                 <span>Type(s) de document :</span>
-                @foreach (var p in articleData.GetProperties())
+                @foreach (var p in articleData2.GetProperties())
                 {
                     if (p.IsInGroup("type"))
                     {
@@ -90,7 +72,7 @@
             </div>
         </div>
         <div class="article-markers">
-            @foreach (var p in articleData.GetProperties())
+            @foreach (var p in articleData2.GetProperties())
             {
                 if (p.IsInGroup("territoire"))
                 {

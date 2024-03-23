@@ -33,6 +33,9 @@
     <Reference Include="RocketEventsAPI">
       <HintPath>..\..\..\bin\RocketEventsAPI.dll</HintPath>
     </Reference>
+    <Reference Include="RocketLibraryAPI">
+      <HintPath>..\..\..\bin\RocketLibraryAPI.dll</HintPath>
+    </Reference>
     <Reference Include="RocketPortal">
       <HintPath>..\..\..\bin\RocketPortal.dll</HintPath>
     </Reference>

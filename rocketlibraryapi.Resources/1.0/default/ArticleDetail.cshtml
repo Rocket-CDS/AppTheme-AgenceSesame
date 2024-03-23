@@ -1,29 +1,17 @@
-﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
-@using RocketDirectoryAPI.Components;
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketPortal.Components;
+﻿@inherits RocketLibraryAPI.Components.RocketLibraryAPITokens<Simplisity.SimplisityRazor>
 @using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
 @using System.Globalization;
-@using Rocket.AppThemes.Components;
+@using Simplisity;
+@AssigDataModel(Model)
+@AddProcessDataResx(appTheme, true)
+<!--inject-->
 @{
-    var sessionParams = (SessionParams)Model.SessionParamsData;
-    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
-    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
-    var categoryList = (CategoryLimpetList)Model.GetDataObject("categorylist");
-    var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
-    var appThemeDefault = (AppThemeLimpet)Model.GetDataObject("appthemedefault");
-    var appThemeDirectory = (AppThemeSystemLimpet)Model.GetDataObject("appthemedirectory");
-    var appThemeDirectoryDefault = (AppThemeLimpet)Model.GetDataObject("appthemedirectorydefault");
-    var catalogSettings = (CatalogSettingsLimpet)Model.GetDataObject("catalogsettings");
-    var propertyList = (PropertyLimpetList)Model.GetDataObject("propertylist");
-    var propertyCheckboxes = new List<PropertyLimpet>();
     var nodList = false;
     var date = articleData.Info.GetXmlPropertyDate("genxml/textbox/publisheddate");
     var dateFormat = date.ToString("dd/MM/yyyy");
     AddProcessDataResx(appTheme, true);
 }
-@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
 
 <div class="articledetail">
 

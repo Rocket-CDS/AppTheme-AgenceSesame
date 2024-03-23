@@ -1,33 +1,17 @@
-﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
-@using DNNrocketAPI;
-@using Simplisity;
-@using RocketPortal.Components;
-@using RocketDirectoryAPI.Components;
+﻿@inherits RocketLibraryAPI.Components.RocketLibraryAPITokens<Simplisity.SimplisityRazor>
 @using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
 @using System.Globalization;
+@using Simplisity;
+@AssigDataModel(Model)
+@AddProcessDataResx(appTheme, true)
+<!--inject-->
 
 @{
-    var sessionParams = (SessionParams)Model.SessionParamsData;
-    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
-    var portalCatalog = (PortalCatalogLimpet)Model.GetDataObject("portalcatalog");
-    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
-    var categoryList = (CategoryLimpetList)Model.GetDataObject("categorylist");
-    var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
-    var appThemeDefault = (AppThemeLimpet)Model.GetDataObject("appthemedefault");
-    var moduleSettings = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-    var categoryData = (CategoryLimpet)Model.GetDataObject("categorydata"); ;
-    var propertyList = (PropertyLimpetList)Model.GetDataObject("propertylist");
-    var catalogSettings = (CatalogSettingsLimpet)Model.GetDataObject("catalogsettings");
-
     var sreturn = Model.GetSetting("searchreturnelement");
-    AddProcessDataResx(appTheme, true);
-    AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/");
 }
 
-
-
 <div class="filters">
-
     <span class="clearfilters" style="display:none;" onclick="clearFilters();return false;">Effacer</span>
     
     <h4>Filtrer les documents par :</h4>
@@ -37,10 +21,10 @@
     }
     @foreach (var g in catalogSettings.GetPropertyGroups())
     {
-        if (moduleSettings.Record.GetXmlPropertyBool("genxml/settings/propertygroup-" + g.Key))
+        if (moduleData.Record.GetXmlPropertyBool("genxml/settings/propertygroup-" + g.Key))
         {
             <div class="rocket-filtergroup"><h5>@g.Value</h5></div>
-            foreach (var p in propertyList.GetPropertyList(g.Key))
+            foreach (var p in propertyDataList.GetPropertyList(g.Key))
             {
                 if (!propertyCheckboxes.Contains(p))
                 {
@@ -83,9 +67,9 @@
 
         @foreach (var g in catalogSettings.GetPropertyGroups())
         {
-            if (moduleSettings.Record.GetXmlPropertyBool("genxml/settings/propertygroup-" + g.Key))
+            if (moduleData.Record.GetXmlPropertyBool("genxml/settings/propertygroup-" + g.Key))
             {
-                foreach (var p in propertyList.GetPropertyList(g.Key))
+            foreach (var p in propertyDataList.GetPropertyList(g.Key))
                 {
                     var propref = "checkboxfilter" + p.PropertyId;
                     @:simplisity_setSessionField('@(propref)', ($('#@(propref)').is(":checked") ? "true" : "false"));
@@ -99,7 +83,7 @@
 
 		$('.simplisity_loader').show();
 
-        $('#a-articlecontainer').getSimplisity('/Desktopmodules/dnnrocket/api/rocket/action', 'remote_publiclist', '{"moduleref":"@(sessionParams.ModuleRef)","moduleid":"@(sessionParams.ModuleId)","tabid":"@(sessionParams.TabId)","catid":"@(sessionParams.Get("catid"))","systemkey":"@(moduleSettings.SystemKey)","template":"ArticleList.cshtml"}', '');
+        $('#a-articlecontainer').getSimplisity('/Desktopmodules/dnnrocket/api/rocket/action', 'remote_publiclist', '{"moduleref":"@(sessionParams.ModuleRef)","moduleid":"@(sessionParams.ModuleId)","tabid":"@(sessionParams.TabId)","catid":"@(sessionParams.Get("catid"))","systemkey":"@(moduleData.SystemKey)","template":"ArticleList.cshtml"}', '');
 
 	}
 
@@ -113,3 +97,4 @@
     }
 
 </script>
+
