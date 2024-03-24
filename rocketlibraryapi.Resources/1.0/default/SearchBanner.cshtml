@@ -75,7 +75,7 @@
         var sList = "";
         $('.rocket-filtercheckbox').each(function () {
             if ($(this).is(":checked")) {
-                var trig = "$('#checkboxfilter" + $(this).attr('propertyid') + "').trigger('click');"
+                var trig = "$('#" + $(this).attr('id') + "').trigger('click');"
                 sList += '<span class="selectedfiltertags" onclick="' + trig + '">' + $(this).attr('propertyname') + '</span>';
             }
         });

@@ -6,96 +6,22 @@
 @AssigDataModel(Model)
 @AddProcessDataResx(appTheme, true)
 <!--inject-->
-
-@{
-    var sreturn = Model.GetSetting("searchreturnelement");
-}
-
 <div class="filters">
-    <span class="clearfilters" style="display:none;" onclick="clearFilters();return false;">Effacer</span>
-    
+    <span class="clearfilters">
+        @FilterActionButton(ResourceKey("DNNrocket.clear").ToString(), sessionParams, false)
+    </span>   
     <h4>Filtrer les documents par :</h4>
-
-    @{
-        var propertyCheckboxes = new List<PropertyLimpet>();
-    }
-    @foreach (var g in catalogSettings.GetPropertyGroups())
+    @foreach (var g in moduleData.GetPropertyModuleGroups(catalogSettings))
     {
-        if (moduleData.Record.GetXmlPropertyBool("genxml/settings/propertygroup-" + g.Key))
+        <div class="rocket-filtergroup"><h5>@g.Value</h5></div>
+        foreach (var p in propertyDataList.GetPropertyFilterList(g.Key))
         {
-            <div class="rocket-filtergroup"><h5>@g.Value</h5></div>
-            foreach (var p in propertyDataList.GetPropertyList(g.Key))
-            {
-                if (!propertyCheckboxes.Contains(p))
-                {
-                    propertyCheckboxes.Add(p);
-                    <div class="rocket-filtercheckwrapper">
-                        @CheckBox(new SimplisityInfo(), "genxml/checkbox/checkboxfilter" + p.PropertyId, "<span class='rf-name'>" + p.Name + "</span><span class='rf-checkbox'></span>", " class='rocket-filtercheckbox simplisity_sessionfield' propertyid='" + p.PropertyId + "' propertyname='" + p.Name + "' ", sessionParams.Info.GetXmlPropertyBool("r/checkboxfilter" + p.PropertyId))
-                    </div>
-                }
-            }
+            <div class="rocket-filtercheckwrapper">
+                @FilterCheckBox(p.Key, p.Value, "#a-articlecontainer", sessionParams.Info.GetXmlPropertyBool("r/" + p.Key), "", "propertyname='" + p.Value.Replace("'", "&apos;") + "'")
+            </div>
         }
     }
-
 </div>
 
-
-<script type="text/javascript">
-	$(document).ready(function () {
-        $('.simplisity_loader').hide();
-        simplisity_setSessionField('disablecache', 'false');
-
-        $(".rocket-filtercheckbox").off("change");
-        $(".rocket-filtercheckbox").on("change", function() {
-          setCategoryMenuSessionParams();
-        } );
-
-        showCancelFilters();
-
-    });
-
-    function clearFilters() {
-        $(".rocket-filtercheckbox").off("change");
-        $('.rocket-filtercheckbox').prop('checked', false);
-        $(".rocket-filtercheckbox").on("change", function() {
-          setCategoryMenuSessionParams();
-        } );       
-        setCategoryMenuSessionParams();
-    }
-
-	function setCategoryMenuSessionParams() {
-
-        @foreach (var g in catalogSettings.GetPropertyGroups())
-        {
-            if (moduleData.Record.GetXmlPropertyBool("genxml/settings/propertygroup-" + g.Key))
-            {
-            foreach (var p in propertyDataList.GetPropertyList(g.Key))
-                {
-                    var propref = "checkboxfilter" + p.PropertyId;
-                    @:simplisity_setSessionField('@(propref)', ($('#@(propref)').is(":checked") ? "true" : "false"));
-                }
-            }
-        }
-
-        simplisity_setSessionField('disablecache', 'true');
-
-        showCancelFilters();
-        showCheckedTags();
-
-		$('.simplisity_loader').show();
-
-        $('#a-articlecontainer').getSimplisity('/Desktopmodules/dnnrocket/api/rocket/action', 'remote_publiclist', '{"moduleref":"@(sessionParams.ModuleRef)","moduleid":"@(sessionParams.ModuleId)","tabid":"@(sessionParams.TabId)","catid":"@(sessionParams.Get("catid"))","systemkey":"@(moduleData.SystemKey)","template":"ArticleList.cshtml"}', '');
-
-	}
-
-    function showCancelFilters() {
-        var len = $('.filters input[type=checkbox]:checked').length;
-        if (len > 0) {
-            $(".clearfilters").show();
-        } else if (len === 0) {
-            $(".clearfilters").hide();
-        }
-    }
-
-</script>
+@FilterJsApiCall(moduleData.SystemKey, sessionParams)
 
