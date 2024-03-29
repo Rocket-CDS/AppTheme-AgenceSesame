@@ -1,0 +1,193 @@
+﻿@inherits RocketBusinessAPI.Components.RocketBusinessAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@using RocketBusinessAPI.Components;
+@AssigDataModel(Model)
+<!--inject-->
+<div class="articledetail">
+
+    <div class="articledetail-back">
+        @{
+            if (articleData == null)
+            {
+                articleData = new ArticleLimpet(new SimplisityInfo()); // stop error when no id
+            }
+            var hreflink = ListUrl(moduleData.ListPageTabId(), categoryData);
+        }
+        <a href="@(hreflink)" class="bigbutton"><span class="icon"><i class="fas fa-angle-left"></i></span><span>@ResourceKey("RocketBusinessAPI.back", sessionParams.CultureCode)</span></a>
+    </div>
+
+    <div class="articledetailflex">
+
+        <div class="articledetail-left">
+
+            <figure class="image">
+                <img id="mainimage@(articleData.ArticleId)" class="imgrollovertarget has-ratio" src="@ImageUrl(articleData.GetImage(0).RelPath,640,0)" alt="@articleData.GetImage(0).Alt" />
+            </figure>
+
+            <h1 class="title">@articleData.Name</h1>
+            @if (articleData.GetProperties().Count > 0)
+            {
+                <p class="subtitle">@articleData.GetProperties().First().Name</p>
+            }
+            <div class="articledetail-section">@BreakOf(articleData.Summary)</div>
+
+            <div class="articledetail-section">
+                @if ((articleData.Info.GetXmlProperty("genxml/textbox/lat") != "") && (articleData.Info.GetXmlProperty("genxml/textbox/long") != "" ))
+                {
+                <div class="h3-headline"><i class="fas fa-map-marker-alt fa-lg"></i>@ResourceKey("RocketBusinessAPI.localize", sessionParams.CultureCode)</div>
+                <div id="leafletmap"></div>
+                }
+            </div>
+
+        </div>
+
+        <div class="articledetail-right">
+
+            [INJECT:apptheme,OpenTimes.cshtml]
+
+             <div class="articledetail-section">
+                <div class="h3-headline"><i class="far fa-user-circle fa-lg"></i>@ResourceKey("RocketBusinessAPI.contact", sessionParams.CultureCode)</div>
+                <div class="block">
+                    <h4>@articleData.Name</h4>
+                    @articleData.Info.GetXmlProperty("genxml/textbox/address1")
+                    @if (articleData.Info.GetXmlProperty("genxml/textbox/address2") != "")
+                    {
+                        <br />@articleData.Info.GetXmlProperty("genxml/textbox/address2")
+                    }
+                    @if (articleData.Info.GetXmlProperty("genxml/textbox/address2") != "")
+                    {
+                        <br />@articleData.Info.GetXmlProperty("genxml/textbox/address3")
+                    }
+                    @if (articleData.Info.GetXmlProperty("genxml/textbox/address4") != "")
+                    {
+                        <br />@articleData.Info.GetXmlProperty("genxml/textbox/address4")
+                    }
+                    
+                </div>
+
+                @if (articleData.Info.GetXmlProperty("genxml/textbox/phone") != "")
+                {
+                    <div class="h4-headline">@ResourceKey("RocketBusinessAPI.tel", sessionParams.CultureCode) @articleData.Info.GetXmlProperty("genxml/textbox/phone")</div>
+                }
+                @if (articleData.Info.GetXmlProperty("genxml/textbox/mobile") != "")
+                {
+                    <div class="h4-headline">@ResourceKey("RocketBusinessAPI.mobile", sessionParams.CultureCode) @articleData.Info.GetXmlProperty("genxml/textbox/mobile")</div>
+                }
+
+                @if (articleData.Info.GetXmlProperty("genxml/textbox/email") != "")
+                {
+                    <div class="block">@ResourceKey("RocketBusinessAPI.email", sessionParams.CultureCode) : @EmailOf(articleData.Info, "genxml/textbox/email")</div>
+                }
+
+                @if (articleData.Info.GetXmlProperty("genxml/textbox/website") != "")
+                {
+                    var websiteUrl = articleData.Info.GetXmlProperty("genxml/textbox/website");
+                    if (!websiteUrl.StartsWith("http"))
+                    {
+                        websiteUrl = "http://" + websiteUrl;
+                    }
+                    <div class="block"><a href="@websiteUrl")" target="_blank" class="bigbutton">@ResourceKey("RocketBusinessAPI.website", sessionParams.CultureCode)</a></div>
+                }
+
+                 <div class="articledetail-section">
+                    @if (articleData.Info.GetXmlProperty("genxml/textbox/facebooklink") != "")
+                    {
+                        <a href="@articleData.Info.GetXmlProperty("genxml/textbox/facebooklink")" target="_blank"><i class="fab fa-facebook fa-2x"></i></a>
+                    }
+                    @if (articleData.Info.GetXmlProperty("genxml/textbox/instagramlink") != "")
+                    {
+                        <a href="@articleData.Info.GetXmlProperty("genxml/textbox/instagramlink")" target="_blank"><i class="fab fa-instagram fa-2x"></i></a>
+                    }
+                    @if (articleData.Info.GetXmlProperty("genxml/textbox/youtubelink") != "")
+                    {
+                        <a href="@articleData.Info.GetXmlProperty("genxml/textbox/youtubelink")" target="_blank"><i class="fab fa-youtube fa-2x"></i></a>
+                    }
+                    @if (articleData.Info.GetXmlProperty("genxml/textbox/twitterlink") != "")
+                    {
+                        <a href="@articleData.Info.GetXmlProperty("genxml/textbox/twitterlink")" target="_blank"><i class="fab fa-twitter fa-2x"></i></a>
+                    }
+                    @if (articleData.Info.GetXmlProperty("genxml/textbox/linkedinlink") != "")
+                    {
+                        <a href="@articleData.Info.GetXmlProperty("genxml/textbox/linkedinlink")" target="_blank"><i class="fab fa-linkedin fa-2x"></i></a>
+                    }
+                </div>
+            </div>
+
+            @if (articleData.Getlinks().Count > 0 || articleData.GetDocs().Count > 0)
+            {
+                <div class="articledetail-section" id="linklistcontainer">
+                    <div class="h3-headline">@ResourceKey("DNNrocket.links") / @ResourceKey("DNNrocket.documents")</div>
+                    @foreach (var lk in articleData.Getlinks())
+                    {
+                        if (!lk.Hidden)
+                        {
+                            var lkName = lk.Name;
+                            if (lkName == "")
+                            {
+                                lkName = lk.Url;
+                            }
+                            <a target="_blank" href="@lk.Url" class="panel-block">
+                                <i class="fas fa-link" aria-hidden="true"></i>@lkName
+                            </a>
+                        }
+                    }
+                    @foreach (var doc in articleData.GetDocs())
+                    {
+                        if (!doc.Hidden)
+                        {
+                            <a target="_blank" href="@doc.RelPath" class="panel-block">
+                                <i class="fas fa-file-pdf" aria-hidden="true"></i>@doc.Name
+                            </a>
+                        }
+                    }
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+
+    @if ((articleData.Info.GetXmlProperty("genxml/textbox/lat") != "") && (articleData.Info.GetXmlProperty("genxml/textbox/long") != ""))
+    {
+        <text>
+            setTimeout(() => { initmap(); }, 500);
+        </text>
+    }
+
+        function initmap() {
+            var x = '@articleData.Info.GetXmlProperty("genxml/textbox/lat")';
+            var y = '@articleData.Info.GetXmlProperty("genxml/textbox/long")';
+            var defaultLat = '@moduleData.Record.GetXmlProperty("genxml/settings/lat")';
+            var defaultLong = '@moduleData.Record.GetXmlProperty("genxml/settings/long")';
+            var companyname = '@articleData.Info.GetXmlProperty("genxml/textbox/companyname")';
+            var marker = "";
+            var map = "";
+            var defaultIcon = L.icon({
+                iconUrl: '/@(appTheme.AppThemeVersionFolderRel.TrimStart('/'))/img/marker-default.png',
+                iconSize: [27, 36],
+                iconAnchor: [13, 36]
+            });
+
+            map = L.map('leafletmap', { minZoom: 3, scrollWheelZoom: false }).setView([x, y], 16);
+            marker = L.marker([x, y], {
+                title: companyname,
+                icon: defaultIcon
+            });
+            map.addLayer(marker);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+        }
+
+
+    });
+</script>

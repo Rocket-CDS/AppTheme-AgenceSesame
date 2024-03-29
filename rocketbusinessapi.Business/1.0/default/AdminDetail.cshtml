@@ -1,0 +1,58 @@
+@inherits RocketBusinessAPI.Components.RocketBusinessAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@using RocketPortal.Components;
+@using System.Globalization;
+@AssigDataModel(Model)
+<!--inject-->
+@{
+    var sfieldDict = new Dictionary<string, string>();
+    sfieldDict.Add("articleid", articleData.ArticleId.ToString());
+    sfieldDict.Add("moduleedit", sessionParams.GetBool("moduleedit").ToString());
+    sfieldDict.Add("tabid", sessionParams.TabId.ToString());
+}
+
+@RenderLanguageSelector("articleadmin_editarticle", sfieldDict, appThemeDirectory, Model)
+
+<div id="articleedit">
+
+    <div id="articleeditcontent" class='w3-animate-opacity '>
+
+        [INJECT:appthemedirectory,AdminDetailButtons.cshtml]
+
+        <div id="articledatasection" class="">
+            <div class='w3-row'>
+                <div class="w3-twothird w3-padding-small">
+                    [INJECT:appthemesystem,ArticleGeneralBlock.cshtml]
+                    [INJECT:appthemesystem,ArticleOpenHoursBlock.cshtml]
+                    [INJECT:appthemedirectory,ArticleSocialMediaBlock.cshtml]
+                    [INJECT:appthemedirectory,ArticleSEOBlock.cshtml]
+                </div>
+                <div class="w3-third w3-padding-small">
+                    [INJECT:appthemesystem,ArticleMapBlock.cshtml]
+                    [INJECT:appthemedirectory,ArticleCategoryListBlock.cshtml]
+                    [INJECT:appthemedirectory,ArticlePropertyListBlock.cshtml]
+                    [INJECT:appthemedirectory,ArticleimagesBlock.cshtml]
+                    [INJECT:appthemedirectory,ArticleDocumentsBlock.cshtml]
+                    [INJECT:appthemedirectory,ArticleLinksBlock.cshtml]
+                </div>
+            </div>
+        </div>
+
+        <div class="w3-padding">
+            @if (UserUtils.IsInRole("Administrator"))
+            {
+                <div class="w3-container">
+                    <div class="w3-right">
+                        @RenderXml(info)
+                    </div>
+                </div>
+            }
+            <i>ID: </i> @info.ItemID <i> GuidKey:</i> @info.GUIDKey
+        </div>
+
+    </div>
+
+</div>

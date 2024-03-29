@@ -1,0 +1,41 @@
+﻿@inherits RocketBusinessAPI.Components.RocketBusinessAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@using RocketBusinessAPI.Components;
+@AssigDataModel(Model)
+<!--inject-->
+
+<div class="listheader">
+
+@if (articleData == null || !articleData.Exists)
+{
+    <h1 class="title listtitle">
+    @if (sessionParams.GetInt(RocketDirectoryAPIUtils.UrlQueryCategoryKey(portalContent.PortalId, portalContent.SystemKey)) == 0)
+    {
+        <span>@catalogSettings.CatalogName</span>
+    }
+    else
+    {
+        <span>@categoryData.Name</span>
+    }
+    </h1>
+    
+    [INJECT:apptheme,Search.cshtml]
+}
+
+</div>
+
+<div id="businesscontainer">
+
+@if (articleData == null || !articleData.Exists)
+{
+    [INJECT: apptheme, ArticleList.cshtml]
+}
+else
+{
+    [INJECT: apptheme, ArticleDetail.cshtml]
+}
+
+</div>

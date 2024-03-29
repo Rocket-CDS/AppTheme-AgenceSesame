@@ -1,0 +1,120 @@
+﻿<genxml>
+	<deps list="true">
+		<genxml>
+			<ctrltype><![CDATA[css]]></ctrltype>
+			<url><![CDATA[/DesktopModules/DNNrocket/css/rocket-icons-v1.0/style.css]]></url>
+			<ecofriendly>true</ecofriendly>
+		</genxml>
+		<genxml>
+			<ctrltype><![CDATA[css]]></ctrltype>
+			<url><![CDATA[/DesktopModules/DNNrocket/Simplisity/css/simplisity.css]]></url>
+			<ecofriendly>true</ecofriendly>
+		</genxml>
+		<genxml>
+			<ctrltype><![CDATA[js]]></ctrltype>
+			<url><![CDATA[/DesktopModules/DNNrocket/Simplisity/js/simplisity.js]]></url>
+			<ecofriendly>true</ecofriendly>
+		</genxml>
+		<genxml>
+			<ctrltype><![CDATA[css]]></ctrltype>
+			<url><![CDATA[https://fonts.googleapis.com/icon?family=Material+Icons]]></url>
+			<ecofriendly>true</ecofriendly>
+		</genxml>
+		<genxml>
+			<ctrltype><![CDATA[css]]></ctrltype>
+			<url><![CDATA[/DesktopModules/DNNrocket/API/Themes/config-w3/1.0/css/dnnrocket-theme.css]]></url>
+			<ecofriendly>true</ecofriendly>
+		</genxml>
+		<genxml>
+			<ctrltype><![CDATA[css]]></ctrltype>
+			<url><![CDATA[{appthemefolder}/css/theme.css]]></url>
+			<ecofriendly>true</ecofriendly>
+		</genxml>
+		<genxml>
+			<ctrltype><![CDATA[js]]></ctrltype>
+			<url><![CDATA[{appthemefolder}/js/jquery.navgoco.min.js]]></url>
+			<ecofriendly>true</ecofriendly>
+		</genxml>
+		<genxml>
+			<ctrltype><![CDATA[js]]></ctrltype>
+			<url><![CDATA[{jquery}]]></url>
+			<ecofriendly>true</ecofriendly>
+		</genxml>
+		<genxml>
+			<ctrltype><![CDATA[css]]></ctrltype>
+			<url><![CDATA[https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css]]></url>
+			<ecofriendly>true</ecofriendly>
+		</genxml>
+		<genxml>
+			<ctrltype><![CDATA[css]]></ctrltype>
+			<url><![CDATA[https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css]]></url>
+			<ecofriendly>true</ecofriendly>
+		</genxml>
+		<genxml>
+			<ctrltype><![CDATA[css]]></ctrltype>
+			<url><![CDATA[https://unpkg.com/leaflet@1.7.1/dist/leaflet.css]]></url>
+			<ecofriendly>true</ecofriendly>
+		</genxml>
+		<genxml>
+			<ctrltype><![CDATA[js]]></ctrltype>
+			<url><![CDATA[https://unpkg.com/leaflet@1.7.1/dist/leaflet.js]]></url>
+			<ecofriendly>true</ecofriendly>
+		</genxml>
+		<genxml>
+			<ctrltype><![CDATA[js]]></ctrltype>
+			<url><![CDATA[https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js]]></url>
+			<ecofriendly>true</ecofriendly>
+		</genxml>
+		
+	</deps>
+
+
+	<moduletemplates list="true">
+		<genxml>
+			<file><![CDATA[view.cshtml]]></file>
+			<name><![CDATA[Article View]]></name>
+			<cmd>listdetail</cmd>
+		</genxml>
+		<genxml>
+			<file><![CDATA[CatMenuHorizontal.cshtml]]></file>
+			<name><![CDATA[Category Menu - Horizontal 2 level]]></name>
+			<cmd>catmenu</cmd>
+		</genxml>
+		<genxml>
+			<file><![CDATA[CatMenuVertical.cshtml]]></file>
+			<name><![CDATA[Category Menu - Vertical (Navgoco)]]></name>
+			<cmd>catmenu</cmd>
+		</genxml>
+		<genxml>
+			<file><![CDATA[Filters.cshtml]]></file>
+			<name><![CDATA[Filters]]></name>
+			<cmd>catmenu</cmd>
+		</genxml>
+		<genxml>
+			<file><![CDATA[Tags.cshtml]]></file>
+			<name><![CDATA[Tags]]></name>
+			<cmd>catmenu</cmd>
+		</genxml>
+		<genxml>
+			<file><![CDATA[Search.cshtml]]></file>
+			<name><![CDATA[Search]]></name>
+			<cmd>catmenu</cmd>
+		</genxml>
+	</moduletemplates>
+
+	<queryparams list="true">
+		<genxml>
+			<queryparam>busid</queryparam>
+			<tablename>rocketdirectoryapi</tablename>
+			<systemkey>rocketbusinessapi</systemkey>
+			<datatype>article</datatype>
+		</genxml>
+		<genxml>
+			<queryparam>buscatid</queryparam>
+			<tablename>rocketdirectoryapi</tablename>
+			<systemkey>rocketbusinessapi</systemkey>
+			<datatype>category</datatype>
+		</genxml>
+	</queryparams>
+
+</genxml>

@@ -1,0 +1,82 @@
+﻿@inherits RocketBusinessAPI.Components.RocketBusinessAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@using RocketBusinessAPI.Components;
+@AssigDataModel(Model)
+<!--inject-->
+<div class="container">
+
+@if (articleDataList.DataList.Count == 0)
+{
+    <p><i>@ResourceKey("RC.noresults")</i></p>
+}
+else
+{
+    <div class="mapviewtab" style="display:none;">
+
+        <div class="listviews">
+            <a href="javascript:void(0)" onclick="showRocketBusinessList();"><i class="fas fa-grip-horizontal"></i>@ResourceKey("DNNrocket.list")</a>
+        </div>
+
+        [INJECT:apptheme,ArticleMap.cshtml]
+
+    </div>
+
+    <div class="listviewtab" style="display:none;">
+
+        <div class="listviews">
+            <a href="javascript:void(0)" onclick="showRocketBusinessMap();"><i class="fas fa-map-marker-alt"></i>@ResourceKey("DNNrocket.map")</a>
+        </div>
+
+        [INJECT:apptheme,ArticleListLoop.cshtml]
+
+    </div>
+
+    <script>
+
+        $(document).ready(function () {
+
+            var displayTabName = simplisity_getCookieValue("RocketBusiness-displaytab");
+            if (displayTabName == "mapviewtab") {
+                showRocketBusinessMap();
+            } else {
+                showRocketBusinessList();
+            }
+            $('.simplisity_loader').hide();
+
+            $('#dnn_dnnSearch_txtSearch').unbind('keydown');
+            $('#dnn_dnnSearch_txtSearch').on('keydown', function (e) {
+                if (e.keyCode == 13) {
+                    $('.simplisity_loader').show();
+                }
+            });
+
+        });
+
+        function showRocketBusinessList() {
+            $('.listviewtab').show();
+            $('.mapviewtab').hide();
+            simplisity_setCookieValue("RocketBusiness-displaytab", "listviewtab");
+        }
+        function showRocketBusinessMap() {
+            $('.mapviewtab').show();
+            // after show map do resize.
+            if (map != null) {
+                map.invalidateSize();
+                if (boundmarkers.length > 0) {
+                    var group = L.featureGroup(boundmarkers);
+                    map.fitBounds(group.getBounds(), {
+                        padding: [100, 100]
+                    })
+                }
+            }
+
+            $('.listviewtab').hide();
+            simplisity_setCookieValue("RocketBusiness-displaytab", "mapviewtab");
+        }
+
+    </script>
+}
+</div>

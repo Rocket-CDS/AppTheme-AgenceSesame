@@ -1,0 +1,102 @@
+﻿@inherits RocketBusinessAPI.Components.RocketBusinessAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@using RocketBusinessAPI.Components;
+@AssigDataModel(Model)
+<!--inject-->
+
+<div class="mapcontainer">
+
+    <div id="leafletmap"></div>
+
+    @{
+        var locationlist = "";
+        var boundlocationlist = "";
+        var gpslong = "";
+        var gpslat = "";
+        var companyname = "";
+        var websiteurl = "";
+        var txtdata = "";
+        var articlesummary = "";
+        ArticleImage articleImage = null;
+    }
+
+    @foreach (ArticleLimpet articleData1 in articleDataList.GetArticlesListWithoutPaging())
+    {
+        var info = articleData1.Info;
+        gpslong = info.GetXmlProperty("genxml/textbox/long").Replace("'", "");
+        gpslat = info.GetXmlProperty("genxml/textbox/lat").Replace("'", "");
+        articleImage = articleData1.GetImage(0);
+        companyname = System.Web.HttpUtility.HtmlEncode(articleData1.Name);
+
+        if (GeneralUtils.IsNumeric(gpslong) && (GeneralUtils.IsNumeric(gpslat)))
+        {
+            var mapIcon = "defaultIcon";
+            var hreflink = DetailUrl(moduleData.DetailPageTabId(), articleData1, categoryData);
+
+            txtdata = "'<div class=\"leafletinfowindow liwimg\" style=\"overflow: hidden;\">";
+            txtdata += "<img src=\"" + ImageUrl(articleImage.RelPath, 200, 140) + "\"/>";
+            txtdata += "<h3><a href=\"" + hreflink + "\" >" + companyname + "</a></h3>";
+            txtdata += "</div>'";
+
+            locationlist += "var m = L.marker([" + gpslat + ", " + gpslong + "], {icon: " + mapIcon + ",itemid: " + info.ItemID + "}, { title: '" + companyname + "' }, {itemid: " + info.ItemID + "});";
+            locationlist += "m.bindPopup(" + txtdata + ").openPopup();";
+            locationlist += "m.number = " + info.ItemID + ";";
+            locationlist += "markers1.addLayer(m);";
+            boundlocationlist += "L.marker([" + gpslat + ", " + gpslong + "]),";
+        }
+    }
+
+    <script>
+        
+        var map = null;
+        var boundmarkers = null;
+
+        $(document).ready(function () {
+            setTimeout(() => { initmap(); }, 200);
+        });
+
+        function initmap() {
+
+            var defaultIcon = L.icon({
+                iconUrl: '/@(appTheme.AppThemeVersionFolderRel.TrimStart('/'))/img/marker-default.png',
+                iconSize: [27, 36],
+                iconAnchor: [13, 36]
+            });
+
+            //set grouping markers maxClusterRadius: 80 is the default option, can change to reduce splitting on zoom
+            var markers1 = L.markerClusterGroup();
+
+            map = L.map('leafletmap', {
+                scrollWheelZoom: false
+            });
+
+            var tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            }).addTo(map);
+
+            //set the initial padding of the map depending on markers position
+            boundmarkers = [@(new RazorEngine.Text.RawString(boundlocationlist.TrimEnd(',')))];
+
+            if (boundmarkers.length > 0) {
+                var group = L.featureGroup(boundmarkers);
+                map.fitBounds(group.getBounds(), {
+                    padding: [100, 100]
+                })
+            }
+
+        @(new RazorEngine.Text.RawString(locationlist))
+
+                // add markers layer
+                map.addLayer(markers1);
+            map.on('focus', function () { map.scrollWheelZoom.enable(); });
+            map.on('blur', function () { map.scrollWheelZoom.disable(); });
+
+        }
+
+    </script>
+</div>
+
