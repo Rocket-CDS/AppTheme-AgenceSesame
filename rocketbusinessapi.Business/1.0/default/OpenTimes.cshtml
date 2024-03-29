@@ -15,7 +15,7 @@
 @if (opentimes.Count > 0)
 {
     <div class="articledetail-section">
-        <div class="h3-headline"><i class="fas fa-clock fa-lg"></i>@ResourceKey("RocketBusinessAPI.openinghours", sessionParams.CultureCode)</div>
+        <div class="h3-headline"><i class="far fa-clock"></i>@ResourceKey("RocketBusinessAPI.openinghours", sessionParams.CultureCode)</div>
         <table class="pdr-table">
         <tbody>
         @foreach (var dl in openarray)
@@ -28,22 +28,22 @@
                 <th>@DateTime.MinValue.AddDays(dl + 6).ToString("dddd")</th>
                 @if (o1 != "" && o2 != "" && c1 != "" && c2 != "")
                 {
-                    <td>@o1 - @c1</td>
-                    <td>@o2 - @c2</td>
+                    <td>@o1-@c1</td>
+                    <td>@o2-@c2</td>
                 }
                 else if (o1 != "" && c1 != "" && o2 == "" && c2 == "")
                 {
-                    <td>@o1 - @c1</td>
+                    <td>@o1-@c1</td>
                     <td>@ResourceKey("RocketBusinessAPI.closed")</td>
                 }
                 else if (o2 != "" && c2 != "" && o1 == "" && c1 == "")
                 {
                     <td>@ResourceKey("RocketBusinessAPI.closed")</td>
-                    <td>@o2 - @c2</td>
+                    <td>@o2-@c2</td>
                 }
                 else if (o1 != "" && c2 != "" && c1 == "" && o2 == "")
                 {
-                    <td colspan="2" align="center">@o1 - @c2</td>
+                    <td colspan="2" align="center">@o1-@c2</td>
                 }
                 else
                 {

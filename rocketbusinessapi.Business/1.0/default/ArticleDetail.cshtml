@@ -14,9 +14,9 @@
             {
                 articleData = new ArticleLimpet(new SimplisityInfo()); // stop error when no id
             }
-            var hreflink = ListUrl(moduleData.ListPageTabId(), categoryData);
+            var hreflink2 = ListUrl(moduleData.ListPageTabId(), categoryData);
         }
-        <a href="@(hreflink)" class="bigbutton"><span class="icon"><i class="fas fa-angle-left"></i></span><span>@ResourceKey("RocketBusinessAPI.back", sessionParams.CultureCode)</span></a>
+        <a href="@(hreflink2)" class="bigbutton"><i class="fas fa-angle-left"></i>@ResourceKey("RocketBusinessAPI.back", sessionParams.CultureCode)</a>
     </div>
 
     <div class="articledetailflex">
@@ -24,7 +24,7 @@
         <div class="articledetail-left">
 
             <figure class="image">
-                <img id="mainimage@(articleData.ArticleId)" class="imgrollovertarget has-ratio" src="@ImageUrl(articleData.GetImage(0).RelPath,640,0)" alt="@articleData.GetImage(0).Alt" />
+                <img id="mainimage@(articleData.ArticleId)" src="@ImageUrl(articleData.GetImage(0).RelPath,640,-1)" alt="@articleData.GetImage(0).Alt" />
             </figure>
 
             <h1 class="title">@articleData.Name</h1>
@@ -34,10 +34,23 @@
             }
             <div class="articledetail-section">@BreakOf(articleData.Summary)</div>
 
+            @if (articleData.GetImages().Count > 1)
+            {
+            <div class="articledetail-section articlegallery">
+                @{var imgLp = 1;}
+                @foreach (var i in articleData.GetImages())
+                {
+                <a data-fancybox="gallery" data-caption="@(i.Alt)" href="@ImageUrl(i.RelPath,800,0)">
+                <img src="@ImageUrl(i.RelPath,150,150)" alt="@(i.Alt)" />
+                </a>
+                }
+            </div>
+            }
+
             <div class="articledetail-section">
                 @if ((articleData.Info.GetXmlProperty("genxml/textbox/lat") != "") && (articleData.Info.GetXmlProperty("genxml/textbox/long") != "" ))
                 {
-                <div class="h3-headline"><i class="fas fa-map-marker-alt fa-lg"></i>@ResourceKey("RocketBusinessAPI.localize", sessionParams.CultureCode)</div>
+                <div class="h3-headline"><i class="fas fa-map-marker-alt"></i>@ResourceKey("RocketBusinessAPI.localize", sessionParams.CultureCode)</div>
                 <div id="leafletmap"></div>
                 }
             </div>
@@ -49,7 +62,7 @@
             [INJECT:apptheme,OpenTimes.cshtml]
 
              <div class="articledetail-section">
-                <div class="h3-headline"><i class="far fa-user-circle fa-lg"></i>@ResourceKey("RocketBusinessAPI.contact", sessionParams.CultureCode)</div>
+                <div class="h3-headline"><i class="far fa-user-circle"></i>@ResourceKey("RocketBusinessAPI.contact", sessionParams.CultureCode)</div>
                 <div class="block">
                     <h4>@articleData.Name</h4>
                     @articleData.Info.GetXmlProperty("genxml/textbox/address1")
@@ -92,7 +105,7 @@
                     <div class="block"><a href="@websiteUrl")" target="_blank" class="bigbutton">@ResourceKey("RocketBusinessAPI.website", sessionParams.CultureCode)</a></div>
                 }
 
-                 <div class="articledetail-section">
+                 <div class="articledetail-section sociallinks">
                     @if (articleData.Info.GetXmlProperty("genxml/textbox/facebooklink") != "")
                     {
                         <a href="@articleData.Info.GetXmlProperty("genxml/textbox/facebooklink")" target="_blank"><i class="fab fa-facebook fa-2x"></i></a>
@@ -188,6 +201,25 @@
             }).addTo(map);
         }
 
-
     });
+
+    $("[data-fancybox]").fancybox({
+    lang : 'fr',
+    i18n : {
+        'fr' : {
+            CLOSE       : 'Fermer',
+            NEXT        : 'Suivant',
+            PREV        : 'Précédent',
+            ERROR       : 'Le contenu demandé ne peut pas être chargé.<br />Veuillez réessayer plus tard.',
+            PLAY_START  : 'Démarrer le diaporama',
+            PLAY_STOP   : 'Mettre en pause le diaporama',
+            FULL_SCREEN : 'Plein écran',
+            THUMBS      : 'Vignettes',
+            DOWNLOAD    : 'Télécharger',
+            SHARE       : 'Partager',
+            ZOOM        : 'Zoomer'
+        }
+    }
+    });
+
 </script>
