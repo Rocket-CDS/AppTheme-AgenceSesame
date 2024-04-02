@@ -68,7 +68,7 @@
 		<genxml>
 			<interfacekey>rocketdirectoryadmin</interfacekey>
 			<show>false</show>
-		</genxml>k
+		</genxml>
 	</adminpanelinterfacekeys>
 	<queryparams list="true">
 		<genxml>
