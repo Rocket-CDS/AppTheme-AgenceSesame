@@ -10,7 +10,7 @@
     @{
         var monthidx = 1;
     }
-    @foreach (var a in RocketDirectoryAPIUtils.GetArticlesByMonth(systemData.SystemKey, DateTime.Now, 12, "publisheddate", sessionParams.GetInt("catid")))
+    @foreach (var a in RocketDirectoryAPIUtils.GetArticlesByMonth(systemData.SystemKey, DateTime.Now.AddMonths(-6), 12, "publisheddate", sessionParams.GetInt("catid")))
     {
         if (a.Value.Count > 0)
         {
