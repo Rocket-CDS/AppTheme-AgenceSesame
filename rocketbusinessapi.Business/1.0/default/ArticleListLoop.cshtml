@@ -9,20 +9,20 @@
 
 <div class="listcontainer">
 
-<div class="articlelist">
+<div class="barticlelist">
 
     @foreach (ArticleLimpet articleData2 in articleDataList.GetArticleList())
     {
         var hreflink = DetailUrl(moduleData.DetailPageTabId(), articleData2, categoryData);
-        <div class="article">
-            <figure class="article-image">
+        <div class="barticle">
+            <figure class="barticle-image">
                 <a href="@hreflink" onclick="$('.simplisity_loader').show()">
                     <img src="@ImageUrl(articleData2.GetImage(0).RelPath,380, 0)" alt="@articleData2.Name">
                 </a>
             </figure>
-            <div class="article-content">
+            <div class="barticle-content">
                 <h2><a href="@(hreflink)" onclick="$('#simplisity_loader').show();">@articleData2.Name</a></h2>
-                <div class="article-summary">
+                <div class="barticle-summary">
                     @articleData2.Info.GetXmlProperty("genxml/textbox/address1")
                     @if (articleData2.Info.GetXmlProperty("genxml/textbox/address2") != "")
                     {

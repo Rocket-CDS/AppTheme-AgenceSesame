@@ -6,9 +6,9 @@
 @using RocketBusinessAPI.Components;
 @AssigDataModel(Model)
 <!--inject-->
-<div class="articledetail">
+<div class="barticledetail">
 
-    <div class="articledetail-back">
+    <div class="barticledetail-back">
         @{
             if (articleData == null)
             {
@@ -19,9 +19,9 @@
         <a href="@(hreflink2)" class="bigbutton"><i class="fas fa-angle-left"></i>@ResourceKey("RocketBusinessAPI.back", sessionParams.CultureCode)</a>
     </div>
 
-    <div class="articledetailflex">
+    <div class="barticledetailflex">
 
-        <div class="articledetail-left">
+        <div class="barticledetail-left">
 
             <figure class="image">
                 <img id="mainimage@(articleData.ArticleId)" src="@ImageUrl(articleData.GetImage(0).RelPath,640,-1)" alt="@articleData.GetImage(0).Alt" />
@@ -32,11 +32,11 @@
             {
                 <p class="subtitle">@articleData.GetProperties().First().Name</p>
             }
-            <div class="articledetail-section">@BreakOf(articleData.Summary)</div>
+            <div class="barticledetail-section">@HtmlOf(articleData.RichText)</div>
 
             @if (articleData.GetImages().Count > 1)
             {
-            <div class="articledetail-section articlegallery">
+            <div class="barticledetail-section barticlegallery">
                 @{var imgLp = 1;}
                 @foreach (var i in articleData.GetImages())
                 {
@@ -47,7 +47,7 @@
             </div>
             }
 
-            <div class="articledetail-section">
+            <div class="barticledetail-section">
                 @if ((articleData.Info.GetXmlProperty("genxml/textbox/lat") != "") && (articleData.Info.GetXmlProperty("genxml/textbox/long") != "" ))
                 {
                 <div class="h3-headline"><i class="fas fa-map-marker-alt"></i>@ResourceKey("RocketBusinessAPI.localize", sessionParams.CultureCode)</div>
@@ -57,11 +57,11 @@
 
         </div>
 
-        <div class="articledetail-right">
+        <div class="barticledetail-right">
 
             [INJECT:apptheme,OpenTimes.cshtml]
 
-             <div class="articledetail-section">
+             <div class="barticledetail-section">
                 <div class="h3-headline"><i class="far fa-user-circle"></i>@ResourceKey("RocketBusinessAPI.contact", sessionParams.CultureCode)</div>
                 <div class="block">
                     <h4>@articleData.Name</h4>
@@ -105,7 +105,7 @@
                     <div class="block"><a href="@websiteUrl")" target="_blank" class="bigbutton">@ResourceKey("RocketBusinessAPI.website", sessionParams.CultureCode)</a></div>
                 }
 
-                 <div class="articledetail-section sociallinks">
+                 <div class="barticledetail-section sociallinks">
                     @if (articleData.Info.GetXmlProperty("genxml/textbox/facebooklink") != "")
                     {
                         <a href="@articleData.Info.GetXmlProperty("genxml/textbox/facebooklink")" target="_blank"><i class="fab fa-facebook fa-2x"></i></a>
@@ -131,7 +131,7 @@
 
             @if (articleData.Getlinks().Count > 0 || articleData.GetDocs().Count > 0)
             {
-                <div class="articledetail-section" id="linklistcontainer">
+                <div class="barticledetail-section" id="linklistcontainer">
                     <div class="h3-headline">@ResourceKey("DNNrocket.links") / @ResourceKey("DNNrocket.documents")</div>
                     @foreach (var lk in articleData.Getlinks())
                     {
