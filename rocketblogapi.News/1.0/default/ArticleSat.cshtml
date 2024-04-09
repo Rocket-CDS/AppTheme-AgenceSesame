@@ -27,8 +27,8 @@
 				{
 					<figure><a href="@DetailUrl(moduleData.DetailPageTabId(), article, categoryData)" onclick="$('#simplisity_loader').show();"><img src="@ImageUrl(article.GetImage(0).RelPathWebp, widthlist, heightlist)" alt="@article.GetImage(0).Alt" /></a></figure>  
 				}
-                <h3><a href="@DetailUrl(moduleData.DetailPageTabId(), article, categoryData)" onclick="$('#simplisity_loader').show();">@article.Name</a></h3>
                 <div class="article-content">
+                    <h3><a href="@DetailUrl(moduleData.DetailPageTabId(), article, categoryData)" onclick="$('#simplisity_loader').show();">@article.Name</a></h3>
                     <div class="article-summary">
                         @article.Summary
                     </div>
