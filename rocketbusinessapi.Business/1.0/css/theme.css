@@ -67,9 +67,9 @@ span.rocket-filtercheckbox-display:after {content:"";display:none;position:relat
 /* List */
 .listheader {position:relative;}
 .listtitle {padding-right:100px;}
-.article {display:flex;margin:0 0 40px 0;}
-.article-content {flex:1;background:white;padding:0 40px 40px 40px;}
-.articlelist h2 {margin:0 0 20px 0;}
+.barticle {display:flex;margin:0 0 40px 0;}
+.barticle-content {flex:1;background:white;padding:0 40px 40px 40px;}
+.barticlelist h2 {margin:0 0 20px 0;}
 /* MapList */
 .listviews {text-align:right;margin:0 0 20px 0;}
 .listviews a {font-weight:bold;font-size:16px;line-height:18px;text-transform:uppercase;}
@@ -80,18 +80,18 @@ span.rocket-filtercheckbox-display:after {content:"";display:none;position:relat
 #leafletmap {height:700px;margin-bottom:20px;}
 .leaflet-control a {text-decoration:none !important;}
 /* Detail */
-.articledetail {position:relative;padding:60px 0 0 0;}
-.articledetail-back {position:absolute;top:0;right:0;}
-.articledetailflex {display:flex;}
-.articledetail-left {width:60%;margin:0 40px 0 0;}
-.articledetail-right {flex:1;}
-.articledetail-section {margin:0 0 40px 0;}
-.articledetail-section i.fas, .articledetail-section i.far {color:#464646;margin:0 10px 0 0;}
-.articledetail-section .block {margin:0 0 20px 0;}
-.articledetail .image img {max-width:100%;height:auto;}
-.articlegallery a {display:block;float:left;margin:0 12px 12px 0;}
-.articlegallery:after {content:"";display:table;clear:both;}
-.articlegallery a:first-child {display:none;}
+.barticledetail {position:relative;padding:60px 0 0 0;}
+.barticledetail-back {position:absolute;top:0;right:0;}
+.barticledetailflex {display:flex;}
+.barticledetail-left {width:60%;margin:0 40px 0 0;}
+.barticledetail-right {flex:1;}
+.barticledetail-section {margin:0 0 40px 0;}
+.barticledetail-section i.fas, .barticledetail-section i.far {color:#464646;margin:0 10px 0 0;}
+.barticledetail-section .block {margin:0 0 20px 0;}
+.barticledetail .image img {max-width:100%;height:auto;}
+.barticlegallery a {display:block;float:left;margin:0 12px 12px 0;}
+.barticlegallery:after {content:"";display:table;clear:both;}
+.barticlegallery a:first-child {display:none;}
 .pdr-table {margin:20px 0;border:none;border-collapse:collapse;}
 .pdr-table tr {background:#fafafa;border-bottom:2px solid transparent;background-clip:padding-box;}
 .pdr-table th {padding:12px;text-align:right;font-weight:600;text-transform:capitalize;}
