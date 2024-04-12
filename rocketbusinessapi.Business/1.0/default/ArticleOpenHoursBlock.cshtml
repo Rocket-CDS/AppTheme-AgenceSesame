@@ -1,0 +1,16 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@AssigDataModel(Model)
+<!--inject-->
+<div class="w3-row w3-margin-bottom">
+    <div onclick="$('#opentimestab').toggle();" class="w3-button w3-block w3-theme w3-left-align w3-round-large " style="margin-bottom:8px;">
+        <strong>@ResourceKey("RocketBusinessAPI.openinghours")</strong>
+        <span id="opentimestabexpand" class="material-icons w3-right" >
+            unfold_more
+        </span>
+    </div>
+    <div id="opentimestab" class='w3-row sectionname w3-border w3-round-large'>
+        [INJECT:apptheme,ArticleOpenHours.cshtml]
+    </div>
+</div>

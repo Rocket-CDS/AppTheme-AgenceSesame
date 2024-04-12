@@ -83,11 +83,11 @@
 
                 @if (articleData.Info.GetXmlProperty("genxml/textbox/phone") != "")
                 {
-                    <div class="h4-headline">@ResourceKey("RocketBusinessAPI.tel", sessionParams.CultureCode) @articleData.Info.GetXmlProperty("genxml/textbox/phone")</div>
+                    <div class="block h4-headline">@ResourceKey("RocketBusinessAPI.tel", sessionParams.CultureCode) @articleData.Info.GetXmlProperty("genxml/textbox/phone")</div>
                 }
                 @if (articleData.Info.GetXmlProperty("genxml/textbox/mobile") != "")
                 {
-                    <div class="h4-headline">@ResourceKey("RocketBusinessAPI.mobile", sessionParams.CultureCode) @articleData.Info.GetXmlProperty("genxml/textbox/mobile")</div>
+                    <div class="block h4-headline">@ResourceKey("RocketBusinessAPI.mobile", sessionParams.CultureCode) @articleData.Info.GetXmlProperty("genxml/textbox/mobile")</div>
                 }
 
                 @if (articleData.Info.GetXmlProperty("genxml/textbox/email") != "")
@@ -131,7 +131,7 @@
 
             @if (articleData.Getlinks().Count > 0 || articleData.GetDocs().Count > 0)
             {
-                <div class="barticledetail-section" id="linklistcontainer">
+                <div class="barticledetail-section docslinks" id="linklistcontainer">
                     <div class="h3-headline">@ResourceKey("DNNrocket.links") / @ResourceKey("DNNrocket.documents")</div>
                     @foreach (var lk in articleData.Getlinks())
                     {
