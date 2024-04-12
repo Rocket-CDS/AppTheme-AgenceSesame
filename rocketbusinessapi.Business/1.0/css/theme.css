@@ -77,13 +77,13 @@ span.rocket-filtercheckbox-display:after {content:"";display:none;position:relat
 .listviews a:active, .listviews a:hover {color:#3d3d3d;text-decoration:none;}
 .listviews a i.fas {margin:0 6px 0 0;}
 .mapcontainer {height:700px;}
-#leafletmap {height:700px;margin-bottom:20px;}
+.mapcontainer #leafletmap {height:700px;}
 .leaflet-control a {text-decoration:none !important;}
 /* Detail */
 .barticledetail {position:relative;padding:60px 0 0 0;}
 .barticledetail-back {position:absolute;top:0;right:0;}
 .barticledetailflex {display:flex;}
-.barticledetail-left {width:60%;margin:0 40px 0 0;}
+.barticledetail-left {width:64%;margin:0 4% 0 0;}
 .barticledetail-right {flex:1;}
 .barticledetail-section {margin:0 0 40px 0;}
 .barticledetail-section i.fas, .barticledetail-section i.far {color:#464646;margin:0 10px 0 0;}
@@ -92,12 +92,14 @@ span.rocket-filtercheckbox-display:after {content:"";display:none;position:relat
 .barticlegallery a {display:block;float:left;margin:0 12px 12px 0;}
 .barticlegallery:after {content:"";display:table;clear:both;}
 .barticlegallery a:first-child {display:none;}
+.barticledetail #leafletmap {height:450px;margin:20px 0 0 0;}
 .pdr-table {margin:20px 0;border:none;border-collapse:collapse;}
 .pdr-table tr {background:#fafafa;border-bottom:2px solid transparent;background-clip:padding-box;}
 .pdr-table th {padding:12px;text-align:right;font-weight:600;text-transform:capitalize;}
 .pdr-table td {padding:12px;text-align:center;}
 .sociallinks a {margin:0 6px 0 0;}
-.docslinks {margin:30px 0 0 0;}
+.docslinks .h3-headline {margin:0 0 20px 0;}
+.docslinks .panel-block {display:block;}
 
 /* Sort, selected search; selected filters */
 .rocket-sort {position:absolute;top:0;right:0;}
