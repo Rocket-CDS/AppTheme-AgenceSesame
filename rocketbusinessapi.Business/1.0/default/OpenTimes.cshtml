@@ -10,7 +10,7 @@
 <!--inject-->
 @{
     var opentimes = RocketBusinessUtils.OpeningHours(articleData);
-    int[] openarray = { 1, 2, 3, 4, 5, 6, 0 }; 
+    int[] openarray = { 0, 1, 2, 3, 4, 5, 6 }; 
 }
 @if (opentimes.Count > 0)
 {
@@ -25,7 +25,7 @@
             var o2 = opentimes[dl][2];
             var c2 = opentimes[dl][3];
             <tr>
-                <th>@DateTime.MinValue.AddDays(dl + 6).ToString("dddd")</th>
+                <th>@DateTime.MinValue.AddDays(dl + 7).ToString("dddd")</th>
                 @if (o1 != "" && o2 != "" && c1 != "" && c2 != "")
                 {
                     <td>@o1-@c1</td>
