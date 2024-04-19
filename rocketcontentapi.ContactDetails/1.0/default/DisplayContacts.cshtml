@@ -5,21 +5,28 @@
 
 @foreach (var contactInfo in articleRowData.GetLinkList())
 {
-    if (contactInfo.GetXmlProperty("genxml/textbox/contactmulti") != "")
+    if (contactInfo.GetXmlProperty("genxml/lang/genxml/textbox/contactmulti") != "")
     {
     <div class="contact-item">
         <div class="ci-header">
             <span class="ri-user"></span>
         </div>
         <div class="ci-content">
-            <h3>@contactInfo.GetXmlProperty("genxml/textbox/contactmulti")</h3>
+            <h3>@contactInfo.GetXmlProperty("genxml/lang/genxml/textbox/contactmulti")</h3>
             @if (contactInfo.GetXmlProperty("genxml/textbox/namemulti") != "")
             {
                 <div>@contactInfo.GetXmlProperty("genxml/textbox/namemulti")</div>
             }
             @if (contactInfo.GetXmlProperty("genxml/textbox/mobilemulti") != "")
             {
-                <div>@ResourceKey("DNNrocket.mobile") : @contactInfo.GetXmlProperty("genxml/textbox/mobilemulti")</div>
+                if (contactInfo.GetXmlProperty("genxml/textbox/clickmobilemulti") != "")
+				{
+				<div>@ResourceKey("DNNrocket.mobile") : <a href="tel:@contactInfo.GetXmlProperty("genxml/textbox/clickmobilemulti")">@contactInfo.GetXmlProperty("genxml/textbox/mobilemulti")</a></div>
+				}
+				else
+				{
+				<div>@ResourceKey("DNNrocket.mobile") : @contactInfo.GetXmlProperty("genxml/textbox/mobilemulti")</div>
+				}
             }
             @if (contactInfo.GetXmlProperty("genxml/textbox/emailmulti") != "")
             {
@@ -29,4 +36,3 @@
     </div>
     }
 }
-
