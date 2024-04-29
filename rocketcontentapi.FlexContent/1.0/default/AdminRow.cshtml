@@ -44,7 +44,11 @@
             </div>
         </div>
     </div>
+
     <div id="imgs" class='w3-row sectionname' style="display:none">
+        <div class="w3-panel w3-padding w3-light-grey">
+            @RadioButtonList(rowData, "genxml/select/imagealign", "fcdi-left,fcdi-center,fcdi-right", "<span class='material-icons'>format_align_left</span>,<span class='material-icons'>format_align_center</span>,<span class='material-icons'>format_align_right</span>", "", "2", "", false, 0, "")
+        </div>
         <div class='w3-padding '>
             [INJECT:appthemesystem,ArticleImagesSize.cshtml]
         </div>
@@ -67,6 +71,7 @@
             [INJECT:appthemesystem,ArticleLinks.cshtml]
         </div>
     </div>
+
     <div id="htmltext" class='w3-row sectionname' style="display:none">
         <div class='w3-col m12 w3-padding'>
             @EditFlag(sessionParams)
@@ -91,6 +96,7 @@
             @CheckBoxRowIsHidden(rowData)
         </div>
     </div>
+
 </div>
 
 <script>

@@ -4,9 +4,13 @@
 @AddProcessDataResx(appThemeView, true)
 <!--inject-->
 
+@{  
+    var imgalign = rowData.GetXmlProperty("genxml/select/imagealign");
+}
+
 <div class="flexcontent-div @rowData.GetXmlProperty("genxml/textbox/cssclass")">
     <div class="flexcontent-media">
-        <div class="fcd-images ">
+        <div class="fcd-images @(imgalign)">
             @foreach (ArticleImage articleImage in articleRowData.GetImages())
             {
                 if (articleImage.RelPath != "")
