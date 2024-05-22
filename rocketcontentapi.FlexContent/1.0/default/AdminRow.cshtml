@@ -38,10 +38,11 @@
 
     <div id="html" class='w3-row sectionname' style="display:none">
         <div class='w3-col m12 w3-padding'>
-            @EditFlag(sessionParams)
-            <div class='w3-col m12'>
-                @CKEditor4(rowData, "genxml/lang/genxml/textbox/richtext", true)
+            <div class="w3-row">
+                @EditFlag(sessionParams)
+                <div class="w3-right">@ChatGPT("richtext", "title")@DeepL("richtext", "richtext", sessionParams.CultureCodeEdit)</div>
             </div>
+            @CKEditor4(rowData, "genxml/lang/genxml/textbox/richtext", true)
         </div>
     </div>
 
