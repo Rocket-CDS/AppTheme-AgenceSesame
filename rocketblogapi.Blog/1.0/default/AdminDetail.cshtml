@@ -73,11 +73,17 @@
                             @TextBox(info, articleData.NameXPath, " class='w3-input w3-border' autocomplete='off' ", "", true, 0)
                         </div>
                         <div class=" w3-row w3-padding">
-                            <label>@ResourceKey("DNNrocket.summary")</label>&nbsp;@EditFlag(sessionParams)
+                            <div class="w3-row">
+                                <label>@ResourceKey("DNNrocket.summary")</label>&nbsp;@EditFlag(sessionParams)
+                                <div class="w3-right">@ChatGPT("articlesummary", "articlename")@DeepL("articlesummary", "articlesummary", sessionParams.CultureCodeEdit)</div>
+                            </div>
                             @TextArea(info, articleData.SummaryXPath, " class='w3-input w3-border' rows='8' autocomplete='off' ", "", true, 0)
                         </div>
                         <div class="w3-row w3-padding">
-                            <label>@ResourceKey("DNNrocket.description")</label>&nbsp;@EditFlag(sessionParams)
+                            <div class="w3-row">
+                                <label>@ResourceKey("DNNrocket.description")</label>&nbsp;@EditFlag(sessionParams)
+                                <div class="w3-right">@ChatGPT("articlerichtext", "articlename")@DeepL("articlerichtext", "articlerichtext", sessionParams.CultureCodeEdit)</div>
+                            </div>
                             @CKEditor4(info, articleData.RichTextXPath, true)
                         </div>
                         <div class="w3-row w3-padding">
