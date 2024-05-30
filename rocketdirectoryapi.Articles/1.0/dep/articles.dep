@@ -55,11 +55,11 @@
 		</genxml>
 		<genxml>
 			<interfacekey>categoryadmin</interfacekey>
-			<show>false</show>
+			<show>true</show>
 		</genxml>
 		<genxml>
 			<interfacekey>propertyadmin</interfacekey>
-			<show>false</show>
+			<show>true</show>
 		</genxml>
 		<genxml>
 			<interfacekey>settingsadmin</interfacekey>
