@@ -41,4 +41,25 @@
 			<ecofriendly>true</ecofriendly>
 		</genxml>		
 	</deps>
+	<menuprovider>
+		<genxml>
+			<assembly>RocketEcommerceAPI</assembly>
+			<namespaceclass>RocketEcommerceAPI.Components.MenuDirectory</namespaceclass>
+			<systemkey>rocketecommerceapi</systemkey>
+		</genxml>
+	</menuprovider>
+	<queryparams list="true">
+		<genxml>
+			<queryparam>pid</queryparam>
+			<tablename>rocketecommerceapi</tablename>
+			<systemkey>rocketecommerceapi</systemkey>
+			<datatype>article</datatype>
+		</genxml>
+		<genxml>
+			<queryparam>catid</queryparam>
+			<tablename>rocketecommerceapi</tablename>
+			<systemkey>rocketecommerceapi</systemkey>
+			<datatype>category</datatype>
+		</genxml>
+	</queryparams>
 </genxml>
