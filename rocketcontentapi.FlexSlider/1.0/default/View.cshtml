@@ -1,0 +1,62 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketContentAPI.Components;
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
+
+@{
+    var width = moduleData.GetSettingInt("width");
+    var height = moduleData.GetSettingInt("height");
+}
+<div @(moduleData.GetSetting("cssclass"))>
+    <div class="flexslider" id="flexslider">
+        <ul class="slides">
+            @foreach (var articleRowData in articleData.GetRows())
+            {
+                rowData = articleRowData.Info;
+                var hideRow = rowData.GetXmlPropertyBool("genxml/checkbox/hiderow");
+                if (!hideRow)
+                {
+                    var articleImage = articleRowData.GetImage(0);
+                    var title = rowData.GetXmlProperty("genxml/lang/genxml/textbox/title");
+                    <li class="@rowData.GetXmlProperty("genxml/lang/genxml/textbox/cssclass")">
+                        <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@(title)" />
+                        <div class="flex-caption">
+                            @if (rowData.GetXmlProperty("genxml/lang/genxml/textbox/title") != "")
+                            {
+                                <h2>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
+                            }
+                            @if (rowData.GetXmlProperty("genxml/lang/genxml/textbox/title2") != "")
+                            {
+                                <h3>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title2")</h3>
+                            }
+                            @if (rowData.GetXmlProperty("genxml/lang/genxml/textbox/text") != "")
+                            {
+                                <p>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/text")</p>
+                            }
+                            @{
+                                var linkData = articleRowData.Getlink(0);
+                                if (!linkData.Hidden && !linkData.IsDisabled)
+                                {
+                                    <a href="@(linkData.Url)" class="bigbutton" target="@(linkData.Target)">@linkData.Name</a>
+                                }
+                            }
+                        </div>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#flexslider').flexslider({
+            controlNav: true, 
+            directionNav: false 
+        });
+
+    });
+</script>
