@@ -23,6 +23,7 @@
                     <li class="@rowData.GetXmlProperty("genxml/lang/genxml/textbox/cssclass")">
                         <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@(title)" />
                         <div class="flex-caption">
+							<div class="fc-text">
                             @if (rowData.GetXmlProperty("genxml/lang/genxml/textbox/title") != "")
                             {
                                 <h2>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
@@ -42,6 +43,7 @@
                                     <a href="@(linkData.Url)" class="bigbutton" target="@(linkData.Target)">@linkData.Name</a>
                                 }
                             }
+							</div>
                         </div>
                     </li>
                 }
