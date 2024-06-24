@@ -26,6 +26,7 @@
 .fcd-images div {margin:0 40px 40px 0;}
 .fcd-images div:last-child, .fcd-images div:only-child {margin:0 0 40px 0;}
 .flexcontent-media.fcm-bottom {margin:40px 0 0 0;}
+.flexcontent-media.fcm-only {margin:0;}
 .fcd-flex .flexcontent-media, .fcd-flex .flexcontent-media.fcm-bottom {margin:0;}
 .fcd-flex .fcd-images {display:block;text-align:center;}
 .fcd-flex .fcd-images.fcdi-left {text-align:left;}
