@@ -23,6 +23,10 @@
             @if (info.GetXmlProperty("genxml/lang/genxml/textbox/content") != "")
             {
                 <div class="about-text">
+					@if (info.GetXmlProperty("genxml/lang/genxml/textbox/title") != "")
+					{
+					<h4>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h4>
+					}
                     @info.GetXmlProperty("genxml/lang/genxml/textbox/content")
                 </div>
             }
