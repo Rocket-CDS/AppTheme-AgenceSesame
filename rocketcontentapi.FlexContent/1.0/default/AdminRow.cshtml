@@ -23,15 +23,15 @@
     <div id="heading" class='w3-row sectionname' style="display:none">
         <div class="w3-panel w3-padding w3-light-grey">
             @{
-                String[] layouts = {"<span class='material-icons'>view_headline</span>","<span class='material-icons' style='transform:rotate(180deg);'>horizontal_split</span>","<span class='material-icons'>horizontal_split</span>","<span class='material-icons' style='transform:rotate(180deg);'>vertical_split</span>","<span class='material-icons'>vertical_split</span>"};
+                String[] layouts = {"<span class='material-icons'>view_headline</span>","<span class='material-icons' style='transform:rotate(180deg);'>horizontal_split</span>","<span class='material-icons'>horizontal_split</span>","<span class='material-icons' style='transform:rotate(180deg);'>vertical_split</span>","<span class='material-icons'>vertical_split</span>","<span class='material-icons'>rectangle</span>"};
                 var imgLayoutList = "";
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < 6; i++)
                 {
                     imgLayoutList += "<span class='w3-button w3-round w3-theme-action'>" + layouts[i] + "</span>,";
                 }
                 imgLayoutList = imgLayoutList.TrimEnd(',');
             }
-            @RadioButtonList(rowData, "genxml/select/layout", "0,1,2,3,4", imgLayoutList, "class='  ' ", "0", "", false, 0)
+            @RadioButtonList(rowData, "genxml/select/layout", "0,1,2,3,4,5", imgLayoutList, "class='  ' ", "0", "", false, 0)
         </div>
         [INJECT:appthemesystem,ArticleRowHeader.cshtml]
     </div>
