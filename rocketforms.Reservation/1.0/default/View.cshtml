@@ -1,0 +1,118 @@
+﻿@inherits RocketForms.Components.RocketFormsTokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketForms.Components;
+@using Simplisity;
+@using RazorEngine.Text;
+@using Rocket.AppThemes.Components;
+@using RocketPortal.Components;
+
+@AssigDataModel(Model)
+<!--inject-->
+@{
+    var info = new SimplisityInfo();
+    var cssClass = "";
+    if (moduleData.Record.GetXmlProperty("genxml/setting/cssclass") != "")
+    {
+        cssClass = "class='" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass") + "' ";
+    }
+}
+
+@if (!GeneralUtils.IsEmail(moduleData.GetSetting("fromemail")) || !GeneralUtils.IsEmail(moduleData.GetSetting("manageremail")))
+{
+    <div class="w3-panel w3-pale-yellow w3-border">
+        @ResourceKey("RocketForms.fromemailerror")    
+    </div>
+}
+<div @(cssClass)>
+    <div id="contactform@(moduleData.ModuleId)" class="contactform">
+        <div class="contactformfields">
+            <div class="cff-100">
+                <div class="cff-50">
+                    <label>@ResourceKey("RocketForms.name")</label>
+                    @TextBox(info, "genxml/textbox/name")
+                </div>
+                <div class="cff-50">
+                    <label>@ResourceKey("RocketForms.firstname")</label>
+                    @TextBox(info, "genxml/textbox/firstname")
+                </div>
+            </div>
+            <div class="cff-100">
+                <div class="cff-50">
+                    <label>@ResourceKey("RocketForms.email") *</label>
+                    @TextBox(info, "genxml/textbox/email", "type='email' required")
+                </div>
+                <div class="cff-50">
+                    <label>@ResourceKey("RocketForms.tel")</label>
+                    @TextBox(info, "genxml/textbox/tel")
+                </div>
+            </div>
+            <div class="cff-100">
+                <div class="cff-50">
+                    <label>@ResourceKey("Reservation.arrivaldate")</label>
+                    @TextBox(info, "genxml/textbox/arrivaldate", "type='date'")
+                </div>
+                <div class="cff-50">
+                    <label>@ResourceKey("Reservation.departuredate")</label>
+                    @TextBox(info, "genxml/textbox/departuredate", "type='date'")
+                </div>
+            </div>
+            <div class="cff-100">
+                <div class="cff-50">
+                    <label>@ResourceKey("Reservation.numberpeople")</label>
+                    @TextBox(info, "genxml/textbox/numberpeople")
+                </div>
+                <div class="cff-50"></div>
+            </div>
+            <div class="cff">
+                <label>@ResourceKey("Reservation.extra")</label>
+                <div>@TextArea(info, "genxml/textbox/message", "rows='5'")</div>
+            </div>
+        </div>
+
+        <div class="cff-cb">
+            <input type="checkbox" name="gdprcheckbox" id="gdprcheckbox" required s-update="ignore" aria-required="true">
+            <label for="gdprcheckbox">@ResourceKey("RocketForms.gdprmessage")</label>
+        </div>
+
+        <div class="cff-required"><i>@ResourceKey("RocketForms.compulsory")</i></div>
+
+        <div id="buttondiv@(moduleData.ModuleId)" class="bigbutton simplisity_panel" style="min-height:40px;">
+        </div>
+
+        <div class="simplisity_loader" style="display:none;">
+            <span class=" simplisity_loader_inner">
+            </span>
+        </div>
+        <!-- we must pass moduleid to server -->
+        @HiddenField(info, "genxml/hidden/moduleid", "", moduleData.ModuleId.ToString())
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        setTimeout(function () {
+            var buttontext = '<button id="sendemail@(moduleData.ModuleId)" type="button" class="bigbutton simplisity_click" s-before="validate@(moduleData.ModuleId)" s-return="#buttondiv@(moduleData.ModuleId)"  s-cmdurl="/Desktopmodules/dnnrocket/api/rocket/action" s-cmd="rocketforms_publicpostform"  s-post="#contactform@(moduleData.ModuleId)" >@ResourceKey("RocketForms.send")</button>'
+            $('#buttondiv@(moduleData.ModuleId)').html(buttontext);
+            $('#contactform@(moduleData.ModuleId)').activateSimplisityPanel();
+        }, 1200);
+
+        $('.simplisity_loader').hide();
+
+    });
+
+    function validate@(moduleData.ModuleId)() {
+        var form = $("#Form");
+        form.validate();
+
+        if (form.valid()) {
+            $('.simplisity_loader').show();
+        } else {
+            $('#sendemail@(moduleData.ModuleId)').attr('s-stop', 'stop');
+        }
+    }
+
+</script>
+
+
+

@@ -1,0 +1,17 @@
+﻿@inherits RocketForms.Components.RocketFormsTokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketForms.Components;
+@using Simplisity;
+@using RazorEngine.Text;
+@using Rocket.AppThemes.Components;
+@using RocketPortal.Components;
+@AssigDataModel(Model)
+<!--inject-->
+@{
+    var info = new SimplisityInfo(moduleData.Record);
+}
+
+<div class="w3-row w3-padding ">
+    <label>CSS Wrapper</label>
+    @TextBox(info, "genxml/setting/cssclass", " class='w3-input w3-border' ")
+</div>
