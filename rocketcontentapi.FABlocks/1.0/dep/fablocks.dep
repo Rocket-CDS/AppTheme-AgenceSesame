@@ -1,0 +1,15 @@
+﻿<genxml>
+	<deps list="true">
+		<genxml>
+			<ctrltype><![CDATA[css]]></ctrltype>
+			<url>https://use.fontawesome.com/releases/v5.15.1/css/all.css</url>
+			<ecofriendly>true</ecofriendly>
+		</genxml>
+		<genxml>
+			<ctrltype><![CDATA[css]]></ctrltype>
+			<url>https://use.fontawesome.com/releases/v5.15.1/css/v4-shims.css</url>
+			<ecofriendly>true</ecofriendly>
+		</genxml>
+	</deps>
+</genxml>
+	

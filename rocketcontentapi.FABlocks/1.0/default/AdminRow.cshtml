@@ -1,0 +1,33 @@
+@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
+
+<!-- require Key for saving -->
+@RowKey(rowData)
+
+<div class='w3-row w3-padding'>
+
+    <div id="heading" class='w3-row w3-margin-top sectionname w3-card w3-round w3-padding'>
+        <div class='w3-col m12 w3-margin-top' style='min-width:200px;'>
+            <label>Font Awesome Icon</label>
+            @TextBox(info, "genxml/textbox/faicon", " class='w3-input w3-border' autocomplete='off' ", "", false, 0)
+        </div>
+        <div class='w3-col m12 w3-margin-top' style='min-width:200px;'>
+            <label>@ResourceKey("DNNrocket.title")</label>&nbsp;@EditFlag(sessionParams)
+            <div class="w3-right">@DeepL("title", "title", sessionParams.CultureCodeEdit)</div>
+            @TextBox(info, "genxml/lang/genxml/textbox/title", " class='w3-input w3-border' autocomplete='off' ", "", true, 0)
+        </div>
+        <div class='w3-col m12 w3-margin-top' style='min-width:200px;'>
+            <label>@ResourceKey("DNNrocket.description")</label>&nbsp;@EditFlag(sessionParams)
+            <div class="w3-right">@ChatGPT("title2", "title")@DeepL("title2", "title2", sessionParams.CultureCodeEdit)</div>
+            @TextBox(info, "genxml/lang/genxml/textbox/title2", " class='w3-input w3-border' autocomplete='off' ", "", true, 0)
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+    });
+</script>
+

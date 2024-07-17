@@ -1,0 +1,32 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
+
+
+<div class="hb-wrapper">
+
+    <div class="homeblocks">
+        @foreach (var articleRowData in articleData.GetRows())
+        {
+            var rowData = articleRowData.Info;
+            var hideRow = rowData.GetXmlPropertyBool("genxml/checkbox/hiderow");
+            if (!hideRow)
+            {
+                var faicon = rowData.GetXmlProperty("genxml/textbox/faicon");
+                var title = rowData.GetXmlProperty("genxml/lang/genxml/textbox/title");
+                var title2 = rowData.GetXmlProperty("genxml/lang/genxml/textbox/title2");
+
+                <div class="hb-item">
+                    <div class="h3-headline">@(title)</div>
+                    <div class="hb-icon"><i class="@(faicon)"></i></div>
+                    <div class="hb-text">@(title2)</div>
+                </div>
+
+            }
+        }
+
+    </div>
+
+</div>
