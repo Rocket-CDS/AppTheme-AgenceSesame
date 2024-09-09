@@ -106,26 +106,11 @@
                 }
 
                  <div class="barticledetail-section sociallinks">
-                    @if (articleData.Info.GetXmlProperty("genxml/textbox/facebooklink") != "")
-                    {
-                        <a href="@articleData.Info.GetXmlProperty("genxml/textbox/facebooklink")" target="_blank"><i class="fab fa-facebook fa-2x"></i></a>
-                    }
-                    @if (articleData.Info.GetXmlProperty("genxml/textbox/instagramlink") != "")
-                    {
-                        <a href="@articleData.Info.GetXmlProperty("genxml/textbox/instagramlink")" target="_blank"><i class="fab fa-instagram fa-2x"></i></a>
-                    }
-                    @if (articleData.Info.GetXmlProperty("genxml/textbox/youtubelink") != "")
-                    {
-                        <a href="@articleData.Info.GetXmlProperty("genxml/textbox/youtubelink")" target="_blank"><i class="fab fa-youtube fa-2x"></i></a>
-                    }
-                    @if (articleData.Info.GetXmlProperty("genxml/textbox/twitterlink") != "")
-                    {
-                        <a href="@articleData.Info.GetXmlProperty("genxml/textbox/twitterlink")" target="_blank"><i class="fab fa-twitter fa-2x"></i></a>
-                    }
-                    @if (articleData.Info.GetXmlProperty("genxml/textbox/linkedinlink") != "")
-                    {
-                        <a href="@articleData.Info.GetXmlProperty("genxml/textbox/linkedinlink")" target="_blank"><i class="fab fa-linkedin fa-2x"></i></a>
-                    }
+                    @LinkURL(info, "genxml/textbox/facebooklink", true, "<i class='fab fa-facebook fa-2x'></i>", " target='_blank' ")
+                    @LinkURL(info, "genxml/textbox/instagramlink", true, "<i class='fab fa-instagram fa-2x'></i>", " target='_blank' ")
+                    @LinkURL(info, "genxml/textbox/youtubelink", true, "<i class='fab fa-youtube fa-2x'></i>", " target='_blank' ")
+                    @LinkURL(info, "genxml/textbox/twitterlink", true, "<i class='fab fa-twitter fa-2x'></i>", " target='_blank' ")
+                    @LinkURL(info, "genxml/textbox/linkedinlink", true, "<i class='fab fa-linkedin fa-2x'></i>", " target='_blank' ")
                 </div>
             </div>
 
