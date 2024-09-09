@@ -24,7 +24,7 @@
 .fcd-images.fcdi-left {justify-content:flex-start;}
 .fcd-images.fcdi-right {justify-content:flex-end;}
 .fcd-images div {margin:0 40px 40px 0;}
-.fcd-images div:last-child, .fcd-images div:only-child {margin:0 0 40px 0;}
+.fcd-images div:last-child, .fcd-images div:only-child {margin:0;}
 .flexcontent-media.fcm-bottom {margin:40px 0 0 0;}
 .flexcontent-media.fcm-only {margin:0;}
 .fcd-flex .flexcontent-media, .fcd-flex .flexcontent-media.fcm-bottom {margin:0;}
@@ -32,7 +32,6 @@
 .fcd-flex .fcd-images.fcdi-left {text-align:left;}
 .fcd-flex .fcd-images.fcdi-right {text-align:right;}
 .fcd-flex .fcd-images div {margin:0 0 40px 0;}
-.fcd-flex .fcd-images div:last-child, .fcd-flex .fcd-images div:only-child {margin:0;}
 .fcd-video {margin:40px 0 0 0;}
 
 /* for 980px and less - Only portrait for retina display */
