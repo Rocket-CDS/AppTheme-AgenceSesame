@@ -46,7 +46,7 @@
                             }
                             @if (rowData.GetXmlProperty("genxml/lang/genxml/textbox/text") != "")
                             {
-                                <p>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/text")</p>
+                                <p>@BreakOf(info, "genxml/lang/genxml/textbox/text")</p>
                             }
                             @{
                                 var linkData = articleRowData.Getlink(0);
