@@ -5,9 +5,15 @@
 @AddProcessDataResx(appTheme, true)
 <!--inject-->
 
-@RenderLanguageSelector("articleadmin_editlist", new Dictionary<string, string>(), appThemeDirectory, Model)
+<div class="pl-breadcrumb">
+    <div class="pl-breadcrumb-itemlink w3-border-blue w3-border-bottom w3-text-blue " onclick="simplisity_setCookieValue('adminpanelcmd','');window.location.reload();">@ResourceKey("DNNrocket.services")</div>
+    <div class="pl-breadcrumb-item">
+        <img src="/DesktopModules/DNNrocket/API/images/chevron_right.svg" />
+    </div>
+    <div class="pl-breadcrumb-itemlink w3-border-blue w3-border-bottom w3-text-blue simplisity_click" s-cmd="articleadmin_editlist" s-fields='{"track":"true"}'>@ResourceKey("RC.articles")</div>
+</div>
 
-<div class='w3-animate-opacity'>
+<div id="" class='w3-animate-opacity w3-card w3-padding w3-margin w3-white '>
 
     [INJECT:appthemedirectory,AdminSearch.cshtml]
 
@@ -18,7 +24,7 @@
                 <tr>
                     <th></th>
                     <th></th>
-                    <th>@ResourceKey("RE.name")</th>
+                    <th>@ResourceKey("DNNrocket.name")</th>
                 </tr>
             </thead>
             @foreach (ArticleLimpet articleData in articleDataList.GetArticleList())
