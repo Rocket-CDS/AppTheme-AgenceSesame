@@ -1,0 +1,475 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@AssignDataModel(Model)
+
+@{
+    var rtnUrl = sessionParams.Get(portalContent.SystemKey + "listurl");
+    if (rtnUrl == "")
+    {
+        rtnUrl = DNNrocketUtils.NavigateURL(moduleData.ListPageTabId());
+    }
+}
+<!--inject-->
+
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v18.0&appId=401970051385259" nonce="ixwdTzkE"></script>
+
+<article class="darticle-detail">
+
+<div class="darticle-header">
+    <a href="@(rtnUrl)" class="darticle-back bigbutton"><i class="fas fa-chevron-circle-up"></i>@ResourceKey("DNNrocket.back")</a>  
+    <h1>@articleData.Name</h1>
+</div>
+
+<div class="darticle-flex">
+
+<div class="darticle-left">
+    <div class="darticle-img">
+        <img alt="@(articleData.GetImage(0).Alt)" src="@ImageUrl(articleData.GetImage(0).RelPath,600,0)" />
+    </div>
+    <div class="darticle-gallery">
+        @foreach (var i in articleData.GetImages())
+        {
+            <a data-fancybox="group@(articleData.ArticleId)" data-caption="@(i.Alt)" href="@ImageUrl(i.RelPath,0,0)">
+                <img src="@ImageUrl(i.RelPath,0,240)" alt="@(i.Alt)" />
+            </a>
+        }
+    </div>
+    @if (info.GetXmlProperty("genxml/lang/genxml/textbox/compliment") != "")
+    {
+    <div class="darticle-tag">
+    <span>&ldquo;</span>
+    @info.GetXmlProperty("genxml/lang/genxml/textbox/compliment")
+    <span>&rdquo;</span>
+    </div>
+    }
+</div>
+<div class="darticle-right">
+    <div class="darticle-content">
+
+        <div class="darticle-labels">
+        @if (info.GetXmlPropertyBool("genxml/checkbox/haymilk")) {<div><img src="@(appTheme.AppThemeVersionFolderRel)/img/laitdefoin.png" alt="Lait de foin" /></div>}
+        @if (articleData.HasProperty("chkaop")) {<div><img src="@(appTheme.AppThemeVersionFolderRel)/img/aop.png" alt="AOP" /></div>}
+        @if (articleData.HasProperty("chkaops")) {<div><img src="@(appTheme.AppThemeVersionFolderRel)/img/aops.png" alt="AOP Suisse" /></div>}
+        @if (articleData.HasProperty("chkdop")) {<div><img src="@(appTheme.AppThemeVersionFolderRel)/img/dop.png" alt="DOP" /></div>}
+        @if (articleData.HasProperty("chknaturland")) {<div><img src="@(appTheme.AppThemeVersionFolderRel)/img/naturland.png" alt="Naturland" /></div>}
+        @if (articleData.HasProperty("chkbiokreis")) {<div><img src="@(appTheme.AppThemeVersionFolderRel)/img/biokreis.png" alt="Biokreis" /></div>}
+        @if (articleData.HasProperty("chkdemeter")) {<div><img src="@(appTheme.AppThemeVersionFolderRel)/img/demeter.png" alt="Demeter" /></div>}
+        @if (articleData.HasProperty("chkbioland")) {<div><img src="@(appTheme.AppThemeVersionFolderRel)/img/bioland.png" alt="Bioland" /></div>}
+        @if (articleData.HasProperty("chkbioeurope")) {<div><img src="@(appTheme.AppThemeVersionFolderRel)/img/bioeurope.png" alt="Bio Europe" /></div>}
+        @if (articleData.HasProperty("chkab")) {<div><img src="@(appTheme.AppThemeVersionFolderRel)/img/ab.png" alt="Agriculture biologique" /></div>}
+        @if (articleData.HasProperty("new")) {<div><img src="@(appTheme.AppThemeVersionFolderRel)/img/new.svg" alt="Nouveau" /></div>}
+        @if (articleData.HasProperty("coupe")) {<div><img src="@(appTheme.AppThemeVersionFolderRel)/img/coupe.svg" alt="À la coupe" /></div>}
+        @if (articleData.HasProperty("vne")) {<div><img src="@(appTheme.AppThemeVersionFolderRel)/img/vne.png" alt="Vache non écornée" /></div>}
+        </div>
+
+        <div class="darticle-summary">
+            @BreakOf(articleData.Summary)
+        </div>
+        <div class="darticle-description">
+            @HtmlOf(articleData.RichText)
+            @if (info.GetXmlProperty("genxml/textbox/stockage") != "")
+            {
+            <div class="small"><strong>Stockage :</strong><br />@BreakOf(info, "genxml/textbox/stockage")</div>
+            }
+        </div>
+
+        <div class="darticle-sections">
+            
+        <div class="darticle-section">
+            <h3>Références</h3>
+            <table class="datatable">
+                <tbody>
+                    @foreach (ArticleModel m in articleData.GetModels())
+                    {
+                    <tr>
+                        @if (m.Ref == "") {
+                            <td>NC</td>
+                        }
+                        else {
+                            <td class="nowrap">Réf. @m.Ref</td>
+                        }
+                        <td><strong>@m.Name</strong></td>
+                        <td>@m.Info.GetXmlProperty("genxml/lang/genxml/textbox/compliment")</td>
+                        @if (m.BarCode != "") {
+                        <td class="nowrap">EAN @m.BarCode</td>
+                        }
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @if (!articleData.IsInCategory("40")) {
+
+        <div class="darticle-section">
+            <h3>@ResourceKey("ProductsFood.information")</h3>
+            <table class="datatable">
+                <tbody>
+                    <tr>
+                        @if (@info.GetXmlProperty("genxml/select/orgin") != "") {<th>@ResourceKey("ProductsFood.origin")</th>}
+                        @if (@info.GetXmlProperty("genxml/select/animal") != "") {<th>@ResourceKey("ProductsFood.type")</th>}
+                        <th>@ResourceKey("ProductsFood.milk")</th>
+                        <th>@ResourceKey("ProductsFood.mgms")</th>
+                        <th>@ResourceKey("ProductsFood.mgpds")</th>
+                        <th>@ResourceKey("ProductsFood.salt")</th>
+                        <th>@ResourceKey("ProductsFood.rennet")</th>
+                        <th>@ResourceKey("ProductsFood.refining")</th>
+                    </tr>
+                    <tr>
+                        @if (@info.GetXmlProperty("genxml/select/orgin") != "") {
+                        <td>
+                            @if (@info.GetXmlProperty("genxml/select/orgin") == "France") {<img src="@(appTheme.AppThemeVersionFolderRel)/img/france.png" alt="France" />}
+                            @if (@info.GetXmlProperty("genxml/select/orgin") == "Italie") {<img src="@(appTheme.AppThemeVersionFolderRel)/img/italie.png" alt="Italie" />}
+                            @if (@info.GetXmlProperty("genxml/select/orgin") == "Suisse") {<img src="@(appTheme.AppThemeVersionFolderRel)/img/suisse.png" alt="Suisse" />}
+                            @if (@info.GetXmlProperty("genxml/select/orgin") == "Autriche") {<img src="@(appTheme.AppThemeVersionFolderRel)/img/autriche.png" alt="Autriche" />}
+                            @if (@info.GetXmlProperty("genxml/select/orgin") == "Grèce") {<img src="@(appTheme.AppThemeVersionFolderRel)/img/grece.png" alt="Grèce" />}
+                            @if (@info.GetXmlProperty("genxml/select/orgin") == "Allemagne") {<img src="@(appTheme.AppThemeVersionFolderRel)/img/allemagne.png" alt="Allemagne" />}
+                            @if (@info.GetXmlProperty("genxml/select/orgin") == "Pays-Bas") {<img src="@(appTheme.AppThemeVersionFolderRel)/img/paysbas.png" alt="Pays-Bas" />}
+                        </td>
+                        }
+                        @if (@info.GetXmlProperty("genxml/select/animal") != "") {
+                        <td>
+                            @if (@info.GetXmlProperty("genxml/select/animal") == "Vache") {<img src="@(appTheme.AppThemeVersionFolderRel)/img/vache.png" alt="Vache" />}
+                            @if (@info.GetXmlProperty("genxml/select/animal") == "Chèvre") {<img src="@(appTheme.AppThemeVersionFolderRel)/img/chevre.png" alt="Chèvre" />}
+                            @if (@info.GetXmlProperty("genxml/select/animal") == "Brebis") {<img src="@(appTheme.AppThemeVersionFolderRel)/img/brebis.png" alt="Brebis" />}
+                            @if (@info.GetXmlProperty("genxml/select/animal") == "Buffle") {<img src="@(appTheme.AppThemeVersionFolderRel)/img/buffle.png" alt="Buffle" />}
+                        </td>
+                        }
+                        <td>@info.GetXmlProperty("genxml/select/milk")</td>
+                        <td>@info.GetXmlProperty("genxml/textbox/mgms")</td>
+                        <td>@info.GetXmlProperty("genxml/textbox/mgpds")</td>
+                        <td>@info.GetXmlProperty("genxml/textbox/salt")</td>
+                        <td>@info.GetXmlProperty("genxml/select/rennet")</td>
+                        <td>@info.GetXmlProperty("genxml/textbox/refining") @info.GetXmlProperty("genxml/select/refiningunit")</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="datatable">
+            <tbody>
+                <tr>
+                        <th>@ResourceKey("ProductsFood.ediblecrust")</th>
+                        <th>@ResourceKey("ProductsFood.otherinformation")</th>
+                        <th>@ResourceKey("ProductsFood.packaging")</th>
+                        @if (info.GetXmlProperty("genxml/textbox/conditionnement") != "")
+                        {
+                        <th>Conditionnement</th>
+                        }
+                </tr>
+                <tr>
+                    <td>@info.GetXmlProperty("genxml/select/ediblecrust")</td>
+                    <td>
+                        @if (info.GetXmlProperty("genxml/textbox/otherinformation") != "")
+                        {
+                        <div class="otherinfo">@BreakOf(info, "genxml/textbox/otherinformation")</div>
+                        }
+                            @if (info.GetXmlPropertyBool("genxml/checkbox/bacteriaculture"))
+                        {
+                                <div class="extrainfo">@ResourceKey("ProductsFood.bacteriaculture")</div>
+                        }
+                            @if (info.GetXmlPropertyBool("genxml/checkbox/haymilk"))
+                        {
+                                <div class="extrainfo">@ResourceKey("ProductsFood.haymilk")</div>
+                        }
+                            @if (info.GetXmlPropertyBool("genxml/checkbox/silagefree"))
+                        {
+                                <div class="extrainfo">@ResourceKey("ProductsFood.silagefree")</div>
+                        }
+                            @if (info.GetXmlPropertyBool("genxml/checkbox/naturallylactosefree"))
+                        {
+                                <div class="extrainfo">@ResourceKey("ProductsFood.naturallylactosefree")</div>
+                        }
+                            @if (info.GetXmlPropertyBool("genxml/checkbox/microbialrennet"))
+                        {
+                                <div class="extrainfo">@ResourceKey("ProductsFood.microbialrennet")</div>
+                        }
+                    </td>
+                    <td>@info.GetXmlProperty("genxml/textbox/packaging")</td>
+                    @if (info.GetXmlProperty("genxml/textbox/conditionnement") != "")
+                    {
+                    <td>@info.GetXmlProperty("genxml/textbox/conditionnement")</td>
+                    }
+                </tr>
+            </tbody>
+            </table>
+        </div>
+
+        if (info.GetXmlPropertyBool("genxml/checkbox/sensorycharacteristics"))
+			{
+            <div class="darticle-section">
+                <h4>@ResourceKey("ProductsFood.sensorycharacteristics")</h4>
+                <table class="datatable valuetable">
+                <tbody>
+                        @if (info.GetXmlProperty("genxml/textbox/appearanceexterior") != "")
+                {
+								<tr>
+                                <td>@ResourceKey("ProductsFood.appearanceexterior")</td>
+                                <td>@info.GetXmlProperty("genxml/textbox/appearanceexterior")</td>
+								</tr>
+                }
+                        @if (info.GetXmlProperty("genxml/textbox/appearanceinterior") != "")
+                {
+								<tr>
+                                <td>@ResourceKey("ProductsFood.appearanceinterior")</td>
+                                <td>@info.GetXmlProperty("genxml/textbox/appearanceinterior")</td>
+								</tr>
+                }
+                        @if (info.GetXmlProperty("genxml/textbox/consistency") != "")
+                {
+								<tr>
+                                <td>@ResourceKey("ProductsFood.consistency")</td>
+                                <td>@info.GetXmlProperty("genxml/textbox/consistency")</td>
+								</tr>
+                }
+                        @if (info.GetXmlProperty("genxml/textbox/odor") != "")
+                {
+								<tr>
+                                <td>@ResourceKey("ProductsFood.odor")</td>
+                                <td>@info.GetXmlProperty("genxml/textbox/odor")</td>
+								</tr>
+                }
+                        @if (info.GetXmlProperty("genxml/textbox/taste") != "")
+                {
+								<tr>
+                                <td>@ResourceKey("ProductsFood.taste")</td>
+                                <td>@info.GetXmlProperty("genxml/textbox/taste")</td>
+								</tr>
+                }
+                </tbody>
+                </table>
+            </div>
+			}
+
+        if (info.GetXmlPropertyBool("genxml/checkbox/nutritionalinformation"))
+			{
+            <div class="darticle-section">
+                <h4>@ResourceKey("ProductsFood.nutritionalinformation")</h4>
+                <table class="datatable valuetable">
+                    <tbody>
+                        @if (info.GetXmlProperty("genxml/textbox/energyvaluekj") != "")
+                {
+								<tr>
+                                <td>@ResourceKey("ProductsFood.energyvalue")</td>
+                                <td>@info.GetXmlProperty("genxml/textbox/energyvaluekj") kJ / @info.GetXmlProperty("genxml/textbox/energyvaluecal") Kcal</td>
+                            </tr>
+                }
+                        @if (info.GetXmlProperty("genxml/textbox/fatg") != "")
+                {
+								<tr>
+                                <td>@ResourceKey("ProductsFood.fatg")</td>
+                                <td>@info.GetXmlProperty("genxml/textbox/fatg") g</td>
+                            </tr>
+                }
+                        @if (info.GetXmlProperty("genxml/textbox/ofwhichfattyacids") != "")
+                {
+								<tr>
+                                <td>@ResourceKey("ProductsFood.ofwhichfattyacids")</td>
+                                <td>@info.GetXmlProperty("genxml/textbox/ofwhichfattyacids") g</td>
+                            </tr>
+                }
+                        @if (info.GetXmlProperty("genxml/textbox/carbohydrates") != "")
+                {
+								<tr>
+                                <td>@ResourceKey("ProductsFood.carbohydrates")</td>
+                                <td>@info.GetXmlProperty("genxml/textbox/carbohydrates") g</td>
+                            </tr>
+                }
+                        @if (info.GetXmlProperty("genxml/textbox/ofwhichsugars") != "")
+                {
+								<tr>
+                                <td>@ResourceKey("ProductsFood.ofwhichsugars")</td>
+                                <td>@info.GetXmlProperty("genxml/textbox/ofwhichsugars") g</td>
+                            </tr>
+                }
+                        @if (info.GetXmlProperty("genxml/textbox/proteing") != "")
+                {
+								<tr>
+                                <td>@ResourceKey("ProductsFood.proteing")</td>
+                                <td>@info.GetXmlProperty("genxml/textbox/proteing") g</td>
+                            </tr>
+                }
+                        @if (info.GetXmlProperty("genxml/textbox/fibreg") != "")
+                {
+								<tr>
+                                <td>@ResourceKey("ProductsFood.fibreg")</td>
+                                <td>@info.GetXmlProperty("genxml/textbox/fibreg") g</td>
+                            </tr>
+                }
+                @if (info.GetXmlProperty("genxml/textbox/sel") != "")
+                {
+								<tr>
+                                <td>@ResourceKey("ProductsFood.saltg")</td>
+                                <td>@info.GetXmlProperty("genxml/textbox/saltg") g</td>
+                            </tr>
+                }
+                    </tbody>
+                </table>
+            </div>
+			}
+
+        if (info.GetXmlPropertyBool("genxml/checkbox/allergens"))
+			{
+			<div class="darticle-section">
+                <h4>@ResourceKey("ProductsFood.allergens")</h4>
+                <table class="datatable fwtable">
+                    <tbody>
+                        @if (info.GetXmlPropertyBool("genxml/checkbox/allergens1"))
+                        {
+				<tr>
+                    <td>@ResourceKey("ProductsFood.1")</td>
+				</tr>
+				}
+                        @if (info.GetXmlPropertyBool("genxml/checkbox/allergens2"))
+                        {
+				<tr>
+                                <td>@ResourceKey("ProductsFood.2")</td>
+                            </tr>
+				}
+                        @if (info.GetXmlPropertyBool("genxml/checkbox/allergens3"))
+                        {
+				<tr>
+                                <td>@ResourceKey("ProductsFood.3")</td>
+                            </tr>
+				}
+                        @if (info.GetXmlPropertyBool("genxml/checkbox/allergens4"))
+                        {
+				<tr>
+                                <td>@ResourceKey("ProductsFood.4")</td>
+                            </tr>
+				}
+                        @if (info.GetXmlPropertyBool("genxml/checkbox/allergens5"))
+                        {
+				<tr>
+                                <td>@ResourceKey("ProductsFood.5")</td>
+                            </tr>
+				}
+                        @if (info.GetXmlPropertyBool("genxml/checkbox/allergens6"))
+                        {
+				<tr>
+                                <td>@ResourceKey("ProductsFood.6")</td>
+                            </tr>
+				}
+                        @if (info.GetXmlPropertyBool("genxml/checkbox/allergens7"))
+                        {
+				<tr>
+                                <td>@ResourceKey("ProductsFood.7")</td>
+                            </tr>
+				}
+                        @if (info.GetXmlPropertyBool("genxml/checkbox/allergens8"))
+                        {
+				<tr>
+                                <td>@ResourceKey("ProductsFood.8")</td>
+                            </tr>
+				}
+                        @if (info.GetXmlPropertyBool("genxml/checkbox/allergens9"))
+                        {
+				<tr>
+                                <td>@ResourceKey("ProductsFood.9")</td>
+                            </tr>
+				}
+                        @if (info.GetXmlPropertyBool("genxml/checkbox/allergens10"))
+                        {
+				<tr>
+                                <td>@ResourceKey("ProductsFood.10")</td>
+                            </tr>
+				}
+                        @if (info.GetXmlPropertyBool("genxml/checkbox/allergens11"))
+                        {
+				<tr>
+                                <td>@ResourceKey("ProductsFood.11")</td>
+                            </tr>
+				}
+                        @if (info.GetXmlPropertyBool("genxml/checkbox/allergens12"))
+                        {
+				<tr>
+                                <td>@ResourceKey("ProductsFood.12")</td>
+                            </tr>
+				}
+                        @if (info.GetXmlPropertyBool("genxml/checkbox/allergens13"))
+                        {
+				<tr>
+                                <td>@ResourceKey("ProductsFood.13")</td>
+                            </tr>
+				}
+                        @if (info.GetXmlPropertyBool("genxml/checkbox/allergens14"))
+                        {
+				<tr>
+                                <td>@ResourceKey("ProductsFood.14")</td>
+                            </tr>
+				}
+                    </tbody>
+                </table>
+            </div>
+			}
+
+        }
+
+        @if (articleData.GetLinkList().Count() > 0)
+        {
+            <div class="darticle-section">
+            <div class="newspaper-link">
+                @foreach (var linkData in articleData.Getlinks())
+                {
+                    if (!linkData.Hidden)
+                    {
+                        <div><a href="@(linkData.Url)" target="@(linkData.Target)">@linkData.Name</a></div>
+                    }
+                }
+            </div>
+            </div>
+        }
+        @if (articleData.GetDocList().Count() > 0)
+        {
+            <div class="darticle-section">
+            <div class="documents">
+                @foreach (ArticleDoc documentData in articleData.GetDocs())
+                {
+                    if (!documentData.Hidden)
+                    {
+                        <div><a href="@(documentData.RelPath)" target="_blank">@documentData.Name</a></div>
+                    }
+                }
+            </div>
+            </div>
+        }
+
+        </div>
+
+    </div>
+</div>
+
+</div>
+
+<hr>
+
+<div class="fb-share-button" data-href="@DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData)" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"></a></div>
+
+</article>
+
+<script>
+
+$("[data-fancybox]").fancybox({
+  lang : 'fr',
+  i18n : {
+      'fr' : {
+          CLOSE       : 'Fermer',
+          NEXT        : 'Suivant',
+          PREV        : 'Précédent',
+          ERROR       : 'Le contenu demandé ne peut pas être chargé.<br />Veuillez réessayer plus tard.',
+          PLAY_START  : 'Démarrer le diaporama',
+          PLAY_STOP   : 'Mettre en pause le diaporama',
+          FULL_SCREEN : 'Plein écran',
+          THUMBS      : 'Vignettes',
+          DOWNLOAD    : 'Télécharger',
+          SHARE       : 'Partager',
+          ZOOM        : 'Zoomer'
+      }
+  }
+});
+
+$(document).ready(function () {
+    $('.simplisity_loader').hide();
+});
+
+</script>

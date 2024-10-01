@@ -1,0 +1,57 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@AssignDataModel(Model)
+<!--inject-->
+
+<div class="pl-breadcrumb">
+    <div class="pl-breadcrumb-itemlink w3-border-blue w3-border-bottom w3-text-blue " onclick="simplisity_setCookieValue('adminpanelcmd','');window.location.reload();">@ResourceKey("DNNrocket.services")</div>
+    <div class="pl-breadcrumb-item">
+        <img src="/DesktopModules/DNNrocket/API/images/chevron_right.svg" />
+    </div>
+    <div class="pl-breadcrumb-itemlink w3-border-blue w3-border-bottom w3-text-blue a-reloadpage simplisity_click" s-cmd="articleadmin_editlist" s-fields='{"track":"true","systemkey":"rocketdirectoryapi","basesystemkey":"rocketdirectoryapi"}'>@ResourceKey("RC.articles")</div>
+</div>
+
+<div class="w3-animate-opacity w3-card w3-padding w3-margin w3-white">
+
+    @RenderTemplate("AdminSearch.cshtml", appThemeSystem, Model, true)
+
+    <div id="datalistsection" class="w3-padding">
+
+        <table class="w3-table w3-bordered w3-hoverable">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>@ResourceKey("DNNrocket.name")</th>
+                </tr>
+            </thead>
+            @foreach (ArticleLimpet articleData in articleDataList.GetArticleList())
+            {
+                <tr class=" simplisity_click" s-cmd="articleadmin_editarticle" s-fields='{"track":"true","articleid":"@articleData.ArticleId"}' style="cursor:pointer;">
+                    <td style="width:54px;">
+                        <img src="@ImageUrl(articleData.GetImage(0).RelPath, 48, 48)" style="height:48px;width:48px;" class="w3-round" />
+                    </td>
+                    <td style="width:54px;">
+                        @if (articleData.IsHidden)
+                        {
+                            <span class="material-icons">
+                                hide_source
+                            </span>
+                        }
+                    </td>
+                    <td><div class="w3-tiny">@articleData.Ref</div><b>@articleData.Name</b></td>
+                </tr>
+            }
+        </table>
+
+        @RenderTemplate("AdminPaging.cshtml", appThemeSystem, Model, true)
+
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+    });
+</script>

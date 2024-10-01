@@ -1,0 +1,87 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@AssigDataModel(Model)
+<!--inject-->
+@{
+    var showtext = " display:none; ";
+    if (moduleData.GetSettingBool("showsearchtext"))
+    {
+        showtext = "";
+    }
+    var showpage = " display:none; ";
+    if (moduleData.GetSettingBool("showpagesize"))
+    {
+        showpage = "";
+    }
+    var showorderby = " display:none; ";
+    if (moduleData.GetSettingBool("showorderby"))
+    {
+        showorderby = "";
+    }
+}
+
+<div class="searchdata">
+
+    <div class="searchinput">
+        @TextBox(infoempty, "genxml/textbox/searchtext", " class='simplisity_sessionfield actionentrykey' autocomplete='off' placeholder='Rechercher' ", sessionParams.Get("searchtext"))
+        <span class="clearsearch" style="display:none;" onclick="clearSearch();return false;"><i class="far fa-times-circle"></i></span>
+        <span class="simplisity_click dosearch" onclick="doSearchReload();return false;"><i class="fas fa-search"></i></span>
+    </div>
+
+</div>
+
+<div class="simplisity_loader">
+    <span class=" simplisity_loader_inner">
+    </span>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        if ($('.actionentrykey').val() !== '') {
+            $('.actionentrykey').focus();
+            $('.clearsearch').show();
+            $('.dosearch').hide();
+            var tmpStr = $('.actionentrykey').val();
+            $('.actionentrykey').val('');
+            $('.actionentrykey').val(tmpStr);
+            $('#searchtext').addClass('w3-theme-light');
+        }
+        else {
+            $('#searchtext').removeClass('w3-theme-light');
+            $('.clearsearch').hide();
+            $('.dosearch').show();
+        }
+
+        $('.actionentrykey').unbind('keypress');
+        $('.actionentrykey').on('keypress', function (e) {
+            if (e.keyCode == 13) {
+                doSearchReload();
+                return false; // prevent the button click from happening
+            }
+        });
+
+        simplisity_setSessionField('searchtext', $('#searchtext').val()); // we need to repopulate the session cookie if the DNN search has been used.
+
+        $('.simplisity_loader').hide();
+    });
+
+    function clearSearch() {
+        $('#searchtext').val('');
+        doSearchReload();
+    }
+
+    function doSearchReload() {
+        simplisity_setSessionField('searchtext', $('#searchtext').val());
+        simplisity_setSessionField('pagesize', $('#pagesize').val());
+        simplisity_setSessionField('orderbyref', $('#orderbyref').val());
+        $('.simplisity_loader').show();
+        @{
+        var urlp = new Dictionary<string, string>();
+        urlp.Add("page", "1");
+        }
+            window.location.href = '@(DNNrocketUtils.NavigateURL(moduleData.ListPageTabId(), urlp))';
+    }
+
+</script>

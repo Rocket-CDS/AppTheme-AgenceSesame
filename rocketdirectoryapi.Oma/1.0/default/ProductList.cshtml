@@ -1,0 +1,87 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@AssignDataModel(Model)
+<!--inject-->
+
+@{
+    var articleList = articleDataList.GetArticleList();
+}
+
+<div class="darticles-header">
+    @if (articleList.Count == 0)
+    {
+        <h1>Résultats de recherche</h1>
+        <p>Aucun résultat.</p>
+    }
+    else
+    {
+        <h1>
+        @if (sessionParams.Get("searchtext") != "")
+        {
+            <span>Résultats de recherche</span>
+        }
+        else
+        {
+            <span>@categoryData.Name</span>
+        }
+        </h1>
+    }
+</div>
+
+<div class="darticles-items">
+    @foreach (ArticleLimpet articleData2 in articleList)
+    {
+        var urlparams = new Dictionary<string, string>();
+        urlparams.Add("id", articleData2.ArticleId.ToString());
+        <div class="darticles-item">
+            <div class="dai-img">
+            <div class="dai-spec">
+            @if (articleData2.HasProperty("new")) {<div><img src="@(appTheme.AppThemeVersionFolderRel)/img/new.svg" alt="Nouveau" /></div>}
+            @if (articleData2.HasProperty("coupe")) {<div><img src="@(appTheme.AppThemeVersionFolderRel)/img/coupe.svg" alt="À la coupe" /></div>}
+            @if (articleData2.HasProperty("vne")) {<div><img src="@(appTheme.AppThemeVersionFolderRel)/img/vne.png" alt="Vache non écornée" /></div>}
+            </div>
+            <a href="@(DNNrocketUtils.NavigateURL(sessionParams.TabId, urlparams, articleData2.Name))" onclick="$('.simplisity_loader').show()">
+                <img src="@ImageUrl(articleData2.GetImage(0).RelPath,360,360)" alt="@articleData2.Name">
+            </a>
+            </div>
+            <div class="dai-desc">
+                <h2><a href="@(DNNrocketUtils.NavigateURL(sessionParams.TabId, urlparams, articleData2.Name))" onclick="$('.simplisity_loader').show()">@articleData2.Name</a></h2>
+                <div class="darticle-labels dai-labels">
+                @if (articleData2.Info.GetXmlPropertyBool("genxml/checkbox/haymilk")) {<div><img src="@(appTheme.AppThemeVersionFolderRel)/img/laitdefoin_small.png" alt="Lait de foin" /></div>}
+                @if (articleData2.HasProperty("chkaop")) {<div><img src="@(appTheme.AppThemeVersionFolderRel)/img/aop_small.png" alt="AOP" /></div>}
+                @if (articleData2.HasProperty("chkaops")) {<div><img src="@(appTheme.AppThemeVersionFolderRel)/img/aops_small.png" alt="AOP Suisse" /></div>}
+                @if (articleData2.HasProperty("chkdop")) {<div><img src="@(appTheme.AppThemeVersionFolderRel)/img/dop_small.png" alt="DOP" /></div>}
+                @if (articleData2.HasProperty("chknaturland")) {<div><img src="@(appTheme.AppThemeVersionFolderRel)/img/naturland_small.png" alt="Naturland" /></div>}
+                @if (articleData2.HasProperty("chkbiokreis")) {<div><img src="@(appTheme.AppThemeVersionFolderRel)/img/biokreis_small.png" alt="Biokreis" /></div>}
+                @if (articleData2.HasProperty("chkdemeter")) {<div><img src="@(appTheme.AppThemeVersionFolderRel)/img/demeter_small.png" alt="Demeter" /></div>}
+                @if (articleData2.HasProperty("chkbioland")) {<div><img src="@(appTheme.AppThemeVersionFolderRel)/img/bioland_small.png" alt="Bioland" /></div>}
+                @if (articleData2.HasProperty("chkbioeurope")) {<div><img src="@(appTheme.AppThemeVersionFolderRel)/img/bioeurope_small.png" alt="Bio Europe" /></div>}
+                @if (articleData2.HasProperty("chkab")) {<div><img src="@(appTheme.AppThemeVersionFolderRel)/img/ab_small.png" alt="Agriculture biologique" /></div>}
+                </div>
+                @if (articleData2.Info.GetXmlProperty("genxml/textbox/taste") != "")
+                {
+				<div class="dai-comp">
+                    @articleData2.Info.GetXmlProperty("genxml/textbox/taste")
+                    @if (articleData2.Info.GetXmlProperty("genxml/textbox/conditionnement") != "")
+                    {
+                    <br />@articleData2.Info.GetXmlProperty("genxml/textbox/conditionnement")
+                    }
+                </div>
+                }
+                <div class="dai-ref">Réf. @articleData2.Info.GetXmlProperty("genxml/textbox/publicreference")</div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="darticles-paging">
+    [INJECT:appthemedefault,ArticlePaging.cshtml]
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.simplisity_loader').hide();
+        simplisity_setSessionField('@(portalContent.SystemKey)listurl', window.location.href); // href to cookie so we can use it on the detail back button.
+    });
+</script>

@@ -1,0 +1,239 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using Simplisity;
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@AssignDataModel(Model)
+<!--inject-->
+@{
+    var originList = ",France,Italie,Suisse,Autriche,Grèce,Allemagne,Pays-Bas";
+    var animalList = ",Vache,Chèvre,Brebis,Buffle";
+    var milkList = ",Pasteurisé,Cru,Thermisé";
+    var rennetList = ",Animale,Microbienne";
+    var refiningList = ",Jours,Semaine,Mois";
+    var ediblecrustList = "Oui,Non,Aucune";
+}
+
+<div class="w3-row">
+    <div class="w3-col m2 w3-padding">
+        <label>@ResourceKey("ProductsFood.origin")</label>
+        @DropDownList(info, "genxml/select/orgin", originList, originList, " class='w3-input w3-border' ")
+    </div>
+    <div class="w3-col m2 w3-padding">
+        <label>@ResourceKey("ProductsFood.animal")</label>
+        @DropDownList(info, "genxml/select/animal", animalList, animalList, " class='w3-input w3-border' ")
+    </div>
+    <div class="w3-col m2 w3-padding">
+        <label>@ResourceKey("ProductsFood.milk")</label>
+        @DropDownList(info, "genxml/select/milk", milkList, milkList, " class='w3-input w3-border' ")
+    </div>
+    <div class="w3-col m2 w3-padding">
+        <label>@ResourceKey("ProductsFood.rennet")</label>
+        @DropDownList(info, "genxml/select/rennet", rennetList, rennetList, " class='w3-input w3-border' ")
+    </div>
+    <div class="w3-col m2 w3-padding">
+        <label>@ResourceKey("ProductsFood.refining")</label>
+        @TextBox(info, "genxml/textbox/refining", " class='w3-input w3-border' maxlength='20' ")
+    </div>
+    <div class="w3-col m2 w3-padding">
+        <label>@ResourceKey("ProductsFood.refiningunit")</label>
+        @DropDownList(info, "genxml/select/refiningunit", refiningList, refiningList, " class='w3-input w3-border' ")
+    </div>
+</div>
+
+<div class="w3-row">
+    <div class="w3-col m2 w3-padding">
+        <label>@ResourceKey("ProductsFood.ediblecrust")</label><br/>
+        @DropDownList(info, "genxml/select/ediblecrust", ediblecrustList, ediblecrustList, " class='w3-input w3-border' ")
+    </div>
+    <div class="w3-col m2 w3-padding">
+        <label>@ResourceKey("ProductsFood.mgms") %</label>
+        @TextBox(info, "genxml/textbox/mgms", " class='w3-input w3-border' maxlength='20' ", "0")
+    </div>
+    <div class="w3-col m2 w3-padding">
+        <label>@ResourceKey("ProductsFood.mgpds") %</label>
+        @TextBox(info, "genxml/textbox/mgpds", " class='w3-input w3-border' maxlength='20' ", "0")
+    </div>
+    <div class="w3-col m2 w3-padding">
+        <label>@ResourceKey("ProductsFood.salt") %</label>
+        @TextBox(info, "genxml/textbox/salt", " class='w3-input w3-border' maxlength='20' ", "0")
+    </div>
+</div>
+<div class="w3-row w3-padding">
+    <label>@ResourceKey("ProductsFood.publicreference")</label>
+    @TextBox(info, "genxml/textbox/publicreference", " class='w3-input w3-border' maxlength='200' ", "")
+</div>
+<div class="w3-row w3-padding">
+    <label>@ResourceKey("ProductsFood.otherinformation")</label>
+    @TextArea(info, "genxml/textbox/otherinformation", " class='w3-input w3-border' ", "")
+</div>
+<div class="w3-row w3-padding">
+    <label>@ResourceKey("ProductsFood.packaging")</label>
+    @TextArea(info, "genxml/textbox/packaging", " class='w3-input w3-border' ", "")
+</div>
+<div class="w3-row w3-padding">
+    <label>Conditionnement</label>
+    @TextBox(info, "genxml/textbox/conditionnement", " class='w3-input w3-border' maxlength='200' ", "")
+</div>
+<div class="w3-row w3-padding">
+    <label>Stockage</label>
+    @TextArea(info, "genxml/textbox/stockage", " class='w3-input w3-border' ", "")
+</div>
+
+<div class="w3-row">
+    <div class="w3-col m2 w3-padding">
+        <label>@ResourceKey("ProductsFood.bacteriaculture")</label><br/>
+        @CheckBox(info, "genxml/checkbox/bacteriaculture", "", " class='w3-check' ")
+    </div>
+    <div class="w3-col m2 w3-padding">
+        <label>@ResourceKey("ProductsFood.haymilk")</label><br />
+        @CheckBox(info, "genxml/checkbox/haymilk", "", " class='w3-check' ")
+    </div>
+    <div class="w3-col m2 w3-padding">
+        <label>@ResourceKey("ProductsFood.silagefree")</label><br />
+        @CheckBox(info, "genxml/checkbox/silagefree", "", " class='w3-check' ")
+    </div>
+    <div class="w3-col m2 w3-padding">
+        <label>@ResourceKey("ProductsFood.naturallylactosefree")</label><br />
+        @CheckBox(info, "genxml/checkbox/naturallylactosefree", "", " class='w3-check' ")
+    </div>
+    <div class="w3-col m2 w3-padding">
+        <label>@ResourceKey("ProductsFood.microbialrennet")</label><br />
+        @CheckBox(info, "genxml/checkbox/microbialrennet", "", " class='w3-check' ")
+    </div>
+</div>
+
+<hr/>
+
+<div class="w3-row ">
+    <div class="w3-third">
+        <div class="w3-row w3-padding">
+            <div class="w3-large">@ResourceKey("ProductsFood.sensorycharacteristics")</div>
+            @CheckBox(info, "genxml/checkbox/sensorycharacteristics", "", " class='w3-check' ", true)
+        </div>
+        <div class="w3-row w3-padding">
+            <label>@ResourceKey("ProductsFood.appearanceexterior")</label><br />
+        @TextBox(info, "genxml/textbox/appearanceexterior", " class='w3-input w3-border' maxlength='200' ", "")
+        </div>
+        <div class="w3-row w3-padding">
+            <label>@ResourceKey("ProductsFood.appearanceinterior")</label><br />
+        @TextBox(info, "genxml/textbox/appearanceinterior", " class='w3-input w3-border' maxlength='200' ", "")
+        </div>
+        <div class="w3-row w3-padding">
+            <label>@ResourceKey("ProductsFood.consistency")</label><br />
+        @TextBox(info, "genxml/textbox/consistency", " class='w3-input w3-border' maxlength='200' ", "")
+        </div>
+        <div class="w3-row w3-padding">
+            <label>@ResourceKey("ProductsFood.odor")</label><br />
+        @TextBox(info, "genxml/textbox/odor", " class='w3-input w3-border' maxlength='200' ", "")
+        </div>
+        <div class="w3-row w3-padding">
+            <label>@ResourceKey("ProductsFood.taste")</label><br />
+        @TextBox(info, "genxml/textbox/taste", " class='w3-input w3-border' maxlength='200' ", "")
+        </div>
+    </div>
+    <div class="w3-third">
+        <div class="w3-row w3-padding">
+            <div class="w3-large">@ResourceKey("ProductsFood.nutritionalinformation")</div>
+            @CheckBox(info, "genxml/checkbox/nutritionalinformation", "", " class='w3-check' ", true)
+        </div>
+        <div class="w3-row w3-padding">
+            <label>@ResourceKey("ProductsFood.energyvaluekj")</label>
+            @TextBox(info, "genxml/textbox/energyvaluekj", " class='w3-input w3-border' maxlength='20' ", "")
+        </div>
+        <div class="w3-row w3-padding">
+            <label>@ResourceKey("ProductsFood.energyvaluecal")</label>
+            @TextBox(info, "genxml/textbox/energyvaluecal", " class='w3-input w3-border' maxlength='20' ", "")
+        </div>
+        <div class="w3-row w3-padding">
+            <label>@ResourceKey("ProductsFood.fatg")</label>
+            @TextBox(info, "genxml/textbox/fatg", " class='w3-input w3-border' maxlength='20' ", "")
+        </div>
+        <div class="w3-row w3-padding">
+            <label>@ResourceKey("ProductsFood.ofwhichfattyacids")</label>
+            @TextBox(info, "genxml/textbox/ofwhichfattyacids", " class='w3-input w3-border' maxlength='20' ", "")
+        </div>
+        <div class="w3-row w3-padding">
+            <label>@ResourceKey("ProductsFood.carbohydrates")</label>
+            @TextBox(info, "genxml/textbox/carbohydrates", " class='w3-input w3-border' maxlength='20' ", "")
+        </div>
+        <div class="w3-row w3-padding">
+            <label>@ResourceKey("ProductsFood.ofwhichsugars")</label>
+            @TextBox(info, "genxml/textbox/ofwhichsugars", " class='w3-input w3-border' maxlength='20' ", "")
+        </div>
+        <div class="w3-row w3-padding">
+            <label>@ResourceKey("ProductsFood.proteing")</label>
+            @TextBox(info, "genxml/textbox/proteing", " class='w3-input w3-border' maxlength='20' ", "")
+        </div>
+        <div class="w3-row w3-padding">
+            <label>@ResourceKey("ProductsFood.fibreg")</label>
+            @TextBox(info, "genxml/textbox/fibreg", " class='w3-input w3-border' maxlength='20' ", "")
+        </div>
+        <div class="w3-row w3-padding">
+            <label>@ResourceKey("ProductsFood.saltg")</label>
+            @TextBox(info, "genxml/textbox/saltg", " class='w3-input w3-border' maxlength='20' ", "")
+        </div>
+    </div>
+    <div class="w3-third">
+        <div class="w3-row w3-padding">
+            <div class="w3-large">@ResourceKey("ProductsFood.allergens")</div>
+            @CheckBox(info, "genxml/checkbox/allergens", "", " class='w3-check' ",true)
+        </div>
+        <div class="w3-row w3-padding">
+            @CheckBox(info, "genxml/checkbox/allergens1", "", " class='w3-check'")
+            <label>@ResourceKey("ProductsFood.1")</label>
+        </div>
+        <div class="w3-row w3-padding">
+            @CheckBox(info, "genxml/checkbox/allergens2", "", " class='w3-check'")
+            <label>@ResourceKey("ProductsFood.2")</label>
+        </div>
+        <div class="w3-row w3-padding">
+            @CheckBox(info, "genxml/checkbox/allergens3", "", " class='w3-check'")
+            <label>@ResourceKey("ProductsFood.3")</label>
+        </div>
+        <div class="w3-row w3-padding">
+            @CheckBox(info, "genxml/checkbox/allergens4", "", " class='w3-check'")
+            <label>@ResourceKey("ProductsFood.4")</label>
+        </div>
+        <div class="w3-row w3-padding">
+            @CheckBox(info, "genxml/checkbox/allergens5", "", " class='w3-check'")
+            <label>@ResourceKey("ProductsFood.5")</label>
+        </div>
+        <div class="w3-row w3-padding">
+            @CheckBox(info, "genxml/checkbox/allergens6", "", " class='w3-check'")
+            <label>@ResourceKey("ProductsFood.6")</label>
+        </div>
+        <div class="w3-row w3-padding">
+            @CheckBox(info, "genxml/checkbox/allergens7", "", " class='w3-check'")
+            <label>@ResourceKey("ProductsFood.7")</label>
+        </div>
+        <div class="w3-row w3-padding">
+            @CheckBox(info, "genxml/checkbox/allergens8", "", " class='w3-check'")
+            <label>@ResourceKey("ProductsFood.8")</label>
+        </div>
+        <div class="w3-row w3-padding">
+            @CheckBox(info, "genxml/checkbox/allergens9", "", " class='w3-check'")
+            <label>@ResourceKey("ProductsFood.9")</label>
+        </div>
+        <div class="w3-row w3-padding">
+            @CheckBox(info, "genxml/checkbox/allergens10", "", " class='w3-check'")
+            <label>@ResourceKey("ProductsFood.10")</label>
+        </div>
+        <div class="w3-row w3-padding">
+            @CheckBox(info, "genxml/checkbox/allergens11", "", " class='w3-check'")
+            <label>@ResourceKey("ProductsFood.11")</label>
+        </div>
+        <div class="w3-row w3-padding">
+            @CheckBox(info, "genxml/checkbox/allergens12", "", " class='w3-check'")
+            <label>@ResourceKey("ProductsFood.12")</label>
+        </div>
+        <div class="w3-row w3-padding">
+            @CheckBox(info, "genxml/checkbox/allergens13", "", " class='w3-check'")
+            <label>@ResourceKey("ProductsFood.13")</label>
+        </div>
+        <div class="w3-row w3-padding">
+            @CheckBox(info, "genxml/checkbox/allergens14", "", " class='w3-check'")
+            <label>@ResourceKey("ProductsFood.14")</label>
+        </div>
+    </div>
+</div>
+

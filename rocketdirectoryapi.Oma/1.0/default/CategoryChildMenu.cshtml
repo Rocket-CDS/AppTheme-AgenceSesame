@@ -1,0 +1,38 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@AssignDataModel(Model)
+<!--inject-->
+
+<div class="darticles-banner">
+
+        <div class="breadcrumb">
+            <ul>
+            @{
+                var catBreadCrumbList = categoryDataList.GetBreadCrumbList(categoryData.CategoryId);
+            }
+            @foreach (var catData in catBreadCrumbList)
+            {
+                <li><span>@catData.Name</span></li>
+            }
+            </ul>
+        </div>
+
+        @if (categoryData.GetDirectChildren().Count > 0) {
+            <div class="filter">
+            <span>Affinez votre recherche :</span>
+            <ul>
+            @foreach (var c in categoryData.GetDirectChildren())
+            {
+                if (!c.Hidden && !c.HiddenByCulture)
+                {
+                    var catDict = new Dictionary<string, string>();
+                    catDict.Add("catid", c.CategoryId.ToString());
+                    <li><a href="@DNNrocketUtils.NavigateURL(sessionParams.TabId, catDict, c.Name)" onclick="$('.simplisity_loader').show()">@c.Name (@c.GetArticles().RecordCount)</a></li>
+                }
+            }
+            </ul>
+            </div>
+        }
+
+</div>

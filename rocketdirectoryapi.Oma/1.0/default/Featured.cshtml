@@ -1,0 +1,22 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using RocketDirectoryAPI.Components;
+@using DNNrocketAPI.Components;
+@AssignDataModel(Model)
+<!--inject-->
+
+<div id="catalog-tag" class="catalog-container">
+    @{
+        var rtnUrl = sessionParams.Get(portalContent.SystemKey + "listurl");
+        if (rtnUrl == "")
+        {
+            rtnUrl = DNNrocketUtils.NavigateURL(moduleData.ListPageTabId());
+        }
+        AddProcessData("resourcepath", appTheme.AppThemeVersionFolderRel + "/resx/");
+    }
+
+    <div class="productlist featured">
+        [INJECT:apptheme,ProductList.cshtml]
+    </div>
+
+</div>
+<div class="w3-overlay simplisity_loader" style="z-index:999;"></div>

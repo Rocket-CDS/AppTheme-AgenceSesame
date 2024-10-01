@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="price.Text" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="details.Text" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="allproducts.Text" xml:space="preserve">
+    <value>All articles</value>
+  </data>
+  <data name="categories.Text" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="nurturance.Text" xml:space="preserve">
+    <value>Nurturance</value>
+  </data>
+  <data name="refiningunit.Text" xml:space="preserve">
+    <value>Refining (Unit of time)</value>
+  </data>
+  <data name="milk.Text" xml:space="preserve">
+    <value>Milk</value>
+  </data>
+  <data name="origin.Text" xml:space="preserve">
+    <value>Origin</value>
+  </data>
+  <data name="refining.Text" xml:space="preserve">
+    <value>Refining</value>
+  </data>
+  <data name="rennet.Text" xml:space="preserve">
+    <value>Rennet</value>
+  </data>
+  <data name="type.Text" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="ediblecrust.Text" xml:space="preserve">
+    <value>Edible crust</value>
+  </data>
+  <data name="mgms.Text" xml:space="preserve">
+    <value>Mg/ms</value>
+  </data>
+  <data name="mgpds.Text" xml:space="preserve">
+    <value>Mg/pds</value>
+  </data>
+  <data name="salt.Text" xml:space="preserve">
+    <value>Salt</value>
+  </data>
+  <data name="publicreference.Text" xml:space="preserve">
+    <value>Public reference</value>
+  </data>
+  <data name="otherinformation.Text" xml:space="preserve">
+    <value>Other information</value>
+  </data>
+  <data name="packaging.Text" xml:space="preserve">
+    <value>Packaging</value>
+  </data>
+  <data name="bacteriaculture.Text" xml:space="preserve">
+    <value>Lactic acid bacteria culture</value>
+  </data>
+  <data name="haymilk.Text" xml:space="preserve">
+    <value>Hay milk</value>
+  </data>
+  <data name="silagefree.Text" xml:space="preserve">
+    <value>Silage-free</value>
+  </data>
+  <data name="naturallylactosefree.Text" xml:space="preserve">
+    <value>Naturally lactose-free</value>
+  </data>
+  <data name="microbialrennet.Text" xml:space="preserve">
+    <value>Microbial rennet</value>
+  </data>
+  <data name="sensorycharacteristics.Text" xml:space="preserve">
+    <value>Sensory characteristics</value>
+  </data>
+  <data name="appearanceexterior.Text" xml:space="preserve">
+    <value>Exterior Appearance</value>
+  </data>
+  <data name="nutritionalinformation.Text" xml:space="preserve">
+    <value>Nutritional information per 100g of the consumable product</value>
+  </data>
+  <data name="energyvalue.Text" xml:space="preserve">
+    <value>Energy value</value>
+  </data>
+  <data name="energyvaluekj.Text" xml:space="preserve">
+    <value>Energy value kJ in g</value>
+  </data>
+  <data name="energyvaluecal.Text" xml:space="preserve">
+    <value>Energy value kcal in g</value>
+  </data>
+  <data name="fatg.Text" xml:space="preserve">
+    <value>Fat in g</value>
+  </data>
+  <data name="ofwhichfattyacids.Text" xml:space="preserve">
+    <value>of which saturated fatty acids in g</value>
+  </data>
+  <data name="carbohydrates.Text" xml:space="preserve">
+    <value>Carbohydrates in g</value>
+  </data>
+  <data name="ofwhichsugars.Text" xml:space="preserve">
+    <value>of which sugars in g</value>
+  </data>
+  <data name="proteing.Text" xml:space="preserve">
+    <value>Protein in g</value>
+  </data>
+  <data name="fibreg.Text" xml:space="preserve">
+    <value>Dietary fibre in g</value>
+  </data>
+  <data name="saltg.Text" xml:space="preserve">
+    <value>Salt in g</value>
+  </data>
+  <data name="allergens.Text" xml:space="preserve">
+    <value>Allergens in the product</value>
+  </data>
+  <data name="1.Text" xml:space="preserve">
+    <value>Gluten-containing cereals and gluten-related products</value>
+  </data>
+  <data name="2.Text" xml:space="preserve">
+    <value>Crustaceans and Crustacean Products</value>
+  </data>
+  <data name="3.Text" xml:space="preserve">
+    <value>Eggs and Egg Products</value>
+  </data>
+  <data name="4.Text" xml:space="preserve">
+    <value>Fish and fish products</value>
+  </data>
+  <data name="5.Text" xml:space="preserve">
+    <value>Peanut and Peanut Products</value>
+  </data>
+  <data name="6.Text" xml:space="preserve">
+    <value>Soybeans and soy products</value>
+  </data>
+  <data name="7.Text" xml:space="preserve">
+    <value>Milk and milk products</value>
+  </data>
+  <data name="8.Text" xml:space="preserve">
+    <value>Nuts</value>
+  </data>
+  <data name="9.Text" xml:space="preserve">
+    <value>Celery and Celery Products</value>
+  </data>
+  <data name="10.Text" xml:space="preserve">
+    <value>Mustard and mustard products</value>
+  </data>
+  <data name="11.Text" xml:space="preserve">
+    <value>Sesame and derivatives</value>
+  </data>
+  <data name="12.Text" xml:space="preserve">
+    <value>Sulphur dioxide (SO2) and sulphites</value>
+  </data>
+  <data name="13.Text" xml:space="preserve">
+    <value>Lupin and Derivatives</value>
+  </data>
+  <data name="14.Text" xml:space="preserve">
+    <value>Molluscs and Derivatives</value>
+  </data>
+  <data name="animal.Text" xml:space="preserve">
+    <value>Animal</value>
+  </data>
+  <data name="appearanceinterior.Text" xml:space="preserve">
+    <value>Interior Appearance</value>
+  </data>
+  <data name="consistency.Text" xml:space="preserve">
+    <value>Consistency</value>
+  </data>
+  <data name="odor.Text" xml:space="preserve">
+    <value>Odor</value>
+  </data>
+  <data name="taste.Text" xml:space="preserve">
+    <value>Taste</value>
+  </data>
+  <data name="information.Text" xml:space="preserve">
+    <value>Information</value>
+  </data>
+</root>
