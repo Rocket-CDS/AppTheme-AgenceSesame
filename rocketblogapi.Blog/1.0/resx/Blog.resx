@@ -162,4 +162,7 @@
   <data name="showsatimage.Text" xml:space="preserve">
     <value>Show image in satellite</value>
   </data>
+  <data name="allcategories.Text" xml:space="preserve">
+    <value>All categories</value>
+  </data>
 </root>
