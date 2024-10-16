@@ -1,0 +1,16 @@
+@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
+
+<a href="http://manager.rocket-cds.org/Aides-aux-modules/GraphicBlocks" title="@ResourceKey("DNNrocket.help")" target="_blank" class="w3-button w3-circle w3-blue">?</a>
+
+<div class="w3-row">
+    [INJECT:appthemesystem,ArticleHeader.cshtml]
+    <div id="articledetailpanel" class="w3-threequarter">
+        [INJECT:appthemeadmin,AdminRow.cshtml]
+    </div>
+    <div class="w3-quarter">
+        [INJECT:appthemesystem,AdminRowSelect.cshtml]
+    </div>
+</div>

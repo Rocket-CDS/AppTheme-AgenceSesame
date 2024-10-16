@@ -1,0 +1,56 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
+
+@{
+    var width = moduleData.GetSettingInt("width");
+    var height = moduleData.GetSettingInt("height");
+}
+
+<div class="@(moduleData.GetSetting("cssclass"))">
+
+    <div class="publicationswrapper">
+
+        [INJECT:appthemesystem,ArticleHeaderView.cshtml]
+
+        <div class="publications">
+            @foreach (var articleRowData in articleData.GetRows())
+            {
+                var rowData = articleRowData.Info;
+                var hideRow = rowData.GetXmlPropertyBool("genxml/checkbox/hiderow");
+                if (!hideRow)
+                {                   
+                    var cssClassRow = "";
+                    if (rowData.GetXmlProperty("genxml/textbox/cssclass") != "")
+                    {
+                        cssClassRow = rowData.GetXmlProperty("genxml/textbox/cssclass");
+                    }
+                    <div class="publication @(cssClassRow)">
+                        <h3>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h3>
+                        <p>@BreakOf(rowData, "genxml/lang/genxml/textbox/text")</p>
+                        @foreach (ArticleDoc documentData in articleRowData.GetDocs())
+                        {
+                            if (documentData.Exists)
+                            {
+                            <div class="documents">
+                                <a href="@(documentData.RelPath)" target="_blank" >@ResourceKey("Publications.viewpdf")</a>
+                            </div>
+                            }
+                        }
+                        @foreach (var linkData in articleRowData.Getlinks())
+                        {
+                            if (linkData.Url != "")
+                            {
+                            <div class="newspaper-link">
+                                <a href="@(linkData.Url)" target="@(linkData.Target)">@ResourceKey("Publications.readmore")</a>
+                            </div>
+                            }
+                        }
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
