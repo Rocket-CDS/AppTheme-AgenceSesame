@@ -1,5 +1,6 @@
-/* Essential styles */
+/* Blog styles */
 .material-icons-outlined {
     vertical-align: middle;
 }
-.rocket-monthdates, .rocket-tagbutton {cursor:pointer;}
+.rocket-monthdates {text-transform:capitalize;cursor:pointer;}
+.rocket-tagbutton {cursor:pointer;}
