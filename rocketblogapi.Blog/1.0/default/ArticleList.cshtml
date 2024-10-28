@@ -15,7 +15,7 @@
 
     <div class="blogheader">
         <div class="blogtools">
-            <a href="@RssUrl(portalData.PortalId,"rocketblogapi_rss",12,"publisheddate",sessionParams.GetInt("catid"))" target="_blank">
+            <a href="@RssUrl(portalData.PortalId,"rocketblogapi_rss", DateTime.Now.AddMonths(-11).Year, DateTime.Now.AddMonths(-11).Month, 12,"publisheddate")" target="_blank">
                 <span class="material-icons-outlined">rss_feed</span>
             </a>
         </div>
@@ -55,7 +55,7 @@
         }
     </div>
     <div class="blogpaging">
-        [INJECT:appthemedirectorydefault,articlePaging.cshtml]
+        [INJECT:apptheme,articlePaging.cshtml]
     </div>
     }
     else
@@ -64,3 +64,19 @@
     }
 
 </div>
+
+<script>
+    $(document).ready(function () {
+        simplisity_setCookieValue('simplisity_language', simplisity_getCookieValue('language'));
+        const urlParams = new URLSearchParams(window.location.search);
+        const pageParam = urlParams.get('page');
+        $(window).on('beforeunload', function () {
+            if (!pageParam || pageParam == '') {
+            setSelected('');
+            simplisity_setSessionField('searchdate1', '');
+            simplisity_setSessionField('searchdate2', '');
+            simplisity_setSessionField('page', '1');
+            }
+        });
+    });
+</script>
