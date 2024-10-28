@@ -4,3 +4,36 @@
 }
 .rocket-monthdates {text-transform:capitalize;cursor:pointer;}
 .rocket-tagbutton {cursor:pointer;}
+
+/* Paging */
+.pagination {align-items:center;display:flex;justify-content:space-between;text-align:center;font-size:16px;}
+.pagination-list {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-wrap: wrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin:0 !important;
+    padding: 0;
+}
+.pagination-list a {margin:3px;}
+.pagination-previous, .pagination-next, .pagination-link {
+    color: #363636;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+    box-shadow: none;
+    min-width: 30px;
+    height: 30px;
+    text-decoration: none !important;
+}
+.pagination-previous:hover, .pagination-next:hover, .pagination-link:hover {border:1px solid #b5b5b5;}
+.pagination-link.is-current {
+    background-color: #666;
+    border-color: #666;
+    color: white;
+}
