@@ -46,10 +46,10 @@
             var tmpStr = $('.actionentrykey').val();
             $('.actionentrykey').val('');
             $('.actionentrykey').val(tmpStr);
-            $('#searchtext').addClass('w3-theme-light');
+            $('#viewsearchtext').addClass('w3-theme-light');
         }
         else {
-            $('#searchtext').removeClass('w3-theme-light');
+            $('#viewsearchtext').removeClass('w3-theme-light');
             $('.clearsearch').hide();
             $('.dosearch').show();
         }
@@ -62,18 +62,18 @@
             }
         });
 
-        simplisity_setSessionField('searchtext', $('#searchtext').val()); // we need to repopulate the session cookie if the DNN search has been used.
+        simplisity_setSessionField('viewsearchtext', $('#viewsearchtext').val()); // we need to repopulate the session cookie if the DNN search has been used.
 
         $('.simplisity_loader').hide();
     });
 
     function clearSearch() {
-        $('#searchtext').val('');
+        $('#viewsearchtext').val('');
         doSearchReload();
     }
 
     function doSearchReload() {
-        simplisity_setSessionField('searchtext', $('#searchtext').val());
+        simplisity_setSessionField('viewsearchtext', $('#viewsearchtext').val());
         simplisity_setSessionField('pagesize', $('#pagesize').val());
         simplisity_setSessionField('orderbyref', $('#orderbyref').val());
         $('.simplisity_loader').show();
