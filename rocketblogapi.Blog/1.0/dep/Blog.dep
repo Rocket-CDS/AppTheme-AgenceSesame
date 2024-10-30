@@ -87,7 +87,7 @@
 	</adminpanelinterfacekeys>
 	<queryparams list="true">
 		<genxml>
-			<queryparam>catid</queryparam>
+			<queryparam>blogcatid</queryparam>
 			<tablename>rocketdirectoryapi</tablename>
 			<systemkey>rocketblogapi</systemkey>
 			<datatype>category</datatype>
