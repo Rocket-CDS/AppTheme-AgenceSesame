@@ -41,7 +41,7 @@
             }
             @if (rowData.GetXmlProperty("genxml/lang/genxml/textbox/text") != "")
             {
-                <h3>@BreakOf(articleRowData.Info, "genxml/lang/genxml/textbox/text")</h3>
+                <h3>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/text")</h3>
             }
         </div>
     </div>
