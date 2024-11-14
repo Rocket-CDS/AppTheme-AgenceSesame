@@ -1,0 +1,48 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeAdmin, true)
+<!--inject-->
+@{
+    var info = moduleDataInfo;
+    //NOTE: xPath for module settings must use "genxml/settings/*"
+}
+
+@{
+    var mask = "";
+    if (moduleData.GetSettingBool("mask"))
+    {
+        mask = "tih-mask";
+    }
+    var articleImage = articleRowData.GetImage(0);
+    var linkData = articleRowData.Getlink(0);
+    var width = moduleData.GetSettingInt("width");
+    var height = moduleData.GetSettingInt("height");
+    var crop = rowData.GetXmlProperty("genxml/select/crop");
+    if (crop == "")
+    {
+        crop = "center";
+    }
+}
+
+<div class="@(moduleData.GetSetting("cssclass"))">
+    <div class="herocontent @(mask)" style="background:url('@ImageUrl(articleImage.RelPath, width, height, "", "webp")') center @(crop) no-repeat;
+                                            -webkit-background-size: cover;
+                                            -moz-background-size: cover;
+                                            -o-background-size: cover;
+                                            background-size: cover;">
+        <div class="caption">
+            @if (rowData.GetXmlProperty("genxml/lang/genxml/textbox/title") != "")
+            {
+                <h2>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h2>
+            }
+            @HtmlOf(rowData.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
+            @if (!linkData.Hidden && !linkData.IsDisabled)
+            {
+                <div class="herocontent-link"><a class="bigbutton" href="@(linkData.Url)" target="@(linkData.Target)">@linkData.Name</a></div>
+            }
+        </div>
+    </div>
+</div>
+
+
+
