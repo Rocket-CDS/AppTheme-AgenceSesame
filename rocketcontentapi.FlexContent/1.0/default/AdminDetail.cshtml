@@ -13,3 +13,14 @@
         [INJECT:appthemesystem,AdminRowSelect.cshtml]
     </div>
 </div>
+
+@{
+    Model.SetSetting("chatgptcmd", "article_chatgpt");
+}
+@RenderTemplate("ChatGptForm.cshtml", appThemeRocketApi, Model, true)
+
+@{
+    Model.SetSetting("deeplcmd", "article_translate");
+}
+@RenderTemplate("DeepLForm.cshtml", appThemeRocketApi, Model, true)
+
