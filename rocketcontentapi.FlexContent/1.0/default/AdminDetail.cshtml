@@ -15,12 +15,12 @@
 </div>
 
 @{
-    Model.SetSetting("chatgptcmd", "rocketdirectoryapi_chatgpt");
+    Model.SetSetting("chatgptcmd", "article_chatgpt");
 }
 @RenderTemplate("ChatGptForm.cshtml", appThemeRocketApi, Model, true)
 
 @{
-    Model.SetSetting("deeplcmd", "rocketdirectoryapi_translate");
+    Model.SetSetting("deeplcmd", "article_translate");
 }
 @RenderTemplate("DeepLForm.cshtml", appThemeRocketApi, Model, true)
 
