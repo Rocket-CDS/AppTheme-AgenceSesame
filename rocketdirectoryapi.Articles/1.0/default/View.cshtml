@@ -6,16 +6,20 @@
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
 <!--inject-->
 
-<div id="rocket-example1" class="rocket-example1-container">
+<div id="articledisplaywrapper">
     @{
         Model.SetSetting("searchview", "false");
         if (articleData != null)
         {
-            @RenderTemplate("ArticleDetail.cshtml", appTheme, Model, false)
+            <div id="articlelistdisplay">
+                @RenderTemplate("ArticleDetail.cshtml", appTheme, Model, false)
+            </div>
         }
         else
         {
-            @RenderTemplate("ArticleList.cshtml", appTheme, Model, false)
+            <div id="articlelistdisplay">
+                @RenderTemplate("ArticleList.cshtml", appTheme, Model, false)
+            </div>
         }
     }
 </div>

@@ -4,81 +4,104 @@
 @AssignDataModel(Model)
 @AddProcessDataResx(appTheme, true)
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
-
-<div id="fb-root"></div>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v18.0&appId=401970051385259" nonce="ixwdTzkE"></script>
-
 <!--inject-->
-<div class="@(moduleData.GetSetting("cssclass"))">
 
-    @{
-        var mainImage = articleData.GetImage(0);
-        var widthlist = moduleData.GetSettingInt("widthlist");
-        var heightlist = moduleData.GetSettingInt("heightlist");
-        var widthdetail = moduleData.GetSettingInt("widthdetail");
-        var heightdetail = moduleData.GetSettingInt("heightdetail");
-    }
+@{
+    var mainImage = articleData.GetImage(0);
+    var widthlist = moduleData.GetSettingInt("widthlist");
+    var heightlist = moduleData.GetSettingInt("heightlist");
+    var widthdetail = moduleData.GetSettingInt("widthdetail");
+    var heightdetail = moduleData.GetSettingInt("heightdetail");
+}
 
-    <article class="darticle-detail">
+<article class="darticle-detail">
 
-        <a class="darticle-back bigbutton" href="@ListUrl(moduleData.ListPageTabId(), categoryData)">@ResourceKey("DNNrocket.back")</a>
-        <h1>@articleData.Name</h1>
+    <a class="darticle-back bigbutton" href="@ListUrl(moduleData.ListPageTabId(), categoryData)">@ResourceKey("DNNrocket.back")</a>
+
+    <div class="darticle-header">
+        <div class="darticle-title">
+            <h1>@articleData.Name</h1>
+            <hr />
+            <h2>@articleData.Summary</h2>
+        </div>
         <div class="darticle-img">
             <img src="@ImageUrl(mainImage.RelPath, widthdetail, heightdetail)" alt="@(mainImage.Alt)" />
         </div>
+    </div>
 
-        <div class="darticle-content">
+    <div class="darticle-content">
 
-            @if (articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/video") != "")
+        <div class="darticle-infos">
+            <div class="darticle-infosection">
+                <h3>Informations</h3>
+                <p>Surface : <strong>@articleData.Info.GetXmlProperty("genxml/textbox/surface") m²</strong></p>
+                <p>Classement : <strong>@articleData.Info.GetXmlProperty("genxml/textbox/classement")</strong></p>
+                <p>Année de réalisation : <strong>@articleData.Info.GetXmlProperty("genxml/textbox/annee")</strong></p>
+            </div>
+            @if (articleData.Info.GetXmlProperty("genxml/textbox/partenaires") != "")
             {
-                <div class="darticle-video"><div class="video-container">@HtmlOf(articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/video"))</div></div>
-            }
-
-            @HtmlOf(articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
-            @HtmlOf(articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/htmltext"))
-
-            @if (articleData.GetLinkList().Count() > 0) 
-            {
-            <div class="newspaper-link">
-                @foreach (var linkData in articleData.Getlinks())
-                {    
-                    if (!linkData.Hidden)
-                    {
-                        <div><a href="@(linkData.Url)" target="@(linkData.Target)">@linkData.Name</a></div>
-                    }
-                }
+            <div class="darticle-infosection">
+                <h3>Partenaires</h3>
+                <p>@BreakOf(articleData.Info.GetXmlProperty("genxml/textbox/partenaires"))</p>
             </div>
             }
-            @if (articleData.GetDocList().Count() > 0) {
-            <div class="documents">
-                @foreach (ArticleDoc documentData in articleData.GetDocs())
-                {
-                    if (!documentData.Hidden)
-                    {
-                        <div><a href="@(documentData.RelPath)" target="_blank" >@documentData.Name</a></div>
-                    }
-                }
+            @if (articleData.Info.GetXmlProperty("genxml/textbox/labels") != "")
+            {
+            <div class="darticle-infosection">
+                <h3>Labels et certifications</h3>
+                <p>@BreakOf(articleData.Info.GetXmlProperty("genxml/textbox/labels"))</p>
             </div>
             }
-
         </div>
+
+        <div class="darticle-description">
+
+        @if (articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/video") != "")
+        {
+            <div class="darticle-video"><div class="video-container">@HtmlOf(articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/video"))</div></div>
+        }
+
+        @HtmlOf(articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
+        @HtmlOf(articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/htmltext"))
+
+        @if (articleData.GetLinkList().Count() > 0) 
+        {
+        <div class="newspaper-link">
+            @foreach (var linkData in articleData.Getlinks())
+            {    
+                if (!linkData.Hidden)
+                {
+                    <div><a href="@(linkData.Url)" target="@(linkData.Target)">@linkData.Name</a></div>
+                }
+            }
+        </div>
+        }
+        @if (articleData.GetDocList().Count() > 0) {
+        <div class="documents">
+            @foreach (ArticleDoc documentData in articleData.GetDocs())
+            {
+                if (!documentData.Hidden)
+                {
+                    <div><a href="@(documentData.RelPath)" target="_blank" >@documentData.Name</a></div>
+                }
+            }
+        </div>
+        }
 
         <div class="darticle-gallery">
-            @foreach (var articleImage in articleData.GetImages())
-            {
-                <a data-fancybox="group@(articleData.ArticleId)" data-caption="@(articleImage.Alt)" href="@ImageUrl(articleImage.RelPath,0,0)">
-                    <img src="@ImageUrl(articleImage.RelPath, 120, 120)" alt="@(articleImage.Alt)" />
-                </a>
-            }
+        @foreach (var articleImage in articleData.GetImages())
+        {
+            <a data-fancybox="group@(articleData.ArticleId)" data-caption="@(articleImage.Alt)" href="@ImageUrl(articleImage.RelPath,0,0)">
+                <img src="@ImageUrl(articleImage.RelPath, 180, 105)" alt="@(articleImage.Alt)" />
+            </a>
+        }
         </div>
 
-        <hr />
+        </div>
 
-        <div class="fb-share-button" data-href="@DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData)" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">@ResourceKey("Articles.share")</a></div>
+    </div>
 
-    </article>
-
-</div>
+</article>
 
 <script type="text/javascript">
 

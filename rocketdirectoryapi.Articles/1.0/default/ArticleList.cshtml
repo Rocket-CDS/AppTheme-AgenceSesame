@@ -13,27 +13,23 @@
     var heightdetail = moduleData.GetSettingInt("heightdetail");
 
 }
-<div class="@(moduleData.GetSetting("cssclass"))">
 
-    <div class="darticleswrapper">
+<div class="darticleswrapper">
 
-        <div class="darticles">
-        @foreach (ArticleLimpet articleData in articleDataList.GetArticleList())
-        {
-            var articleImage = articleData.GetImage(0);
-            <article>
-                <h2><a href="@DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData)">@articleData.Name</a></h2>
-                <div class="darticle-img"><img src="@ImageUrl(articleImage.RelPath, widthlist, heightlist)" alt="@(articleImage.Alt)" /></div>
-                <p>@Succinct(articleData.Summary, 200)</p>
-                <a class="bigbutton" href="@(DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData))">@ResourceKey("Articles.readmore")</a>
-            </article>
-        }
-        </div>
+    <div class="darticles">
+    @foreach (ArticleLimpet articleData in articleDataList.GetArticleList())
+    {
+        var articleImage = articleData.GetImage(0);
+        <article>
+            <div class="darticle-img"><a href="@DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData)"><img src="@ImageUrl(articleImage.RelPath, widthlist, heightlist)" alt="@(articleImage.Alt)" /></a></div>
+            <h3><a href="@DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData)">@articleData.Name</a></h3>
+            <p>@Succinct(articleData.Summary, 200)</p>
+        </article>
+    }
+    </div>
 
-        <div class="darticles-paging">
-            [INJECT:apptheme,ArticlePaging.cshtml]
-        </div>
-
+    <div class="darticles-paging">
+        [INJECT:apptheme,ArticlePaging.cshtml]
     </div>
 
 </div>
