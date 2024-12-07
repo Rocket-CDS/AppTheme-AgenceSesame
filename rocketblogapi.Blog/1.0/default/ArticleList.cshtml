@@ -67,19 +67,17 @@
 
 <script>
     $(document).ready(function () {
+
         const urlParams = new URLSearchParams(window.location.search);
         const pageParam = urlParams.get('page');
-        var lang = simplisity_getCookieValue('language');
-        if (lang && lang != '') {
-            simplisity_setCookieValue('simplisity_language', lang);
-        }
         $(window).on('beforeunload', function () {
             if (!pageParam || pageParam == '') {
-                setSelected('');
+                simplisity_setSessionField('monthidx', '');
+                simplisity_setSessionField('viewsearchtext', '');
                 simplisity_setSessionField('searchdate1', '');
                 simplisity_setSessionField('searchdate2', '');
                 simplisity_setSessionField('page', '1');
-                simplisity_setSessionField('searchtext', '');
+                simplisity_setSessionField('viewsearchtext', '');
             }
         });
     });
