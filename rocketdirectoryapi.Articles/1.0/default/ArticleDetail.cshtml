@@ -16,7 +16,7 @@
 
 <article class="darticle-detail">
 
-    <a class="darticle-back bigbutton" href="@ListUrl(moduleData.ListPageTabId(), categoryData)">@ResourceKey("DNNrocket.back")</a>
+    <a class="darticle-back" href="@ListUrl(moduleData.ListPageTabId(), categoryData)">@ResourceKey("DNNrocket.back")</a>
 
     <div class="darticle-header">
         <div class="darticle-title">
@@ -34,24 +34,8 @@
         <div class="darticle-infos">
             <div class="darticle-infosection">
                 <h3>Informations</h3>
-                <p>Surface : <strong>@articleData.Info.GetXmlProperty("genxml/textbox/surface") m²</strong></p>
-                <p>Classement : <strong>@articleData.Info.GetXmlProperty("genxml/textbox/classement")</strong></p>
-                <p>Année de réalisation : <strong>@articleData.Info.GetXmlProperty("genxml/textbox/annee")</strong></p>
+                <p>Texte</p>
             </div>
-            @if (articleData.Info.GetXmlProperty("genxml/textbox/partenaires") != "")
-            {
-            <div class="darticle-infosection">
-                <h3>Partenaires</h3>
-                <p>@BreakOf(articleData.Info.GetXmlProperty("genxml/textbox/partenaires"))</p>
-            </div>
-            }
-            @if (articleData.Info.GetXmlProperty("genxml/textbox/labels") != "")
-            {
-            <div class="darticle-infosection">
-                <h3>Labels et certifications</h3>
-                <p>@BreakOf(articleData.Info.GetXmlProperty("genxml/textbox/labels"))</p>
-            </div>
-            }
         </div>
 
         <div class="darticle-description">

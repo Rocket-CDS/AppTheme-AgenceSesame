@@ -16,6 +16,18 @@
 
 <div class="darticleswrapper">
 
+    <div class="darticles-header">
+        @if (!categoryData.Exists)
+        {
+            <h1>@catalogSettings.CatalogName</h1>
+            <p>@catalogSettings.Summary</p>
+        }
+        else
+        {
+            <h1>@categoryData.Name</h1>
+        }
+    </div>
+
     <div class="darticles">
     @foreach (ArticleLimpet articleData in articleDataList.GetArticleList())
     {
