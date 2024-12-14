@@ -30,3 +30,12 @@
 </div>
 
 @TagJsApiCall(moduleData.SystemKey,"#rocket-blog", sessionParams)
+
+<script>
+    $(document).ready(function () {
+        $(".rocket-tagbutton").on("click", function () {
+            var element_to_scroll_to = document.getElementById('rocketblogdisplay');
+            element_to_scroll_to.scrollIntoView();
+        });
+    });
+</script>

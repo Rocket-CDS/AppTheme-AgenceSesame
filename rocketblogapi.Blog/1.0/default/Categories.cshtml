@@ -9,7 +9,9 @@
 <div class="blog-categories">
     <div class="h3-headline">@ResourceKey("DNNrocket.categories")</div>
     <ul>
-        <li><a href="@DNNrocketUtils.NavigateURL(sessionParams.TabId)" onclick="clearDateSearch();$('.simplisity_loader').show();">@ResourceKey("Blog.allcategories")</a></li>
+        <li>
+            <a href="@ListUrl(moduleData.ListPageTabId())" onclick="blog_clearFiltersCategories('w3-theme-l3');" class="w3-bar-item w3-button rocket-categorylink">@ResourceKey("Blog.allcategories")</a>
+        </li>
         @foreach (var c in categoryDataList.GetCategoryTree())
         {
             if (!c.Hidden && !c.HiddenByCulture && c.Level == 0)
@@ -21,7 +23,9 @@
                     catDict.Add("catid", c.CategoryId.ToString());
                     if (l.Count == 0)
                     {
-                        <li><a href="@DNNrocketUtils.NavigateURL(sessionParams.TabId, catDict, c.Name)" onclick="clearDateSearch();$('.simplisity_loader').show();">@c.Name (@c.GetArticles().RecordCount)</a></li>
+                        <li>
+                            <a href="@ListUrl(moduleData.ListPageTabId(), catData)" class=" rocket-categorylink " onclick="blog_clearFiltersCategories('w3-theme-l3');">@c.Name (@c.GetArticles().RecordCount)</a>
+                        </li>
                     }
                 }
             }

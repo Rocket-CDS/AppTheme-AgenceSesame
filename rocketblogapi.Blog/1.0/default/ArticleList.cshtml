@@ -64,21 +64,3 @@
     }
 
 </div>
-
-<script>
-    $(document).ready(function () {
-
-        const urlParams = new URLSearchParams(window.location.search);
-        const pageParam = urlParams.get('page');
-        $(window).on('beforeunload', function () {
-            if (!pageParam || pageParam == '') {
-                simplisity_setSessionField('monthidx', '');
-                simplisity_setSessionField('viewsearchtext', '');
-                simplisity_setSessionField('searchdate1', '');
-                simplisity_setSessionField('searchdate2', '');
-                simplisity_setSessionField('page', '1');
-                simplisity_setSessionField('viewsearchtext', '');
-            }
-        });
-    });
-</script>

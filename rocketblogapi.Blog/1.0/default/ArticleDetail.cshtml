@@ -109,9 +109,15 @@
 
     </article>
 
+    <div id="rocket-sharrre" class="w3-row w3-xxlarge"></div>
+
 </div>
 
 <script type="text/javascript">
+
+    $(document).ready(function () {
+        blog_sharrre('@DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData)', 'w3-padding w3-button')
+    });
 
 $("[data-fancybox]").fancybox({
   lang : 'fr',

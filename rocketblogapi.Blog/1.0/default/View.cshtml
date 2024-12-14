@@ -6,11 +6,7 @@
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
 <!--inject-->
 
-<div class="simplisity_loader" style="display:none;">
-    <span class=" simplisity_loader_inner"></span>
-</div>
-
-<div id="rocket-blog">
+<div id="rocket-blog rocketblogdisplay">
     @{
         Model.SetSetting("searchview", "false");
         if (articleData != null)
@@ -27,3 +23,12 @@
         }
     }
 </div>
+<div class="simplisity_loader" style="display:none;">
+    <span class=" simplisity_loader_inner">
+    </span>
+</div>
+<script>
+    $(document).ready(function () {
+        blog_pageLoad('w3-theme-l3');
+    });
+</script>

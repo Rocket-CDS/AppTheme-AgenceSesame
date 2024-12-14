@@ -21,3 +21,12 @@
 </div>
 
 @FilterJsApiCall(moduleData.SystemKey, sessionParams)
+<script>
+    $(document).ready(function () {
+        $(".rocket-filtercheckbox").on("click", function () {
+            var element_to_scroll_to = document.getElementById('rocketblogdisplay');
+            element_to_scroll_to.scrollIntoView();
+            simplisity_setSessionField('page', '1');
+        });
+    });
+</script>
