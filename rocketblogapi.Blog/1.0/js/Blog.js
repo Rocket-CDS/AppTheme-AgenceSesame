@@ -1,14 +1,14 @@
-function blog_showSelectedMonths(monthidx, date1, date2, reloadUrl, browserUrl, cscSelectedClass) {
+function blog_showSelectedMonths(monthidx, date1, date2, reloadUrl, browserUrl, cssSelectedClass) {
     $('.simplisity_loader').show();
     simplisity_setSessionField('page', '1');
     $('#viewsearchtext').val('');
-    $('.rocket-monthdates').removeClass(cscSelectedClass);
-    $('.rocket-monthdates' + monthidx).addClass(cscSelectedClass);
+    $('.rocket-monthdates').removeClass(cssSelectedClass);
+    $('.rocket-monthdates' + monthidx).addClass(cssSelectedClass);
     simplisity_setSessionField('viewsearchtext', '');
     simplisity_setSessionField('monthidx', monthidx);
     simplisity_setSessionField('searchdate1', date1);
     simplisity_setSessionField('searchdate2', date2);
-    $('.rocket-categorylink').removeClass(cscSelectedClass);
+    $('.rocket-categorylink').removeClass(cssSelectedClass);
     if (browserUrl && browserUrl != '') {
         history.pushState('', "Title", browserUrl);
     }
@@ -23,10 +23,10 @@ function blog_showSelectedMonths(monthidx, date1, date2, reloadUrl, browserUrl, 
         doDateSearchReload(date1, date2);
     }
 }
-function blog_clearFiltersCategories(cscSelectedClass) {
+function blog_clearFiltersCategories(cssSelectedClass) {
     $('.simplisity_loader').show();
     // remove selecton class
-    $('.rocket-monthdates').removeClass(cscSelectedClass);
+    $('.rocket-monthdates').removeClass(cssSelectedClass);
 
     // Clear the search field
     $('#viewsearchtext').val('');
@@ -43,12 +43,12 @@ function blog_clearFiltersCategories(cscSelectedClass) {
     // Clear Filter checkboxes
     $('.rocket-filtercheckbox').each(function (i, obj) { simplisity_setSessionField(this.id, false); });
 }
-function blog_pageLoad(cscSelectedClass) {
+function blog_pageLoad(cssSelectedClass) {
     $('.simplisity_loader').show();
     if (simplisity_getSessionField('searchdate1') != '' && simplisity_getSessionField('viewsearchtext') == '') {
         monthidx = simplisity_getSessionField('monthidx');
-        $('.rocket-monthdates').removeClass(cscSelectedClass);
-        $('.rocket-monthdates' + monthidx).addClass(cscSelectedClass);
+        $('.rocket-monthdates').removeClass(cssSelectedClass);
+        $('.rocket-monthdates' + monthidx).addClass(cssSelectedClass);
     }
     $('.simplisity_loader').hide();
 }
