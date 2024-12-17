@@ -78,7 +78,7 @@
             <div class="article-infos">
                 <div class="share-buttons">
                     <div class="bloginfo">Partager</div>
-                    <div class="fb-share-button" data-href="@DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData)" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">@ResourceKey("Articles.share")</a></div>
+                    <div id="rocket-sharrre"></div>
                 </div>
                 @if (articleData.GetProperties("tags").Count > 0)
                 {
@@ -109,14 +109,12 @@
 
     </article>
 
-    <div id="rocket-sharrre" class="w3-row w3-xxlarge"></div>
-
 </div>
 
 <script type="text/javascript">
 
     $(document).ready(function () {
-        blog_sharrre('@DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData)', 'w3-padding w3-button')
+        blog_sharrre('@DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData)', 'share-button')
     });
 
 $("[data-fancybox]").fancybox({
