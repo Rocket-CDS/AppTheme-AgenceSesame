@@ -82,7 +82,7 @@ function blog_sharrre(pageUrl, iconClass) {
             content = '';
             for (i in list) {
                 service = list[i];
-                content += '<a class="' + service + ' ' + iconClass + '"><span class="ri-' + service + '"></span></a>';
+                content += '<a class="' + service + '"><span class="ri-' + service + ' ' + iconClass + '"></span></a>';
             }
             return content;
         }(), render: function (api, options) {
