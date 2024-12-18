@@ -21,6 +21,10 @@
         <br />
         @CheckBox(info, "genxml/settings/satimage", "&nbsp;" + ResourceKey("Blog.showsatimage").ToString(), " class='w3-check'", false)
     </div>
+    <div class="w3-quarter w3-padding">
+        <label>@ResourceKey("DNNrocket.itemlimit")</label>
+        @TextBox(info, "genxml/settings/itemlimit", " class='w3-input w3-border' ", "0")
+    </div>
 }
 <!-- Filter Settings -->
 @if (moduleData.DisplayTemplate == "filters.cshtml")
@@ -94,10 +98,6 @@
         <div class="w3-quarter w3-padding">
             <label>@ResourceKey("DNNrocket.pagesize")</label>
             @DropDownList(info, "genxml/settings/pagesize", "12,24,48", "12,24,48", " style='height:40px;' class='w3-input w3-border simplisity_sessionfield ' onchange=\"doSearchReload();return false;\" title='" + @ResourceKey("DNNrocket.pagesize", sessionParams.CultureCode) + "'", "24")
-        </div>
-        <div class="w3-quarter w3-padding">
-            <label>@ResourceKey("DNNrocket.itemlimit")</label>
-            @TextBox(info, "genxml/settings/itemlimit", " class='w3-input w3-border' ", "0")
         </div>
         <div class="w3-quarter w3-padding">
             <br />
