@@ -59,21 +59,11 @@ function blog_sharrre(pageUrl, iconClass) {
     $('#rocket-sharrre').sharrre({
         share: {
             facebook: true,
-            linkedin: true,
+            linkedin: true
         },
         buttons: {
-            facebook: {
-                popup: {
-                    width: 1200,
-                    height: 900
-                }
-            },
-            linkedin: {
-                popup: {
-                    width: 1200,
-                    height: 900
-                }
-            },
+            facebook: {},
+            linkedin: {}
         },
         url: pageUrl,
         enableCounter: false,
@@ -82,7 +72,7 @@ function blog_sharrre(pageUrl, iconClass) {
             content = '';
             for (i in list) {
                 service = list[i];
-                content += '<a class="' + service + '"><span class="ri-' + service + ' ' + iconClass + '"></span></a>';
+				content += '<a class="' + service + '" href="#"><span class="ri-' + service + '"></span></a>';
             }
             return content;
         }(), render: function (api, options) {
