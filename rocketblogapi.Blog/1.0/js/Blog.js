@@ -18,8 +18,7 @@ function blog_showSelectedMonths(monthidx, date1, date2, reloadUrl, browserUrl, 
         location.replace(reloadUrl);
     }
     else {
-        var element_to_scroll_to = document.getElementById('rocketblogdisplay');
-        element_to_scroll_to.scrollIntoView();
+		$("html,body").animate({scrollTop:$('#rocket-blog').offset().top - 100},500);
         doDateSearchReload(date1, date2);
     }
 }
@@ -58,35 +57,13 @@ function blog_sharrre(pageUrl, iconClass) {
     $('#rocket-sharrre').sharrre({
         share: {
             facebook: true,
-            twitter: true,
+            twitter: false,
             linkedin: true,
-            pinterest: true,
+            pinterest: false
         },
         buttons: {
-            facebook: {
-                popup: {
-                    width: 1200,
-                    height: 900
-                }
-            },
-            twitter: {
-                popup: {
-                    width: 1200,
-                    height: 900
-                }
-            },
-            linkedin: {
-                popup: {
-                    width: 1200,
-                    height: 900
-                }
-            },
-            pinterest: {
-                popup: {
-                    width: 1200,
-                    height: 900
-                }
-            },
+            facebook: {},
+            linkedin: {}
         },
         url: pageUrl,
         enableCounter: false,
@@ -95,7 +72,7 @@ function blog_sharrre(pageUrl, iconClass) {
             content = '';
             for (i in list) {
                 service = list[i];
-                content += '<a class="' + service + '"><span class="ri-' + service + ' ' + iconClass + '"></span></a>';
+                content += '<a class="' + service + ' ' + iconClass + '" href="#"><span class="ri-' + service + '"></span></a>';
             }
             return content;
         }(), render: function (api, options) {
