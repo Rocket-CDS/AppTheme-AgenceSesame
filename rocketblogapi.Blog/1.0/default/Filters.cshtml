@@ -24,8 +24,7 @@
 <script>
     $(document).ready(function () {
         $(".rocket-filtercheckbox").on("click", function () {
-            var element_to_scroll_to = document.getElementById('rocketblogdisplay');
-            element_to_scroll_to.scrollIntoView();
+            $("html,body").animate({scrollTop:$('#rocket-blog').offset().top - 100},500);
             simplisity_setSessionField('page', '1');
         });
     });

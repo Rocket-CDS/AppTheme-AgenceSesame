@@ -18,9 +18,7 @@
         {
             if (!displayList.Contains(p.Key))
             {
-                <li>
-                    @TagButton(p.Key, p.Value ,sessionParams)
-                </li>
+                <li>@TagButton(p.Key, p.Value ,sessionParams)</li>
                 displayList.Add(p.Key);
             }
         }
@@ -34,8 +32,7 @@
 <script>
     $(document).ready(function () {
         $(".rocket-tagbutton").on("click", function () {
-            var element_to_scroll_to = document.getElementById('rocketblogdisplay');
-            element_to_scroll_to.scrollIntoView();
+			$("html,body").animate({scrollTop:$('#rocket-blog').offset().top - 100},500);
         });
     });
 </script>

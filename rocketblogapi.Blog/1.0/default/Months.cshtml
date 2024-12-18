@@ -17,7 +17,7 @@
 }
 <div class="blog-archives rocket-months">
     <div class="blog-archives-item">
-        <div class="rocket-monthdates rocket-monthdates0" onclick="blog_showSelectedMonths('0','','','@browserUrl','@browserUrl','w3-theme-l3');">@ResourceKey("Blog.allnews")</div>
+        <div class="rocket-monthdates rocket-monthdates0" onclick="blog_showSelectedMonths('0','','','@browserUrl','@browserUrl','activemonth');">@ResourceKey("Blog.allnews")</div>
     </div>
     @{
         var monthidx = 1;
@@ -26,7 +26,7 @@
     {
         if (a.Value.Count > 0)
         {
-            <div class="blog-archives-item rocket-monthdates rocket-monthdates@(monthidx)" monthidx="@(monthidx)" onclick="blog_showSelectedMonths('@(monthidx)','@a.Key.ToString("yyyy-MM-dd")', '@a.Key.AddMonths(1).AddDays(-1).ToString("yyyy-MM-dd")', '@reloadUrl','@browserUrl','w3-theme-l3');">
+            <div class="blog-archives-item rocket-monthdates rocket-monthdates@(monthidx)" monthidx="@(monthidx)" onclick="blog_showSelectedMonths('@(monthidx)','@a.Key.ToString("yyyy-MM-dd")', '@a.Key.AddMonths(1).AddDays(-1).ToString("yyyy-MM-dd")', '@reloadUrl','@browserUrl','activemonth');">
                 @a.Key.ToString("MMMM yyyy")
                 <span class="count">@a.Value.Count<span class="material-icons-outlined">article</span></span>
             </div>
