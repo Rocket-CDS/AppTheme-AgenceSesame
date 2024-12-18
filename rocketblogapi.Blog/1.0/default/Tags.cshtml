@@ -11,19 +11,19 @@
 
 <div class="rocket-tags blog-tags">
     <div class="h3-headline">@ResourceKey("Blog.tags")</div>
-    <ul class="blogtaglist">
+    <div class="blogtaglist">
     @foreach (var g in moduleData.GetPropertyModuleGroups(catalogSettings))
     {
         foreach (var p in propertyDataList.GetPropertyTagList(g.Key))
         {
             if (!displayList.Contains(p.Key))
             {
-                <li>@TagButton(p.Key, p.Value ,sessionParams)</li>
+                @TagButton(p.Key, p.Value ,sessionParams)
                 displayList.Add(p.Key);
             }
         }
     }
-    </ul>
+    </div>
     <div class="blogtagclear">@TagButtonClear("Effacer", sessionParams)</div>
 </div>
 
