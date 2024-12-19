@@ -8,21 +8,18 @@
     //NOTE: xPath for module settings must use "genxml/settings/*"
 }
 
-<div class="w3-row">
+<!-- List Settings -->
+@if (moduleData.DisplayTemplate == "view.cshtml")
+{ 
+<div class='w3-row'>
     <div class="w3-quarter w3-padding">
         <label>@ResourceKey("DNNrocket.width") (List)</label>
-        @TextBox(info, "genxml/settings/widthlist", "type='number' class='w3-input w3-border'", "600")
+        @TextBox(info, "genxml/settings/widthlist", "type='number' class='w3-input w3-border'", "300")
     </div>
     <div class="w3-quarter w3-padding">
         <label>@ResourceKey("DNNrocket.height") (List)</label>
-        @TextBox(info, "genxml/settings/heightlist", "type='number' class='w3-input w3-border'", "400")
+        @TextBox(info, "genxml/settings/heightlist", "type='number' class='w3-input w3-border'", "240")
     </div>
-    <div class="w3-quarter w3-padding">
-        <label>@ResourceKey("DNNrocket.rowlimit")</label>
-        @TextBox(info, "genxml/settings/limit", "type='number' class='w3-input w3-border'", "0")
-    </div>
-</div>
-<div class="w3-row">
     <div class="w3-quarter w3-padding">
         <label>@ResourceKey("DNNrocket.width") (Detail)</label>
         @TextBox(info, "genxml/settings/widthdetail", "type='number' class='w3-input w3-border'", "800")
@@ -32,6 +29,17 @@
         @TextBox(info, "genxml/settings/heightdetail", "type='number' class='w3-input w3-border'", "600")
     </div>
 </div>
+<div class='w3-row'>
+    <div class="w3-quarter w3-padding">
+        <label>@ResourceKey("DNNrocket.pagesize")</label>
+        @DropDownList(info, "genxml/settings/pagesize", "12,24,48", "12,24,48", " style='height:40px;' class='w3-input w3-border simplisity_sessionfield ' onchange=\"doSearchReload();return false;\" title='" + @ResourceKey("DNNrocket.pagesize", sessionParams.CultureCode) + "'", "24")
+    </div>
+</div>
+}
+
+<!-- Filter Settings -->
+@if (moduleData.DisplayTemplate == "filters.cshtml")
+{
 <div class="w3-row w3-padding">
     <div class="w3-large w3-margin-bottom">@ResourceKey("RC.propertygroups")</div>
     @foreach (var p in groupDict)
@@ -41,3 +49,13 @@
         </span>
     }
 </div>
+}
+
+<!-- Satellite Settings -->
+@if (moduleData.DisplayTemplate == "featured.cshtml")
+{
+<div class="w3-quarter w3-padding">
+    <label>@ResourceKey("DNNrocket.rowlimit")</label>
+    @TextBox(info, "genxml/settings/limit", "type='number' class='w3-input w3-border'", "0")
+</div>
+}

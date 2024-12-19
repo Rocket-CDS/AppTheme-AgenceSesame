@@ -48,6 +48,10 @@
                                 @TextBox(info, articleData.RefXPath, " class='w3-input w3-border' autocomplete='off' ", "", false, 0)
                             </div>
                         </div>
+						<div class="w3-row w3-padding">
+								<label>Titre H1 (vue détails)</label>&nbsp;@EditFlag(sessionParams)
+								@TextBox(info, "genxml/lang/genxml/textbox/title", " class='w3-input w3-border' autocomplete='off' ", "", true, 0)
+						</div>
                         <div class=" w3-row w3-padding">
                             <label>Résumé</label>&nbsp;@EditFlag(sessionParams)
                             @TextArea(info, articleData.SummaryXPath, " class='w3-input w3-border' rows='8' autocomplete='off' ", "", true, 0)
