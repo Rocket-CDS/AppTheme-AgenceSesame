@@ -16,7 +16,7 @@
             @foreach (var p in propertyDataList.GetPropertyFilterList(g.Key))
             {
                 <div class="rocket-filtercheckwrapper">
-                    @FilterCheckBox(p.Key, p.Value, "#articlelistdisplay", sessionParams.Info.GetXmlPropertyBool("r/" + p.Key), "", "propertyname='" + p.Value.Replace("'", "'") + "'")
+                    @FilterCheckBox(p.Key, p.Value, "#articlelistdisplay", sessionParams.Info.GetXmlPropertyBool("r/" + p.Key))
                 </div>
             }
             </div>
