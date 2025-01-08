@@ -84,8 +84,28 @@
 <!-- Satellite Settings -->
 @if (moduleData.DisplayTemplate == "featured.cshtml")
 {
-<div class="w3-quarter w3-padding">
-    <label>@ResourceKey("DNNrocket.rowlimit")</label>
-    @TextBox(info, "genxml/settings/limit", "type='number' class='w3-input w3-border'", "0")
-</div>
+    <div class="w3-row w3-padding">
+        <label>@ResourceKey("RC.defaultcategory")&nbsp;</label>
+        <div class="w3-row">
+            <div id="defaultcategorydisplay" class="w3-border w3-light-grey " style="width:100%;height:40px;">
+                @categoryData.Name
+                <span class="w3-right w3-button w3-theme parentcategoryselect" onclick="$('#categoryselect').show();" style="width:64px;height:40px;">@ButtonIcon(ButtonTypes.tree)</span>
+            </div>
+        </div>
+        @HiddenField(info, "genxml/settings/defaultcategory")
+        @RenderTemplate("ModuleSettingsCatSelect.cshtml", appThemeDirectory, Model, true)
+    </div>
+    <div class="w3-quarter w3-padding">
+        <label>@ResourceKey("DNNrocket.rowlimit")</label>
+        @TextBox(info, "genxml/settings/itemlimit", "type='number' class='w3-input w3-border'", "0")
+    </div>
+    <div class="w3-quarter w3-padding">
+        <label>@ResourceKey("DNNrocket.width") (List)</label>
+        @TextBox(info, "genxml/settings/widthlist", "type='number' class='w3-input w3-border'", "300")
+    </div>
+    <div class="w3-quarter w3-padding">
+        <label>@ResourceKey("DNNrocket.height") (List)</label>
+        @TextBox(info, "genxml/settings/heightlist", "type='number' class='w3-input w3-border'", "240")
+    </div>
+
 }

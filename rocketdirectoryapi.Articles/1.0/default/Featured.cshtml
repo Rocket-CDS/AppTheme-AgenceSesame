@@ -5,34 +5,27 @@
 @AddProcessDataResx(appTheme, true)
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
 <!--inject-->
-
-@if (articleDataList != null)
-{
-    var limit = moduleData.GetSettingInt("limit");
+@{
+    var articleList = articleDataList.GetArticleList(moduleData);
     var widthlist = moduleData.GetSettingInt("widthlist");
     var heightlist = moduleData.GetSettingInt("heightlist");
-    var widthdetail = moduleData.GetSettingInt("widthdetail");
-    var heightdetail = moduleData.GetSettingInt("heightdetail");
-    var lp = 1;
+}
 
+@if (articleList.Count > 0)
+{
     <div class="darticleswrapper">
 
         <div class="darticles">
-        @foreach (ArticleLimpet articleData in articleDataList.GetArticleList())
-        {
-            var articleImage = articleData.GetImage(0);
-            <article>
-                <h2><a href="@DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData)">@articleData.Name</a></h2>
-                <div class="darticle-img"><img src="@ImageUrl(articleImage.RelPath, widthlist, heightlist)" alt="@(articleImage.Alt)" /></div>
-                <p>@Succinct(articleData.Summary, 200)</p>
-                <a class="bigbutton" href="@(DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData))">@ResourceKey("Articles.readmore")</a>
-            </article>
-			if (lp == limit)
-			{
-				break;
-			}
-			lp++;
-		}
+            @foreach (ArticleLimpet articleData in articleList)
+            {
+                var articleImage = articleData.GetImage(0);
+                <article>
+                    <h2><a href="@DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData)">@articleData.Name</a></h2>
+                    <div class="darticle-img"><img src="@ImageUrl(articleImage.RelPath, widthlist, heightlist)" alt="@(articleImage.Alt)" /></div>
+                    <p>@Succinct(articleData.Summary, 200)</p>
+                    <a class="bigbutton" href="@(DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData))">@ResourceKey("Articles.readmore")</a>
+                </article>
+		    }
         </div>
 
     </div>
