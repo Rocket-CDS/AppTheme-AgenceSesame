@@ -14,21 +14,16 @@
 @if (articleList.Count > 0)
 {
     <div class="darticleswrapper">
-
         <div class="darticles">
             @foreach (ArticleLimpet articleData in articleList)
             {
                 var articleImage = articleData.GetImage(0);
                 <article>
-                    <h2><a href="@DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData)">@articleData.Name</a></h2>
-                    <div class="darticle-img"><img src="@ImageUrl(articleImage.RelPath, widthlist, heightlist)" alt="@(articleImage.Alt)" /></div>
+                    <div class="darticle-img"><a href="@DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData)"><img src="@ImageUrl(articleImage.RelPath, widthlist, heightlist)" alt="@(articleImage.Alt)" /></a></div>
+                    <h3><a href="@DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData)">@articleData.Name</a></h3>
                     <p>@Succinct(articleData.Summary, 200)</p>
-                    <a class="bigbutton" href="@(DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData))">@ResourceKey("Articles.readmore")</a>
                 </article>
 		    }
         </div>
-
     </div>
-
 }
-
