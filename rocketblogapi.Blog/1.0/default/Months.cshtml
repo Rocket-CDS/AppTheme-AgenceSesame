@@ -10,7 +10,7 @@
     var monthList = RocketDirectoryAPIUtils.GetArticlesByMonth(systemData.SystemKey, DateTime.Now.AddMonths(-36), 36, "publisheddate", sessionParams.GetInt("catid"));
     var reloadUrl = "";
     var browserUrl = ListUrl(moduleData.ListPageTabId()).ToString();
-    if (categoryDataList.DataList.Count > 0)
+    if (sessionParams.GetInt(RocketDirectoryAPIUtils.UrlQueryCategoryKey(portalData.PortalId, portalContent.SystemKey)) > 0)
     {
         reloadUrl = browserUrl;
     }
