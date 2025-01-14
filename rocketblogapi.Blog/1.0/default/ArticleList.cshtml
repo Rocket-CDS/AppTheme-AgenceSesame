@@ -19,10 +19,13 @@
                 <span class="material-icons-outlined">rss_feed</span>
             </a>
         </div>
-        @if (sessionParams.GetInt("catid") == 0)
+        @if (!categoryData.Exists)
         {
             <h1>@catalogSettings.CatalogName</h1>
+            if (catalogSettings.Summary != "")
+            {
             <p>@catalogSettings.Summary</p>
+            }
         }
         else
         {
