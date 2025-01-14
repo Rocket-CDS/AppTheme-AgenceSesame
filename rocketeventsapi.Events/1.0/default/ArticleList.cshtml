@@ -6,17 +6,20 @@
 @AddProcessDataResx(appTheme, true)
 <!--inject-->
 @{
-    var articleListData = (ArticleLimpetList)Model.GetDataObject("articlelist");
-    var eventList = (List<ArticleLimpet>)Model.GetDataObject("eventnextlist");
+	var eventList = RocketEventsUtils.GetNextEvents(portalData.PortalId, sessionParams.CultureCode, 10);
+    eventList.Reverse();
     if (sessionParams.GetInt("month") == 0 && sessionParams.Get("searchtext") == "")
     {
-        eventList.AddRange(articleListData.GetArticleList());
+        if (eventList.Count == 0)
+        {
+            eventList = (List<ArticleLimpet>)Model.GetDataObject("eventpassedlist");
+        }
     }
     else
     {
+        var articleListData = (ArticleLimpetList)Model.GetDataObject("articlelist");
         eventList = articleListData.GetArticleList();
     }
-
     var widthlist = moduleData.GetSettingInt("widthlist");
     var heightlist = moduleData.GetSettingInt("heightlist");
 }
@@ -66,9 +69,6 @@
                 </article>
             }
         </div>
-    <div class="eventspaging">
-            [INJECT:appthemesystem,articlePaging.cshtml]
-    </div>
     }
     else
     {
