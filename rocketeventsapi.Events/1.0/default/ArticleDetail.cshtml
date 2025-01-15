@@ -6,9 +6,6 @@
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
 <!--inject-->
 
-<div id="fb-root"></div>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v18.0&appId=401970051385259" nonce="ixwdTzkE"></script>
-
 @{
     var mainImage = articleData.GetImage(0);
     var widthdetail = moduleData.GetSettingInt("widthdetail");
@@ -93,9 +90,9 @@
                 }
             </div>
             <div class="article-infos">
-                <div class="share-buttons">
-                    <div class="eventinfo">@ResourceKey("DNNrocket.share")</div>
-                    <div class="fb-share-button" data-href="@DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData)" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">@ResourceKey("Articles.share")</a></div>
+				<div class="share-buttons">
+                    <div class="bloginfo">@ResourceKey("DNNrocket.share")</div>
+                    <div id="rocket-sharrre"></div>
                 </div>
                 <div class="eventinfo">@DateOf(articleData.Info, "genxml/textbox/eventstartdate", sessionParams.CultureCode, "dddd dd MMMM yyyy")</div>
             </div>
@@ -120,6 +117,43 @@
 </div>
 
 <script type="text/javascript">
+
+$(document).ready(function () {
+	blog_sharrre('@DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData)', '')
+});
+
+function blog_sharrre(pageUrl, iconClass) {
+    var list = ['facebook', 'linkedin'];
+    $('#rocket-sharrre').sharrre({
+        share: {
+            facebook: true,
+            linkedin: true
+        },
+        buttons: {
+            facebook: {},
+            linkedin: {}
+        },
+        url: pageUrl,
+        enableCounter: false,
+        enableHover: false,
+        template: function () {
+            content = '';
+            for (i in list) {
+                service = list[i];
+				content += '<a class="' + service + '" href="#"><span class="ri-' + service + '"></span></a>';
+            }
+            return content;
+        }(), render: function (api, options) {
+            for (i in list) {
+                service = list[i];
+                $(api.element).on('click', '.' + service, function () {
+                    api.openPopup(this.className);
+                });
+            }
+        }
+    });
+
+}
 
 $("[data-fancybox]").fancybox({
   lang : 'fr',
