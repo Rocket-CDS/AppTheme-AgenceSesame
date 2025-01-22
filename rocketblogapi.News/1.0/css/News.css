@@ -3,7 +3,8 @@
     vertical-align: middle;
 }
 .rocket-monthdates {text-transform:capitalize;cursor:pointer;}
-.rocket-tagbutton {cursor:pointer;}
+.rocket-monthdates0 {text-transform:none;}
+.rocket-tagbutton {cursor:pointer;white-space:nowrap;}
 
 /* Paging */
 .pagination {align-items:center;display:flex;justify-content:space-between;text-align:center;font-size:16px;}
