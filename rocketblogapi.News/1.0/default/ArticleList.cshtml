@@ -19,10 +19,13 @@
                 <span class="material-icons-outlined">rss_feed</span>
             </a>
         </div>
-        @if (sessionParams.GetInt("catid") == 0)
+        @if (!categoryData.Exists)
         {
             <h1>@catalogSettings.CatalogName</h1>
+            if (catalogSettings.Summary != "")
+            {
             <p>@catalogSettings.Summary</p>
+            }
         }
         else
         {
@@ -67,21 +70,3 @@
     }
 
 </div>
-
-<script>
-    $(document).ready(function () {
-
-        const urlParams = new URLSearchParams(window.location.search);
-        const pageParam = urlParams.get('page');
-        $(window).on('beforeunload', function () {
-            if (!pageParam || pageParam == '') {
-                simplisity_setSessionField('monthidx', '');
-                simplisity_setSessionField('viewsearchtext', '');
-                simplisity_setSessionField('searchdate1', '');
-                simplisity_setSessionField('searchdate2', '');
-                simplisity_setSessionField('page', '1');
-                simplisity_setSessionField('viewsearchtext', '');
-            }
-        });
-    });
-</script>
