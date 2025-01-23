@@ -6,9 +6,6 @@
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
 <!--inject-->
 
-<div id="fb-root"></div>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v18.0&appId=401970051385259" nonce="ixwdTzkE"></script>
-
 @{
     var mainImage = articleData.GetImage(0);
     var widthdetail = moduleData.GetSettingInt("widthdetail");
@@ -41,7 +38,7 @@
         <div class="article-flex">
             <div class="article-content">
 
-				<p><strong>@articleData.Summary</strong></p>
+                <p><strong>@articleData.Summary</strong></p>
                 @HtmlOf(articleData.RichText)
                 @HtmlOf(articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/htmltext"))
 
@@ -77,9 +74,19 @@
             </div>
             <div class="article-infos">
                 <div class="share-buttons">
-                    <div class="bloginfo">Partager</div>
-                    <div class="fb-share-button" data-href="@DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData)" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">@ResourceKey("Articles.share")</a></div>
+                    <div class="bloginfo">@ResourceKey("DNNrocket.share")</div>
+                    <div id="rocket-sharrre"></div>
                 </div>
+                @if (articleData.GetProperties("tags").Count > 0)
+                {
+                <div class="article-tags">
+                    <div class="bloginfo">Tags</div>
+                    @foreach (var tag in articleData.GetProperties("tags"))
+                    {
+                        <span>@tag.Name</span>
+                    }
+                </div>
+                }
                 <div class="bloginfo">@DateOf(articleData.Info, articleData.PublishedDateXPath,sessionParams.CultureCode, "d MMMM yyyy")</div>
             </div>
         </div>
@@ -102,6 +109,10 @@
 </div>
 
 <script type="text/javascript">
+
+$(document).ready(function () {
+	blog_sharrre('@DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData)', '')
+});
 
 $("[data-fancybox]").fancybox({
   lang : 'fr',
