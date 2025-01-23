@@ -31,6 +31,14 @@
         <label>@ResourceKey("DNNrocket.itemlimit")</label>
         @TextBox(info, "genxml/settings/itemlimit", " class='w3-input w3-border' ", "0")
     </div>
+    <div class="w3-quarter w3-padding">
+        <label>@ResourceKey("DNNrocket.width") (List)</label>
+        @TextBox(info, "genxml/settings/widthlist", "type='number' class='w3-input w3-border'", "300")
+    </div>
+    <div class="w3-quarter w3-padding">
+        <label>@ResourceKey("DNNrocket.height") (List)</label>
+        @TextBox(info, "genxml/settings/heightlist", "type='number' class='w3-input w3-border'", "240")
+    </div>
 }
 <!-- Month Settings -->
 @if (moduleData.DisplayTemplate == "months.cshtml")
