@@ -28,7 +28,7 @@
         {
             <div class="blog-archives-item rocket-monthdates rocket-monthdates@(monthidx)" monthidx="@(monthidx)" onclick="blog_showSelectedMonths('@(monthidx)','@a.Key.ToString("yyyy-MM-dd")', '@a.Key.AddMonths(1).AddDays(-1).ToString("yyyy-MM-dd")', '@reloadUrl','@browserUrl','activemonth');">
                 @a.Key.ToString("MMMM yyyy")
-                <span class="count">@a.Value.Count<span class="material-icons-outlined">article</span></span>
+                <span class="count">@a.Value.Count<span class="material-symbols-outlined">article</span></span>
             </div>
         }
         monthidx += 1;
