@@ -6,19 +6,27 @@
 @AddProcessDataResx(appTheme, true)
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
 <!--inject-->
-
-<div class="blog-archives">
+@{
+    var monthList = RocketDirectoryAPIUtils.GetArticlesByMonth(systemData.SystemKey, DateTime.Now.AddMonths(-36), 36, "publisheddate", sessionParams.GetInt("catid"));
+    var reloadUrl = "";
+    var browserUrl = ListUrl(moduleData.ListPageTabId()).ToString();
+    if (sessionParams.GetInt(RocketDirectoryAPIUtils.UrlQueryCategoryKey(portalData.PortalId, portalContent.SystemKey)) > 0)
+    {
+        reloadUrl = browserUrl;
+    }
+}
+<div class="blog-archives rocket-months">
     <div class="blog-archives-item">
-        <a href="@ListUrl(moduleData.ListPageTabId())" onclick="$('.simplisity_loader').show();setSelected('');doDateSearchReload('','');">@ResourceKey("Blog.allnews")</a>
+        <div class="rocket-monthdates rocket-monthdates0" onclick="blog_showSelectedMonths('0','','','@browserUrl','@browserUrl','activemonth');">@ResourceKey("Blog.allnews")</div>
     </div>
     @{
         var monthidx = 1;
     }
-    @foreach (var a in RocketDirectoryAPIUtils.GetArticlesByMonth(systemData.SystemKey, DateTime.Now.AddMonths(-36), 36, "publisheddate", sessionParams.GetInt("catid")))
+    @foreach (var a in monthList)
     {
         if (a.Value.Count > 0)
         {
-            <div class="blog-archives-item rocket-monthdates rocket-monthdates@(monthidx)" monthidx="@(monthidx)" onclick="$('.simplisity_loader').show();setSelected($(this).attr('monthidx'));doDateSearchReload('@a.Key.ToString("yyyy-MM-dd")','@a.Key.AddMonths(1).AddDays(-1).ToString("yyyy-MM-dd")');$('html,body').animate({scrollTop:0},500);">
+            <div class="blog-archives-item rocket-monthdates rocket-monthdates@(monthidx)" monthidx="@(monthidx)" onclick="blog_showSelectedMonths('@(monthidx)','@a.Key.ToString("yyyy-MM-dd")', '@a.Key.AddMonths(1).AddDays(-1).ToString("yyyy-MM-dd")', '@reloadUrl','@browserUrl','activemonth');">
                 @a.Key.ToString("MMMM yyyy")
                 <span class="count">@a.Value.Count<span class="material-symbols-outlined">article</span></span>
             </div>
@@ -27,21 +35,4 @@
     }
 </div>
 
-@DateJsApiCall(moduleData.SystemKey, "#rocket-blog", sessionParams)
-
-<script>
-    $(document).ready(function () {
-        if (simplisity_getSessionField('searchdate1') != '')
-        {
-            setSelected(simplisity_getSessionField('monthidx'));
-        }
-        $('.rocket-tagbutton').click(function(){
-            $('.rocket-monthdates').removeClass('selmonth');
-        });
-    });
-    function setSelected(monthidx) {
-        $('.rocket-monthdates').removeClass('selmonth');
-        $('.rocket-monthdates' + monthidx).addClass('selmonth');
-        simplisity_setSessionField('monthidx', monthidx);
-    }
-</script>
+@DateJsApiCall(moduleData, "#rocket-blog", sessionParams)
