@@ -47,7 +47,7 @@
 
         @if (BeginPage != 1)
         {
-            <a href="@PagingUrl(sessionParams.TabId, 1, catid, catUrlKey)" class="pagination-previous" onclick="$('.simplisity_loader').show()"><span class="material-icons-outlined">first_page</span></a>
+            <a href="@PagingUrl(sessionParams.TabId, 1, catid, catUrlKey)" class="pagination-previous" onclick="$('.simplisity_loader').show()"><span class="material-symbols-outlined">first_page</span></a>
         }
 
         <div class="pagination-list">
@@ -56,7 +56,7 @@
             {
                 if (page >= 6)
                 {
-                    <a href="@PagingUrl(sessionParams.TabId, (BeginPage - 1), catid, catUrlKey)" class="pagination-link" onclick="$('.simplisity_loader').show()"><span class="material-icons-outlined">more_horiz</span></a>
+                    <a href="@PagingUrl(sessionParams.TabId, (BeginPage - 1), catid, catUrlKey)" class="pagination-link" onclick="$('.simplisity_loader').show()"><span class="material-symbols-outlined">more_horiz</span></a>
                 }
             }
 
@@ -77,7 +77,7 @@
             {
                 if (EndPage != lastpage)
                 {
-                    <a href="@PagingUrl(sessionParams.TabId, (EndPage + 1), catid, catUrlKey)" class="pagination-link" onclick="$('.simplisity_loader').show()"><span class="material-icons-outlined">more_horiz</span></a>
+                    <a href="@PagingUrl(sessionParams.TabId, (EndPage + 1), catid, catUrlKey)" class="pagination-link" onclick="$('.simplisity_loader').show()"><span class="material-symbols-outlined">more_horiz</span></a>
                 }
             }
 
@@ -85,7 +85,7 @@
 
         @if (page < lastpage)
         {
-            <a href="@PagingUrl(sessionParams.TabId, lastpage, catid, catUrlKey)" class="pagination-next" onclick="$('.simplisity_loader').show()"><span class="material-icons-outlined">last_page</span></a>
+            <a href="@PagingUrl(sessionParams.TabId, lastpage, catid, catUrlKey)" class="pagination-next" onclick="$('.simplisity_loader').show()"><span class="material-symbols-outlined">last_page</span></a>
         }
 
     </nav>
