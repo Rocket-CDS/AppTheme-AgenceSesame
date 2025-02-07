@@ -18,7 +18,7 @@
 }
 
 <div class="flexcontent-div @(defaultOpenParentClass) @rowData.GetXmlProperty("genxml/textbox/cssclass")">
-<div class="fca-header" onclick="slideAccordionFC('@(contentId)','@(sessionParams.ModuleId)')" style="cursor:pointer;">[INJECT:appthemeview,ArticleRowHeaderView.cshtml]</div>
+    <div class="fca-header" onclick="slideAccordionFC('@(contentId)','@(sessionParams.ModuleId)','@(moduleData.GetSetting("disableaccordianmode"))')" style="cursor:pointer;">[INJECT:appthemeview,ArticleRowHeaderView.cshtml]</div>
 <div id="@(contentId)" class="fca-content @(defaultOpenClass)" style="@(defaultOpenStyle)">
     <div class="flexcontent-media">
         <div class="fcd-images ">
