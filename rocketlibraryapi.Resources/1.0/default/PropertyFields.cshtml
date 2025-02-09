@@ -1,0 +1,17 @@
+@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using Simplisity;
+@using RocketDirectoryAPI.Components;
+@using DNNrocketAPI.Components;
+
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
+@{
+    var info = new SimplisityInfo();
+    var propertyData = (PropertyLimpet)Model.List.First();
+    if (propertyData.Info != null)
+    {
+        info = propertyData.Info;
+    }
+}
+<!--inject-->
+

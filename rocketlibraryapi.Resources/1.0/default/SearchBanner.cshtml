@@ -21,7 +21,7 @@
     <div class="searchbar-item">
         <div class="searchbar-label">Par mots-clés</div>
         <div class="searchbar-input">
-            @TextBox(new SimplisityInfo(), "genxml/textbox/searchtext", " class='simplisity_sessionfield actionentrykey searchinput' autocomplete='off' ", sessionParams.Get("searchtext"))
+            @TextBox(new SimplisityInfo(), "genxml/textbox/viewsearchtext", " class='simplisity_sessionfield actionentrykey searchinput' autocomplete='off' ", sessionParams.Get("viewsearchtext"))
         </div>
     </div>
     <div class="searchbar-item">
@@ -53,10 +53,10 @@
             var tmpStr = $('.actionentrykey').val();
             $('.actionentrykey').val('');
             $('.actionentrykey').val(tmpStr);
-            $('#searchtext').addClass('w3-theme-light');
+            $('#viewsearchtext').addClass('w3-theme-light');
         }
         else {
-            $('#searchtext').removeClass('w3-theme-light');
+            $('#viewsearchtext').removeClass('w3-theme-light');
             $('.clearsearch').hide();
             $('.dosearch').show();
         }
@@ -83,14 +83,14 @@
     }
 
     function clearSearch() {
-        $('#searchtext').val('');
+        $('#viewsearchtext').val('');
         $('#searchdate1').val('');
         $('#searchdate2').val('');
         doSearchReload();
     }
 
     function doSearchReload() {
-        simplisity_setSessionField('searchtext', $('#searchtext').val());
+        simplisity_setSessionField('viewsearchtext', $('#viewsearchtext').val());
         simplisity_setSessionField('searchdate1', $('#searchdate1').val());
         simplisity_setSessionField('searchdate2', $('#searchdate2').val());
         simplisity_setSessionField('pagesize', $('#pagesize').val());
