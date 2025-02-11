@@ -41,7 +41,7 @@
         "name" : "@(productData.Name.Replace("\"", ""))",
         "image" : "@(portalData.EngineUrlWithProtocol)@(productImg)",
         "description" : "@(productData.Summary.Replace("\"", ""))",
-        "url" : "@DNNrocketUtils.NavigateURL(moduleSettings.DetailPageTabId(), dictParams, productData.Name),
+        "url" : "@DNNrocketUtils.NavigateURL(moduleSettings.DetailPageTabId(), dictParams, productData.Name)",
         "brand" : {
         "@@type" : "Brand",
         "name" : "@(productData.Brand.Replace("\"", ""))"
