@@ -1,0 +1,66 @@
+﻿@inherits RocketLibraryAPI.Components.RocketLibraryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@using System.Globalization;
+@using Simplisity;
+@AssignDataModel(Model)
+@AddProcessDataResx(appTheme, true)
+
+@if (articleData.Getlinks().Count > 0 || articleData.GetDocs().Count > 0)
+{
+    <div class="ads-icon"><i class="far fa-file-alt fa-lg"></i></div>
+    <div class="h4-headline">Ressources</div>
+}
+
+    @if (!UserUtils.IsAuthorised())
+    {
+    <div class="article-infos article-alert">
+        Vous devez être connecté à votre espace adhérent ou créer un compte pour accéder aux ressources.
+        <a href="/login?returnurl=%2fbase-documentaire%2farticleid%2f@(articleData.ArticleId)" class="bigbutton">Se connecter</a>
+    </div>
+    }
+                                
+    <div class="article-docs">
+    @foreach (var lk in articleData.Getlinks())
+    {
+        if (!lk.Hidden)
+        {
+            if (UserUtils.IsAuthorised())
+            {
+                <a target="_blank" href="@lk.Url" class="panel-block">
+                    <i class="fas fa-link fa-fw" aria-hidden="true"></i>@lk.Name
+                </a>
+            }
+            else
+            {
+                <span class="panel-block">
+                    <i class="fas fa-link fa-fw" aria-hidden="true"></i>@lk.Name
+                </span>
+            }
+        }
+    }
+    @foreach (var doc in articleData.GetDocs())
+    {
+        if (!doc.Hidden)
+        {
+            if (UserUtils.IsAuthorised())
+            {
+                <a class="panel-block simplisity_filedownload" s-cmd="remote_publicdownload" s-fields='{"articleid":"@(articleData.ArticleId.ToString())","dockey":"@(doc.DocKey)"}'>
+                    <i class="fas fa-file-pdf fa-fw" aria-hidden="true"></i>@doc.Name
+                </a>
+            }
+            else
+            {
+                <span class="panel-block">
+                    <i class="fas fa-file-pdf fa-fw" aria-hidden="true"></i>@doc.Name
+                </span>
+            }
+        }
+    }
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#linklistcontainer').activateSimplisityPanel();
+        });
+    </script>
