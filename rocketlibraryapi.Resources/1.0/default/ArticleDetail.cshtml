@@ -172,7 +172,7 @@
             simplisity_setSessionField('searchtext', '');
         });
 
-
+        $('#linklistcontainer').simplisityStartUp('/Desktopmodules/dnnrocket/api/rocket/action', { systemkey: '@(articleData.SystemKey)' });
         $('#linklistcontainer').getSimplisity('/Desktopmodules/dnnrocket/api/rocket/action', 'remote_publicview', { systemkey: '@(articleData.SystemKey)', articleid: '@(articleData.ArticleId.ToString())', disablecache: 'true', template: 'ArticleDetailUserAccess.cshtml' })
         $('#simplisity_loader').hide();
 
