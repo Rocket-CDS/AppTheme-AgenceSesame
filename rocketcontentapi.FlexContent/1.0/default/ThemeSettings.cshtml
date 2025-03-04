@@ -1,4 +1,4 @@
-﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+﻿﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
 @using DNNrocketAPI;
 @using Simplisity;
 @using RocketContentAPI.Components;
@@ -30,6 +30,6 @@
     </div>
     <div class="w3-third w3-padding">
         <br/>
-        @CheckBox(info, "genxml/settings/ecomode", "&nbsp;" + ResourceKey("DNNrocket.ecomode").ToString(), " class='w3-check' ", true)
+        @CheckBox(info, "genxml/settings/ecomode", "&nbsp;" + ResourceKey("DNNrocket.ecomode").ToString(), " class='w3-check' ", false)
     </div>
 </div>
