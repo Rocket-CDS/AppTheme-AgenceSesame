@@ -53,12 +53,12 @@
         @if (articleData.Info.GetXmlProperty("genxml/select/dpe") != "")
         {
             <h4>Consommation énergétique</h4>
-            <img src="@(appTheme.ImageFolderRel)/@(articleData.Info.GetXmlProperty("genxml/select/dpe")).png" />
+            <img src="@(appTheme.ImageFolderRel)/dpe-@(articleData.Info.GetXmlProperty("genxml/select/dpe")).png" />
         }
         @if (articleData.Info.GetXmlProperty("genxml/select/ges") != "")
         {
             <h4>Emission de gaz à effet de serre</h4>
-            <img src="@(appTheme.ImageFolderRel)/@(articleData.Info.GetXmlProperty("genxml/select/ges")).png" />
+            <img src="@(appTheme.ImageFolderRel)/ges-@(articleData.Info.GetXmlProperty("genxml/select/ges")).png" />
         }
 
         <script type="text/javascript">
