@@ -1,0 +1,101 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@AssignDataModel(Model)
+@AddProcessDataResx(appTheme, true)
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
+<!--inject-->
+@{
+    var width = moduleData.GetSettingInt("width");
+    var height = moduleData.GetSettingInt("height");
+    var captionHeight = moduleData.GetSettingInt("captionheight");
+    var alignment = moduleData.GetSetting("alignment");
+    var paddingClass = moduleData.GetSetting("padding");
+    var backgroundcolor = moduleData.GetSetting("backgroundcolor");
+}
+
+<div class="w3-row @backgroundcolor @(moduleData.GetSetting("cssclass"))">
+
+
+    <div id="printableArea">
+
+        @if (articleData.GetImages().Count > 0)
+        {
+            <img src="@ImageUrl(articleData.GetImage(0).RelPath,640,640)" alt="@articleData.GetImage(0).Alt" style="width:100%" />
+           foreach (var i in articleData.GetImages())
+           {
+                <img src="@ImageUrl(i.RelPath,640,640)" alt="@i.Alt" style="width:100%;display:none;" />
+           }
+        }
+
+
+        <h1>@articleData.Name</h1>
+        <h2>@articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/articlearea")</h2>
+        <div class="price">@articleData.Info.GetXmlProperty("genxml/textbox/price") &euro;</div>
+        <div class="notes">@articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/articlenotes")</div>
+        <p><strong>@BreakOf(articleData.Summary)</strong></p>
+        <p>@BreakOf(articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/articlesummary2"))</p>
+        <div class="ref">REF. @articleData.Ref</div>
+
+        <div class="gallery">
+            @foreach (var i in articleData.GetImages())
+            {
+                <a data-fancybox="group" data-caption="@articleData.Name" href="@ImageUrl(i.RelPath,0,0)" class="entrygal">
+                    <img src="@ImageUrl(i.RelPath, 140, -1)">
+                </a>
+            }
+        </div>
+
+        @if (articleData.Info.GetXmlProperty("genxml/select/dpe") != "" || articleData.Info.GetXmlProperty("genxml/select/ges") != "")
+        {
+            <h2>DPE</h2>
+        }
+        @if (articleData.Info.GetXmlProperty("genxml/select/dpe") != "")
+        {
+            <h4>Consommation énergétique</h4>
+            <img src="@(appTheme.ImageFolderRel)/@(articleData.Info.GetXmlProperty("genxml/select/dpe")).png" />
+        }
+        @if (articleData.Info.GetXmlProperty("genxml/select/ges") != "")
+        {
+            <h4>Emission de gaz à effet de serre</h4>
+            <img src="@(appTheme.ImageFolderRel)/@(articleData.Info.GetXmlProperty("genxml/select/ges")).png" />
+        }
+
+        <script type="text/javascript">
+
+            $("[data-fancybox]").fancybox({
+                lang: 'fr',
+                i18n: {
+                    'fr': {
+                        CLOSE: 'Fermer',
+                        NEXT: 'Suivant',
+                        PREV: 'Précédent',
+                        ERROR: 'Le contenu demandé ne peut pas être chargé.<br />Veuillez réessayer plus tard.',
+                        PLAY_START: 'Démarrer le diaporama',
+                        PLAY_STOP: 'Mettre en pause le diaporama',
+                        FULL_SCREEN: 'Plein écran',
+                        THUMBS: 'Vignettes',
+                        DOWNLOAD: 'Télécharger',
+                        SHARE: 'Partager',
+                        ZOOM: 'Zoomer'
+                    }
+                }
+            });
+
+        </script>
+    </div>
+    <div style="text-align:right;"><a href="@ListUrl(moduleData.ListPageTabId(), categoryData)" class="bigbutton">@ResourceKey("DNNrocket.return")</a></div>
+    <div style="text-align:right;"><a href="javascript:void(0);" onclick="printPageArea('printableArea')"><span class="material-icons">print</span></a></div>
+</div>
+
+<script type="text/javascript">
+
+    function printPageArea(areaID) {
+        var printContent = document.getElementById(areaID).innerHTML;
+        var originalContent = document.body.innerHTML;
+        document.body.innerHTML = printContent;
+        window.print();
+        document.body.innerHTML = originalContent;
+    }
+
+</script>

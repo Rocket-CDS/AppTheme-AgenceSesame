@@ -1,0 +1,41 @@
+@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@AssignDataModel(Model)
+@AddProcessDataResx(appTheme, true)
+<!--inject-->
+<div class='w3-row'>
+    <div class='w3-row'>
+        <div class="w3-col m2 w3-padding">
+            <label>@ResourceKey("RC.ref")</label>
+            @TextBox(info, articleData.RefXPath, " class='w3-input w3-border' autocomplete='off' ", "", false, 0)
+        </div>
+        <div class="w3-col m10 w3-padding">
+            <label>@ResourceKey("RC.name")</label>&nbsp;@EditFlag(sessionParams)
+            @TextBox(info, articleData.NameXPath, " class='w3-input w3-border' autocomplete='off' ", "", true, 0)
+        </div>
+    </div>
+    <div class='w3-row'>
+        <div class="w3-third w3-padding">
+            @CheckBox(info, articleData.HiddenXPath, "&nbsp;" + ResourceKey("RC.hidden"), " class='w3-check' ")
+        </div>
+        <div class="w3-third w3-padding">
+            @CheckBox(info, articleData.HiddenByCultureXPath, "&nbsp;" + ResourceKey("RC.hidden") + "&nbsp;" + EditFlag(sessionParams), " class='w3-check' ")
+        </div>
+        <div class="w3-third w3-padding">
+            <label>@ResourceKey("Theme.price")</label>
+            @TextBox(info, "genxml/textbox/price", "class='w3-input w3-border'", "0")
+        </div>
+    </div>
+    <div class=" w3-row w3-padding">
+        <label>@ResourceKey("Theme.summary")</label>&nbsp;@EditFlag(sessionParams)
+        @TextArea(info, articleData.SummaryXPath, " class='w3-input w3-border' rows='3' autocomplete='off' ", "", true, 0)
+    </div>
+    <div class=" w3-row w3-padding">
+        <label>@ResourceKey("Theme.summary")&nbsp;2</label>&nbsp;@EditFlag(sessionParams)
+        @TextArea(info, "genxml/lang/genxml/textbox/articlesummary2", " class='w3-input w3-border' rows='8' autocomplete='off' ", "", true, 0)
+    </div>
+    <div class=" w3-row">
+        [INJECT:apptheme,AdminExtra.cshtml]
+    </div>
+</div>

@@ -1,0 +1,80 @@
+@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@AssignDataModel(Model)
+@AddProcessDataResx(appTheme, true)
+<!--inject-->
+@{
+    var disableauto = "";
+    var disablehide = "";
+    if (catalogSettings.Info.GetXmlPropertyBool("genxml/checkbox/hidefuturedates"))
+    {
+        if (articleData.Info.GetXmlPropertyBool("genxml/checkbox/autopublish") && articleData.Info.GetXmlPropertyDate("genxml/textbox/publisheddate").Date > DateTime.Now.Date)
+        {
+            disablehide = " disabled ";
+        }
+    }
+    else
+    {
+        disableauto = " w3-hide ";
+    }
+}
+
+<div class="pl-breadcrumb">
+    <div class="pl-breadcrumb-itemlink w3-border-blue w3-border-bottom w3-text-blue " onclick="simplisity_setCookieValue('adminpanelcmd','');window.location.reload();">@ResourceKey("DNNrocket.services")</div>
+    <div class="pl-breadcrumb-item">
+        <img src="/DesktopModules/DNNrocket/API/images/chevron_right.svg" />
+    </div>
+    <div class="pl-breadcrumb-itemlink w3-border-blue w3-border-bottom w3-text-blue simplisity_click" s-cmd="articleadmin_editlist" s-fields='{"track":"true"}'>@ResourceKey("RC.articles")</div>
+    <div class="pl-breadcrumb-item">
+        <img src="/DesktopModules/DNNrocket/API/images/chevron_right.svg" />
+    </div>
+    <div class="pl-breadcrumb-itemlink w3-border-blue w3-border-bottom w3-text-blue a-reloadpage simplisity_click" s-cmd="articleadmin_editarticle" s-fields='{"track":"true","articleid":"@articleData.ArticleId"}'>@articleData.Name</div>
+</div>
+
+<div id="articleedit">
+
+    <div id="articleeditcontent" class='w3-animate-opacity w3-card w3-padding w3-margin w3-white '>
+
+        [INJECT:appthemedirectory,editbuttonbar.cshtml]
+
+        <div id="articledatasection" class="">
+            <div class='w3-row'>
+                <div class="w3-twothird w3-padding-small">
+
+                    [INJECT:apptheme,AdminGeneralBlock.cshtml]
+                    [INJECT:appthemedirectory,ArticleSEOBlock.cshtml]
+
+                </div>
+                <div class="w3-third w3-padding-small">
+
+                    [INJECT:appthemedirectory,ArticleimagesBlock.cshtml]
+                    [INJECT:appthemedirectory,ArticleCategoryListBlock.cshtml]
+                    [INJECT:appthemedirectory,ArticlePropertyListBlock.cshtml]
+                    [INJECT:appthemedirectory,ArticleDocumentsBlock.cshtml]
+                    [INJECT:appthemedirectory,ArticleLinksBlock.cshtml]
+
+                </div>
+            </div>
+        </div>
+
+        <div class="w3-padding">
+            @if (UserUtils.IsInRole("Administrator"))
+            {
+                <div class="w3-container">
+                    <div class="w3-right">
+                        @RenderXml(info)
+                    </div>
+                </div>
+            }
+            <i>ID: </i> @info.ItemID <i> GuidKey:</i> @info.GUIDKey
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+    });
+</script>

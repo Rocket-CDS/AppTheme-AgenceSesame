@@ -1,0 +1,102 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@AssignDataModel(Model)
+@AddProcessDataResx(appTheme, true)
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
+<!--inject-->
+@{
+    var articleList = articleDataList.GetArticleList();
+    var width = moduleData.GetSettingInt("width");
+    var height = moduleData.GetSettingInt("height");
+    var captionHeight = moduleData.GetSettingInt("captionheight");
+    var alignment = moduleData.GetSetting("alignment");
+    var paddingClass = moduleData.GetSetting("padding");
+    var backgroundcolor = moduleData.GetSetting("backgroundcolor");
+    Model.SetSetting("pagesizelist", "6,12,24,48");
+}
+
+<div class="containerouter @backgroundcolor @(moduleData.GetSetting("cssclass"))" style="padding-right:8px;padding-left:8px;padding-top:@(moduleData.GetSetting("toppadding"))px;padding-bottom:@(moduleData.GetSetting("bottompadding"))px;">
+    <div class="w3-section containerinner">
+
+        <div class="categories">
+            @foreach (var catData in categoryDataList.GetCategoryTree())
+            {
+                if (!catData.Hidden && !catData.HiddenByCulture && catData.Level == 0)
+                {
+                    if (catData.Level == 0)
+                    {
+                        <span><a href="@ListUrl(moduleData.ListPageTabId(), catData)">@catData.Name</a></span>
+                    }
+                }
+            }
+        </div>
+
+        <h1>
+            @if (sessionParams.GetInt("catid") == 0)
+            {
+                <span>Nos biens</span>
+            }
+            else
+            {
+                <span>@categoryData.Name</span>
+            }
+        </h1>
+
+        [INJECT:appthemedirectorydefault,SearchBanner.cshtml]
+
+        @if (articleList.Count > 0)
+        {
+            <div class="w3-row w3-tiny">
+                <a href="@RssUrl(portalData.PortalId,"rocketproductsapi_rss", DateTime.Now.AddMonths(-11).Year, DateTime.Now.AddMonths(-11).Month, 12,"publisheddate")" target="_blank">
+                    <span class="material-icons">
+                        rss_feed
+                    </span>
+                </a>
+            </div>
+
+            foreach (var article in articleList)
+            {
+                var info = article.Info;
+                var layout = info.GetXmlPropertyInt("genxml/select/layout");
+                var hStyle = info.GetXmlProperty("genxml/select/headingstyle");
+                var headingHide = info.GetXmlPropertyBool("genxml/checkbox/hideheading");
+                var hideRow = info.GetXmlPropertyBool("genxml/checkbox/hiderow");
+                var articleImage = article.GetImage(0);
+                var linkData = article.Getlink(0);
+
+
+                <div class="entry">
+                    <div class="entryimg">
+                        <a href="@DetailUrl(moduleData.DetailPageTabId(), article, categoryData)">
+                            <img class="w3-image @(moduleData.GetSetting("opacity")) " alt="@articleImage.Name" src="@ImageUrl(articleImage.RelPath, moduleData.GetSettingInt("width"), moduleData.GetSettingInt("height"))" />
+                        </a>
+                    </div>
+                    <div class="entrydesc">
+                        <h4>
+                            <a href="@DetailUrl(moduleData.DetailPageTabId(), article, categoryData)">
+                                @article.Name
+                            </a>
+                        </h4>
+                        <h5>@article.Info.GetXmlProperty("genxml/lang/genxml/textbox/articlearea")</h5>
+                        <div class="price">@article.Info.GetXmlProperty("genxml/textbox/price") &euro;</div>
+                        <div class="notes">@article.Info.GetXmlProperty("genxml/lang/genxml/textbox/articlenotes")</div>
+                        <p>@BreakOf(article.Summary)</p>
+                        <div class="ref">REF. @article.Ref</div>
+                    </div>
+                </div>
+
+            }
+
+            <div class="w3-row w3-padding-16 w3-center">
+                [INJECT:appthemedirectorydefault,articlePaging.cshtml]
+            </div>
+
+        }
+        else
+        {
+            <div class="h2-headline">@ResourceKey("DNNrocket.notfound")</div>
+        }
+
+    </div>
+</div>

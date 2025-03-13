@@ -1,0 +1,51 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@AssignDataModel(Model)
+@AddProcessDataResx(appTheme, true)
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
+<!--inject-->
+
+<div class="rocket-categories" style="padding-right:8px;padding-left:8px;padding-top:@(moduleData.GetSetting("toppadding"))px;padding-bottom:@(moduleData.GetSetting("bottompadding"))px;">
+
+    <div class="rocket-categoriestitle">@ResourceKey("DNNrocket.categories")</div>
+
+    <div class="w3-bar-block">
+        <a href="@ListUrl(moduleData.ListPageTabId())" onclick="products_clearFiltersCategories('w3-theme-l3');" class="w3-bar-item w3-button rocket-categorylink">@ResourceKey("DNNrocket.all")</a>
+
+        @foreach (var catData in categoryDataList.GetCategoryTree())
+        {
+            var selectedCat = "";
+            if (catData.CategoryId == categoryData.CategoryId)
+            {
+                selectedCat = " w3-theme-l3 ";
+            }
+            if (!catData.Hidden && !catData.HiddenByCulture && catData.Level == 0)
+            {
+                if (catData.Level == 0)
+                {
+                    var l = catData.GetDirectChildren();
+                    if (l.Count == 0)
+                    {
+                        <a href="@ListUrl(moduleData.ListPageTabId(), catData)" class="w3-bar-item w3-button rocket-categorylink @selectedCat" onclick="products_clearFiltersCategories('w3-theme-l3');" style="text-decoration: none;">@catData.Name (@catData.GetArticles().RecordCount)</a>
+                    }
+                    else
+                    {
+                        <a href="@ListUrl(moduleData.ListPageTabId(), catData)" class="w3-bar-item w3-button rocket-categorylink @selectedCat" onclick="products_clearFiltersCategories('w3-theme-l3');" style="text-decoration: none;">@catData.Name (@catData.GetArticles().RecordCount)</a>
+                        <div class="w3-margin-left">
+                            @foreach (var child in l)
+                            {
+                                selectedCat = "";
+                                if (child.CategoryId == categoryData.CategoryId)
+                                {
+                                    selectedCat = " w3-theme-l3 ";
+                                }
+                                <a href="@ListUrl(moduleData.ListPageTabId(), child)" class="w3-bar-item w3-button rocket-categorylink @selectedCat" onclick="products_clearFiltersCategories('w3-theme-l3');" style="text-decoration: none;">@child.Name  (@child.GetArticles().RecordCount)</a>
+                            }
+                        </div>
+                    }
+                }
+            }
+        }
+    </div>
+</div>
