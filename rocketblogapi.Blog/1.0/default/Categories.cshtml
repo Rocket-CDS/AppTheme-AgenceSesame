@@ -24,7 +24,7 @@
                     if (l.Count == 0)
                     {
                         <li>
-                            <a href="@ListUrl(moduleData.ListPageTabId(), categoryData)" class=" rocket-categorylink " onclick="blog_clearFiltersCategories('w3-theme-l3');">@c.Name (@c.GetArticles().RecordCount)</a>
+                            <a href="@ListUrl(moduleData.ListPageTabId(), c)" class=" rocket-categorylink " onclick="blog_clearFiltersCategories('w3-theme-l3');">@c.Name (@c.GetArticles().RecordCount)</a>
                         </li>
                     }
                 }
