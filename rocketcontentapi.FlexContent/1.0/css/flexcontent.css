@@ -17,6 +17,7 @@
 .fcw-4col .flexcontent-div {flex:1 0 25%;width:25%;padding:0 4%;}
 .fcw-5col .flexcontent-div {flex:1 0 20%;width:20%;padding:0 4%;}
 .fcw-multicol .flexcontent-div {flex:1;padding:0 4%;}
+.fcw-2col .flexcontent-div:last-child, .fcw-3col .flexcontent-div:last-child, .fcw-4col .flexcontent-div:last-child, .fcw-5col .flexcontent-div:last-child, .fcw-multicol .flexcontent-div:last-child {margin:0 0 40px 0;}
 
 /* Media */
 .flexcontent-media {margin:0 0 40px 0;}
