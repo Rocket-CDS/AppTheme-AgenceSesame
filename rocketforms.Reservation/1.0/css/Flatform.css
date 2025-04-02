@@ -1,10 +1,9 @@
 /* FLAT FORM */
-.contactform {}
 .contactform * {-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
 .cff {margin:0 0 20px 0;}
 .cff-100 {display:flex;margin:0 0 20px 0;}
 .cff-50 {flex:1;margin:0 4% 0 0;}
-.cff-100 div:last-child {margin:0;}
+.cff-100 > div:last-child {margin:0;}
 .contactformfields {margin:0 0 20px 0;}
 .contactformfields input[type=text], .contactformfields input[type=email], .contactformfields input[type=date], .contactformfields select {border:none;height:40px;padding-left:10px;background:#f2f2f2;color:#666666;font:inherit;}
 .contactformfields textarea {border:none;padding:10px;background:#f2f2f2;color:#666666;font:inherit;}
@@ -59,7 +58,3 @@ label.error {color:#d45252 !important;line-height:14px;margin:8px 0 0 0;text-tra
 .cff-100 {display:block;}
 .cff-50 {flex:0;margin:0;}
 }
-
-div.sentbtn { background-color: grey; color: white; padding: 15px 32px; text-align: center; display: inline-block; font-size: 16px; cursor: pointer; }
-
-div.sentbtn:hover {background:#333333;color:white;}
