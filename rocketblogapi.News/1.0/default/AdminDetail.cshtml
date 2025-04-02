@@ -129,14 +129,3 @@
     </div>
 
 </div>
-
-@{
-    Model.SetSetting("chatgptcmd", "rocketdirectoryapi_chatgpt");
-}
-@RenderTemplate("ChatGptForm.cshtml", appThemeRocketApi, Model, true)
-
-@{
-    Model.SetSetting("deeplcmd", "rocketdirectoryapi_translate");
-}
-@RenderTemplate("DeepLForm.cshtml", appThemeRocketApi, Model, true)
-
