@@ -1,0 +1,47 @@
+@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
+@{
+    var moduleTitle = headerData.GetXmlProperty("genxml/lang/genxml/header/headertitle");
+    var moduleText = headerData.GetXmlProperty("genxml/lang/genxml/header/headertext");
+    if (moduleTitle != "" || moduleText != "")
+    {
+        var headerAlignText = headerData.GetXmlProperty("genxml/header/headeralign");
+        if (headerAlignText == "")
+        {
+            headerAlignText = "start";
+        }
+        var headerStyle = headerData.GetXmlProperty("genxml/header/headerstyle");
+        if (headerStyle == "")
+        {
+            headerStyle = "h2";
+        }
+        var headerAnchor = "";
+        if (headerData.GetXmlProperty("genxml/lang/genxml/header/headeranchor") != "")
+        {
+            headerAnchor = " id=" + headerData.GetXmlProperty("genxml/lang/genxml/header/headeranchor");
+        }
+        var headerElement = "";
+        if (headerStyle.Contains("-"))
+        {
+            headerElement = "<div class=\"" + headerStyle + "\" " + headerAnchor + ">" + moduleTitle + "</div> ";
+        }
+        else
+        {
+            headerElement = "<" + headerStyle + " " + headerAnchor + ">" + moduleTitle + "</" + headerStyle + ">";
+        }
+
+        <div style="text-align:@headerAlignText;">
+            @if (moduleTitle != "")
+            {
+                @HtmlOf(headerElement)
+            }
+            @if (moduleText != "")
+            {
+                <p>@BreakOf(moduleText)</p>
+            }
+        </div>
+
+    }
+}
