@@ -45,6 +45,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="rocketcontentapi.01shared\1.0\css\" />
+    <Folder Include="rocketcontentapi.01shared\1.0\dep\" />
     <Folder Include="rocketcontentapi.About\1.0\dep\" />
     <Folder Include="rocketcontentapi.Citation\1.0\dep\" />
     <Folder Include="rocketcontentapi.ContactDetailsSat\1.0\dep\" />

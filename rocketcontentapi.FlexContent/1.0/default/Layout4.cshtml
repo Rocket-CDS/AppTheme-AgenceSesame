@@ -10,7 +10,7 @@
 
 <div class="flexcontent-div fcd-flex @rowData.GetXmlProperty("genxml/textbox/cssclass")">
     <div class="flexcontent-text">
-        [INJECT:appthemesystem,ArticleRowHeaderView.cshtml]
+        [INJECT:appthemeshared,ArticleRowHeaderView.cshtml]
         @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
         @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/htmltext"))
         @if (articleRowData.GetLinkList().Count() > 0) {
