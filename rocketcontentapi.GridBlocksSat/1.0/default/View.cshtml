@@ -1,0 +1,59 @@
+@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@AssigDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
+
+<div class="@(moduleData.GetSetting("cssclass"))">
+
+    <div class="grid-wrapper">
+
+        [INJECT:appthemesystem,ArticleHeaderView.cshtml]
+
+        <div class="grid-refs">
+            <div class="grid-sizer"></div>
+            @{
+                var displayCount = articleData.GetRows().Count();
+                if (displayCount > 4)
+                {
+                    displayCount = 4;
+                }
+            }
+            @foreach (var articleRowData in articleData.GetRows().GetRange(0, displayCount))
+            {
+                var rowData = articleRowData.Info;
+                var hideRow = rowData.GetXmlPropertyBool("genxml/checkbox/hiderow");
+                if (!hideRow)
+                {
+                    var gridsize = articleRowData.Info.GetXmlProperty("genxml/select/gridsize");
+                    var title = rowData.GetXmlProperty("genxml/lang/genxml/textbox/title");
+                    var articleImage = articleRowData.GetImage(0);
+                    foreach (var linkData in articleRowData.Getlinks())
+                    {
+                        var cssClassRow = "";
+                        if (rowData.GetXmlProperty("genxml/textbox/cssclass") != "")
+                        {
+                            cssClassRow = rowData.GetXmlProperty("genxml/textbox/cssclass");
+                        }
+                        <div class="grid-item grid-item@(gridsize) @(cssClassRow)">
+                            <div class="refsimg" style="background-image:url('@ImageUrl(articleImage.RelPath, 800, 0)');">
+                                <div class="refsoverlay">
+                                <div>
+                                    <h3>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h3>
+                                    <p>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title2")</p>
+                                    @if (rowData.GetXmlProperty("genxml/lang/genxml/textbox/externallinkarticlelink") != "")
+
+                                    {
+                                        <a class="bigbutton" href="@(linkData.Url)" target="@(linkData.Target)">Voir le site</a>
+                                    }
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            }
+            <div class="grid-more"><a href="/realisations" class="bigbutton">Toutes nos réalisations</a></div>
+        </div>
+    </div>
+</div>
