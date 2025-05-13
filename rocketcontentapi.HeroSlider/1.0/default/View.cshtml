@@ -30,7 +30,7 @@
                 if (!hideRow)
                 {
                     var articleImage = articleRowData.GetImage(0);
-                    <li style="background: url('@ImageUrl(articleImage.RelPath, width, height, "", "webp")') center @(crop) no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;" class="@rowData.GetXmlProperty("genxml/lang/genxml/textbox/cssclass")">
+                    <li style="background: url('@ImageUrl(articleImage.RelPath, width, height)') center @(crop) no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;" class="@rowData.GetXmlProperty("genxml/lang/genxml/textbox/cssclass")">
                         <div class="caption">
                             @if (rowData.GetXmlProperty("genxml/lang/genxml/textbox/title") != "")
                             {

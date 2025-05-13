@@ -33,7 +33,7 @@
                         if (linkData.IsDisabled || linkData.Hidden)
                         {
                             <div class="grid-item grid-item@(gridsize) @(cssClassRow)">
-                                <div class="refsimg" style="background-image:url('@ImageUrl(articleImage.RelPath, "", "")');">
+                                <div class="refsimg" style="background-image:url('@ImageUrl(articleImage.RelPath, 0, 0)');">
                                     <div class="refsoverlay"><h4>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h4></div>
                                     <div class="refstext">
                                         <h3>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h3>
@@ -45,7 +45,7 @@
                         else
                         {
                             <a class="grid-item grid-item@(gridsize) @(cssClassRow)" href="@(linkData.Url)" target="@(linkData.Target)">
-                                <div class="refsimg" style="background-image:url('@ImageUrl(articleImage.RelPath, "", "")');">
+                                <div class="refsimg" style="background-image:url('@ImageUrl(articleImage.RelPath, 0, 0)');">
                                     <div class="refsoverlay"><h4>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h4></div>
                                     <div class="refstext">
                                         <h3>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h3>

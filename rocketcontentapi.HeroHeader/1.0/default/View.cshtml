@@ -25,7 +25,7 @@
 }
 
 <div class="@(moduleData.GetSetting("cssclass"))">
-    <div class="topimageheader @(mask)" style="background:url('@ImageUrl(articleImage.RelPath, width, height, "", "webp")') center @(crop) no-repeat;
+    <div class="topimageheader @(mask)" style="background:url('@ImageUrl(articleImage.RelPath, width, height)') center @(crop) no-repeat;
                                             -webkit-background-size: cover;
                                             -moz-background-size: cover;
                                             -o-background-size: cover;
