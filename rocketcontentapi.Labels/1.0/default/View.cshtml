@@ -7,10 +7,17 @@
 @{
     var width = moduleData.Record.GetXmlPropertyInt("genxml/settings/width");
     var height = moduleData.Record.GetXmlPropertyInt("genxml/settings/height");
+    var openDiv = "";
+    var closeDiv = "";
+    if (moduleData.GetSetting("cssclass") != "")
+    {
+        openDiv = "<div class='" + moduleData.GetSetting("cssclass") + "'>";
+        closeDiv = "</div>";
+    }
 }
-<div class="@(moduleData.GetSetting("cssclass"))">
+@HtmlOf(openDiv)
     <div class="labelswrapper">
-        [INJECT: appthemesystem,ArticleHeaderView.cshtml]
+        [INJECT:appthemeshared,ArticleHeaderView.cshtml]
         <div class="labels">
             @foreach (var articleImage in articleRowData.GetImages())
             {
@@ -31,5 +38,5 @@
             }
         </div>
     </div>
-</div>
+@HtmlOf(closeDiv)
 

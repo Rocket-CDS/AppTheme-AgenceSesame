@@ -8,8 +8,15 @@
 @{
     var width = moduleData.GetSettingInt("width");
     var height = moduleData.GetSettingInt("height");
+    var openDiv = "";
+    var closeDiv = "";
+    if (moduleData.GetSetting("cssclass") != "")
+    {
+        openDiv = "<div class='" + moduleData.GetSetting("cssclass") + "'>";
+        closeDiv = "</div>";
+    }
 }
-<div @(moduleData.GetSetting("cssclass"))>
+@HtmlOf(openDiv)
     <div class="flexslider" id="flexslider">
         <ul class="slides">
             @foreach (var articleRowData in articleData.GetRows())
@@ -50,7 +57,7 @@
             }
         </ul>
     </div>
-</div>
+@HtmlOf(closeDiv)
 
 <script type="text/javascript">
     $(document).ready(function () {

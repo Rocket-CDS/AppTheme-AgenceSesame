@@ -7,9 +7,16 @@
 @{
     var width = moduleData.GetSettingInt("width");
     var height = moduleData.GetSettingInt("height");
+    var openDiv = "";
+    var closeDiv = "";
+    if (moduleData.GetSetting("cssclass") != "")
+    {
+        openDiv = "<div class='" + moduleData.GetSetting("cssclass") + "'>";
+        closeDiv = "</div>";
+    }
 }
 
-<div class="@(moduleData.GetSetting("cssclass"))">
+@HtmlOf(openDiv)
 
     <div class="gblockswrapper">
 
@@ -57,4 +64,5 @@
             }
         </div>
     </div>
-</div>
+    
+@HtmlOf(closeDiv)

@@ -4,10 +4,6 @@
 <!--inject-->
 @{
     var info = moduleDataInfo;
-    //NOTE: xPath for module settings must use "genxml/settings/*"
-}
-
-@{
     var mask = "";
     if (moduleData.GetSettingBool("mask"))
     {
@@ -22,9 +18,16 @@
     {
         crop = "center";
     }
+    var openDiv = "";
+    var closeDiv = "";
+    if (moduleData.GetSetting("cssclass") != "")
+    {
+        openDiv = "<div class='" + moduleData.GetSetting("cssclass") + "'>";
+        closeDiv = "</div>";
+    }
 }
 
-<div class="@(moduleData.GetSetting("cssclass"))">
+@HtmlOf(openDiv)
     <div class="topimageheader @(mask)" style="background:url('@ImageUrl(articleImage.RelPath, width, height)') center @(crop) no-repeat;
                                             -webkit-background-size: cover;
                                             -moz-background-size: cover;
@@ -45,7 +48,4 @@
             }
         </div>
     </div>
-</div>
-
-
-
+@HtmlOf(closeDiv)

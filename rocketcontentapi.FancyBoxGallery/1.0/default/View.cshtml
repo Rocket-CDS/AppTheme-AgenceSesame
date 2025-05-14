@@ -5,25 +5,34 @@
 @AddProcessDataResx(appThemeView, true)
 <!--inject-->
 
-    <div class="@moduleData.GetSetting("cssclass")">
+@{
+    var openDiv = "";
+    var closeDiv = "";
+    if (moduleData.GetSetting("cssclass") != "")
+    {
+        openDiv = "<div class='" + moduleData.GetSetting("cssclass") + "'>";
+        closeDiv = "</div>";
+    }
+}
 
-        <div class="gallery-wrapper">
-            [INJECT:appthemesystem,ArticleHeaderView.cshtml]
-            <div class="gallery">
+@HtmlOf(openDiv)
+    <div class="gallery-wrapper">
+        [INJECT:appthemeshared,ArticleHeaderView.cshtml]
+        <div class="gallery">
 
-            @foreach (ArticleImage articleImage in articleRowData.GetImages())
+        @foreach (ArticleImage articleImage in articleRowData.GetImages())
+        {
+            if (articleImage.RelPath != "")
             {
-                if (articleImage.RelPath != "")
-                {
-                    <a data-fancybox="@(articleRowData.RowKey)" data-caption="@(articleImage.Alt)" href="@(articleImage.RelPath)">
-                        <img src="@ImageUrl(articleImage.RelPath, moduleData.GetSettingInt("width"), moduleData.GetSettingInt("height"))" alt="@(articleImage.Alt)" />
-                    </a>
+                <a data-fancybox="@(articleRowData.RowKey)" data-caption="@(articleImage.Alt)" href="@(articleImage.RelPath)">
+                    <img src="@ImageUrl(articleImage.RelPath, moduleData.GetSettingInt("width"), moduleData.GetSettingInt("height"))" alt="@(articleImage.Alt)" />
+                </a>
 
-                }
             }
-            </div>
+        }
         </div>
     </div>
+@HtmlOf(closeDiv)
 
 <script type="text/javascript">
 

@@ -6,18 +6,24 @@
 <!--inject-->
 
 @{
-
     var width = moduleData.GetSettingInt("width");
     var height = moduleData.GetSettingInt("height");
     var zoom = moduleData.GetSettingInt("zoom");
     var mapLong = moduleData.GetSettingInt("long");
     var mapLat = moduleData.GetSettingInt("lat");
+    var openDiv = "";
+    var closeDiv = "";
+    if (moduleData.GetSetting("cssclass") != "")
+    {
+        openDiv = "<div class='" + moduleData.GetSetting("cssclass") + "'>";
+        closeDiv = "</div>";
+    }
 }
 
-<div class="@(moduleData.GetSettingInt("cssclass"))">
-    [INJECT:appthemesystem,ArticleHeaderView.cshtml]
+@HtmlOf(openDiv)
+    [INJECT:appthemeshared,ArticleHeaderView.cshtml]
     <div id="map-canvas" style="width:@(width)%;height:@(height)px"></div>
-</div>
+@HtmlOf(closeDiv)
 
 <script type="text/javascript">
     var map = '';

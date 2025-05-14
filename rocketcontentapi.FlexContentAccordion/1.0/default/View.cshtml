@@ -3,7 +3,17 @@
 @AddProcessDataResx(appThemeView, true)
 <!--inject-->
 
-<div class="@moduleData.GetSetting("cssclass")">
+@{
+    var openDiv = "";
+    var closeDiv = "";
+    if (moduleData.GetSetting("cssclass") != "")
+    {
+        openDiv = "<div class='" + moduleData.GetSetting("cssclass") + "'>";
+        closeDiv = "</div>";
+    }
+}
+
+@HtmlOf(openDiv)
 
     <div class="flexcontent-wrapper flexcontent-accordion">
 
@@ -21,7 +31,7 @@
     
     </div>
 
-</div>
+@HtmlOf(closeDiv)
 
 @if (!moduleData.ECOMode)
 {

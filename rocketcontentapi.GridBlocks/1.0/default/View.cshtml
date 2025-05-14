@@ -4,11 +4,21 @@
 @AddProcessDataResx(appThemeView, true)
 <!--inject-->
 
-<div class="@(moduleData.GetSetting("cssclass"))">
+@{
+    var openDiv = "";
+    var closeDiv = "";
+    if (moduleData.GetSetting("cssclass") != "")
+    {
+        openDiv = "<div class='" + moduleData.GetSetting("cssclass") + "'>";
+        closeDiv = "</div>";
+    }
+}
+
+@HtmlOf(openDiv)
 
     <div class="grid-wrapper">
 
-        [INJECT:appthemesystem,ArticleHeaderView.cshtml]
+        [INJECT:appthemeshared,ArticleHeaderView.cshtml]
 
         <div class="grid-refs">
             <div class="grid-sizer"></div>
@@ -59,7 +69,8 @@
             }
         </div>
     </div>
-</div>
+
+@HtmlOf(closeDiv)
 
 <script>
     $(document).ready(function () {

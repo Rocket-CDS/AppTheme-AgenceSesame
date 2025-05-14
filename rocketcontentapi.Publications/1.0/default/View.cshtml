@@ -7,13 +7,20 @@
 @{
     var width = moduleData.GetSettingInt("width");
     var height = moduleData.GetSettingInt("height");
+    var openDiv = "";
+    var closeDiv = "";
+    if (moduleData.GetSetting("cssclass") != "")
+    {
+        openDiv = "<div class='" + moduleData.GetSetting("cssclass") + "'>";
+        closeDiv = "</div>";
+    }
 }
 
-<div class="@(moduleData.GetSetting("cssclass"))">
+@HtmlOf(openDiv)
 
     <div class="publicationswrapper">
 
-        [INJECT:appthemesystem,ArticleHeaderView.cshtml]
+        [INJECT:appthemeshared,ArticleHeaderView.cshtml]
 
         <div class="publications">
             @foreach (var articleRowData in articleData.GetRows())
@@ -53,4 +60,5 @@
             }
         </div>
     </div>
-</div>
+
+@HtmlOf(closeDiv)

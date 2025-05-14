@@ -5,8 +5,17 @@
 @AddProcessDataResx(appThemeView, true)
 <!--inject-->
 
-<div class="@moduleData.GetSetting("cssclass")">
+@{
+    var openDiv = "";
+    var closeDiv = "";
+    if (moduleData.GetSetting("cssclass") != "")
+    {
+        openDiv = "<div class='" + moduleData.GetSetting("cssclass") + "'>";
+        closeDiv = "</div>";
+    }
+}
 
+@HtmlOf(openDiv)
     <div class="docswrapper">
         [INJECT:appthemesystem,ArticleHeaderView.cshtml]       
         @foreach (var articleRowData in articleData.GetRows())
@@ -27,4 +36,4 @@
             </ul>
         }
     </div>
-</div>
+@HtmlOf(closeDiv)

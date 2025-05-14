@@ -4,8 +4,15 @@
 
 @{
     var info = articleRowData.Info;
+    var openDiv = "";
+    var closeDiv = "";
+    if (moduleData.GetSetting("cssclass") != "")
+    {
+        openDiv = "<div class='" + moduleData.GetSetting("cssclass") + "'>";
+        closeDiv = "</div>";
+    }
 }
-<div class="@moduleData.GetSetting("cssclass")">
+@HtmlOf(openDiv)
     <div class="contactsat-infos">
         <div class="h4-headline">@ResourceKey("DNNrocket.contactus")</div>
         <div class="csi-content">
@@ -53,4 +60,4 @@
             }
         </div>
     </div>
-</div>
+@HtmlOf(closeDiv)

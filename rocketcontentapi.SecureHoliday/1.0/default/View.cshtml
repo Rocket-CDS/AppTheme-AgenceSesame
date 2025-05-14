@@ -6,6 +6,13 @@
 @{
     var currentlang = sessionParams.CultureCode.Substring(0, 2);
     var redirecturl = "https://bookingpremium.secureholiday.net/" + currentlang + "/" + moduleData.GetSetting("clientnumber") + "/search?dateStart={secureholidayday1}/{secureholidaymonth1}/{secureholidayyear1}&dateEnd={secureholidayday2}/{secureholidaymonth2}/{secureholidayyear2}&productType={rbltype}";
+    var openDiv = "";
+    var closeDiv = "";
+    if (moduleData.GetSetting("cssclass") != "")
+    {
+        openDiv = "<div class='" + moduleData.GetSetting("cssclass") + "'>";
+        closeDiv = "</div>";
+    }
 }
 
 <script>
@@ -111,7 +118,7 @@
 
 </script>
 
-<div class="@(moduleData.GetSetting("cssclass"))">
+@HtmlOf(openDiv)
     <div class="resaformwrapper">
         <div class="resaheader">@ResourceKey("SecureHoliday.bookyourstay")</div>
         <div class="resaform">
@@ -131,4 +138,4 @@
             </div>
         </div>
     </div>
-</div>
+@HtmlOf(closeDiv)

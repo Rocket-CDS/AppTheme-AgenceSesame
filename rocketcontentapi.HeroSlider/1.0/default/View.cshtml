@@ -14,8 +14,15 @@
     var width = moduleData.GetSettingInt("width");
     var height = moduleData.GetSettingInt("height");
     var separationLine = moduleData.GetSettingBool("separation");
+    var openDiv = "";
+    var closeDiv = "";
+    if (moduleData.GetSetting("cssclass") != "")
+    {
+        openDiv = "<div class='" + moduleData.GetSetting("cssclass") + "'>";
+        closeDiv = "</div>";
+    }
 }
-<div @(moduleData.GetSetting("cssclass"))>
+@HtmlOf(openDiv)
     <div class="slider-container @(mask)">
         <ul class="rslides" id="heroslider">
             @foreach (var articleRowData in articleData.GetRows())
@@ -61,7 +68,7 @@
             }
         </ul>
     </div>
-</div>
+@HtmlOf(closeDiv)
 
 <script type="text/javascript">
     $(document).ready(function () {

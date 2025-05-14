@@ -5,8 +5,18 @@
 @AddProcessDataResx(appThemeView, true)
 <!--inject-->
 
-<div class="@(moduleData.GetSetting("cssclass"))">
+@{
+    var openDiv = "";
+    var closeDiv = "";
+    if (moduleData.GetSetting("cssclass") != "")
+    {
+        openDiv = "<div class='" + moduleData.GetSetting("cssclass") + "'>";
+        closeDiv = "</div>";
+    }
+}
+
+@HtmlOf(openDiv)
 <div class="htmltext">
     @HtmlOf(rowData.GetXmlProperty("genxml/lang/genxml/textbox/htmltext"))
 </div>
-</div>
+@HtmlOf(closeDiv)

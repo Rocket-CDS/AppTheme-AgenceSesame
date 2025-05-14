@@ -2,7 +2,18 @@
 @AssignDataModel(Model)
 @AddProcessDataResx(appThemeView, true)
 <!--inject-->
-<div class="@moduleData.GetSetting("cssclass")">
+
+@{
+    var openDiv = "";
+    var closeDiv = "";
+    if (moduleData.GetSetting("cssclass") != "")
+    {
+        openDiv = "<div class='" + moduleData.GetSetting("cssclass") + "'>";
+        closeDiv = "</div>";
+    }
+}
+
+@HtmlOf(openDiv)
     <div class="contact-wrapper">
         <div id="@articleRowData.RowKey" class="contact-infos">
             @if (rowData.GetXmlProperty("genxml/lang/genxml/textbox/title") != "")
@@ -74,4 +85,4 @@
         }
 
     </div>
-</div>
+@HtmlOf(closeDiv)

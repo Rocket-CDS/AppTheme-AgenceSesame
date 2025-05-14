@@ -3,7 +3,17 @@
 @AddProcessDataResx(appThemeView, true)
 <!--inject-->
 
-<div class="@(moduleData.GetSetting("cssclass"))">
+@{
+    var openDiv = "";
+    var closeDiv = "";
+    if (moduleData.GetSetting("cssclass") != "")
+    {
+        openDiv = "<div class='" + moduleData.GetSetting("cssclass") + "'>";
+        closeDiv = "</div>";
+    }
+}
+
+@HtmlOf(openDiv)
     <div class="citation-window">   
         <div class="citation-content">
         @foreach (var articleRowData in articleData.GetRows())
@@ -22,4 +32,4 @@
         }
         </div>
     </div>
-</div>
+@HtmlOf(closeDiv)

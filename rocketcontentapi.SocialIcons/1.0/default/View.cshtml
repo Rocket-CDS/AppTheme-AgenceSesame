@@ -5,7 +5,17 @@
 @AddProcessDataResx(appThemeView, true)
 <!--inject-->
 
-<div class="@(moduleData.GetSetting("cssclass"))">
+@{
+    var openDiv = "";
+    var closeDiv = "";
+    if (moduleData.GetSetting("cssclass") != "")
+    {
+        openDiv = "<div class='" + moduleData.GetSetting("cssclass") + "'>";
+        closeDiv = "</div>";
+    }
+}
+
+@HtmlOf(openDiv)
     @if (info.GetXmlProperty("genxml/lang/genxml/textbox/title") != "")
     {
         <div class="h4-headline">@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</div>
@@ -21,6 +31,4 @@
         @LinkURL(info, "genxml/textbox/messenger", true, "<span class='ri-messenger'></span>", " class='messengericon' title='Messenger' target='_blank' ")
         @LinkURL(info, "genxml/textbox/rss", true, "<span class='ri-rss'></span>", " class='rssicon' title='RSS' target='_blank' ")
     </div>
-</div>
-
-
+@HtmlOf(closeDiv)

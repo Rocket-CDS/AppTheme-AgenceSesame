@@ -5,9 +5,19 @@
 @AddProcessDataResx(appThemeView, true)
 <!--inject-->
 
-<div class="@(moduleData.GetSetting("cssclass"))">
+@{
+    var openDiv = "";
+    var closeDiv = "";
+    if (moduleData.GetSetting("cssclass") != "")
+    {
+        openDiv = "<div class='" + moduleData.GetSetting("cssclass") + "'>";
+        closeDiv = "</div>";
+    }
+}
+
+@HtmlOf(openDiv)
     <div class="linkswrapper">
-        [INJECT: appthemesystem,ArticleHeaderView.cshtml]
+        [INJECT:appthemeshared,ArticleHeaderView.cshtml]
         <ul class="links">
             @foreach (var linkData in articleRowData.Getlinks())
             {
@@ -20,4 +30,4 @@
             }
         </ul>
     </div>
-</div>
+@HtmlOf(closeDiv)
