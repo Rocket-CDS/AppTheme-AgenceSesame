@@ -10,10 +10,12 @@
 <!--inject-->
 @{
     var info = new SimplisityInfo();
-    var cssClass = "";
-    if (moduleData.Record.GetXmlProperty("genxml/setting/cssclass") != "")
+    var openDiv = "";
+    var closeDiv = "";
+    if (moduleData.GetSetting("cssclass") != "")
     {
-        cssClass = "class='" + moduleData.Record.GetXmlProperty("genxml/settings/cssclass") + "' ";
+        openDiv = "<div class='" + moduleData.GetSetting("cssclass") + "'>";
+        closeDiv = "</div>";
     }
 }
 
@@ -23,31 +25,32 @@
         @ResourceKey("RocketForms.fromemailerror")    
     </div>
 }
-<div @(cssClass)>
+
+@HtmlOf(openDiv)
     <div id="contactform@(moduleData.ModuleId)" class="contactform">
         <div class="contactformfields">
             <div class="cff-100">
                 <div class="cff-50">
-                    <label>@ResourceKey("RocketForms.name")</label>
+                    <label for="name">@ResourceKey("RocketForms.name")</label>
                     @TextBox(info, "genxml/textbox/name")
                 </div>
                 <div class="cff-50">
-                    <label>@ResourceKey("RocketForms.firstname")</label>
+                    <label for="firstname">@ResourceKey("RocketForms.firstname")</label>
                     @TextBox(info, "genxml/textbox/firstname")
                 </div>
             </div>
             <div class="cff-100">
                 <div class="cff-50">
-                    <label>@ResourceKey("RocketForms.email") *</label>
+                    <label for="email">@ResourceKey("RocketForms.email") *</label>
                     @TextBox(info, "genxml/textbox/email", "type='email' required")
                 </div>
                 <div class="cff-50">
-                    <label>@ResourceKey("RocketForms.tel")</label>
+                    <label for="tel">@ResourceKey("RocketForms.tel")</label>
                     @TextBox(info, "genxml/textbox/tel")
                 </div>
             </div>
             <div class="cff">
-                <label>@ResourceKey("RocketForms.message")</label>
+                <label for="message">@ResourceKey("RocketForms.message")</label>
                 <div>@TextArea(info, "genxml/textbox/message", "rows='4'")</div>
             </div>
         </div>
@@ -69,7 +72,7 @@
         <!-- we must pass moduleid to server -->
         @HiddenField(info, "genxml/hidden/moduleid", "", moduleData.ModuleId.ToString())
     </div>
-</div>
+@HtmlOf(closeDiv)
 
 <script>
     $(document).ready(function () {
