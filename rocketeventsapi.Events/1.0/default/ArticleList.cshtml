@@ -6,7 +6,7 @@
 @AddProcessDataResx(appTheme, true)
 <!--inject-->
 @{
-	var eventList = RocketEventsUtils.GetNextEvents(portalData.PortalId, sessionParams.CultureCode, 10);
+    var eventList = articleDataList.GetArticleList();
     eventList.Reverse();
     if (sessionParams.GetInt("month") == 0 && sessionParams.Get("searchtext") == "")
     {
