@@ -58,7 +58,12 @@
     <Folder Include="rocketcontentapi.SecureHoliday\1.0\css\" />
     <Folder Include="rocketcontentapi.SecureHoliday\1.0\img\" />
     <Folder Include="rocketcontentapi.SecureHoliday\1.0\js\" />
-    <Folder Include="rocketeventsapi.Events\1.0\resx\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="rocketeventsapi.Events\1.0\resx\Events.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

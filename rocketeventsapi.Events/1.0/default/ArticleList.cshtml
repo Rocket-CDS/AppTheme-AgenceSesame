@@ -7,7 +7,6 @@
 <!--inject-->
 @{
     var eventList = articleDataList.GetArticleList();
-    eventList.Reverse();
     if (sessionParams.GetInt("month") == 0 && sessionParams.Get("searchtext") == "")
     {
         if (eventList.Count == 0)
