@@ -1,5 +1,13 @@
 /* Essential styles */
-.rocket-monthdates {cursor:pointer;}
+
+/* Archives */
+.rocket-monthdates {
+	text-transform: capitalize;
+	cursor: pointer;
+}
+.rocket-monthdates0 {
+	text-transform:none;
+}
 
 /* Month header */
 .month {
