@@ -11,7 +11,9 @@
     var eventList = (Dictionary<DateTime, List<ArticleLimpet>>)Model.GetDataObject("eventlistbymonth");
 }
 <div class="events-archives">
-
+	<div class="events-archives-item rocket-monthdates rocket-monthdates0">
+		<a href="@ListUrl(moduleData.ListPageTabId())">@ResourceKey("Events.showall")</a>
+	</div>
     @{
         var monthidx = 1;
     }
@@ -29,7 +31,6 @@
         }
         monthidx += 1;
     }
-
 </div>
 
 <script>
