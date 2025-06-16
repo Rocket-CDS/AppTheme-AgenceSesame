@@ -16,14 +16,11 @@
     var notification = (NotificationLimpet)Model.GetDataObject("notificationdata");
     var systemData = (SystemLimpet)Model.GetDataObject("systemdata"); ;
     var companyData = (CompanyLimpet)Model.GetDataObject("companydata"); ;
-    
-    var info = (SimplisityInfo)Model.List.First();
-    info.Lang = DNNrocketUtils.GetCurrentCulture();
-
+   
 }
 
 
-<div id="datasection" class="rocketecommerce_paymentform simplisity_panel">
+<div id="datasection" class="rocketecommerceapi_paymentform simplisity_panel">
     <div class="w3-container w3-margin">
 
         <div class="w3-row formdata">
@@ -37,15 +34,16 @@
                     }
                 </div>
                 <div class="w3-threequarter w3-padding">
-                    <b>
-                        @companyData.CompanyName
-                    </b>
-                    <div class="w3-row w3-small">
-                        @companyData.WebsiteUrl <br />
-                        @companyData.ContactEmail <br />
-                        @companyData.Phone <br />
+                    <div class="w3-right">
+                        <b>
+                            @companyData.CompanyName
+                        </b>
+                        <div class="w3-row w3-small">
+                            @companyData.WebsiteUrl <br />
+                            @companyData.ContactEmail <br />
+                            @companyData.Phone <br />
+                        </div>
                     </div>
-
                 </div>
 
             </div>

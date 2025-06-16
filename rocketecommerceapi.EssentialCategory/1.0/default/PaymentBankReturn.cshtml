@@ -15,18 +15,24 @@
     var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
     var notification = (NotificationLimpet)Model.GetDataObject("notificationdata");
     var systemData = (SystemLimpet)Model.GetDataObject("systemdata"); ;
-    var companyData = (CompanyLimpet)Model.GetDataObject("companydata"); ;
-    
-    var info = (SimplisityInfo)Model.List.First();
-    info.Lang = DNNrocketUtils.GetCurrentCulture();
-
+    var companyData = (CompanyLimpet)Model.GetDataObject("companydata");
+    var paymentData = (CompanyLimpet)Model.GetDataObject("paymentdata");
+    var info = new SimplisityInfo();
+    if (paymentData != null)
+    {
+        info = paymentData.Info;
+    }
 }
 
-<div id="cartbankreturn"></div>
+<div id="cartbankreturn">
+    <div class="simplisity_loader">
+        <span class=" simplisity_loader_inner">
+        </span>
+    </div>
+</div>
 
 <script>
     $(document).ready(function () {
-        $('.simplisity_loader').show();
         $('#cartbankreturn').getSimplisity('@(portalShop.ApiUrl)', '@(sessionParams.Get("cmd"))', '{"systemkey":"rocketecommerceapi", "moduleref": "@(sessionParams.ModuleRef)","key":"@(sessionParams.Get("key"))" }', '')
     });
 </script>

@@ -16,10 +16,12 @@
     var notification = (NotificationLimpet)Model.GetDataObject("notificationdata");
     var systemData = (SystemLimpet)Model.GetDataObject("systemdata"); ;
     var companyData = (CompanyLimpet)Model.GetDataObject("companydata"); ;
-    
-    var info = (SimplisityInfo)Model.List.First();
-    info.Lang = DNNrocketUtils.GetCurrentCulture();
-
+    var paymentData = (CompanyLimpet)Model.GetDataObject("paymentdata");
+    var info = new SimplisityInfo();
+    if (paymentData != null)
+    {
+        info = paymentData.Info;
+    }   
 }
 
     <div class="w3-row formdata">
@@ -59,7 +61,7 @@
                 foreach (var p in payList)
                 {
                     <div class="w3-row w3-padding">
-                        <div style="cursor:pointer;" class="w3-card-2 w3-margin-bottom w3-hover-light-grey dovalidatepayment simplisity_click " s-return="document" s-before="validatePayment" s-cmd="remote_publicpay" s-post="#datasection" s-fields='{"providerkey":"@(p.PaymentProvKey())","systemkey":"rocketpayment"}'>
+                        <div style="cursor:pointer;" class="w3-card-2 w3-margin-bottom w3-hover-light-grey dovalidatepayment simplisity_click " s-return="document" s-before="validatePayment" s-cmd="remote_publicpay" s-post="#datasection" s-fields='{"providerkey":"@(p.PaymentProvKey())","systemkey":"rocketecommerceapi"}'>
                             <div class="w3-button w3-large @(buttoncolor)" style="width:100%;">@ResourceKey("RE.pay")</div>
                         </div>
                     </div>
