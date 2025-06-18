@@ -30,8 +30,8 @@
                 }
             </div>
             <div class="pfh-address">
-                <strong>@companyData.CompanyName</strong><br />
-                @companyData.DisplayAddress<br />
+                <h4>@companyData.CompanyName</h4>
+				@BreakOf(companyData.Info.GetXmlProperty("genxml/merchant/displayaddress"))<br />
                 @companyData.Phone<br />
                 @companyData.ContactEmail
             </div>

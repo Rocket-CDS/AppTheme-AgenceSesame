@@ -54,11 +54,9 @@
         var buttoncolor = "w3-green";
         foreach (var p in payList)
         {
-            <div class="w3-row w3-padding">
-                <div class="dovalidatepayment simplisity_click " s-return="document" s-before="validatePayment" s-cmd="remote_publicpay" s-post="#datasection" s-fields='{"providerkey":"@(p.PaymentProvKey())","systemkey":"rocketecommerceapi"}'>
-                    <button class="bigbutton">@ResourceKey("RE.pay")</button>
-                </div>
-            </div>
+			<div class="dovalidatepayment simplisity_click " s-return="document" s-before="validatePayment" s-cmd="remote_publicpay" s-post="#datasection" s-fields='{"providerkey":"@(p.PaymentProvKey())","systemkey":"rocketecommerceapi"}'>
+				<button class="bigbutton">@ResourceKey("RE.pay")</button>
+			</div>
         }
     }
 </div>
