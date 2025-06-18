@@ -1,0 +1,23 @@
+/* Essential styles */
+.material-icons {vertical-align:middle;}
+.paymentformheader {display:flex;}
+.pfh-logo {margin:0 40px 0 0;}
+.pfh-address {flex:1;}
+
+/* FLAT FORM */
+.formdata * {-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
+.formdata {margin:0 0 20px 0;}
+.formdata input[type=text], .formdata input[type=email], .formdata input[type=date], .formdata select {border:none;height:40px;padding-left:10px;background:#f2f2f2;color:#666666;font:inherit;}
+.formdata textarea {border:none;padding:10px;background:#f2f2f2;color:#666666;font:inherit;}
+.formdata input[type=text]:focus, .formdata input[type=email]:focus, .formdata input[type=date]:focus, .formdata textarea:focus {background:#eaeaea;}
+.formdata input[type=text], .formdata input[type=email], .formdata input[type=date], .formdata select, .formdata textarea {width:100%;}
+.formdatafield {margin:0 0 16px 0;}
+.formdataamount {text-align:right;}
+/* JQuery Validate */
+input.error, textarea.error {background:#ffd9d9 !important;}
+label.error {color:#d45252 !important;line-height:14px;margin:8px 0 0 0;text-transform:none;}
+
+/* for 480px and less */
+@media screen and (max-width:480px) {
+
+}
