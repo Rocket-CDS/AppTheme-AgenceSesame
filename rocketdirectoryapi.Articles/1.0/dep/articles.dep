@@ -60,6 +60,13 @@
 			<datatype>article</datatype>
 		</genxml>
 	</queryparams>
+	<menuprovider>
+		<genxml>
+			<assembly>RocketDirectoryAPI</assembly>
+			<namespaceclass>RocketDirectoryAPI.Components.MenuDirectory</namespaceclass>
+			<systemkey>rocketdirectoryapi</systemkey>
+		</genxml>
+	</menuprovider>
 	<adminpanelinterfacekeys list="true">
 		<genxml>
 			<interfacekey>articleadmin</interfacekey>
