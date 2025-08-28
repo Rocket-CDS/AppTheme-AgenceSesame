@@ -47,7 +47,7 @@
 		</genxml>
 		<genxml>
 			<ctrltype><![CDATA[css]]></ctrltype>
-			<url><![CDATA[/DesktopModules/DNNrocket/css/rocket-icons-v1.0/style.css]]></url>
+			<url><![CDATA[/DesktopModules/RocketThemes/AppTheme-AgenceSesame/rocket-icons-v1.0/style.css]]></url>
 			<ecofriendly>true</ecofriendly>
 		</genxml>
 	</deps>
