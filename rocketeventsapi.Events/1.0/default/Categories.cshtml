@@ -1,0 +1,36 @@
+﻿@inherits RocketEventsAPI.Components.RocketEventsAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@using Simplisity;
+@using RocketEventsAPI.Components;
+@using System.Globalization;
+@AssignDataModel(Model)
+@AddProcessDataResx(appTheme, true)
+<!--inject-->
+
+<div class="events-categories">
+    <div class="h3-headline">@ResourceKey("DNNrocket.categories")</div>
+    <ul>
+        <li>
+            <a href="@ListUrl(moduleData.ListPageTabId())" class="rocket-categorylink">@ResourceKey("Events.allcategories")</a>
+        </li>
+        @foreach (var c in categoryDataList.GetCategoryTree())
+        {
+            if (!c.Hidden && !c.HiddenByCulture && c.Level == 0)
+            {
+                if (c.Level == 0)
+                {
+                    var l = c.GetDirectChildren();
+                    var catDict = new Dictionary<string, string>();
+                    catDict.Add("catid", c.CategoryId.ToString());
+                    if (l.Count == 0)
+                    {
+                        <li>
+                            <a href="@ListUrl(moduleData.ListPageTabId(), c)" class="rocket-categorylink">@c.Name (@c.GetArticles().RecordCount)</a>
+                        </li>
+                    }
+                }
+            }
+        }
+    </ul>
+</div>
