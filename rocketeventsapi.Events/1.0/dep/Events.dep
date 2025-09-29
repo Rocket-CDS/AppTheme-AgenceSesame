@@ -58,6 +58,11 @@
 			<cmd>listdetail</cmd>
 		</genxml>
 		<genxml>
+			<file><![CDATA[Categories.cshtml]]></file>
+			<name><![CDATA[Category Menu]]></name>
+			<cmd>catmenu</cmd>
+		</genxml>
+		<genxml>
 			<file><![CDATA[ArticleSat.cshtml]]></file>
 			<name><![CDATA[Sat]]></name>
 			<cmd>satellite</cmd>
@@ -96,6 +101,12 @@
 		</genxml>
 	</adminpanelinterfacekeys>
 	<queryparams list="true">
+		<genxml>
+			<queryparam>eventscatid</queryparam>
+			<tablename>rocketdirectoryapi</tablename>
+			<systemkey>rocketeventsapi</systemkey>
+			<datatype>category</datatype>
+		</genxml>
 		<genxml>
 			<queryparam>event</queryparam>
 			<tablename>rocketdirectoryapi</tablename>
