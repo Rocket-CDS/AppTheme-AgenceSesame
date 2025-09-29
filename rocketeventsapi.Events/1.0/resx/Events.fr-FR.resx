@@ -123,4 +123,7 @@
   <data name="showall.Text" xml:space="preserve">
     <value>Afficher tout</value>
   </data>
+  <data name="allcategories.Text" xml:space="preserve">
+    <value>Toutes les catégories</value>
+  </data>
 </root>
