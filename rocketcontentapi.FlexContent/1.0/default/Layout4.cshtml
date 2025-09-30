@@ -6,17 +6,31 @@
 
 @{  
     var imgalign = rowData.GetXmlProperty("genxml/select/imagealign");
+    var appThemeShared = (AppThemeLimpet)Model.GetDataObject("appthemeshared");
+    var excludetitle = rowData.GetXmlPropertyBool("genxml/checkbox/excludetitle");
+    var header1 = "";
+    var header2 = ""; 
+    if (excludetitle)
+    {
+        header1 = RenderTemplate("ArticleRowHeaderView.cshtml", appThemeShared, Model).ToString();
+    }
+    else
+    {
+        header2 = RenderTemplate("ArticleRowHeaderView.cshtml", appThemeShared, Model).ToString();
+    }
 }
 
-<div class="flexcontent-div fcd-flex @rowData.GetXmlProperty("genxml/textbox/cssclass")">
+<div class="flexcontent-div @rowData.GetXmlProperty("genxml/textbox/cssclass")">
+    @HtmlOf(header1)
+	<div class="fcd-flex">
     <div class="flexcontent-text">
-        [INJECT:appthemeshared,ArticleRowHeaderView.cshtml]
+        @HtmlOf(header2)
         @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
         @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/htmltext"))
         @if (articleRowData.GetLinkList().Count() > 0) {
         <div class="newspaper-link">
-                [INJECT:appthemeview,Links.cshtml]
-            </div>
+            [INJECT:appthemeview,Links.cshtml]
+        </div>
         }
         @if (articleRowData.GetDocList().Count() > 0) {
         <div class="documents">
@@ -50,4 +64,5 @@
             <div class="fcd-video"><div class="video-container">@HtmlOf(rowData.GetXmlProperty("genxml/lang/genxml/textbox/video"))</div></div>
         }
     </div>
+	</div>
 </div>
