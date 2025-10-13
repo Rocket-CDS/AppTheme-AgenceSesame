@@ -1,9 +1,9 @@
 @font-face {
   font-family: 'rocket-icons';
   src:
-    url('fonts/rocket-icons.ttf?ax6hol') format('truetype'),
-    url('fonts/rocket-icons.woff?ax6hol') format('woff'),
-    url('fonts/rocket-icons.svg?ax6hol#rocket-icons') format('svg');
+    url('fonts/rocket-icons.ttf?dbjav6') format('truetype'),
+    url('fonts/rocket-icons.woff?dbjav6') format('woff'),
+    url('fonts/rocket-icons.svg?dbjav6#rocket-icons') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -12,6 +12,7 @@
 [class^="ri-"], [class*=" ri-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'rocket-icons' !important;
+  speak: never;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -23,16 +24,21 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.ri-sr-only {
-  clip: rect(0 0 0 0); 
-  clip-path: inset(50%);
-  height: 1px;
-  overflow: hidden;
-  position: absolute;
-  white-space: nowrap; 
-  width: 1px;
+.ri-soundcloud:before {
+  content: "\e902";
 }
-
+.ri-location:before {
+  content: "\e947";
+}
+.ri-clock:before {
+  content: "\e94e";
+}
+.ri-user:before {
+  content: "\e971";
+}
+.ri-info:before {
+  content: "\ea0c";
+}
 .ri-messenger:before {
   content: "\e900";
 }
@@ -74,16 +80,4 @@
 }
 .ri-tripadvisor:before {
   content: "\f262";
-}
-.ri-location:before {
-  content: "\e947";
-}
-.ri-clock:before {
-  content: "\e94e";
-}
-.ri-user:before {
-  content: "\e971";
-}
-.ri-info:before {
-  content: "\ea0c";
 }
