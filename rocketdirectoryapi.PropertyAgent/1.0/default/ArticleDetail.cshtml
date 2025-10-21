@@ -34,6 +34,10 @@
         <div class="price">@articleData.Info.GetXmlProperty("genxml/textbox/price") &euro;</div>
         <div class="notes">@articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/articlenotes")</div>
         <p><strong>@BreakOf(articleData.Summary)</strong></p>
+		@if (articleData.Info.GetXmlProperty("genxml/textbox/videoembed") != "")
+        {
+            <div class="video-container">@HtmlOf(articleData.Info.GetXmlProperty("genxml/textbox/videoembed"))</div>
+        }
         <p>@BreakOf(articleData.Info.GetXmlProperty("genxml/lang/genxml/textbox/articlesummary2"))</p>
         <div class="ref">REF. @articleData.Ref</div>
 
