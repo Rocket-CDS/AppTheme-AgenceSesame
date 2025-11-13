@@ -7,11 +7,11 @@
 <!--inject-->
 @{
     var eventList = (List<ArticleLimpet>)Model.GetDataObject("eventnextlist");
-	eventList.Reverse();
-    if (eventList.Count == 0)
+	if (eventList.Count == 0)
     {
-    eventList = RocketEventsUtils.GetPassedEvents(portalData.PortalId, Model.SessionParamsData.CultureCode);
+    eventList = RocketEventsUtils.GetPassedEventsDesc(portalData.PortalId, Model.SessionParamsData.CultureCode);
     }
+	eventList.Reverse();
     var widthlist = moduleData.GetSettingInt("widthlist");
     var heightlist = moduleData.GetSettingInt("heightlist");
 }
