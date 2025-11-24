@@ -1,0 +1,88 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketContentAPI.Components;
+@AssignDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
+
+@{
+    var mask = "";
+    if (moduleData.GetSettingBool("mask"))
+    {
+        mask = "rs-mask";
+    }
+    var width = moduleData.GetSettingInt("width");
+    var height = moduleData.GetSettingInt("height");
+    var openDiv = "";
+    var closeDiv = "";
+    if (moduleData.GetSetting("cssclass") != "")
+    {
+        openDiv = "<div class='" + moduleData.GetSetting("cssclass") + "'>";
+        closeDiv = "</div>";
+    }
+}
+@HtmlOf(openDiv)
+    <div class="slider-container @(mask)">
+        <div class="splide">
+        <div class="splide__track">
+        <ul class="splide__list">
+            @foreach (var articleRowData in articleData.GetRows())
+            {
+                rowData = articleRowData.Info;
+                var crop = rowData.GetXmlProperty("genxml/select/crop");
+                if (crop == "")
+                {
+                    crop = "center";
+                }
+                var hideRow = rowData.GetXmlPropertyBool("genxml/checkbox/hiderow");
+                if (!hideRow)
+                {
+                    var articleImage = articleRowData.GetImage(0);
+                    <li style="background:url('@ImageUrl(articleImage.RelPath, width, height)') center @(crop) / cover no-repeat;" class="splide__slide @rowData.GetXmlProperty("genxml/lang/genxml/textbox/cssclass")">
+                        <div class="caption">
+                            @if (rowData.GetXmlProperty("genxml/lang/genxml/textbox/title") != "")
+                            {
+                                <div class="h2-headline">@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</div>
+                            }
+                            @if (rowData.GetXmlProperty("genxml/lang/genxml/textbox/title2") != "")
+                            {
+                                <div class="h3-headline">@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title2")</div>
+                            }
+                            @if (rowData.GetXmlProperty("genxml/lang/genxml/textbox/text") != "")
+                            {
+                                <p>@BreakOf(articleRowData.Info, "genxml/lang/genxml/textbox/text")</p>
+                            }
+                            @{
+                                var linkData = articleRowData.Getlink(0);
+                                if (!linkData.Hidden && !linkData.IsDisabled)
+                                {
+                                    <a href="@(linkData.Url)" class="bigbutton" target="@(linkData.Target)">@linkData.Name</a>
+                                }
+                            }
+                        </div>
+                    </li>
+                }
+            }
+        </ul>
+        </div>
+        </div>
+    </div>
+@HtmlOf(closeDiv)
+
+<script type="text/javascript">
+
+new Splide('.splide', {
+    type: 'slide',
+    interval: 4000,
+    speed: 800,
+    autoplay: true,
+    rewind: true,
+    cover: true,
+    arrows: false,
+    pauseOnHover: false
+}).mount();
+
+</script>
+
+
+
