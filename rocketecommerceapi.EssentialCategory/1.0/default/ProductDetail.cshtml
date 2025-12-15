@@ -30,18 +30,20 @@
         <div class="productquickview">
             <!-- Product images -->
             <div class="quickviewimage">
-                <img class="imgrollovertarget sliderind@(moduleSettings.ModuleRef)" src="@ImageUrl(productData.DefaultImageUrl(),450,450)" popupsrc="@ImageUrl(productData.DefaultImageUrl(),800,0)" alt="@(productData.Name)" onclick="popupImage(this)" />
+                <img class="sliderind@(moduleSettings.ModuleRef)" src="@ImageUrl(productData.DefaultImageUrl(),450,450)" alt="@(productData.Name)" />
                 <div class="quickviewgallery">
                     @foreach (var i in productData.GetImages())
                     {
-                        <img class="demo@(moduleSettings.ModuleRef) imgrollover" src="@ImageUrl(i.RelPath,450,450)" popupsrc="@ImageUrl(i.RelPath,800,0)" onclick="currentDiv@(moduleSettings.ModuleRef)" />
+                        <a data-fancybox="group@(productData.ProductId)" data-caption="@(i.Alt)" href="@ImageUrl(i.RelPath,800,0)">
+                            <img class="demo@(moduleSettings.ModuleRef)" src="@ImageUrl(i.RelPath, 450, 450)" alt="@(i.Alt)" />
+                        </a>
                     }
                 </div>
             </div>
             <!-- Content view -->
             <div id="productdatasection@(productData.ProductId)" class="quickviewcontent">
                 
-				<div class="quickviewprice">
+				<div class="quickviewprice w3-margin-bottom">
                 @if (productData.GetModelList().Count > 1)
                 {
                     <span class="w3-hide-small">@ResourceKey("RE.from")</span>
@@ -61,12 +63,18 @@
 				</div>
 				
 				<div class="quickviewmodels">
+                    @if (productData.GetModelList().Count > 1)
+                    {
                     <div class="w3-white w3-margin-bottom">
 						@ModelDropdown(productData)
 					</div>
+                    }
+                    @if (productData.GetOptionList().Count > 0)
+                    {
 					<div class="w3-white w3-margin-bottom">
 						@OptionsInput(productData)
 					</div>
+                    }
 				</div>
 				
 				<div id="qtyinput@(productData.ProductId)" class="quickviewactions">
@@ -128,40 +136,52 @@
     <img class="w3-animate-zoom" id="imgPopup" />
 </div>
 
-<script>
-                /**
-                 * To not be able to put a value < 1 and not put a value who is longer than 3
-                 * param - input
-                 * param - maxLength
-                 */
-                function checkValue(input, maxLength) {
-                    if (input.value < 1) {
-                        input.value = 1;
-                    } else if (input.value.length > maxLength) {
-                        input.value = input.value.slice(0, maxLength);
-                    }
-                }
+<script type="text/javascript">
+    /**
+     * To not be able to put a value < 1 and not put a value who is longer than 3
+     * param - input
+     * param - maxLength
+     */
+    function checkValue(input, maxLength) {
+        if (input.value < 1) {
+            input.value = 1;
+        } else if (input.value.length > maxLength) {
+            input.value = input.value.slice(0, maxLength);
+        }
+    }
 
-                $(document).ready(function () {
+    $(document).ready(function () {
 
-                    $('.product-subtract').unbind("click");
-                    $('.product-subtract').click(function () {
-                        updateQty($(this).attr("productid"), -1)
-                        return false; // prevent the button click from happening
-                    });
-                    $('.product-plus').unbind("click");
-                    $('.product-plus').click(function () {
-                        updateQty($(this).attr("productid"), 1)
-                        return false; // prevent the button click from happening
-                    });
+        $('.product-subtract').unbind("click");
+        $('.product-subtract').click(function () {
+            updateQty($(this).attr("productid"), -1)
+            return false; // prevent the button click from happening
+        });
+        $('.product-plus').unbind("click");
+        $('.product-plus').click(function () {
+            updateQty($(this).attr("productid"), 1)
+            return false; // prevent the button click from happening
+        });
 
-                    $('.imgrollover').unbind("mouseover");
-                    $(".imgrollover").mouseover(function () {
-                        $('.imgrollovertarget').attr('src', $(this).attr('src'));
-                        $('.imgrollovertarget').attr('popupsrc', $(this).attr('popupsrc'));
-                    });
+    });
 
+    $("[data-fancybox]").fancybox({
+  lang : 'fr',
+  i18n : {
+      'fr' : {
+          CLOSE       : 'Fermer',
+          NEXT        : 'Suivant',
+          PREV        : 'Précédent',
+          ERROR       : 'Le contenu demandé ne peut pas être chargé.<br />Veuillez réessayer plus tard.',
+          PLAY_START  : 'Démarrer le diaporama',
+          PLAY_STOP   : 'Mettre en pause le diaporama',
+          FULL_SCREEN : 'Plein écran',
+          THUMBS      : 'Vignettes',
+          DOWNLOAD    : 'Télécharger',
+          SHARE       : 'Partager',
+          ZOOM        : 'Zoomer'
+      }
+  }
+});
 
-                });
-
-            </script>
+</script>
