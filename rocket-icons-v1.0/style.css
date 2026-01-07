@@ -1,9 +1,9 @@
 @font-face {
   font-family: 'rocket-icons';
   src:
-    url('fonts/rocket-icons.ttf?dbjav6') format('truetype'),
-    url('fonts/rocket-icons.woff?dbjav6') format('woff'),
-    url('fonts/rocket-icons.svg?dbjav6#rocket-icons') format('svg');
+    url('fonts/rocket-icons.ttf?jdfu8s') format('truetype'),
+    url('fonts/rocket-icons.woff?jdfu8s') format('woff'),
+    url('fonts/rocket-icons.svg?jdfu8s#rocket-icons') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -33,6 +33,18 @@
   width: 1px;
 }
 
+.ri-tiktok:before {
+  content: "\e903";
+}
+.ri-messenger:before {
+  content: "\e900";
+}
+.ri-x:before {
+  content: "\e901";
+}
+.ri-twitter:before {
+  content: "\e901";
+}
 .ri-soundcloud:before {
   content: "\e902";
 }
@@ -47,15 +59,6 @@
 }
 .ri-info:before {
   content: "\ea0c";
-}
-.ri-messenger:before {
-  content: "\e900";
-}
-.ri-x:before {
-  content: "\e901";
-}
-.ri-twitter:before {
-  content: "\e901";
 }
 .ri-linkedin-square:before {
   content: "\f08c";
