@@ -53,6 +53,10 @@ label.error {color:#d45252 !important;line-height:14px;margin:8px 0 0 0;text-tra
 .cff-cb label.error {margin:0 0 8px 0;}
 .cff-cb input.error ~ label:before {background:#ffd9d9;}
 
+/* Send button */
+.bigbutton.isbutton {background:#eaeaea;color:#333;display:inline-block;line-height:1;padding:1rem 2rem;text-align:center;font-weight:bold;cursor:pointer;border-radius:9999px;}
+.bigbutton.isbutton:hover {background:#ccc;color:#333;}
+
 /* for 640px and less */
 @media screen and (max-width:640px) {
 .cff-100 {display:block;}
