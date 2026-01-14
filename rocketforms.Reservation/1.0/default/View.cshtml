@@ -92,7 +92,7 @@
     $(document).ready(function () {
 
         setTimeout(function () {
-            var buttontext = '<button id="sendemail@(moduleData.ModuleId)" type="button" class="bigbutton simplisity_click" s-before="validate@(moduleData.ModuleId)" s-return="#buttondiv@(moduleData.ModuleId)"  s-cmdurl="/Desktopmodules/dnnrocket/api/rocket/action" s-cmd="rocketforms_publicpostform"  s-post="#contactform@(moduleData.ModuleId)" >@ResourceKey("RocketForms.send")</button>'
+            var buttontext = '<div id="sendemail@(moduleData.ModuleId)" type="button" class="isbutton bigbutton simplisity_click" s-before="validate@(moduleData.ModuleId)" s-return="#buttondiv@(moduleData.ModuleId)"  s-cmdurl="/Desktopmodules/dnnrocket/api/rocket/action" s-cmd="rocketforms_publicpostform"  s-post="#contactform@(moduleData.ModuleId)" >@ResourceKey("RocketForms.send")</div>'
             $('#buttondiv@(moduleData.ModuleId)').html(buttontext);
             $('#contactform@(moduleData.ModuleId)').activateSimplisityPanel();
         }, 1200);
