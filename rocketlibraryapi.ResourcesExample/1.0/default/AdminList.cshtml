@@ -63,11 +63,11 @@
                     <td style="width:54px;">
                         @if (articleData.GetImage(0) != null && articleData.GetImage(0).RelPath != "")
                         {
-                            <img src="@ThumbnailImageUrl(articleData.GetImage(0).RelPath, 48, 48)" style="height:48px;width:48px;" class="w3-round" />
+                            <img src="@ImageUrl(articleData.GetImage(0).RelPath, 48, 48)" style="height:48px;width:48px;" class="w3-round" />
                         }
                         else
                         {
-                            <img src="@ThumbnailImageUrl("/DesktopModules/DNNrocket/api/images/noimage2.png", 48, 48)" style="height:48px;width:48px;" class="w3-round" />
+                            <img src="@ImageUrl("/DesktopModules/DNNrocket/api/images/noimage2.png", 48, 48)" style="height:48px;width:48px;" class="w3-round" />
                         }
                     </td>
                     <td><div class="w3-tiny">@articleData.Ref</div><b>@articleData.Name</b></td>
