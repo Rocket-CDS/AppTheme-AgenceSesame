@@ -39,12 +39,9 @@
                         <p>@BreakOf(rowData, "genxml/lang/genxml/textbox/text")</p>
                         @foreach (ArticleDoc documentData in articleRowData.GetDocs())
                         {
-                            if (documentData.Exists)
-                            {
                             <div class="documents">
                                 <a href="@(documentData.RelPath)" target="_blank" >@ResourceKey("Publications.viewpdf")</a>
                             </div>
-                            }
                         }
                         @foreach (var linkData in articleRowData.Getlinks())
                         {
