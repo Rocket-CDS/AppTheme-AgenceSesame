@@ -1,0 +1,68 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@AssignDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
+
+@{
+    var width = moduleData.GetSettingInt("width");
+    var height = moduleData.GetSettingInt("height");
+    var openDiv = "";
+    var closeDiv = "";
+    if (moduleData.GetSetting("cssclass") != "")
+    {
+        openDiv = "<div class='" + moduleData.GetSetting("cssclass") + "'>";
+        closeDiv = "</div>";
+    }
+}
+
+@HtmlOf(openDiv)
+
+    <div class="trombinowrapper">
+
+        [INJECT:appthemeshared,ArticleHeaderView.cshtml]
+
+        <div class="trombino">
+            @foreach (var articleRowData in articleData.GetRows())
+            {
+                var rowData = articleRowData.Info;
+                var hideRow = rowData.GetXmlPropertyBool("genxml/checkbox/hiderow");
+                if (!hideRow)
+                {
+                    var title = rowData.GetXmlProperty("genxml/lang/genxml/textbox/title");
+                    var articleImage = articleRowData.GetImage(0);
+                    foreach (var linkData in articleRowData.Getlinks())
+                    {                        
+                        var cssClassRow = "";
+                        if (rowData.GetXmlProperty("genxml/textbox/cssclass") != "")
+                        {
+                            cssClassRow = rowData.GetXmlProperty("genxml/textbox/cssclass");
+                        }
+                        if (linkData.IsDisabled || linkData.Hidden)
+                        {
+
+                            <div class="trombino-item @(cssClassRow)">
+                            <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@title" />
+                            <div class="trombino-text">
+                                <h3>@title</h3>
+                                <h4>@BreakOf(rowData, "genxml/lang/genxml/textbox/text")</h4>
+                            </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <a class="trombino-item @(cssClassRow)" href="@(linkData.Url)" target="@(linkData.Target)">
+                            <img src="@ImageUrl(articleImage.RelPath, width, height)" alt="@title" />
+                            <div class="trombino-text">
+                                <h3>@title</h3>
+                                <h4>@BreakOf(rowData, "genxml/lang/genxml/textbox/text")</h4>
+                            </div>
+                            </a>
+                        }
+                    }
+                }
+            }
+        </div>
+    </div>
+    
+@HtmlOf(closeDiv)
