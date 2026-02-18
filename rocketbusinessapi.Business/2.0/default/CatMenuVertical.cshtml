@@ -1,0 +1,69 @@
+﻿@inherits RocketBusinessAPI.Components.RocketBusinessAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@using RocketBusinessAPI.Components;
+@using RocketPortal.Components;
+@using System.Globalization;
+@AssignDataModel(Model)
+<!--inject-->
+@{
+    var catQueryKey = RocketDirectoryAPIUtils.UrlQueryCategoryKey(portalData.PortalId, portalContent.SystemKey);
+}
+
+<div class="bd-catmenu-header">
+    <div class="h3-headline"><i class="fas fa-bars"></i>Chercher par catégorie :</div>
+</div>
+
+<ul id="navgocomenu@(moduleData.ModuleId)" class="navgocomenu nav bd-catmenu">
+    @foreach (var c in categoryDataList.GetCategoryTree())
+    {
+        if (!c.Hidden && !c.HiddenByCulture && c.Level == 0)
+        {
+            if (c.Level == 0)
+            {
+                var l = c.GetDirectChildren();
+                var catDict = new Dictionary<string, string>();
+                catDict.Add(catQueryKey, c.CategoryId.ToString());
+
+                <li class="navgocoitem">
+                    <a href="@ListUrl(moduleData.ListPageTabId(), c)" onclick="$('.rocket-filtercheckbox').each(function(i, obj) {simplisity_setSessionField(this.id, false);});simplisity_setSessionField('rocketpropertyidtag', '0');simplisity_setSessionField('searchtext', '');$('.simplisity_loader').show();" catid="@c.CategoryId" class="navgocolink" level="0">@c.Name</a>
+                    <ul data-index="0">
+                        @foreach (var c2 in l)
+                        {
+                            var catDict2 = new Dictionary<string, string>();
+                            catDict2.Add(catQueryKey, c2.CategoryId.ToString());
+                            <li class="navgocoitem a-subcatmenu@(moduleData.ModuleId)" style="display:none;">
+                                <a href="@ListUrl(moduleData.ListPageTabId(), c2)" onclick="$('.rocket-filtercheckbox').each(function(i, obj) {simplisity_setSessionField(this.id, false);});simplisity_setSessionField('rocketpropertyidtag', '0');$('.simplisity_loader').show();" catid="@c2.CategoryId" class="navgocolink" level="1">@c2.Name</a>
+                            </li>
+                        }
+                    </ul>
+                </li>
+            }
+        }
+    }
+</ul>
+
+
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+
+        var selectedCatLink = $('a[href="' + window.location.href + '"]');
+        var catid = '@sessionParams.Get("buscatid")';
+        if (catid > 0) {
+            selectedCatLink = $('a[catid="' + catid + '"]');
+            if (jQuery(selectedCatLink).attr('level') == '0') {
+                jQuery(selectedCatLink).parent().addClass('open');
+                jQuery(selectedCatLink).parent().addClass('active');
+            }
+            if (jQuery(selectedCatLink).attr('level') == '1') {
+                jQuery(selectedCatLink).parent().parent().parent().addClass('open');
+                jQuery(selectedCatLink).parent().addClass('active');
+            }
+        }
+
+        jQuery("#navgocomenu@(moduleData.ModuleId)").navgoco({accordion: true });      
+        jQuery(".a-subcatmenu@(moduleData.ModuleId)").show();
+    });
+</script>

@@ -1,0 +1,42 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@AssignDataModel(Model)
+@AddProcessDataResx(appTheme, true)
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
+<!--inject-->
+@{
+    var articleList = articleDataList.GetArticleList(moduleData);
+    var widthlist = moduleData.GetSettingInt("widthlist");
+    var heightlist = moduleData.GetSettingInt("heightlist");
+}
+
+<div class="blog-sat">
+
+    <div class="h4-headline">@ResourceKey("Blog.news")</div>
+
+    <div class="blog">
+        @foreach (ArticleLimpet article in articleList)
+        {
+            var urlparams = new Dictionary<string, string>();
+            urlparams.Add("articleid", article.ArticleId.ToString());
+            <article>
+                @if (moduleData.GetSettingBool("satimage") && (article.GetImage(0).RelPathWebp != ""))
+                {
+                    <figure><a href="@DetailUrl(moduleData.DetailPageTabId(), article, categoryData)" onclick="$('#simplisity_loader').show();"><img src="@ImageUrl(article.GetImage(0).RelPath, widthlist, heightlist)" alt="@article.GetImage(0).Alt" /></a></figure>                 
+                }
+                <div class="article-content">
+                    <h3><a href="@DetailUrl(moduleData.DetailPageTabId(), article, categoryData)" onclick="$('#simplisity_loader').show();">@article.Name</a></h3>
+                    <div class="article-summary">
+                        @article.Summary
+                    </div>
+                </div>
+            </article>
+        }
+    </div>
+
+    <div class="blogsatlink">
+        <a href="@ListUrl(moduleData.ListPageTabId(), categoryData)" class="bigbutton">@ResourceKey("Blog.allnews")</a>
+    </div>
+
+</div>

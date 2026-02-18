@@ -1,0 +1,28 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@AssignDataModel(Model)
+<!--inject-->
+
+<div class="rocket-filters">
+
+    <div class="darticle-infosection">
+        <h3>Filtrer</h3>
+        <div class="clearfilters">@FilterClearButton(ResourceKey("DNNrocket.all").ToString(), "#articlelistdisplay")</div>
+        @foreach (var g in moduleData.GetPropertyModuleGroups(catalogSettings))
+        {
+            <div class="rocket-filtergroup">
+            <div class="rocket-filtertitle">@g.Value</div>
+            @foreach (var p in propertyDataList.GetPropertyFilterList(g.Key))
+            {
+                <div class="rocket-filtercheckwrapper">
+                    @FilterCheckBox(p.Key, p.Value, "#articlelistdisplay", sessionParams.Info.GetXmlPropertyBool("r/" + p.Key))
+                </div>
+            }
+            </div>
+        }
+    </div>
+
+</div>
+
+@FilterJsApiCall(moduleData, sessionParams, "ArticleList.cshtml")

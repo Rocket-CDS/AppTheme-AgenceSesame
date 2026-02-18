@@ -1,0 +1,65 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@AssignDataModel(Model)
+<!--inject-->
+
+<div class='w3-row'>
+    <div class="w3-padding">
+        @{
+            var openhourslp = 0;
+            var openhourslp2 = 1;
+            DateTime midnight = DateTime.Now.Date;
+            var openhourstimeDictionary = new Dictionary<string, string>();
+            openhourstimeDictionary.Add("", "");
+            while (openhourslp2 <= 96)
+            {
+                openhourstimeDictionary.Add(midnight.ToString("HH:mm", new CultureInfo(DNNrocketUtils.GetCurrentCulture())), midnight.ToString("HH:mm", new CultureInfo(DNNrocketUtils.GetCurrentCulture())));
+                midnight = midnight.AddMinutes(15);
+                openhourslp2 += 1;
+            }
+
+            DateTime openhoursdayDate = DateTime.MinValue;
+            openhoursdayDate = openhoursdayDate.AddDays(7);
+        }
+        <table>
+            <tr>
+                <th class="w3-padding"></th>
+                <th class="" colspan="2">@ResourceKey("RocketBusinessAPI.morning")</th>
+                <th class="" colspan="2">@ResourceKey("RocketBusinessAPI.afternoon")</th>
+            </tr>
+            <tr>
+                <th class="w3-padding">@ResourceKey("RocketBusinessAPI.day")</th>
+                <th>@ResourceKey("RocketBusinessAPI.open1")</th>
+                <th>@ResourceKey("RocketBusinessAPI.close1")</th>
+                <th>@ResourceKey("RocketBusinessAPI.open2")</th>
+                <th>@ResourceKey("RocketBusinessAPI.close2")</th>
+            </tr>
+
+            @while (openhourslp < 7)
+            {
+                string dayName = openhoursdayDate.ToString("dddd", new CultureInfo(DNNrocketUtils.GetCurrentCulture()));
+                openhoursdayDate = openhoursdayDate.AddDays(1);
+                <tr>
+                    <td class="w3-padding">
+                        @dayName
+                    </td>
+                    <td>
+                        @DropDownList(info, "genxml/textbox/open1-" + openhourslp, openhourstimeDictionary, "class='w3-input w3-border' maxlength='10' ", "", false)
+                    </td>
+                    <td>
+                        @DropDownList(info, "genxml/textbox/close1-" + openhourslp, openhourstimeDictionary, "class='w3-input w3-border' maxlength='10' ", "", false)
+                    </td>
+                    <td>
+                        @DropDownList(info, "genxml/textbox/open2-" + openhourslp, openhourstimeDictionary, "class='w3-input w3-border' maxlength='10' ", "", false)
+                    </td>
+                    <td>
+                        @DropDownList(info, "genxml/textbox/close2-" + openhourslp, openhourstimeDictionary, "class='w3-input w3-border' maxlength='10' ", "", false)
+                    </td>
+                </tr>
+                openhourslp += 1;
+            }
+
+        </table>
+    </div>
+</div>

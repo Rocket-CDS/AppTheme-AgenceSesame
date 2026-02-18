@@ -1,0 +1,38 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@AssignDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
+
+@{  
+    var imgalign = rowData.GetXmlProperty("genxml/select/imagealign");
+}
+
+<div class="flexcontent-div @rowData.GetXmlProperty("genxml/textbox/cssclass")">
+    <div class="flexcontent-media fcm-only">
+        <div class="fcd-images @(imgalign)">
+            @foreach (ArticleImage articleImage in articleRowData.GetImages())
+            {
+                if (articleImage.RelPath != "")
+                {
+                    if (rowData.GetXmlPropertyBool("genxml/checkbox/openfancybox") && !moduleData.ECOMode)
+                    {
+                        <div>
+                            <a data-fancybox="@(articleRowData.RowKey)" data-caption="@(articleImage.Alt)" href="@(ImageUrl(articleImage.RelPath,0,0))">
+                                <img src="@ImageUrl(articleImage.RelPath, articleImage.Width, articleImage.Height)" alt="@(articleImage.Alt)" />
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div><img src="@ImageUrl(articleImage.RelPath, articleImage.Width, articleImage.Height)" alt="@(articleImage.Alt)" /></div>
+                    }
+                }
+            }
+        </div>
+        @if (rowData.GetXmlProperty("genxml/lang/genxml/textbox/video") != "")
+        {
+            <div class="fcd-video"><div class="video-container">@HtmlOf(rowData.GetXmlProperty("genxml/lang/genxml/textbox/video"))</div></div>
+        }
+    </div>
+</div>

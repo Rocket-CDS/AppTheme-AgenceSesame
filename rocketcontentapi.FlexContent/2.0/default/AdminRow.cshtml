@@ -1,0 +1,130 @@
+@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@AssignDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
+
+<!-- require Key for saving -->
+@HiddenField(rowData, "genxml/config/rowkey")
+@HiddenField(rowData, "genxml/lang/genxml/config/rowkeylang", "", articleRowData.RowKey)
+
+<div class='w3-row w3-padding'>
+
+    <div class="w3-bar" style="cursor: pointer;">
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink headingtablink" onclick="openSection('heading')">@ResourceKey("DNNrocket.heading")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink htmltablink" onclick="openSection('html')">@ResourceKey("DNNrocket.content")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink imgstablink" onclick="openSection('imgs')">@ResourceKey("DNNrocket.images")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink docstablink" onclick="openSection('docs')">@ResourceKey("DNNrocket.docs")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink linkstablink" onclick="openSection('links')">@ResourceKey("DNNrocket.links")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink htmltexttablink" onclick="openSection('htmltext')">@ResourceKey("DNNrocket.html")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink videotablink" onclick="openSection('video')">@ResourceKey("DNNrocket.video")</div>
+        <div class="w3-bar-item w3-bottombar w3-hover-grey w3-padding tablink advancedtablink" onclick="openSection('advanced')">@ResourceKey("DNNrocket.advanced")</div>
+    </div>
+
+    <div id="heading" class='w3-row sectionname' style="display:none">
+        <div class="w3-panel w3-padding w3-light-grey">
+            @{
+                String[] layouts = {"<span class='material-icons'>view_headline</span>","<span class='material-icons' style='transform:rotate(180deg);'>horizontal_split</span>","<span class='material-icons'>horizontal_split</span>","<span class='material-icons' style='transform:rotate(180deg);'>vertical_split</span>","<span class='material-icons'>vertical_split</span>","<span class='material-icons'>rectangle</span>"};
+                var imgLayoutList = "";
+                for (int i = 0; i < 6; i++)
+                {
+                    imgLayoutList += "<span class='w3-button w3-round w3-theme-action'>" + layouts[i] + "</span>,";
+                }
+                imgLayoutList = imgLayoutList.TrimEnd(',');
+            }
+            @RadioButtonList(rowData, "genxml/select/layout", "0,1,2,3,4,5", imgLayoutList, "class='  ' ", "0", "", false, 0)
+        </div>
+        [INJECT:appthemeshared,ArticleRowHeader.cshtml]
+        <div class="w3-padding">
+            @CheckBox(rowData, "genxml/checkbox/excludetitle", "", "class='w3-check' style='margin-right:6px;' ", false, false, 0)<label>Titre de rubrique au-dessus du contenu</label>
+        </div>
+    </div>
+
+    <div id="html" class='w3-row sectionname' style="display:none">
+        <div class='w3-col m12 w3-padding'>
+            <div class="w3-row">
+                @EditFlag(sessionParams)
+                <div class="w3-right">@ChatGPT("richtext", "title")@DeepL("richtext", "richtext", sessionParams.CultureCodeEdit)</div>
+            </div>
+            @Editor(info, "genxml/lang/genxml/textbox/richtext", Model, 0, "")
+        </div>
+    </div>
+
+    <div id="imgs" class='w3-row sectionname' style="display:none">
+        <div class="w3-panel w3-padding w3-light-grey">
+            @RadioButtonList(rowData, "genxml/select/imagealign", "fcdi-left,fcdi-center,fcdi-right", "<span class='material-icons'>format_align_left</span>,<span class='material-icons'>format_align_center</span>,<span class='material-icons'>format_align_right</span>", "", "2", "", false, 0, "")
+        </div>
+        <div class='w3-padding '>
+            [INJECT:appthemesystem,ArticleImagesSize.cshtml]
+        </div>
+        @if (!moduleData.ECOMode)
+        {
+            <div class="w3-padding">
+                @CheckBox(rowData, "genxml/checkbox/openfancybox", "", "class='w3-check' style='margin-right:6px;' ", false, false, 0)<label>@ResourceKey("DNNrocket.openfancy")</label>
+            </div>
+        }
+    </div>
+
+    <div id="docs" class='w3-row sectionname' style="display:none">
+        <div class='w3-col m12 w3-padding '>
+            [INJECT:appthemesystem,ArticleDocuments.cshtml]
+        </div>
+    </div>
+
+    <div id="links" class='w3-row sectionname' style="display:none">
+        <div class='w3-col m12 w3-padding '>
+            [INJECT:appthemesystem,ArticleLinks.cshtml]
+        </div>
+    </div>
+
+    <div id="htmltext" class='w3-row sectionname' style="display:none">
+        <div class='w3-col m12 w3-padding'>
+            @EditFlag(sessionParams)
+            @TextArea(rowData, "genxml/lang/genxml/textbox/htmltext", " class='w3-input w3-border' rows='8' ", "", true, 0)
+        </div>
+    </div>
+
+    <div id="video" class='w3-row sectionname' style="display:none">
+        <div class='w3-col m12 w3-padding'>
+            <label>@ResourceKey("DNNrocket.videocode")</label>
+            @TextArea(rowData, "genxml/lang/genxml/textbox/video", " class='w3-input w3-border' rows='8' ", "", true, 0)
+        </div>
+    </div>
+
+    <div id="advanced" class='w3-row sectionname' style="display:none">
+        <div class='w3-col m12 w3-padding' style='min-width: 200px;'>
+            <label>@ResourceKey("DNNrocket.cssClass")</label>
+            @TextBox(rowData, "genxml/textbox/cssclass", "class='w3-input w3-border' autocomplete='off'", "", false, 0)
+        </div>
+        <div class='w3-col m12 w3-padding'>
+            <label>@ResourceKey("DNNrocket.hiderow")</label><br />
+            @CheckBoxRowIsHidden(rowData)
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        var sectionName = localStorage.getItem('sectiontabs');
+        if ((typeof sectionName === 'undefined') || sectionName === '' || sectionName === null) {
+            sectionName = "heading";
+        }
+        openSection(sectionName);
+        $('#summary').trigger('onkeyup');
+        $('#text').trigger('onkeyup');
+    });
+
+    function openSection(sectionName) {
+        $('.sectionname').hide();
+        $('.tablink').removeClass("w3-border-black");
+        $('.tablink').removeClass("w3-theme-l3");
+        $('#' + sectionName).show();
+        $('.' + sectionName + 'tablink').addClass("w3-border-black");
+        $('.' + sectionName + 'tablink').addClass("w3-theme-l3");
+        localStorage.setItem('sectiontabs', sectionName);
+
+        // so the hidden one gets adjusted
+        $('#summary').trigger('onkeyup');
+        $('#text').trigger('onkeyup');
+    }
+</script>

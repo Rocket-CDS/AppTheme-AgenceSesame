@@ -1,0 +1,29 @@
+﻿@inherits RocketBusinessAPI.Components.RocketBusinessAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@AssignDataModel(Model)
+<!--inject-->
+
+<div class="rocket-filters">
+
+    <div class="bd-catmenu-header">
+        <div class="clearfilters">
+            @FilterActionButton(ResourceKey("DNNrocket.clear").ToString(), sessionParams, false)
+        </div>
+        <div class="h3-headline"><i class="fas fa-filter"></i>Filtrer par :</div>
+    </div>
+
+    @foreach (var g in moduleData.GetPropertyModuleGroups(catalogSettings))
+    {
+        <div class="rocket-filtergroup">@g.Value</div>
+        foreach (var p in propertyDataList.GetPropertyFilterList(g.Key))
+        {
+            <div class="rocket-filtercheckwrapper">
+                @FilterCheckBox(p.Key, p.Value, "#businesscontainer", sessionParams.Info.GetXmlPropertyBool("r/" + p.Key), "", "propertyname='" + p.Value.Replace("'","&apos;") + "'")
+            </div>
+        }
+    }
+
+</div>
+
+@FilterJsApiCall(moduleData.SystemKey, sessionParams)

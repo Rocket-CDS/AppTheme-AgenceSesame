@@ -1,0 +1,46 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketContentAPI.Components;
+@AssignDataModel(Model)
+@AddProcessDataResx(appThemeView, true)
+<!--inject-->
+
+@{
+    var openDiv = "";
+    var closeDiv = "";
+    if (moduleData.GetSetting("cssclass") != "")
+    {
+        openDiv = "<div class='" + moduleData.GetSetting("cssclass") + "'>";
+        closeDiv = "</div>";
+    }
+}
+
+@HtmlOf(openDiv)
+
+    <div class="faqwrapper">
+    [INJECT:appthemeshared,ArticleHeaderView.cshtml]
+    <div class="faq">
+        @foreach (var articleRowData in articleData.GetRows())
+        {
+            var contentId = "content" + articleRowData.RowKey + sessionParams.ModuleId;
+            var rowData = articleRowData.Info;
+            var defaultOpenParentClass = "";
+            var defaultOpenClass = "";
+            var defaultOpenStyle = "display:none;";
+            if (articleRowData.GetBool("genxml/checkbox/defaultopen"))
+            {
+                defaultOpenParentClass = "accordion-active";
+                defaultOpenClass = "a-active" + sessionParams.ModuleId;
+                defaultOpenStyle = "";
+            }
+            <div class="accordion-item @(defaultOpenParentClass)">
+                    <div class="accordion-header" onclick="slideAccordionFAQ('@(contentId)','@(sessionParams.ModuleId)')" style="cursor:pointer;">
+                        <h4>@rowData.GetXmlProperty("genxml/lang/genxml/textbox/title")</h4>
+                    </div>
+                    <div id="@(contentId)" class="accordion-content @(defaultOpenClass)" style="@(defaultOpenStyle)">@HtmlOf(rowData.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))</div>
+            </div>
+        }
+    </div>
+    </div>
+
+@HtmlOf(closeDiv)

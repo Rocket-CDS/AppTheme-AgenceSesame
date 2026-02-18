@@ -1,0 +1,13 @@
+﻿@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@AssignDataModel(Model)
+@AddProcessDataResx(appThemeAdmin, true)
+<!--inject-->
+@{
+    //NOTE: xPath for module settings must use "genxml/settings/*"
+}
+<div class="w3-row">
+    <div class="w3-third w3-padding">
+        <label>@ResourceKey("DNNrocket.cssClass")</label>
+        @TextBox(moduleDataInfo, "genxml/settings/cssclass", "class='w3-input w3-border'", "")
+    </div>
+</div>

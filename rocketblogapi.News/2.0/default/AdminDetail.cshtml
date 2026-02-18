@@ -1,0 +1,131 @@
+@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@AssignDataModel(Model)
+@AddProcessDataResx(appTheme, true)
+<!--inject-->
+@{
+    var disableauto = "";
+    var disablehide = "";
+    if (catalogSettings.Info.GetXmlPropertyBool("genxml/checkbox/hidefuturedates"))
+    {
+        if (articleData.Info.GetXmlPropertyBool("genxml/checkbox/autopublish") && articleData.Info.GetXmlPropertyDate("genxml/textbox/publisheddate").Date > DateTime.Now.Date)
+        {
+            disablehide = " disabled ";
+        }
+    }
+    else
+    {
+        disableauto = " w3-hide ";
+    }
+}
+
+<div class="pl-breadcrumb">
+    <div class="pl-breadcrumb-itemlink w3-border-blue w3-border-bottom w3-text-blue " onclick="simplisity_setCookieValue('adminpanelcmd','');window.location.reload();">@ResourceKey("DNNrocket.services")</div>
+    <div class="pl-breadcrumb-item">
+        <img src="/DesktopModules/DNNrocket/API/images/chevron_right.svg" />
+    </div>
+    <div class="pl-breadcrumb-itemlink w3-border-blue w3-border-bottom w3-text-blue simplisity_click" s-cmd="articleadmin_editlist" s-fields='{"track":"true"}'>@ResourceKey("RC.articles")</div>
+    <div class="pl-breadcrumb-item">
+        <img src="/DesktopModules/DNNrocket/API/images/chevron_right.svg" />
+    </div>
+    <div class="pl-breadcrumb-itemlink w3-border-blue w3-border-bottom w3-text-blue a-reloadpage simplisity_click" s-cmd="articleadmin_editarticle" s-fields='{"track":"true","articleid":"@articleData.ArticleId"}'>@articleData.Name</div>
+</div>
+
+<div id="articleedit">
+
+    <div id="articleeditcontent" class='w3-animate-opacity w3-card w3-padding w3-margin w3-white '>
+
+        [INJECT:appthemedirectory,editbuttonbar.cshtml]
+
+        <div id="articledatasection" class="">
+            <div class='w3-row'>
+                <div class="w3-twothird w3-padding-small">
+                    <div onclick="$('#generaltab').toggle();$('#generaltabexpand').toggle();" class="w3-button w3-block w3-theme-l3 w3-left-align">
+                        @ResourceKey("DNNrocket.general")
+                        <span id="generaltabexpand" class="material-icons w3-right" style="display:none;">
+                            unfold_more
+                        </span>
+                    </div>
+                    <div id="generaltab" class='w3-row sectionname w3-border'>
+                        <div class='w3-row'>
+                            <div class="w3-third w3-padding">
+                                <label>@ResourceKey("DNNrocket.date")</label>
+                                @{
+                                    DateTime today = DateTime.Today;
+                                    var todayString = today.ToString("O");
+                                }
+                                @TextBoxDate(info, "genxml/textbox/publisheddate", " class='w3-input w3-border' autocomplete='off'", todayString, false, 0)
+                            </div>
+                            <div class="w3-third w3-padding">
+                                <label>@ResourceKey("RC.ref")</label>
+                                @TextBox(info, articleData.RefXPath, " class='w3-input w3-border' autocomplete='off' ", "", false, 0)
+                            </div>
+                            <div class="w3-third">
+                                <div class="w3-row">
+                                    <div class="w3-half w3-padding @(disableauto)">
+                                        <br/>
+                                        @CheckBox(info, "genxml/checkbox/autopublish", "&nbsp;" + ResourceKey("RocketBlogApi.autopublish"), " class='w3-check' ", true)
+                                    </div>
+                                    <div class="w3-half w3-padding">
+                                        <br/>
+                                        @CheckBox(info, articleData.HiddenXPath, "&nbsp;" + ResourceKey("DNNrocket.hidden"), " class='w3-check' " + disablehide)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" w3-row w3-padding">
+                            <label>@ResourceKey("RC.name")</label>&nbsp;@EditFlag(sessionParams)
+                            @TextBox(info, articleData.NameXPath, " class='w3-input w3-border' autocomplete='off' ", "", true, 0)
+                        </div>
+                        <div class=" w3-row w3-padding">
+                            <div class="w3-row">
+                                <label>@ResourceKey("DNNrocket.summary")</label>&nbsp;@EditFlag(sessionParams)
+                                <div class="w3-right">@ChatGPT("articlesummary", "articlename")@DeepL("articlesummary", "articlesummary", sessionParams.CultureCodeEdit)</div>
+                            </div>
+                            @TextArea(info, articleData.SummaryXPath, " class='w3-input w3-border' rows='8' autocomplete='off' ", "", true, 0)
+                        </div>
+                        <div class="w3-row w3-padding">
+                            <div class="w3-row">
+                                <label>@ResourceKey("DNNrocket.description")</label>&nbsp;@EditFlag(sessionParams)
+                                <div class="w3-right">@ChatGPT("articlerichtext", "articlename")@DeepL("articlerichtext", "articlerichtext", sessionParams.CultureCodeEdit)</div>
+                            </div>
+                            @Editor(info, articleData.RichTextXPath, Model, 0, "")
+                        </div>
+                        <div class="w3-row w3-padding">
+                            <label>@ResourceKey("DNNrocket.videocode")</label>&nbsp;@EditFlag(sessionParams)
+                            @TextArea(info, "genxml/lang/genxml/textbox/video", " class='w3-input w3-border' rows='8' ", "", true, 0)
+                        </div>
+                        <div class="w3-row w3-padding">
+                            <label>Code HTML</label>&nbsp;@EditFlag(sessionParams)
+                            @TextArea(info, "genxml/lang/genxml/textbox/htmltext", " class='w3-input w3-border' rows='8' ", "", true, 0)
+                        </div>
+                        <div class=" w3-row w3-padding">
+                            @RenderTemplate("AdminExtra.cshtml", appTheme, Model, true)
+                        </div>
+                    </div>
+                    [INJECT:appthemedirectory,ArticleSEOBlock.cshtml]
+                </div>
+                <div class="w3-third w3-padding-small">
+                    [INJECT:appthemedirectory,ArticleimagesBlock.cshtml]
+                    [INJECT:appthemedirectory,ArticleDocumentsBlock.cshtml]
+                    [INJECT:appthemedirectory,ArticleLinksBlock.cshtml]
+                </div>
+            </div>
+        </div>
+
+        <div class="w3-padding">
+            @if (UserUtils.IsInRole("Administrator"))
+            {
+                <div class="w3-container">
+                    <div class="w3-right">
+                        @RenderXml(info)
+                    </div>
+                </div>
+            }
+            <i>ID: </i> @info.ItemID <i> GuidKey:</i> @info.GUIDKey
+        </div>
+
+    </div>
+
+</div>
