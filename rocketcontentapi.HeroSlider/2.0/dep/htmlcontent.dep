@@ -1,0 +1,9 @@
+﻿<genxml>
+	<deps list="true">
+    <genxml>
+      <ctrltype><![CDATA[js]]></ctrltype>
+      <url><![CDATA[{appthemefolder}/js/responsiveslides.min.js]]></url>
+		<ecofriendly>true</ecofriendly>
+	</genxml>
+	</deps>
+</genxml>
