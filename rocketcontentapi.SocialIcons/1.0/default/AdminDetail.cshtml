@@ -10,11 +10,8 @@
 <div class='w3-row w3-padding'>
     <div class="w3-col m12 w3-padding">
 
-        <!-- display title -->
-        <div class="w3-padding">
-            <label>@ResourceKey("DNNrocket.moduletitle")</label><span>@EditFlag(sessionParams)</span>
-            @TextBox(info, "genxml/lang/genxml/textbox/title", " class='w3-input w3-border' ", "", true)
-        </div>
+        [INJECT:appthemeshared,ArticleHeader.cshtml]
+        
         <div class="w3-half w3-padding">
             <label>X</label>
             @TextBox(info, "genxml/textbox/twitter", " class='w3-input w3-border' ", "", false)

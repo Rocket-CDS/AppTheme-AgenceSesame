@@ -16,10 +16,9 @@
 }
 
 @HtmlOf(openDiv)
-    @if (info.GetXmlProperty("genxml/lang/genxml/textbox/title") != "")
-    {
-        <div class="h4-headline">@info.GetXmlProperty("genxml/lang/genxml/textbox/title")</div>
-    }
+
+    [INJECT:appthemeshared,ArticleHeaderView.cshtml]
+
     <div id="@articleRowData.RowKey" class="socialicons si-colored">
         @LinkURL(info, "genxml/textbox/facebook", true, "<span class='ri-facebook'></span><span class='ri-sr-only'>Facebook</span>", " class='facebookicon' title='Facebook' target='_blank' ")
         @LinkURL(info, "genxml/textbox/linkedin", true, "<span class='ri-linkedin'></span><span class='ri-sr-only'>LinkedIn</span>", " class='linkedinicon' title='LinkedIn' target='_blank' ")
@@ -32,4 +31,5 @@
         @LinkURL(info, "genxml/textbox/tiktok", true, "<span class='ri-tiktok'></span><span class='ri-sr-only'>TikTok</span>", " class='tiktokicon' title='TikTok' target='_blank' ")
         @LinkURL(info, "genxml/textbox/rss", true, "<span class='ri-rss'></span><span class='ri-sr-only'>RSS</span>", " class='rssicon' title='RSS' target='_blank' ")
     </div>
+
 @HtmlOf(closeDiv)
