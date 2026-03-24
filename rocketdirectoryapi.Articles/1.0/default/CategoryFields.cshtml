@@ -1,0 +1,24 @@
+@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using Simplisity;
+@using RocketDirectoryAPI.Components;
+@using DNNrocketAPI.Components;
+@AssignDataModel(Model)
+<!--inject-->
+@{
+    var info = new SimplisityInfo();
+    if (categoryData.Info != null)
+    {
+        info = categoryData.Info;
+    }
+}
+
+<div class='w3-col m12 w3-padding'>
+    <label>Titre</label>&nbsp;@EditFlag(sessionParams)
+    @TextBox(info, "genxml/lang/genxml/textbox/subtitle", " class='w3-input w3-border' autocomplete='off' ", "", true, 0)
+</div>
+<div class='w3-col m12 w3-padding'>
+    @EditFlag(sessionParams)
+    <div class='w3-col m12'>
+        @CKEditor4(info, "genxml/lang/genxml/textbox/richtext", true)
+    </div>
+</div>

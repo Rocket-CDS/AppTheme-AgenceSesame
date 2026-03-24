@@ -1,0 +1,58 @@
+﻿@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@AssignDataModel(Model)
+@AddProcessDataResx(appTheme, true)
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketDirectoryAPI/App_LocalResources/")
+<!--inject-->
+@{
+    var articleList = articleDataList.GetArticleList();
+    var width = moduleData.GetSettingInt("width");
+    var height = moduleData.GetSettingInt("height");
+    var captionHeight = moduleData.GetSettingInt("captionheight");
+    var alignment = moduleData.GetSetting("alignment");
+    var paddingClass = moduleData.GetSetting("padding");
+    var backgroundcolor = moduleData.GetSetting("backgroundcolor");
+    Model.SetSetting("pagesizelist", "6,12,24,48");
+}
+
+<div class="articlelist">
+    @if (!categoryData.Exists)
+    {
+        <h1>@portalData.Name</h1>
+    }
+    else
+    {
+        <h1>@categoryData.Name</h1>
+    }
+    [INJECT:appthemedirectorydefault,SearchBanner.cshtml]
+    <div class="productgrid productgrid3">
+        @foreach (var article in articleList)
+        {
+            var info = article.Info;
+            var articleImage = article.GetImage(0);
+            var linkData = article.Getlink(0);
+            <div class="product">
+                <div class="productimg">
+                    <img src="@ImageUrl(articleImage.RelPath != "" ? articleImage.RelPath : "", 480, 480)" alt="@article.Name">
+                    <!-- Rollover -->
+                    <div class="productrollover">
+                        <div class="productrollover-content">
+                            <div class="productrollover-actions">
+                                <a href="@DetailUrl(moduleData.DetailPageTabId(), article, categoryData)#rocket-products" title="@article.Name" onclick="$('.simplisity_loader').show();"><span class="material-icons">search</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="productcontent">
+                    <h3>
+                        <a href="@DetailUrl(moduleData.DetailPageTabId(), article, categoryData)#rocket-products" title="@article.Name" onclick="$('.simplisity_loader').show();">
+                            @article.Name
+                        </a>
+                    </h3>    
+                </div>
+            </div>      
+            }
+    </div>
+    [INJECT:appthemedirectorydefault,articlePaging.cshtml]
+</div>
