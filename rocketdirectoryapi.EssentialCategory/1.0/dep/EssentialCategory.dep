@@ -22,11 +22,6 @@
 		</genxml>
 		<genxml>
 			<ctrltype><![CDATA[js]]></ctrltype>
-			<url><![CDATA[{appthemefolder}/js/EssentialCategory.js]]></url>
-			<ecofriendly>true</ecofriendly>
-		</genxml>
-		<genxml>
-			<ctrltype><![CDATA[js]]></ctrltype>
 			<url><![CDATA[/DesktopModules/DNNrocket/js/jquery.validate.min.js]]></url>
 			<ecofriendly>true</ecofriendly>
 		</genxml>		
@@ -60,6 +55,16 @@
 		<genxml>
 			<file><![CDATA[CategoryMenu.cshtml]]></file>
 			<name><![CDATA[Category Menu]]></name>
+			<cmd>catmenu</cmd>
+		</genxml>
+		<genxml>
+			<file><![CDATA[CategoryMenuDrill.cshtml]]></file>
+			<name><![CDATA[Category Menu Drill]]></name>
+			<cmd>catmenu</cmd>
+		</genxml>
+		<genxml>
+			<file><![CDATA[CategoryMenuSub.cshtml]]></file>
+			<name><![CDATA[Category Menu Sub]]></name>
 			<cmd>catmenu</cmd>
 		</genxml>
 		<genxml>
