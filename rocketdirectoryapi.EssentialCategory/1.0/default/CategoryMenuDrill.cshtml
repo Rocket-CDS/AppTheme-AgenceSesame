@@ -1,0 +1,54 @@
+@inherits RocketDirectoryAPI.Components.RocketDirectoryAPITokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketDirectoryAPI.Components;
+@AssignDataModel(Model)
+@AddProcessDataResx(appTheme, true)
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketEcommerceAPI/App_LocalResources/")
+<!--inject-->
+
+<h3 style="margin-top:30px;">@ResourceKey("RE.categories", sessionParams.CultureCode)</h3>
+
+<div class="categorytree w3-bar-block w3-light-grey w3-mobile w3-margin-top">
+    <a href="@ListUrl(moduleData.ListPageTabId())" onclick="$('.simplisity_loader').show();" class="w3-bar-item w3-button w3-dark-grey">
+        @ResourceKey("RE.allproducts")
+    </a>
+    @foreach (var catData in categoryDataList.GetCategoryTree(categoryData.CategoryId))
+    {
+        var selectedCat = "";
+        if (catData.CategoryId == categoryData.CategoryId)
+        {
+            selectedCat = "catselected";
+        }
+        if (!catData.Hidden && !catData.HiddenByCulture && catData.Level == 0)
+        {
+            if (catData.Level == 0)
+            {
+                var l = catData.GetDirectChildren();
+                if (l.Count == 0)
+                {
+                    <div class="catlevel1 @selectedCat">
+                        <a href="@ListUrl(moduleData.ListPageTabId(), catData)" class="categoryitem" onclick="$('.simplisity_loader').show();">@catData.Name (@catData.GetArticles().RecordCount)</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="catlevel1 @selectedCat">
+                        <a href="@ListUrl(moduleData.ListPageTabId(), catData)" class="categoryitem" onclick="$('.simplisity_loader').show();">@catData.Name (@catData.GetArticles().RecordCount)</a>
+                    </div>
+                    foreach (var child in l)
+                    {
+                        selectedCat = "";
+                        if (child.CategoryId == categoryData.CategoryId)
+                        {
+                            selectedCat = "catselected";
+                        }
+                        <div class="@selectedCat">
+                            <a href="@ListUrl(moduleData.ListPageTabId(), child)" class="categoryitem" onclick="$('.simplisity_loader').show();"><span class="material-icons">chevron_right</span>@child.Name (@child.GetArticles().RecordCount)</a>
+                        </div>
+                    }
+                }
+            }
+        }
+    }
+</div>
