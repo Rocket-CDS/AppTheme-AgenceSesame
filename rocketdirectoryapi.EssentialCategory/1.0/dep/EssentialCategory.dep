@@ -79,12 +79,14 @@
 			<tablename>rocketdirectoryapi</tablename>
 			<systemkey>rocketdirectoryapi</systemkey>
 			<datatype>category</datatype>
+			<metatype>product</metatype>
 		</genxml>
 		<genxml>
 			<queryparam>id</queryparam>
 			<tablename>rocketdirectoryapi</tablename>
 			<systemkey>rocketdirectoryapi</systemkey>
 			<datatype>article</datatype>
+			<metatype>product</metatype>
 		</genxml>
 	</queryparams>
 	<menuprovider>
