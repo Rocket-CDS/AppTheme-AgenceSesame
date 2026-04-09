@@ -111,6 +111,7 @@
 <script type="text/javascript">
 
 $(document).ready(function () {
+    $("html,body").animate({scrollTop:$('#rocket-blog').offset().top - 100},500);
 	blog_sharrre('@DetailUrl(moduleData.DetailPageTabId(), articleData, categoryData)', '')
 });
 
