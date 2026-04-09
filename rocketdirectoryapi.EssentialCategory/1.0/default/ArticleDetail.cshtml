@@ -63,6 +63,17 @@
             @HtmlOf(articleData.RichText)
         </div>
 
+        <div class="quickviewdescription">
+            @HtmlOf(info.GetXmlProperty("genxml/lang/genxml/textbox/richtext"))
+        </div>
+
+        @if (info.GetXmlProperty("genxml/textbox/videoembed") != "")
+        {
+        <div class="quickviewvideo">
+            <div class="video-container">@HtmlOf(info.GetXmlProperty("genxml/textbox/videoembed"))</div>
+        </div>
+        }
+
         <div class="w3-row">
             @foreach (var tag in articleData.GetProperties("tags"))
             {
