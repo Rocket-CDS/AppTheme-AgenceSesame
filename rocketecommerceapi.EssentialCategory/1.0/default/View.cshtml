@@ -39,6 +39,7 @@
 
         $('#ecommerce-tag').activateSimplisityPanel();
         $('#simplisity_loader').hide();
+        $("html,body").animate({scrollTop:$('#ecommerce-tag').offset().top - 100},500);
     });
     function afterMiniCartJson() {
         try {
