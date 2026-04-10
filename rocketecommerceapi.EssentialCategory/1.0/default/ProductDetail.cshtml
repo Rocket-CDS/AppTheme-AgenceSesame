@@ -24,7 +24,6 @@
     <div class="productdetail">
             <!-- Back btn -->
             <a class="w3-button" href="@DNNrocketUtils.NavigateURL(moduleSettings.ListPageTabId())" style="float:right;">@ResourceKey("DNNrocket.back")</a>
-
 			<h1>@(productData.Name)</h1>
 			<div class="productref">@(productData.Ref)</div>
         <div class="productquickview">
@@ -101,9 +100,16 @@
             </div>
         </div>
 		
-		<div class="quickviewsummary">
+		<div class="quickviewdescription">
 			@HtmlOf(productData.RichText)
 		</div>
+
+        @if (productData.Info.GetXmlProperty("genxml/textbox/video") != "")
+        {
+        <div class="quickviewvideo">
+            <div class="video-container">@HtmlOf(productData.Info.GetXmlProperty("genxml/textbox/video"))</div>
+        </div>
+        }
 		
     </div>
     <div class="productlistside">
